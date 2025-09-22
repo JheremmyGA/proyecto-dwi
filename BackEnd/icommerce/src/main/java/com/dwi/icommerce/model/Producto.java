@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -19,11 +20,20 @@ public class Producto {
     private Double precio;
     private int stock;
 
+    //Falta
+    //marca
+    //talla
+
+    //registros de ingresos y salidas de productos en una tabla aparte
+
     @ManyToOne
+    @JoinColumn(name="id_categoria")
     private Categoria categoria;
     @ManyToOne
+    @JoinColumn(name="id_temporada")
     private Temporada temporada;
     @ManyToOne
+    @JoinColumn(name="id_genero")
     private Genero genero;
 
     public Producto(Long id_producto, String nombre, String descripcion, Double precio, int stock, Categoria categoria,

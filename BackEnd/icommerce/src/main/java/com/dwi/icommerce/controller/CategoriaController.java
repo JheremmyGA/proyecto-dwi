@@ -33,37 +33,37 @@ public class CategoriaController {
     }
 
     @GetMapping
-    public List<Categoria> GetAllCategorias() {
-        return categoria_service.GetAllCategorias();
+    public List<Categoria> GetAll() {
+        return categoria_service.GetAll();
     }    
 
     @GetMapping("/{id}")
     public CategoriaDTO getMethodName(@PathVariable Long id) {
-        Optional<Categoria> categoria = categoria_service.GetCategoriaById(id);
+        Optional<Categoria> categoria = categoria_service.GetById(id);
         if(categoria.isEmpty()) return new CategoriaDTO();
 
         return new CategoriaDTO(categoria.get());
     }
 
     @PostMapping
-    public CategoriaDTO CreateCategoria(@RequestBody CategoriaDTO entity) {
+    public CategoriaDTO Create(@RequestBody CategoriaDTO entity) {
         // falta validar que esa categoria no exista
         Categoria new_categoria = new Categoria();
             new_categoria.setNombre(entity.getNombre());
             new_categoria.setDescripcion(entity.getDescripcion());
 
-        return new CategoriaDTO(categoria_service.CreateCategoria(new_categoria));
+        return new CategoriaDTO(categoria_service.Create(new_categoria));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaDTO> UpdateCategoria(@PathVariable Long id, @RequestBody CategoriaDTO newCategoriaDTO) {
-        Optional<Categoria> categoria_encontrada = categoria_service.GetCategoriaById(id);
+    public ResponseEntity<CategoriaDTO> Update(@PathVariable Long id, @RequestBody CategoriaDTO newCategoriaDTO) {
+        Optional<Categoria> categoria_encontrada = categoria_service.GetById(id);
 
         if(categoria_encontrada.isPresent()){
             Categoria cat_actualizado = categoria_encontrada.get();
             cat_actualizado.setNombre(newCategoriaDTO.getNombre());
             cat_actualizado.setDescripcion(newCategoriaDTO.getDescripcion());
-            return new ResponseEntity<>(new CategoriaDTO(categoria_service.CreateCategoria(cat_actualizado)), HttpStatus.OK);
+            return new ResponseEntity<>(new CategoriaDTO(categoria_service.Create(cat_actualizado)), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -71,10 +71,10 @@ public class CategoriaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> DeleteCategoria(@PathVariable Long id) {
-        Optional<Categoria> categoria_encontrada = categoria_service.GetCategoriaById(id);
+        Optional<Categoria> categoria_encontrada = categoria_service.GetById(id);
 
         if(categoria_encontrada.isPresent()){
-            return new ResponseEntity<>(categoria_service.DeleteCategoria(categoria_encontrada.get()), HttpStatus.OK);
+            return new ResponseEntity<>(categoria_service.Delete(categoria_encontrada.get()), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

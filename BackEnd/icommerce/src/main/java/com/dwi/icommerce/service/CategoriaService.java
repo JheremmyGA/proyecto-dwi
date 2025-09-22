@@ -15,22 +15,22 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository categoria_repository;
     
-    public List<Categoria> GetAllCategorias(){
+    public List<Categoria> GetAll(){
         return categoria_repository.findAll();
     }
 
-    public Optional<Categoria> GetCategoriaById(Long id){
+    public Optional<Categoria> GetById(Long id){
         return categoria_repository.findById(id);
     }
 
-    public Categoria CreateCategoria(Categoria new_Categoria){
+    public Categoria Create(Categoria new_Categoria){
         if(new_Categoria.getNombre() != "" && new_Categoria.getDescripcion() != "") {
             return categoria_repository.save(new_Categoria);
         }
         return new Categoria();
     }
 
-    public boolean DeleteCategoria(Categoria update_categoria){
+    public boolean Delete(Categoria update_categoria){
         categoria_repository.delete(update_categoria);
         return true;
     }
