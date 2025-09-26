@@ -35,6 +35,7 @@ public class ProductoService {
                 .orElseThrow(() -> new RuntimeException("Producto con ID " + id + " no existe"));
 
         productoExistente.setNombre(datosNuevos.getNombre());
+        productoExistente.setDescripcion(datosNuevos.getDescripcion());
         productoExistente.setPrecio(datosNuevos.getPrecio());
 
         return productoRepository.save(productoExistente);

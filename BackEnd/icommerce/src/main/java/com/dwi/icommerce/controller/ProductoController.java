@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dwi.icommerce.model.Producto;
 import com.dwi.icommerce.service.ProductoService;
+
 
 @RestController
 @RequestMapping("/api/productos")
@@ -43,7 +45,7 @@ public class ProductoController {
         return serviceProduct.saveProduct(producto);
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/{id}")
     public Producto actualizarProducto(@PathVariable Long id, @RequestBody Producto producto) {
         return serviceProduct.updateProduct(id, producto);
     }
