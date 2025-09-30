@@ -1,11 +1,16 @@
 package com.dwi.icommerce.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="talla")
 public class Talla {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id_talla;
     public String nombre;
 

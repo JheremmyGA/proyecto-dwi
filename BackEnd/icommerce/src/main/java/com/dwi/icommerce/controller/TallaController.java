@@ -19,7 +19,7 @@ import com.dwi.icommerce.model.Talla;
 import com.dwi.icommerce.service.TallaService;
 
 @RestController
-@RequestMapping("/api/Talla")
+@RequestMapping("/api/talla")
 public class TallaController {
     @Autowired
     private final TallaService talla_service;
@@ -44,8 +44,8 @@ public class TallaController {
     @PostMapping
     public Talla CreateTalla(@RequestBody Talla entity) {
         // falta validar que esa categoria no exista
-        Optional<Talla> tallaFind = talla_service.GetById(entity.getId_talla());
-        if(tallaFind.isPresent()) return new Talla();
+        //Optional<Talla> tallaFind = talla_service.GetById(entity.getId_talla());
+        //if(tallaFind.isPresent()) return new Talla();
 
         return talla_service.Create(entity);
     }
