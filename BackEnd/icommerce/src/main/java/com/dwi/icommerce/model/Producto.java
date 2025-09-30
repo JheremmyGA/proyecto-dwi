@@ -20,10 +20,6 @@ public class Producto {
     private Double precio;
     private int stock;
 
-    //Falta
-    //marca
-    //talla
-
     //registros de ingresos y salidas de productos en una tabla aparte
 
     @ManyToOne
@@ -35,9 +31,12 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name="id_genero")
     private Genero genero;
+    @ManyToOne
+    @JoinColumn(name="id_marca")
+    private Marca marca;
 
     public Producto(Long id_producto, String nombre, String descripcion, Double precio, int stock, Categoria categoria,
-            Temporada temporada, Genero genero) {
+            Temporada temporada, Genero genero, Marca marca) {
         this.id_producto = id_producto;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -46,6 +45,7 @@ public class Producto {
         this.categoria = categoria;
         this.temporada = temporada;
         this.genero = genero;
+        this.marca = marca;
     }
 
     public Producto() {
@@ -115,4 +115,11 @@ public class Producto {
         this.genero = genero;
     }
 
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
 }
