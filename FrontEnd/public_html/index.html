@@ -1,48 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Kivora store</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
-        <!-- Enlace al archivo CSS externo -->
-        <link rel="stylesheet" href="style.css">
-        <!-- Enlace al archivo JavaScript externo -->
-        <script src="javascript.js" defer></script>
-        <script src="app.js" defer></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>Kivora store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
+    <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Enlace al archivo JavaScript externo -->
+    <script src="javascript.js" defer></script>
+    <script src="app.js" defer></script>
+</head>
 
-    <body>
-        <div class="callToAction">NOVEDADES DE TEMPORADA !!! 🔥🔥🔥</div>
-        
-        <!-- CARRITO  -->
-        <script>
-            window.addEventListener('mouseover', initLandbot, {once: true});
-            window.addEventListener('touchstart', initLandbot, {once: true});
-            var myLandbot;
-            function initLandbot() {
-                if (!myLandbot) {
-                    var s = document.createElement('script');
-                    s.type = "module"
-                    s.async = true;
-                    s.addEventListener('load', function () {
-                        var myLandbot = new Landbot.Livechat({
-                            configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2951387-POYV5H903CBR9VOW/index.json',
-                        });
+<body>
+    <div class="callToAction">NOVEDADES DE TEMPORADA !!! 🔥🔥🔥</div>
+
+    <!-- Chatbox  -->
+    <script>
+        window.addEventListener('mouseover', initLandbot, { once: true });
+        window.addEventListener('touchstart', initLandbot, { once: true });
+        var myLandbot;
+        function initLandbot() {
+            if (!myLandbot) {
+                var s = document.createElement('script');
+                s.type = "module"
+                s.async = true;
+                s.addEventListener('load', function () {
+                    var myLandbot = new Landbot.Livechat({
+                        configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2951387-POYV5H903CBR9VOW/index.json',
                     });
-                    s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-                    var x = document.getElementsByTagName('script')[0];
-                    x.parentNode.insertBefore(s, x);
-                }
+                });
+                s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+                var x = document.getElementsByTagName('script')[0];
+                x.parentNode.insertBefore(s, x);
             }
-        </script>
-        <hr>
-        
-        <!-- CARRITO + BOTÓN ALINEADOS -->
+        }
+    </script>
+
+    <header class="header-principal">
+        <div class="logo-kivora">
+            <img src="imagenes/logo.png" alt="logo">
+        </div>
+
         <div class="header-derecha">
+            <!-- Barra de búsqueda -->
+            <div class="barra-busqueda">
+                <input type="text" placeholder="Buscar..." />
+                <button type="submit">
+                    <img src="imagenes/busqueda.png" alt="Buscar" />
+                </button>
+            </div>
+            <!-- Botón de inicio de sesión -->
             <div class="btn-login">
-                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión" style="background:none; border:none; padding:0; cursor:pointer;">
+                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión"
+                    style="background:none; border:none; padding:0; cursor:pointer;">
                     <img src="imagenes/login.png" alt="login" class="icono-login">
                 </div>
             </div>
@@ -66,662 +78,323 @@
                 </div>
             </div>
         </div>
-        <!-- menú -->
-        <div class="menu">
-            <!-- Enlaces de navegación -->
-            <div class="menu-enlaces">
-                <a href="#" onclick="mostrarSeccion('inicio')">Inicio</a>
-                <a href="#" onclick="mostrarSeccion('Mi-Tienda')">Mi-Tienda</a>
-                <a href="#" onclick="mostrarSeccion('Nosotros')">Nosotros</a>
-                <a href="#" onclick="mostrarSeccion('Catálogo')">Catálogo</a>
-                <a href="#" onclick="mostrarSeccion('Contacto')">Contacto</a>
+    </header>
+
+    <!-- menú -->
+    <hr>
+    <div class="menu">
+        <!-- Enlaces de navegación -->
+        <div class="menu-enlaces">
+            <a href="#" onclick="mostrarSeccion('inicio')">Inicio</a>
+            <a href="#" onclick="mostrarSeccion('Catálogo')">Catálogo</a>
+            <a href="#" onclick="mostrarSeccion('Temporada')">Temporada</a>
+            <a href="#" onclick="mostrarSeccion('Contacto')">Contacto</a>
+        </div>
+    </div>
+    <hr>
+
+
+    <!-- menu  -->
+    <div id="inicio">
+        <div class="hero">
+            <img src="imagenes/mujer.webp" alt="Sección mujer" class="active">
+            <img src="imagenes/hombre.webp" alt="Sección hombre">
+            <img src="imagenes/niños.webp" alt="Sección niño">
+            <img src="imagenes/calzado.PNG" alt="Sección calzado">
+
+            <div class="hero-content">
+                <h1>Kivora</h1>
+                <div class="hero-button">COMPRAR AHORA</div>
             </div>
+
+            <button class="arrow left">&#10094;</button>
+            <button class="arrow right">&#10095;</button>
         </div>
 
-        <!-- menu  -->
-        <div id="inicio">
-            <div class="hero">
-                <img src="imagenes/mujer.webp" alt="Sección mujer" class="active">
-                <img src="imagenes/hombre.webp" alt="Sección hombre">
-                <img src="imagenes/niños.webp" alt="Sección niño">
-                <img src="imagenes/calzado.PNG" alt="Sección calzado">
+        <!-- Inicio Nuevo -->
+        <div class="categoria-menu">
+            <button id="btn-caballeros">Caballeros</button>
+            <button id="btn-damas">Damas</button>
+            <button id="btn-ninos">Niños</button>
+            <button id="btn-ninas">Niñas</button>
+        </div>
 
-                <div class="hero-content">
-                    <h1>Kivora</h1>
-                    <div class="hero-button">COMPRAR AHORA</div>
-                </div>
-
-                <button class="arrow left">&#10094;</button>
-                <button class="arrow right">&#10095;</button>
-            </div>
-
-            <!-- Sección SOFÁS -->
-            <div class="categoria">
-                <h2>SOFÁS</h2>
-                <div class="carrusel-contenedor">
-                    <div class="carrusel-horizontal" id="carrusel-sofas">
-                        <div class="item producto">
-                            <img src="imagenes/man/Pantalón Hombre University Club.webp" alt="Pantalón Hombre University Club">
-                            <p>Pantalón Hombre University Club</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="201" 
-                               data-nombre="Pantalón Hombre University Club" 
-                               data-precio="S/ 99.90" 
-                               data-imagen="https://media.falabella.com/falabellaPE/883323807_1">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item producto">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7Ccv3xY_hCk5QLr8goZQq0NlBEsy4aJLQZA&s" alt="Seccional Houdini">
-                            <p>Seccional Houdini 4 Cuerpos con USB</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="202" 
-                               data-nombre="Seccional Houdini" 
-                               data-precio="1299.00" 
-                               data-imagen="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7Ccv3xY_hCk5QLr8goZQq0NlBEsy4aJLQZA&s">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item producto">
-                            <img src="https://wongfood.vtexassets.com/arquivos/ids/321773/Casabella-Sofa-Paris-Rojo-1-145121.jpg?v=637060681036170000" alt="Sofá Taylor">
-                            <p>Sofá Taylor 3 Cuerpos Tela</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="203" 
-                               data-nombre="Sofá Taylor 3 Cuerpos" 
-                               data-precio="999.00" 
-                               data-imagen="https://wongfood.vtexassets.com/arquivos/ids/321773/Casabella-Sofa-Paris-Rojo-1-145121.jpg?v=637060681036170000">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item producto">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnDyltiwHo05ytJRCOWwKSv5R4GpY_QG5xiQ&s" alt="Sofá Florencia">
-                            <p>Sofá Cama Florencia Azul Verdoso</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="204" 
-                               data-nombre="Sofá Cama Florencia" 
-                               data-precio="849.00" 
-                               data-imagen="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnDyltiwHo05ytJRCOWwKSv5R4GpY_QG5xiQ&s">
-                                Comprar
-                            </a>
-                        </div>
+        <div class="Novedades">
+            <h2>Novedades 😱</h2>
+            <div class="carrusel-contenedor">
+                <div class="carrusel-horizontal" id="carrusel-sofas">
+                    <div class="item producto">
+                        <img src="imagenes/hombre/Pantalon/Pantalón Hombre University Club.webp"
+                            alt="Pantalón Hombre University Club">
+                        <p>Pantalón Hombre University Club</p>
+                        <a href="#" class="agregar-carrito" data-id="201" data-nombre="Pantalón Hombre University Club"
+                            data-precio="S/ 99.90"
+                            data-imagen="imagenes/hombre/Pantalon/Pantalón Hombre University Club.webp">
+                            Comprar
+                        </a>
                     </div>
-                    <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-sofas', -1)">❮</button>
-                    <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-sofas', 1)">❯</button>
-                </div>
-            </div>
-
-            <!-- Sección ROPEROS -->
-            <div class="categoria">
-                <h2>ROPEROS</h2>
-                <div class="carrusel-contenedor">
-                    <div class="carrusel-horizontal" id="carrusel-roperos">
-                        <div class="item">
-                            <img src="https://images.contentstack.io/v3/assets/blt5e6c562c7d14bc51/blt66e4fe7244afda49/6682ea74bbf7b4e87ba76b37/MB-ROPEROS.jpg" alt="Ropero Edimburgo">
-                            <p>Ropero Edimburgo 6 puertas 8 cajones</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="205" 
-                               data-nombre="Ropero Edimburgo 6 puertas 8 cajones" 
-                               data-precio="499.00" 
-                               data-imagen="https://images.contentstack.io/v3/assets/blt5e6c562c7d14bc51/blt66e4fe7244afda49/6682ea74bbf7b4e87ba76b37/MB-ROPEROS.jpg">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://www.pazartmuebles.com/cdn/shop/files/500017_1.jpg?v=1683049001" alt="Ropero MAXIM">
-                            <p>ROPERO 5 PUERTAS + ESPEJO MAXIM</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="206" 
-                               data-nombre="ROPERO 5 PUERTAS + ESPEJO MAXIM" 
-                               data-precio="269.00" 
-                               data-imagen="https://www.pazartmuebles.com/cdn/shop/files/500017_1.jpg?v=1683049001">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://realplaza.vtexassets.com/arquivos/ids/35409016/image-9670ddc456a845a59927e07b0feb4f72.jpg?v=638773006332170000" alt="Ropero Bruselas">
-                            <p>ROPERO MELAPAK BRUSELAS 6 PUERTAS</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="207" 
-                               data-nombre="ROPERO MELAPAK BRUSELAS 6 PUERTAS" 
-                               data-precio="329.00" 
-                               data-imagen="https://realplaza.vtexassets.com/arquivos/ids/35409016/image-9670ddc456a845a59927e07b0feb4f72.jpg?v=638773006332170000">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://mueblesmarron.com/cdn/shop/files/DafneFrenteLogo.jpg?v=1699058115&width=1946" alt="Ropero Sicilia">
-                            <p>ROPERO FLEX SICILIA 3P 9C ESPEJO BLANCO</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="208" 
-                               data-nombre="ROPERO FLEX SICILIA 3P 9C ESPEJO BLANCO" 
-                               data-precio="699.00" 
-                               data-imagen="https://mueblesmarron.com/cdn/shop/files/DafneFrenteLogo.jpg?v=1699058115&width=1946">
-                                Comprar
-                            </a>
-                        </div>
+                    <div class="item producto">
+                        <img src="imagenes/mujer/Poleras/Casaca Trench Mujer Sybilla.png" alt="Seccional Houdini">
+                        <p>Casaca Trench Mujer Sybilla</p>
+                        <a href="#" class="agregar-carrito" data-id="202" data-nombre="Seccional Houdini"
+                            data-precio="1299.00" data-imagen="imagenes/mujer/Poleras/Casaca Trench Mujer Sybilla.png">
+                            Comprar
+                        </a>
                     </div>
-                    <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-roperos', -1)">❮</button>
-                    <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-roperos', 1)">❯</button>
-                </div>
-            </div>
-            <!-- Sección LÁMPARAS -->
-            <div class="categoria">
-                <h2>LÁMPARAS</h2>
-                <div class="carrusel-contenedor">
-                    <div class="carrusel-horizontal" id="carrusel-lamparas">
-                        <div class="item">
-                            <img src="https://oechsle.vteximg.com.br/arquivos/ids/16857518/image-0.jpg?v=638363911417570000" alt="Lámpara bambú">
-                            <p>Lámpara colgante de bambú</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="209" 
-                               data-nombre="Lámpara colgante de bambú" 
-                               data-precio="299.00" 
-                               data-imagen="https://oechsle.vteximg.com.br/arquivos/ids/16857518/image-0.jpg?v=638363911417570000">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://http2.mlstatic.com/D_Q_NP_854619-MLU73509347045_122023-O.webp" alt="Lámpara dorada">
-                            <p>Lámpara de Techo de 4 Luces - Dorada</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="210" 
-                               data-nombre="Lámpara de Techo de 4 Luces - Dorada" 
-                               data-precio="199.00" 
-                               data-imagen="https://http2.mlstatic.com/D_Q_NP_854619-MLU73509347045_122023-O.webp">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO_RiC4j0B76ubiJy3SRzvZRFgtUzwsNUEhQ&s" alt="Lámpara japonesa">
-                            <p>Lámpara japonesa con diseño irregular</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="211" 
-                               data-nombre="Lámpara japonesa con diseño irregular" 
-                               data-precio="189.00" 
-                               data-imagen="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO_RiC4j0B76ubiJy3SRzvZRFgtUzwsNUEhQ&s">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://i.pinimg.com/474x/f1/3f/9c/f13f9c48bd95d0b3f56e0dd953fe74e4.jpg" alt="Shantale LED">
-                            <p>Lámpara LED Shantale con control</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="212" 
-                               data-nombre="Lámpara LED Shantale con control" 
-                               data-precio="322.00" 
-                               data-imagen="https://i.pinimg.com/474x/f1/3f/9c/f13f9c48bd95d0b3f56e0dd953fe74e4.jpg">
-                                Comprar
-                            </a>
-                        </div>
+                    <div class="item producto">
+                        <img src="imagenes/niña/Poleras/Polera Niña Eleven2.png" alt="Sofá Taylor">
+                        <p>Polera Niña Eleven2</p>
+                        <a href="#" class="agregar-carrito" data-id="203" data-nombre="Sofá Taylor 3 Cuerpos"
+                            data-precio="99.00" data-imagen="imagenes/niña/Poleras/Polera Niña Eleven2.png">
+                            Comprar
+                        </a>
                     </div>
-                    <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-lamparas', -1)">❮</button>
-                    <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-lamparas', 1)">❯</button>
-                </div>
-            </div>
-            <!-- Sección COMEDOR -->
-            <div class="categoria">
-                <h2>COMEDOR</h2>
-                <div class="carrusel-contenedor">
-                    <div class="carrusel-horizontal" id="carrusel-comedor">
-                        <div class="item">
-                            <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/118633718.jpg?k=2c4c1436f14d8525cffde98b5e4884b093085600f76968e57482270767fc399e&o=&hp=1" alt="Comedor Luminus">
-                            <p>Juego de Comedor Luminus 6 Sillas</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="213" 
-                               data-nombre="Juego de Comedor Luminus 6 Sillas" 
-                               data-precio="599.00" 
-                               data-imagen="https://cf.bstatic.com/xdata/images/hotel/max1024x768/118633718.jpg?k=2c4c1436f14d8525cffde98b5e4884b093085600f76968e57482270767fc399e&o=&hp=1">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://d38qrl83hrqn1t.cloudfront.net/media/catalog/product/cache/4d6fe9ab9900f6d7414e36c92af8f679/m/e/mesa-comedor-rectangular-240x120-creta-tzalam-con-sillas-arena-decorado-dc-11.jpg" alt="Comedor Fler">
-                            <p>Juego de Comedor Fler 4 Sillas</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="214" 
-                               data-nombre="Juego de Comedor Fler 4 Sillas" 
-                               data-precio="349.00" 
-                               data-imagen="https://d38qrl83hrqn1t.cloudfront.net/media/catalog/product/cache/4d6fe9ab9900f6d7414e36c92af8f679/m/e/mesa-comedor-rectangular-240x120-creta-tzalam-con-sillas-arena-decorado-dc-11.jpg">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://www.efe.com.pe/media/catalog/product/h/o/ho20202458_1.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400" alt="Comedor Rubi">
-                            <p>Comedor Rubi 6 Sillas</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="215" 
-                               data-nombre="Comedor Rubi 6 Sillas" 
-                               data-precio="579.00" 
-                               data-imagen="https://www.efe.com.pe/media/catalog/product/h/o/ho20202458_1.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://madesa.mx/cdn/shop/articles/Foto_Capa.jpg?v=1716894736&width=1600" alt="Comedor Jaíne">
-                            <p>Comedor Jaíne con 6 Sillas</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="216" 
-                               data-nombre="Comedor Jaíne con 6 Sillas" 
-                               data-precio="129.00" 
-                               data-imagen="https://madesa.mx/cdn/shop/articles/Foto_Capa.jpg?v=1716894736&width=1600">
-                                Comprar
-                            </a>
-                        </div>
+                    <div class="item producto">
+                        <img src="imagenes/niño/Poleras/Casaca Niño Coniglio.png" alt="Sofá Florencia">
+                        <p>Casaca Niño Coniglio</p>
+                        <a href="#" class="agregar-carrito" data-id="204" data-nombre="Sofá Cama Florencia"
+                            data-precio="84.00" data-imagen="imagenes/niño/Poleras/Casaca Niño Coniglio.png">
+                            Comprar
+                        </a>
                     </div>
-                    <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-comedor', -1)">❮</button>
-                    <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-comedor', 1)">❯</button>
                 </div>
+                <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-sofas', -1)">❮</button>
+                <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-sofas', 1)">❯</button>
             </div>
         </div>
 
 
-        <div id="Inicio" style="display: block;">   
-        </div>
-
-        <div id="Mi-Tienda" class="seccion-mi-tienda" style="display: none;">
-            <div class="contenido-mi-tienda">
-                <h2>Bienvenido a <span class="marca">DECOMANÍA</span></h2>
-                <p>
-                    En <strong>DECOMANÍA</strong> encontrarás una cuidadosa selección de productos para transformar tu hogar con estilo y funcionalidad.
-                    Contamos con una variedad de muebles, desde cómodos sofás y prácticos roperos, hasta elegantes lámparas y modernos juegos de comedor.
-                </p>
-                <p>
-                    Nos esforzamos por ofrecerte artículos de calidad, diseños exclusivos y precios accesibles, todo desde la comodidad de tu casa.
-                    Además, te brindamos una experiencia de compra segura, rápida y personalizada, con atención a tus dudas a través de nuestro chat en vivo.
-                </p>
-                <p>
-                    Explora nuestro catálogo para descubrir la pieza perfecta que dará vida a tus espacios.<br>
-                    ¡En <strong>DECOMANÍA</strong> estamos listos para ayudarte a crear ambientes únicos y acogedores!
-                </p>
-                <img src="https://brothertze.com/wp-content/uploads/2023/06/3-Nosotros.png" 
-                     alt="Imagen DECOMANÍA" 
-                     style="margin-top: 30px; max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                <button class="btn-volver" onclick="regresarInicio()">Seguir Comprando</button>
+        <div class="categoria">
+            <h2>Tendencias 🔥🔥🔥</h2>
+            <div class="carrusel-contenedor">
+                <div class="carrusel-horizontal" id="carrusel-sofas">
+                    <div class="item producto">
+                        <img src="imagenes/hombre/Polo/Polo Petit Piqué Hombre Lacoste.png"
+                            alt="Pantalón Hombre University Club">
+                        <p>Pantalón Hombre University Club</p>
+                        <a href="#" class="agregar-carrito" data-id="201" data-nombre="Pantalón Hombre University Club"
+                            data-precio="S/ 99.90"
+                            data-imagen="imagenes/hombre/Polo/Polo Petit Piqué Hombre Lacoste.png">
+                            Comprar
+                        </a>
+                    </div>
+                    <div class="item producto">
+                        <img src="imagenes/mujer/Polo/Polo Manga Corta Mujer University Club.png"
+                            alt="Seccional Houdini">
+                        <p>Seccional Houdini 4 Cuerpos con USB</p>
+                        <a href="#" class="agregar-carrito" data-id="202" data-nombre="Seccional Houdini"
+                            data-precio="199.00"
+                            data-imagen="imagenes/mujer/Polo/Polo Manga Corta Mujer University Club.png">
+                            Comprar
+                        </a>
+                    </div>
+                    <div class="item producto">
+                        <img src="imagenes/niña/Polo/Polo Niña Eleven.png" alt="Sofá Taylor">
+                        <p>Sofá Taylor 3 Cuerpos Tela</p>
+                        <a href="#" class="agregar-carrito" data-id="203" data-nombre="Sofá Taylor 3 Cuerpos"
+                            data-precio="99.00" data-imagen="imagenes/niña/Polo/Polo Niña Eleven.png">
+                            Comprar
+                        </a>
+                    </div>
+                    <div class="item producto">
+                        <img src="imagenes/niño/Polo/Polo Niño Coniglio.png" alt="Sofá Florencia">
+                        <p>Sofá Cama Florencia Azul Verdoso</p>
+                        <a href="#" class="agregar-carrito" data-id="204" data-nombre="Sofá Cama Florencia"
+                            data-precio="84.00" data-imagen="imagenes/niño/Polo/Polo Niño Coniglio.png">
+                            Comprar
+                        </a>
+                    </div>
+                </div>
+                <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-sofas', -1)">❮</button>
+                <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-sofas', 1)">❯</button>
             </div>
         </div>
+    </div>
 
-
-
-
-        <!-- SECCIÓN NOSOTROS MODERNA -->
-        <div id="Nosotros" class="seccion-nosotros" style="display: none;">
-            <div class="contenido-nosotros">
-                <h2 class="titulo-nosotros">¿Por qué <span class="marca">DECOMANÍA</span>?</h2>
-                <p>
-                    Elegimos el nombre <strong>DECOMANÍA</strong> porque transmite pasión y entusiasmo por la decoración.
-                    Es un nombre corto, llamativo y fácil de recordar que refleja perfectamente nuestro objetivo:
-                    ofrecer productos que inspiren a nuestros clientes a transformar sus espacios con estilo y creatividad.
-                </p>
-
-                <div class="bloque-info">
-                    <h2>Misión</h2>
+    <div class="seccion-nosotros">
+        <div class="contenido-nosotros">
+            <h2 class="titulo-nosotros">Nosotros</h2>
+            <div class="nosotros-layout">
+                <img src="imagenes/nosotros.png" alt="Interior de tienda KIVORA">
+                <div class="texto-nosotros">
                     <p>
-                        Transformar espacios en hogares únicos, ofreciendo muebles y decoraciones de calidad, con estilo y accesibles,
-                        a través de una experiencia de compra online simple, confiable y personalizada.
+                        En <span class="marca">KIVORA</span>, creemos que la verdadera esencia de una marca radica en su
+                        propósito.
+                        Nuestra misión es ofrecer prendas únicas, minimalistas y atemporales, creadas con materiales de
+                        alta calidad
+                        y fabricadas de manera responsable. Nos esforzamos por diseñar ropa que se adapte a las
+                        distintas personalidades,
+                        sin seguir las tendencias efímeras, sino apostando por piezas que puedan perdurar y ser parte
+                        del estilo personal
+                        de cada individuo.
                     </p>
-                </div>
-
-                <div class="bloque-info">
-                    <h2>Visión</h2>
                     <p>
-                        Ser la tienda online líder en decoración y mobiliario del hogar, reconocida por su diseño, calidad
-                        y compromiso con la experiencia del cliente.
+                        Nos apasiona el diseño minimalista, y es en él donde encontramos la sofisticación en lo simple.
+                        Cada prenda de KIVORA está pensada para ser versátil, cómoda y elegante, ajustándose a
+                        diferentes
+                        estilos de vida. Queremos que cada pieza sea una inversión en calidad, funcionalidad y estilo,
+                        pensada
+                        para acompañar a nuestras clientas y clientes durante toda la vida.
                     </p>
-                </div>
 
-                <div class="imagen-nosotros-contenedor">
-                    <img src="https://wellaggio.com/wp-content/uploads/2018/06/Wellaggio-diseno-web-valencia-Co%CC%81mo-disen%CC%83ar-la-pa%CC%81gina-%E2%80%9Csobre-nosotros%E2%80%9D-en-la-web-de-mi-empresa.jpg"
-                         alt="Sobre nosotros DECOMANÍA">
                 </div>
-
-                <button class="btn-volver" onclick="regresarInicio()">Seguir Comprando</button>
             </div>
         </div>
+    </div>
 
-        <div id="Catálogo">
-            <div class="categoria">
-                <h2>SOFÁS</h2>
-                <div class="carrusel-contenedor">
-                    <div class="carrusel-horizontal" id="carrusel-sofas">
-                        <div class="item">
-                            <img src="https://promart.vteximg.com.br/arquivos/ids/7794784-190-190/135107_10.webp?v=638417911799800000" alt="Sofá Corcega">
-                            <p>Sofá Corcega 3 Cuerpos</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="201" 
-                               data-nombre="Sofá Corcega 3 Cuerpos" 
-                               data-precio="899.00" 
-                               data-imagen="https://promart.vteximg.com.br/arquivos/ids/7794784-190-190/135107_10.webp?v=638417911799800000">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7Ccv3xY_hCk5QLr8goZQq0NlBEsy4aJLQZA&s" alt="Seccional Houdini">
-                            <p>Seccional Houdini 4 Cuerpos con USB</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="202" 
-                               data-nombre="Seccional Houdini" 
-                               data-precio="1299.00" 
-                               data-imagen="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7Ccv3xY_hCk5QLr8goZQq0NlBEsy4aJLQZA&s">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://wongfood.vtexassets.com/arquivos/ids/321773/Casabella-Sofa-Paris-Rojo-1-145121.jpg?v=637060681036170000" alt="Sofá Taylor">
-                            <p>Sofá Taylor 3 Cuerpos Tela</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="203" 
-                               data-nombre="Sofá Taylor 3 Cuerpos" 
-                               data-precio="999.00" 
-                               data-imagen="https://wongfood.vtexassets.com/arquivos/ids/321773/Casabella-Sofa-Paris-Rojo-1-145121.jpg?v=637060681036170000">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnDyltiwHo05ytJRCOWwKSv5R4GpY_QG5xiQ&s" alt="Sofá Florencia">
-                            <p>Sofá Cama Florencia Azul Verdoso</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="204" 
-                               data-nombre="Sofá Cama Florencia" 
-                               data-precio="849.00" 
-                               data-imagen="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnDyltiwHo05ytJRCOWwKSv5R4GpY_QG5xiQ&s">
-                                Comprar
-                            </a>
-                        </div>
-                    </div>
-                    <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-sofas', -1)">❮</button>
-                    <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-sofas', 1)">❯</button>
-                </div>
-            </div>
-
-            <!-- Sección ROPEROS -->
-            <div class="categoria">
-                <h2>ROPEROS</h2>
-                <div class="carrusel-contenedor">
-                    <div class="carrusel-horizontal" id="carrusel-roperos">
-                        <div class="item">
-                            <img src="https://images.contentstack.io/v3/assets/blt5e6c562c7d14bc51/blt66e4fe7244afda49/6682ea74bbf7b4e87ba76b37/MB-ROPEROS.jpg" alt="Ropero Edimburgo">
-                            <p>Ropero Edimburgo 6 puertas 8 cajones</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="205" 
-                               data-nombre="Ropero Edimburgo 6 puertas 8 cajones" 
-                               data-precio="899.00" 
-                               data-imagen="https://images.contentstack.io/v3/assets/blt5e6c562c7d14bc51/blt66e4fe7244afda49/6682ea74bbf7b4e87ba76b37/MB-ROPEROS.jpg">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://www.pazartmuebles.com/cdn/shop/files/500017_1.jpg?v=1683049001" alt="Ropero MAXIM">
-                            <p>ROPERO 5 PUERTAS + ESPEJO MAXIM</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="206" 
-                               data-nombre="ROPERO 5 PUERTAS + ESPEJO MAXIM" 
-                               data-precio="899.00" 
-                               data-imagen="https://www.pazartmuebles.com/cdn/shop/files/500017_1.jpg?v=1683049001">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://realplaza.vtexassets.com/arquivos/ids/35409016/image-9670ddc456a845a59927e07b0feb4f72.jpg?v=638773006332170000" alt="Ropero Bruselas">
-                            <p>ROPERO MELAPAK BRUSELAS 6 PUERTAS</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="207" 
-                               data-nombre="ROPERO MELAPAK BRUSELAS 6 PUERTAS" 
-                               data-precio="899.00" 
-                               data-imagen="https://realplaza.vtexassets.com/arquivos/ids/35409016/image-9670ddc456a845a59927e07b0feb4f72.jpg?v=638773006332170000">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://mueblesmarron.com/cdn/shop/files/DafneFrenteLogo.jpg?v=1699058115&width=1946" alt="Ropero Sicilia">
-                            <p>ROPERO FLEX SICILIA 3P 9C ESPEJO BLANCO</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="208" 
-                               data-nombre="ROPERO FLEX SICILIA 3P 9C ESPEJO BLANCO" 
-                               data-precio="899.00" 
-                               data-imagen="https://mueblesmarron.com/cdn/shop/files/DafneFrenteLogo.jpg?v=1699058115&width=1946">
-                                Comprar
-                            </a>
-                        </div>
-                    </div>
-                    <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-roperos', -1)">❮</button>
-                    <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-roperos', 1)">❯</button>
-                </div>
-            </div>
-            <!-- Sección LÁMPARAS -->
-            <div class="categoria">
-                <h2>LÁMPARAS</h2>
-                <div class="carrusel-contenedor">
-                    <div class="carrusel-horizontal" id="carrusel-lamparas">
-                        <div class="item">
-                            <img src="https://oechsle.vteximg.com.br/arquivos/ids/16857518/image-0.jpg?v=638363911417570000" alt="Lámpara bambú">
-                            <p>Lámpara colgante de bambú</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="209" 
-                               data-nombre="Lámpara colgante de bambú" 
-                               data-precio="899.00" 
-                               data-imagen="https://oechsle.vteximg.com.br/arquivos/ids/16857518/image-0.jpg?v=638363911417570000">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://http2.mlstatic.com/D_Q_NP_854619-MLU73509347045_122023-O.webp" alt="Lámpara dorada">
-                            <p>Lámpara de Techo de 4 Luces - Dorada</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="210" 
-                               data-nombre="Lámpara de Techo de 4 Luces - Dorada" 
-                               data-precio="899.00" 
-                               data-imagen="https://http2.mlstatic.com/D_Q_NP_854619-MLU73509347045_122023-O.webp">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO_RiC4j0B76ubiJy3SRzvZRFgtUzwsNUEhQ&s" alt="Lámpara japonesa">
-                            <p>Lámpara japonesa con diseño irregular</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="211" 
-                               data-nombre="Lámpara japonesa con diseño irregular" 
-                               data-precio="899.00" 
-                               data-imagen="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO_RiC4j0B76ubiJy3SRzvZRFgtUzwsNUEhQ&s">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://i.pinimg.com/474x/f1/3f/9c/f13f9c48bd95d0b3f56e0dd953fe74e4.jpg" alt="Shantale LED">
-                            <p>Lámpara LED Shantale con control</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="212" 
-                               data-nombre="Lámpara LED Shantale con control" 
-                               data-precio="899.00" 
-                               data-imagen="https://i.pinimg.com/474x/f1/3f/9c/f13f9c48bd95d0b3f56e0dd953fe74e4.jpg">
-                                Comprar
-                            </a>
-                        </div>
-                    </div>
-                    <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-lamparas', -1)">❮</button>
-                    <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-lamparas', 1)">❯</button>
-                </div>
-            </div>
-            <!-- Sección COMEDOR -->
-            <div class="categoria">
-                <h2>COMEDOR</h2>
-                <div class="carrusel-contenedor">
-                    <div class="carrusel-horizontal" id="carrusel-comedor">
-                        <div class="item">
-                            <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/118633718.jpg?k=2c4c1436f14d8525cffde98b5e4884b093085600f76968e57482270767fc399e&o=&hp=1" alt="Comedor Luminus">
-                            <p>Juego de Comedor Luminus 6 Sillas</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="213" 
-                               data-nombre="Juego de Comedor Luminus 6 Sillas" 
-                               data-precio="899.00" 
-                               data-imagen="https://cf.bstatic.com/xdata/images/hotel/max1024x768/118633718.jpg?k=2c4c1436f14d8525cffde98b5e4884b093085600f76968e57482270767fc399e&o=&hp=1">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://d38qrl83hrqn1t.cloudfront.net/media/catalog/product/cache/4d6fe9ab9900f6d7414e36c92af8f679/m/e/mesa-comedor-rectangular-240x120-creta-tzalam-con-sillas-arena-decorado-dc-11.jpg" alt="Comedor Fler">
-                            <p>Juego de Comedor Fler 4 Sillas</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="214" 
-                               data-nombre="Juego de Comedor Fler 4 Sillas" 
-                               data-precio="899.00" 
-                               data-imagen="https://d38qrl83hrqn1t.cloudfront.net/media/catalog/product/cache/4d6fe9ab9900f6d7414e36c92af8f679/m/e/mesa-comedor-rectangular-240x120-creta-tzalam-con-sillas-arena-decorado-dc-11.jpg">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://www.efe.com.pe/media/catalog/product/h/o/ho20202458_1.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400" alt="Comedor Rubi">
-                            <p>Comedor Rubi 6 Sillas</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="215" 
-                               data-nombre="Comedor Rubi 6 Sillas" 
-                               data-precio="899.00" 
-                               data-imagen="https://www.efe.com.pe/media/catalog/product/h/o/ho20202458_1.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400">
-                                Comprar
-                            </a>
-                        </div>
-                        <div class="item">
-                            <img src="https://madesa.mx/cdn/shop/articles/Foto_Capa.jpg?v=1716894736&width=1600" alt="Comedor Jaíne">
-                            <p>Comedor Jaíne con 6 Sillas</p>
-                            <a href="#" 
-                               class="agregar-carrito" 
-                               data-id="216" 
-                               data-nombre="Comedor Jaíne con 6 Sillas" 
-                               data-precio="899.00" 
-                               data-imagen="https://madesa.mx/cdn/shop/articles/Foto_Capa.jpg?v=1716894736&width=1600">
-                                Comprar
-                            </a>
-                        </div>
-                    </div>
-                    <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-comedor', -1)">❮</button>
-                    <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-comedor', 1)">❯</button>
-                </div>
-            </div>
-
+    <footer class="footer-kivora">
+        <div class="footer-logo">
+            <img src="imagenes/logo.png" alt="logo kivora">
         </div>
 
-        <div id="Contacto">
-            <form action="#" method="post">
-                <fieldset>
-                    <legend>INICIAR SESIÓN</legend>
-                    <label for="nombre">Nombre:</label><br>
-                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre"><br>
-
-                    <label for="correo">Correo Electrónico:</label><br>
-                    <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com"><br>
-
-                    <label for="telefono">Número:</label><br>
-                    <input type="text" id="telefono" name="telefono" placeholder="987654321"><br>
-
-                    <label for="comentario">Comentario:</label><br>
-                    <input type="text" id="comentario" name="comentario" placeholder="Tu comentario"><br>
-
-                    <input type="submit" value="Enviar">
-                </fieldset>
-            </form>
+        <div class="footer-contenedor">
+            <div class="footer-col">
+                <h3>Nosotros</h3>
+                <ul>
+                    <li>La empresa</li>
+                    <li>Nuestras tiendas</li>
+                    <li>Ventas corporativas</li>
+                    <li>Trabaja con nosotros</li>
+                    <li>Política SIG</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Legales</h3>
+                <ul>
+                    <li>Políticas de privacidad</li>
+                    <li>Términos y condiciones</li>
+                    <li>Política de Modelo de prevención</li>
+                    <li>Política Anticorrupción</li>
+                    <li>Política de Lavado de Activo y terrorismo</li>
+                    <li>Política de Prevención de Delitos Tributarios y Contables</li>
+                    <li>Política de Prevención de Delitos Aduaneros</li>
+                    <li>Canal de Denuncias</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contáctanos</h3>
+                <ul>
+                    <li>Email: ventas@kivora.com.pe</li>
+                    <li>Teléfono: 01-12475320</li>
+                </ul>
+            </div>
         </div>
-        <script>
-// Espera a que el DOM esté completamente cargado
-            window.addEventListener('DOMContentLoaded', () => {
-                const carrito = document.querySelector("#lista-carrito tbody");
-                const vaciarCarritoBtn = document.querySelector("#vaciar-carrito");
-                const agregarBtns = document.querySelectorAll(".agregar-carrito");
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="footer-copy">
+            © El contenido de esta página web está protegido por copyright y es propiedad de Kivora S.A.C 2025
+        </div>
+    </footer>
 
-                agregarBtns.forEach(btn => {
-                    btn.addEventListener("click", e => {
-                        e.preventDefault();
 
-                        const imagen = btn.getAttribute("data-imagen");
-                        const nombre = btn.getAttribute("data-nombre");
-                        const precio = btn.getAttribute("data-precio");
-                        const id = btn.getAttribute("data-id");
+    <!-- Fin nuevo -->
 
-                        const existe = carrito.querySelector(`tr[data-id='${id}']`);
-                        if (!existe) {
-                            const fila = document.createElement("tr");
-                            fila.setAttribute("data-id", id);
-                            fila.innerHTML = `
+    
+
+    <div id="Contacto">
+        <form action="#" method="post">
+            <fieldset>
+                <legend>INICIAR SESIÓN</legend>
+                <label for="nombre">Nombre:</label><br>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre"><br>
+
+                <label for="correo">Correo Electrónico:</label><br>
+                <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com"><br>
+
+                <label for="telefono">Número:</label><br>
+                <input type="text" id="telefono" name="telefono" placeholder="987654321"><br>
+
+                <label for="comentario">Comentario:</label><br>
+                <input type="text" id="comentario" name="comentario" placeholder="Tu comentario"><br>
+
+                <input type="submit" value="Enviar">
+            </fieldset>
+        </form>
+    </div>
+
+    <script>
+        // Espera a que el DOM esté completamente cargado
+        window.addEventListener('DOMContentLoaded', () => {
+            const carrito = document.querySelector("#lista-carrito tbody");
+            const vaciarCarritoBtn = document.querySelector("#vaciar-carrito");
+            const agregarBtns = document.querySelectorAll(".agregar-carrito");
+
+            agregarBtns.forEach(btn => {
+                btn.addEventListener("click", e => {
+                    e.preventDefault();
+
+                    const imagen = btn.getAttribute("data-imagen");
+                    const nombre = btn.getAttribute("data-nombre");
+                    const precio = btn.getAttribute("data-precio");
+                    const id = btn.getAttribute("data-id");
+
+                    const existe = carrito.querySelector(`tr[data-id='${id}']`);
+                    if (!existe) {
+                        const fila = document.createElement("tr");
+                        fila.setAttribute("data-id", id);
+                        fila.innerHTML = `
                     <td><img src="${imagen}" width="50"></td>
                     <td>${nombre}</td>
                     <td>S/. ${precio}</td>
                     <td><a href="#" class="borrar-producto">X</a></td>
                 `;
-                            carrito.appendChild(fila);
-                        }
-                    });
-                });
-
-                carrito.addEventListener("click", e => {
-                    if (e.target.classList.contains("borrar-producto")) {
-                        e.preventDefault();
-                        e.target.closest("tr").remove();
+                        carrito.appendChild(fila);
                     }
                 });
-
-                vaciarCarritoBtn.addEventListener("click", e => {
-                    e.preventDefault();
-                    carrito.innerHTML = "";
-                });
             });
-        </script>
 
-        <!-- Modal de Login -->
-        <div id="modalLogin" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
-            <div class="modal-contenedor">
-                <span class="cerrar-modal" onclick="cerrarModalLogin()">&times;</span>
-                <h2>Iniciar Sesión</h2>
-                <input type="text" id="loginUsuario" placeholder="Usuario">
-                <input type="password" id="loginClave" placeholder="Contraseña">
-                <button onclick="iniciarSesion()">Iniciar sesión</button>
-                <p class="alternativa">¿No tienes cuenta? <a href="#" onclick="mostrarModalRegistro()">Regístrate</a></p>
-            </div>
+            carrito.addEventListener("click", e => {
+                if (e.target.classList.contains("borrar-producto")) {
+                    e.preventDefault();
+                    e.target.closest("tr").remove();
+                }
+            });
+
+            vaciarCarritoBtn.addEventListener("click", e => {
+                e.preventDefault();
+                carrito.innerHTML = "";
+            });
+        });
+    </script>
+
+    <!-- Modal de Login -->
+    <div id="modalLogin"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
+        <div class="modal-contenedor">
+            <span class="cerrar-modal" onclick="cerrarModalLogin()">&times;</span>
+            <h2>Iniciar Sesión</h2>
+            <input type="text" id="loginUsuario" placeholder="Usuario">
+            <input type="password" id="loginClave" placeholder="Contraseña">
+            <button onclick="iniciarSesion()">Iniciar sesión</button>
+            <p class="alternativa">¿No tienes cuenta? <a href="#" onclick="mostrarModalRegistro()">Regístrate</a></p>
         </div>
+    </div>
 
-        <!-- Modal de Registro -->
-        <div id="modalRegistro" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
-            <div class="modal-contenedor">
-                <span class="cerrar-modal" onclick="cerrarModalRegistro()">&times;</span>
-                <h2>Registrarse</h2>
-                <input type="text" id="registroUsuario" placeholder="Usuario">
-                <input type="password" id="registroClave" placeholder="Contraseña">
-                <button onclick="registrarUsuario()">Registrarse</button>
-            </div>
+    <!-- Modal de Registro -->
+    <div id="modalRegistro"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
+        <div class="modal-contenedor">
+            <span class="cerrar-modal" onclick="cerrarModalRegistro()">&times;</span>
+            <h2>Registrarse</h2>
+            <input type="text" id="registroUsuario" placeholder="Usuario">
+            <input type="password" id="registroClave" placeholder="Contraseña">
+            <button onclick="registrarUsuario()">Registrarse</button>
         </div>
+    </div>
 
 
 
-        <!-- Modal de información del producto con texto grande -->
-        <div id="modalProducto" style="
+    <!-- Modal de información del producto con texto grande -->
+    <div id="modalProducto" style="
              display: none;
              position: fixed;
              top: 0;
@@ -733,7 +406,7 @@
              align-items: center;
              z-index: 9999;
              ">
-            <div style="
+        <div style="
                  background: white;
                  padding: 24px;
                  border-radius: 16px;
@@ -746,8 +419,8 @@
                  font-family: 'Segoe UI', sans-serif;
                  ">
 
-                <!-- Botón cerrar -->
-                <span onclick="cerrarModalProducto()" style="
+            <!-- Botón cerrar -->
+            <span onclick="cerrarModalProducto()" style="
                       position: absolute;
                       top: 12px;
                       right: 18px;
@@ -756,18 +429,19 @@
                       color: #333;
                       ">&times;</span>
 
-                <!-- LADO IZQUIERDO (imagen, nombre, precio) -->
-                <div style="flex: 1; text-align: center;">
-                    <img id="modalImagen" src="" alt="Producto" style="
+            <!-- LADO IZQUIERDO (imagen, nombre, precio) -->
+            <div style="flex: 1; text-align: center;">
+                <img id="modalImagen" src="" alt="Producto" style="
                          width: 100%;
                          height: 200px;
                          object-fit: cover;
                          border-radius: 10px;
                          margin-bottom: 15px;
                          ">
-                    <h2 id="modalNombre" style="margin: 10px 0; font-size: 22px; color: #222;"></h2>
-                    <p id="modalPrecio" style="font-weight: bold; font-size: 20px; color: #007bff;">Precio: <span style="font-size: 22px;" id="modalPrecioNum"></span></p>
-                    <button id="btnComprarDesdeModal" style="
+                <h2 id="modalNombre" style="margin: 10px 0; font-size: 22px; color: #222;"></h2>
+                <p id="modalPrecio" style="font-weight: bold; font-size: 20px; color: #007bff;">Precio: <span
+                        style="font-size: 22px;" id="modalPrecioNum"></span></p>
+                <button id="btnComprarDesdeModal" style="
                             padding: 10px 20px;
                             background-color: #007bff;
                             color: white;
@@ -778,16 +452,16 @@
                             margin-top: 12px;
                             transition: background-color 0.3s ease;
                             ">
-                        Comprar
-                    </button>
+                    Comprar
+                </button>
 
 
-                </div>
+            </div>
 
-                <!-- LADO DERECHO (características) -->
-                <div style="flex: 1; overflow-y: auto;">
-                    <h3 style="color:#007bff; margin-top: 0; font-size: 18px;">Características</h3>
-                    <ul id="modalCaracteristicas" style="
+            <!-- LADO DERECHO (características) -->
+            <div style="flex: 1; overflow-y: auto;">
+                <h3 style="color:#007bff; margin-top: 0; font-size: 18px;">Características</h3>
+                <ul id="modalCaracteristicas" style="
                         text-align: left;
                         line-height: 2;
                         padding-left: 20px;
@@ -796,14 +470,15 @@
                         overflow-y: auto;
                         margin: 0;
                         ">
-                        <!-- JS insertará elementos aquí -->
-                    </ul>
-                </div>
-
+                    <!-- JS insertará elementos aquí -->
+                </ul>
             </div>
-        </div>
 
-        <hr>
-        <div style="text-align: center;">&reg; Taller de Programación</div>
-    </body>
+        </div>
+    </div>
+
+    <hr>
+    <div style="text-align: center;">&reg; Desarrollo Web Integrado</div>
+</body>
+
 </html>

@@ -1,3 +1,130 @@
+/* === HEADER PRINCIPAL (LOGO + LOGIN + CARRITO) === */
+header.header-principal {
+  display: flex;
+  justify-content: space-between; /* logo a la izquierda, iconos a la derecha */
+  align-items: center; /* centrado vertical */
+  padding: 15px 40px;
+  background-color: transparent; /* o color según fondo */
+  position: relative;
+  z-index: 1000;
+}
+
+/* LOGO */
+.logo-kivora {
+  display: flex;
+  align-items: center;
+}
+
+.logo-kivora img {
+  height: 60px; /* ajusta tamaño del logo */
+  width: auto;
+  object-fit: contain;
+}
+
+/* CONTENEDOR DERECHO (LOGIN + CARRITO) */
+.header-derecha {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* espacio entre login y carrito */
+}
+
+/* ÍCONO LOGIN */
+.boton-login-icono {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.boton-login-icono:hover .icono-login {
+  opacity: 0.7;
+}
+
+.icono-login {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+/* CARRITO */
+#carrito-icono {
+  position: relative;
+}
+
+#carrito-icono img {
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#carrito-icono:hover img {
+  transform: scale(1.1);
+}
+
+/* CONTENIDO DEL CARRITO (DESPLEGABLE) */
+#carrito-contenido {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  display: none;
+  width: 320px;
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+}
+
+#carrito-icono:hover #carrito-contenido {
+  display: block;
+}
+
+#lista-carrito {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+#lista-carrito th,
+#lista-carrito td {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+#lista-carrito img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+#vaciar-carrito {
+  display: block;
+  background-color: #c0392b;
+  color: white;
+  padding: 10px;
+  margin-top: 10px;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+#vaciar-carrito:hover {
+  background-color: #e74c3c;
+}
+
+.eliminar-producto {
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 18px;
+}
 
     
 /* === ESTILOS GENERALES === */
@@ -13,12 +140,29 @@ h2 {
   text-align: center;
   margin-top: 40px;
 }
-
-.menu a {
-  margin-left: 15px;
-  text-decoration: none;
-  color: grey;
+/* === nueo menu === */
+.menu {
+  background-color: #000; /* fondo negro */
+  color: #fff;            /* texto blanco */
+  text-align: center;     /* centra el texto */
+  padding: 60px 20px;
+  font-family: 'Segoe UI', sans-serif;
 }
+
+.seccion-especial h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.seccion-especial p {
+  font-size: 18px;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+
+/* === nuevo menu === */
 
 #Nosotros,
 #Mi-Tienda,
@@ -29,7 +173,7 @@ h2 {
 /* === CALL TO ACTION === */
 .callToAction {
   text-align: center;
-  font-size: 10px;
+  font-size: 20px;
   font-weight: bold;
   margin: 0;
   padding-top: 5px;
@@ -328,7 +472,7 @@ input[type="submit"] {
 .hero {
   position: relative;
   width: 100%;
-  height: 15cm;
+  height: 19cm;
   overflow: hidden;
   display: flex;
 }
@@ -505,7 +649,7 @@ input[type="submit"] {
 /* === BOTONES Y SECCIONES === */
 .agregar-carrito {
   display: inline-block;
-  background-color: #007bff;
+  background-color: #d60000;
   color: white;
   padding: 10px 20px;
   border-radius: 8px;
@@ -517,7 +661,7 @@ input[type="submit"] {
 }
 
 .agregar-carrito:hover {
-  background-color: #0056b3;
+  background-color: #d60000;
 }
 
 /* SECCIÓN MI-TIENDA ESTILO MODERNO */
@@ -738,4 +882,275 @@ input[type="submit"] {
   height: 20px;
   object-fit: contain;
 }
+
+/* Inicio Nuevo*/
+/* Inicio Nuevo*/
+/* Inicio Nuevo*/
+
+
+.categoria-menu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.categoria-menu button {
+  background-color: #666;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.categoria-menu button:hover {
+  background-color: #444;
+}
+
+.categoria {
+    background-color: #d60000; /* Rojo intenso */
+    padding: 20px;
+    border-radius: 10px;
+    color: white; /* Para que el texto contraste bien */
+}
+
+
+
+
+
+          /* inicio-nosotros */
+.seccion-nosotros {
+  display: block;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 1200px;
+  background: none;
+  border: none;         /* ← elimina cualquier borde */
+  box-shadow: none;     /* ← elimina cualquier sombra */
+}
+
+.contenido-nosotros {
+  padding: 0 20px;
+}
+
+.titulo-nosotros {
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #000000;
+  font-weight: bold;
+  text-align: center;
+}
+
+.nosotros-layout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: nowrap;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.nosotros-layout img {
+  width: 900px;
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: none;
+  margin: 0;
+}
+
+.texto-nosotros {
+  flex: 1;
+  min-width: 400px;
+  font-size: 18px;
+  line-height: 1.9;
+  color: #333;
+  text-align: right;     
+  padding-right: 20px;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.marca {
+  color: #333;
+  font-weight: bold;
+}
+          /* fin-nosotros */
+
+
+.footer-kivora {
+  background-color: #6b6666;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #ffffff;
+}
+
+.footer-logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.footer-logo img {
+  width: 160px;
+  height: auto;
+  object-fit: contain;
+}
+
+.footer-contenedor {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 220px;
+}
+
+.footer-col h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #fcfcfc;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.footer-copy {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 14px;
+  color: #ffffff;
+}
+          
+/* LOGO*/
+/* Asegúrate de que no haya márgenes/paddings innecesarios */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal del logo y el menú */
+.header {
+  display: flex;
+  justify-content: space-between; /* Alinea el logo y el menú a los extremos */
+  align-items: center; /* Alinea verticalmente al centro */
+  padding: 15px 30px; /* Reducido el padding para acercar más el contenido */
+}
+
+/* Ajustes para el logo */
+.logo-kivora {
+  display: flex;
+  align-items: center; /* Centra verticalmente el logo */
+  margin-right: 10px; /* Reduce el espacio entre el logo y el menú */
+}
+
+.logo-kivora img {
+  width: 100px;  /* Ajusta el tamaño del logo */
+  height: auto;  /* Mantiene la proporción */
+  object-fit: contain;
+}
+
+/* Estilo para el menú de navegación */
+nav {
+  display: flex;
+  gap: 20px; /* Espacio reducido entre los elementos del menú */
+}
+
+/* Ajustes a los enlaces del menú */
+nav a {
+  text-decoration: none;
+  color: #333; /* Ajusta el color según tu diseño */
+  padding: 10px;
+}
+
+
+
+/* BARRA DE BÚSQUEDA */
+.barra-busqueda {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 4px 10px;
+  height: 34px;
+}
+
+.barra-busqueda input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 120px;
+  background: transparent;
+}
+
+.barra-busqueda button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.barra-busqueda button img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  opacity: 0.8;
+  background: transparent;
+}
+
+.barra-busqueda button:hover img {
+  opacity: 1;
+}
+
+.menu {
+  display: flex;
+  background-color: black;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;     /* Centra verticalmente si hay altura */
+  width: 100%;
+  padding: 20px 0;         /* Espaciado arriba y abajo */
+}
+
+.menu-enlaces {
+  display: flex;
+  gap: 40px;               /* Espacio entre enlaces */
+}
+
+.menu-enlaces a {
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  color: white;
+  text-decoration: none;
+  margin: 0 15px; /* Espaciado entre enlaces */
+}
+
+.menu-enlaces a:hover {
+  color: #c0392b; /* Color al pasar el mouse */
+  text-decoration: underline; /* Efecto al pasar el mouse */
+}
+
+
+
 
