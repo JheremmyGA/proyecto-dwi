@@ -80,21 +80,18 @@
         </div>
     </header>
 
-    <!-- menú -->
-
+    <!-- Menú -->
     <div class="menu">
         <!-- Enlaces de navegación -->
         <div class="menu-enlaces">
-            <a href="#" onclick="mostrarSeccion('inicio')">Inicio</a>
-            <a href="#" onclick="mostrarSeccion('Catálogo')">Catálogo</a>
-            <a href="#" onclick="mostrarSeccion('Temporada')">Temporada</a>
-            <a href="#" onclick="mostrarSeccion('Contacto')">Contacto</a>
+            <a href="#" onclick="redirigir('index.html')">Inicio</a>
+            <a href="#" onclick="redirigir('catalogo.html')">Catálogo</a>
+            <a href="#" onclick="redirigir('temporada.html')">Temporada</a>
+            <a href="#" onclick="redirigir('contacto.html')">Contacto</a>
         </div>
     </div>
  
-
-
-    <!-- menu  -->
+    <!-- Inicio  -->
     <div id="inicio">
         <div class="hero">
             <div class="hero-difusion"></div>
@@ -112,10 +109,10 @@
 
         <!-- Inicio Nuevo -->
         <div class="categoria-menu">
-            <button id="btn-caballeros">Caballeros</button>
-            <button id="btn-damas">Damas</button>
-            <button id="btn-ninos">Niños</button>
-            <button id="btn-ninas">Niñas</button>
+            <button id="btn-caballeros" onclick="redirigir('seccCaballeros.html')">Caballeros</button>
+            <button id="btn-damas" onclick="redirigir('seccDamas.html')">Damas</button>
+            <button id="btn-ninos" onclick="redirigir('seccNinos.html')">Niños</button>
+            <button id="btn-ninas" onclick="redirigir('seccNinas.html')">Niñas</button>
         </div>
 
         <div class="Novedades">
@@ -161,7 +158,6 @@
                 <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-sofas', 1)">❯</button>
             </div>
         </div>
-
 
         <div class="categoria">
             <h2>Tendencias 🔥🔥🔥</h2>
@@ -273,20 +269,13 @@
                 </ul>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
         <div class="footer-copy">
             © El contenido de esta página web está protegido por copyright y es propiedad de Kivora S.A.C 2025
         </div>
     </footer>
 
 
-    <!-- Fin nuevo -->
+    <!-- No se que hace esta parte -->
 
     <div id="Contacto">
         <form action="#" method="post">
@@ -379,8 +368,6 @@
         </div>
     </div>
 
-
-
     <!-- Modal de información del producto con texto grande -->
     <div id="modalProducto" style="
              display: none;
@@ -464,9 +451,6 @@
 
         </div>
     </div>
-
-    <hr>
-    <div style="text-align: center;">&reg; Desarrollo Web Integrado</div>
 </body>
 
 </html>

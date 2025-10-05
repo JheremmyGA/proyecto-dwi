@@ -1,3 +1,7 @@
+function redirigir(nombre) {
+  window.location.href = nombre;
+}
+
 // ============ CONTROL DE SECCIONES ============
 document.addEventListener("DOMContentLoaded", () => {
     // Mostrar solo inicio al cargar
