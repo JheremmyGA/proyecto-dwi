@@ -1,4 +1,4 @@
-/* === ESTILOS GENERALES === */
+/* ============= ESTILOS GENERALES ========== */
 body {
   margin: 0;
   padding: 0;
@@ -11,7 +11,27 @@ h2 {
   text-align: center;
 }
 
-/* === HEADER PRINCIPAL (LOGO + LOGIN + CARRITO) === */
+#Nosotros,
+#Mi-Tienda,
+#Catálogo {
+  display: none;
+}
+/* ============================================== */
+
+/* ============= CALL TO ACTION  =============== */
+.callToAction {
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+  padding-top: 5px;
+  color: #FFFFFF;
+  background-color: #B80000;
+  font-family: 'Segoe UI', sans-serif;
+}
+/* ============================================= */
+
+/* ============= HEADER PRINCIPAL (LOGO + LOGIN) ========== */
 header.header-principal {
   display: flex;
   justify-content: space-between; /* logo a la izquierda, iconos a la derecha */
@@ -34,8 +54,6 @@ header.header-principal {
   object-fit: contain;
 }
 
-
-
 /* ÍCONO LOGIN */
 .boton-login-icono {
   background: none;
@@ -56,8 +74,9 @@ header.header-principal {
   height: 20px;
   object-fit: contain;
 }
+/* ============================================== */
 
-/* CARRITO */
+/* ============= HEADER PRINCIPAL (CARRITO) ========== */
 #carrito-icono {
   position: relative;
 }
@@ -133,29 +152,9 @@ header.header-principal {
   cursor: pointer;
   font-size: 18px;
 }
+/* ======================================================== */
 
-
-/* === nuevo menu === */
-
-#Nosotros,
-#Mi-Tienda,
-#Catálogo {
-  display: none;
-}
-
-/* === CALL TO ACTION === */
-.callToAction {
-  text-align: center;
-  font-size: 12px;
-  font-weight: bold;
-  margin: 0;
-  padding-top: 5px;
-  color: #FFFFFF;
-  background-color: #B80000;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-
+/* ================ MODALES DE HEADER ===================== */
 .modal-contenedor {
   background: white;
   padding: 30px 20px;
@@ -236,9 +235,41 @@ header.header-principal {
 .btn-cerrar-sesion:hover {
   background-color: #c82333;
 }
+/* ======================================================== */
 
-/* CATEGORIAS */
+/* ============= MENÚ DE NAVEGACIÓN ===================== */
+.menu {
+  display: flex;
+  background-color: black;
+  text-align: center;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;     /* Centra verticalmente si hay altura */
+  width: 100%;
+}
 
+.menu-enlaces {
+  display: flex;
+  gap: 40px;               /* Espacio entre enlaces */
+}
+
+.menu-enlaces a {
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  color: white;
+  text-decoration: none;
+  margin: 0 15px; /* Espaciado entre enlaces */
+}
+
+.menu-enlaces a:hover {
+  color: #c0392b; /* Color al pasar el mouse */
+  text-decoration: underline; /* Efecto al pasar el mouse */
+}
+/* ===================================================== */
+
+/* =================== CATEGORIAS====================== */
 .categoria {
     background-color: #B80000; /* Rojo intenso */
     padding: 20px;
@@ -267,9 +298,9 @@ header.header-principal {
 .categoria-menu button:hover {
   background-color: #444;
 }
+/* ===================================================== */
 
-
-/* === PRODUCTOS === */
+/* =================== PRODUCTOS======================= */
 .producto {
   display: flex;
   flex-direction: column;
@@ -288,6 +319,8 @@ header.header-principal {
   gap: 20px;
   flex-wrap: wrap;
 }
+/* ===================================================== */
+
 
 /* === FORMULARIO === */
 form {
@@ -928,37 +961,6 @@ nav a {
   opacity: 1;
 }
 
-/* ============= MENÚ DE NAVEGACIÓN ============= */
-.menu {
-  display: flex;
-  background-color: black;
-  text-align: center;
-  color: #fff;
-  font-family: 'Segoe UI', sans-serif;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center;     /* Centra verticalmente si hay altura */
-  width: 100%;
-}
-
-.menu-enlaces {
-  display: flex;
-  gap: 40px;               /* Espacio entre enlaces */
-}
-
-.menu-enlaces a {
-  font-size: 16px;
-  font-weight: 500;
-  transition: color 0.3s ease;
-  color: white;
-  text-decoration: none;
-  margin: 0 15px; /* Espaciado entre enlaces */
-}
-
-.menu-enlaces a:hover {
-  color: #c0392b; /* Color al pasar el mouse */
-  text-decoration: underline; /* Efecto al pasar el mouse */
-}
-/* ============================================== */
 
 
 
