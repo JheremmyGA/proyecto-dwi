@@ -40,13 +40,13 @@
 
     <header class="header-principal">
         <div class="logo-kivora">
-            <img src="imagenes/logo.png" alt="logo">
+            <img src="imagenes/logoRedimension.png" alt="logo">
         </div>
 
         <div class="header-derecha">
             <!-- Barra de búsqueda -->
             <div class="barra-busqueda">
-                <input type="text" placeholder="Buscar..." />
+                <input id="barra-busqueda" type="text" placeholder="¿Qué estás buscando?" />
                 <button type="submit">
                     <img src="imagenes/busqueda.png" alt="Buscar" />
                 </button>
@@ -81,7 +81,7 @@
     </header>
 
     <!-- menú -->
-    <hr>
+
     <div class="menu">
         <!-- Enlaces de navegación -->
         <div class="menu-enlaces">
@@ -91,22 +91,21 @@
             <a href="#" onclick="mostrarSeccion('Contacto')">Contacto</a>
         </div>
     </div>
-    <hr>
+ 
 
 
     <!-- menu  -->
     <div id="inicio">
         <div class="hero">
+            <div class="hero-difusion"></div>
             <img src="imagenes/mujer.webp" alt="Sección mujer" class="active">
             <img src="imagenes/hombre.webp" alt="Sección hombre">
             <img src="imagenes/niños.webp" alt="Sección niño">
-            <img src="imagenes/calzado.PNG" alt="Sección calzado">
-
-            <div class="hero-content">
-                <h1>Kivora</h1>
-                <div class="hero-button">COMPRAR AHORA</div>
-            </div>
-
+            <img src="imagenes/niñas.webp" alt="Sección niña">
+            <p>
+                <span class="texto-hero">Descubre tu estilo con KIVORA</span>
+                <span class="subtexto-hero">Moda minimalista y atemporal para cada personalidad</span>
+            </p>
             <button class="arrow left">&#10094;</button>
             <button class="arrow right">&#10095;</button>
         </div>
@@ -221,20 +220,15 @@
                         En <span class="marca">KIVORA</span>, creemos que la verdadera esencia de una marca radica en su
                         propósito.
                         Nuestra misión es ofrecer prendas únicas, minimalistas y atemporales, creadas con materiales de
-                        alta calidad
-                        y fabricadas de manera responsable. Nos esforzamos por diseñar ropa que se adapte a las
-                        distintas personalidades,
-                        sin seguir las tendencias efímeras, sino apostando por piezas que puedan perdurar y ser parte
-                        del estilo personal
-                        de cada individuo.
+                        alta calidad y fabricadas de manera responsable. Nos esforzamos por diseñar ropa que se adapte a las
+                        distintas personalidades, sin seguir las tendencias efímeras, sino apostando por piezas que puedan perdurar y ser parte
+                        del estilo personal de cada individuo.
                     </p>
                     <p>
                         Nos apasiona el diseño minimalista, y es en él donde encontramos la sofisticación en lo simple.
-                        Cada prenda de KIVORA está pensada para ser versátil, cómoda y elegante, ajustándose a
-                        diferentes
+                        Cada prenda de <span class="marca">KIVORA</span> está pensada para ser versátil y elegante, ajustándose a diferentes
                         estilos de vida. Queremos que cada pieza sea una inversión en calidad, funcionalidad y estilo,
-                        pensada
-                        para acompañar a nuestras clientas y clientes durante toda la vida.
+                        pensada para acompañar a nuestros clientes durante toda la vida.
                     </p>
 
                 </div>
@@ -286,10 +280,6 @@
         <br>
         <br>
         <br>
-        <br>
-        <br>
-        <br>
-        <br>
         <div class="footer-copy">
             © El contenido de esta página web está protegido por copyright y es propiedad de Kivora S.A.C 2025
         </div>
@@ -297,8 +287,6 @@
 
 
     <!-- Fin nuevo -->
-
-    
 
     <div id="Contacto">
         <form action="#" method="post">
@@ -322,7 +310,7 @@
     </div>
 
     <script>
-        // Espera a que el DOM esté completamente cargado
+        // bra a que el DOM esté completamente cargado
         window.addEventListener('DOMContentLoaded', () => {
             const carrito = document.querySelector("#lista-carrito tbody");
             const vaciarCarritoBtn = document.querySelector("#vaciar-carrito");
