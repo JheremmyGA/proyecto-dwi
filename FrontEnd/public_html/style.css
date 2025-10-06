@@ -11,10 +11,11 @@ h2 {
   text-align: center;
 }
 
+/* Oculta secciones que se manejan por JS/redirección */
 #Nosotros,
 #Mi-Tienda,
 #Catálogo,
-#Contacto { /* Se añadió #Contacto */
+#Contacto {
   display: none;
 }
 
@@ -36,8 +37,8 @@ h2 {
 /* ============= HEADER PRINCIPAL (LOGO + LOGIN + BUSQUEDA) ========== */
 header.header-principal {
   display: flex;
-  justify-content: space-between; /* logo a la izquierda, iconos a la derecha */
-  align-items: center; /* centrado vertical */
+  justify-content: space-between;
+  align-items: center;
   padding: 15px 60px;
   background-color: transparent;
   position: relative;
@@ -51,7 +52,7 @@ header.header-principal {
 }
 
 .logo-kivora img {
-  height: 50px; /* ajusta tamaño del logo */
+  height: 50px;
   width: auto;
   object-fit: contain;
 }
@@ -100,8 +101,8 @@ header.header-principal {
 .header-derecha {
   display: flex;
   align-items: center;
-  gap: 18px; /* Espaciado uniforme entre íconos */
-  position: relative; /* Asegura que el carrito se posicione respecto a esto */
+  gap: 18px;
+  position: relative;
 }
 
 /* Estilo general para todos los íconos del header */
@@ -120,7 +121,6 @@ header.header-principal {
 }
 
 /* Íconos funcionales */
-.btn-login,
 .boton-login-icono,
 .btn-logout {
   background: none;
@@ -133,6 +133,7 @@ header.header-principal {
   justify-content: center;
 }
 
+
 .icono-login,
 .icono-logout,
 #carrito-icono img {
@@ -142,7 +143,7 @@ header.header-principal {
   display: block;
 }
 
-/* CONTENIDO DEL CARRITO (DESPLEGABLE) - Única Definición */
+/* CONTENIDO DEL CARRITO (DESPLEGABLE) */
 #carrito-icono {
   position: relative;
 }
@@ -151,7 +152,7 @@ header.header-principal {
   position: absolute;
   top: 45px;
   right: 0;
-  display: none;
+  display: none; /* Controlado por JS */
   width: 320px;
   background-color: white;
   border: 2px solid #ccc;
@@ -160,10 +161,7 @@ header.header-principal {
   padding: 15px;
 }
 
-/* Nota: El hover para mostrarlo debe manejarse en JS, no con CSS puro */
-/* #carrito-icono:hover #carrito-contenido { display: block; } */
-
-
+/* Estilos de la tabla del carrito */
 #lista-carrito {
   width: 100%;
   border-collapse: collapse;
@@ -208,7 +206,23 @@ header.header-principal {
 }
 /* ======================================================== */
 
-/* ================ MODALES DE HEADER ===================== */
+/* ================ MODALES DE HEADER (LOGIN/REGISTRO/PRODUCTO) ===================== */
+
+/* Contenedor del overlay (ahora con clase .modal-wrapper) */
+.modal-wrapper {
+  display: none; /* Controlado por JS */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Contenedor interno del modal (Login/Registro) */
 .modal-contenedor {
   background: white;
   padding: 30px 20px;
@@ -273,11 +287,78 @@ header.header-principal {
   text-align: center;
 }
 
+/* Estilos específicos para el Modal de Producto (Reemplaza estilos en línea) */
+.modal-producto-detalle {
+    width: 600px;
+    height: 420px;
+    padding: 24px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.modal-producto-left {
+    flex: 1;
+    text-align: center;
+}
+
+.modal-producto-left img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.modal-producto-left h2 {
+    margin: 10px 0;
+    font-size: 22px;
+    color: #222;
+}
+
+.modal-producto-left p {
+    font-weight: bold;
+    font-size: 20px;
+    color: #007bff;
+}
+
+#modalPrecioNum {
+    font-size: 22px;
+}
+
+#btnComprarDesdeModal {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 12px;
+}
+
+.modal-producto-right {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.modal-producto-right h3 {
+    color: #007bff;
+    margin-top: 0;
+    font-size: 18px;
+}
+
+#modalCaracteristicas {
+    text-align: left;
+    line-height: 2;
+    padding-left: 20px;
+    font-size: 16px;
+    max-height: 320px;
+    overflow-y: auto;
+    margin: 0;
+}
+
 /* boton cerrar sesion */
 .btn-cerrar-sesion {
   margin-left: 10px;
   padding: 6px 12px;
-  background-color: #dc3545; /* rojo elegante */
+  background-color: #dc3545;
   color: white;
   border: none;
   border-radius: 6px;
@@ -298,14 +379,14 @@ header.header-principal {
   text-align: center;
   color: #fff;
   font-family: 'Segoe UI', sans-serif;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center;     /* Centra verticalmente si hay altura */
+  justify-content: center;
+  align-items: center;
   width: 100%;
 }
 
 .menu-enlaces {
   display: flex;
-  gap: 40px;               /* Espacio entre enlaces */
+  gap: 40px;
 }
 
 .menu-enlaces a {
@@ -314,21 +395,21 @@ header.header-principal {
   transition: color 0.3s ease;
   color: white;
   text-decoration: none;
-  margin: 0 15px; /* Espaciado entre enlaces */
+  margin: 0 15px;
 }
 
 .menu-enlaces a:hover {
-  color: #c0392b; /* Color al pasar el mouse */
-  text-decoration: underline; /* Efecto al pasar el mouse */
+  color: #c0392b;
+  text-decoration: underline;
 }
 /* ===================================================== */
 
 /* =================== CATEGORIAS====================== */
 .categoria {
-    background-color: #B80000; /* Rojo intenso */
+    background-color: #B80000;
     padding: 20px;
     margin: 40px 0;
-    color: white; /* Para que el texto contraste bien */
+    color: white;
 }
 
 .categoria-menu {
@@ -582,7 +663,7 @@ input[type="submit"] {
 }
 
 .agregar-carrito:hover {
-  background-color: #c0392b; /* Oscurecer un poco el rojo */
+  background-color: #c0392b;
 }
 
 /* SECCIÓN MI-TIENDA ESTILO MODERNO */
@@ -731,7 +812,7 @@ input[type="submit"] {
   }
 }
 
-/* Animación para modal de producto, usando la misma base */
+/* Animación para modal de producto */
 #modalProducto {
   animation: fadeIn 0.3s ease-in-out;
 }

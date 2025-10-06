@@ -6,9 +6,7 @@
     <title>Kivora store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
-    <!-- Enlace al archivo CSS externo -->
     <link rel="stylesheet" href="style.css">
-    <!-- Enlace al archivo JavaScript externo -->
     <script src="javascript.js" defer></script>
     <script src="app.js" defer></script>
 </head>
@@ -17,7 +15,6 @@
 <body>
     <div class="callToAction">NOVEDADES DE TEMPORADA !!! 🔥🔥🔥</div>
 
-    <!-- Chatbox  -->
     <script>
         window.addEventListener('mouseover', initLandbot, { once: true });
         window.addEventListener('touchstart', initLandbot, { once: true });
@@ -45,7 +42,6 @@
         </div>
 
         <div class="header-derecha">
-            <!-- Barra de búsqueda -->
             <div class="barra-busqueda">
                 <input id="barra-busqueda" type="text" placeholder="¿Qué estás buscando?" />
                 <button type="submit">
@@ -53,7 +49,6 @@
                 </button>
             </div>
 
-            <!-- Ícono del carrito -->
             <div id="carrito-icono">
                 <img src="imagenes/carrito2.png" alt="Carrito" />
                 <div id="carrito-contenido">
@@ -72,35 +67,27 @@
                 </div>
             </div>
 
-            <!-- Botón de inicio de sesión -->
             <div class="btn-login">
-                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión "
-                    style="background:none; border:none; padding:0; cursor:pointer;">
+                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión">
                     <img src="imagenes/login.png" alt="login" class="icono-login">
                 </div>
             </div>
 
-            <!-- Botón de Cerrar Sesión -->
             <div class="btn-logout" onclick="cerrarSesion()" title="Cerrar sesión">
                 <img src="imagenes/salir.png" alt="Cerrar sesión" class="icono-logout">
             </div>
-
-
         </div>
     </header>
 
-    <!-- Menú -->
-    <div class="menu">
-        <!-- Enlaces de navegación -->
+    <nav class="menu">
         <div class="menu-enlaces">
-            <a href="#" onclick="redirigir('index.html')">Inicio</a>
-            <a href="#" onclick="redirigir('catalogo.html')">Catálogo</a>
-            <a href="#" onclick="redirigir('temporada.html')">Temporada</a>
-            <a href="#" onclick="redirigir('contacto.html')">Contacto</a>
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="temporada.html">Temporada</a>
+            <a href="contacto.html">Contacto</a>
         </div>
-    </div>
+    </nav>
 
-    <!-- Inicio  -->
     <div id="inicio">
         <div class="hero">
             <div class="hero-difusion"></div>
@@ -116,7 +103,6 @@
             <button class="arrow right">&#10095;</button>
         </div>
 
-        <!-- Inicio Nuevo -->
         <div class="categoria-menu">
             <button id="btn-caballeros" onclick="redirigir('seccCaballeros.html')">Caballeros</button>
             <button id="btn-damas" onclick="redirigir('seccDamas.html')">Damas</button>
@@ -126,91 +112,92 @@
 
         <div class="Novedades">
             <h2>Novedades 😱</h2>
-            <div class="carrusel-contenedor">
-                <div class="carrusel-horizontal" id="carrusel-sofas">
+            <div class="carrusel-contenedor" data-carrusel-id="novedades-carrusel">
+                <div class="carrusel-horizontal" id="novedades-carrusel">
                     <div class="item producto">
                         <img src="imagenes/hombre/Pantalon/Pantalón Hombre University Club.webp"
                             alt="Pantalón Hombre University Club">
                         <p>Pantalón Hombre University Club</p>
                         <a href="#" class="agregar-carrito" data-id="201" data-nombre="Pantalón Hombre University Club"
-                            data-precio="S/ 99.90"
+                            data-precio="99.90"
                             data-imagen="imagenes/hombre/Pantalon/Pantalón Hombre University Club.webp">
                             Comprar
                         </a>
                     </div>
                     <div class="item producto">
-                        <img src="imagenes/mujer/Poleras/Casaca Trench Mujer Sybilla.png" alt="Seccional Houdini">
+                        <img src="imagenes/mujer/Poleras/Casaca Trench Mujer Sybilla.png"
+                            alt="Casaca Trench Mujer Sybilla">
                         <p>Casaca Trench Mujer Sybilla</p>
-                        <a href="#" class="agregar-carrito" data-id="202" data-nombre="Seccional Houdini"
+                        <a href="#" class="agregar-carrito" data-id="202" data-nombre="Casaca Trench Mujer Sybilla"
                             data-precio="1299.00" data-imagen="imagenes/mujer/Poleras/Casaca Trench Mujer Sybilla.png">
                             Comprar
                         </a>
                     </div>
                     <div class="item producto">
-                        <img src="imagenes/niña/Poleras/Polera Niña Eleven2.png" alt="Sofá Taylor">
+                        <img src="imagenes/niña/Poleras/Polera Niña Eleven2.png" alt="Polera Niña Eleven2">
                         <p>Polera Niña Eleven2</p>
-                        <a href="#" class="agregar-carrito" data-id="203" data-nombre="Sofá Taylor 3 Cuerpos"
+                        <a href="#" class="agregar-carrito" data-id="203" data-nombre="Polera Niña Eleven2"
                             data-precio="99.00" data-imagen="imagenes/niña/Poleras/Polera Niña Eleven2.png">
                             Comprar
                         </a>
                     </div>
                     <div class="item producto">
-                        <img src="imagenes/niño/Poleras/Casaca Niño Coniglio.png" alt="Sofá Florencia">
+                        <img src="imagenes/niño/Poleras/Casaca Niño Coniglio.png" alt="Casaca Niño Coniglio">
                         <p>Casaca Niño Coniglio</p>
-                        <a href="#" class="agregar-carrito" data-id="204" data-nombre="Sofá Cama Florencia"
+                        <a href="#" class="agregar-carrito" data-id="204" data-nombre="Casaca Niño Coniglio"
                             data-precio="84.00" data-imagen="imagenes/niño/Poleras/Casaca Niño Coniglio.png">
                             Comprar
                         </a>
                     </div>
                 </div>
-                <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-sofas', -1)">❮</button>
-                <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-sofas', 1)">❯</button>
+                <button class="scroll-btn left" onclick="scrollCarrusel('novedades-carrusel', -1)">❮</button>
+                <button class="scroll-btn right" onclick="scrollCarrusel('novedades-carrusel', 1)">❯</button>
             </div>
         </div>
 
         <div class="categoria">
             <h2>Tendencias 🔥🔥🔥</h2>
-            <div class="carrusel-contenedor">
-                <div class="carrusel-horizontal" id="carrusel-sofas">
+            <div class="carrusel-contenedor" data-carrusel-id="tendencias-carrusel">
+                <div class="carrusel-horizontal" id="tendencias-carrusel">
                     <div class="item producto">
                         <img src="imagenes/hombre/Polo/Polo Petit Piqué Hombre Lacoste.png"
-                            alt="Pantalón Hombre University Club">
-                        <p>Pantalón Hombre University Club</p>
-                        <a href="#" class="agregar-carrito" data-id="201" data-nombre="Pantalón Hombre University Club"
-                            data-precio="S/ 99.90"
+                            alt="Polo Petit Piqué Hombre Lacoste">
+                        <p>Polo Petit Piqué Hombre Lacoste</p>
+                        <a href="#" class="agregar-carrito" data-id="301"
+                            data-nombre="Polo Petit Piqué Hombre Lacoste" data-precio="99.90"
                             data-imagen="imagenes/hombre/Polo/Polo Petit Piqué Hombre Lacoste.png">
                             Comprar
                         </a>
                     </div>
                     <div class="item producto">
                         <img src="imagenes/mujer/Polo/Polo Manga Corta Mujer University Club.png"
-                            alt="Seccional Houdini">
-                        <p>Seccional Houdini 4 Cuerpos con USB</p>
-                        <a href="#" class="agregar-carrito" data-id="202" data-nombre="Seccional Houdini"
-                            data-precio="199.00"
+                            alt="Polo Manga Corta Mujer University Club">
+                        <p>Polo Manga Corta Mujer University Club</p>
+                        <a href="#" class="agregar-carrito" data-id="302"
+                            data-nombre="Polo Manga Corta Mujer University Club" data-precio="199.00"
                             data-imagen="imagenes/mujer/Polo/Polo Manga Corta Mujer University Club.png">
                             Comprar
                         </a>
                     </div>
                     <div class="item producto">
-                        <img src="imagenes/niña/Polo/Polo Niña Eleven.png" alt="Sofá Taylor">
-                        <p>Sofá Taylor 3 Cuerpos Tela</p>
-                        <a href="#" class="agregar-carrito" data-id="203" data-nombre="Sofá Taylor 3 Cuerpos"
+                        <img src="imagenes/niña/Polo/Polo Niña Eleven.png" alt="Polo Niña Eleven">
+                        <p>Polo Niña Eleven</p>
+                        <a href="#" class="agregar-carrito" data-id="303" data-nombre="Polo Niña Eleven"
                             data-precio="99.00" data-imagen="imagenes/niña/Polo/Polo Niña Eleven.png">
                             Comprar
                         </a>
                     </div>
                     <div class="item producto">
-                        <img src="imagenes/niño/Polo/Polo Niño Coniglio.png" alt="Sofá Florencia">
-                        <p>Sofá Cama Florencia Azul Verdoso</p>
-                        <a href="#" class="agregar-carrito" data-id="204" data-nombre="Sofá Cama Florencia"
+                        <img src="imagenes/niño/Polo/Polo Niño Coniglio.png" alt="Polo Niño Coniglio">
+                        <p>Polo Niño Coniglio</p>
+                        <a href="#" class="agregar-carrito" data-id="304" data-nombre="Polo Niño Coniglio"
                             data-precio="84.00" data-imagen="imagenes/niño/Polo/Polo Niño Coniglio.png">
                             Comprar
                         </a>
                     </div>
                 </div>
-                <button class="scroll-btn left" onclick="scrollCarrusel('carrusel-sofas', -1)">❮</button>
-                <button class="scroll-btn right" onclick="scrollCarrusel('carrusel-sofas', 1)">❯</button>
+                <button class="scroll-btn left" onclick="scrollCarrusel('tendencias-carrusel', -1)">❮</button>
+                <button class="scroll-btn right" onclick="scrollCarrusel('tendencias-carrusel', 1)">❯</button>
             </div>
         </div>
     </div>
@@ -238,7 +225,6 @@
                         estilos de vida. Queremos que cada pieza sea una inversión en calidad, funcionalidad y estilo,
                         pensada para acompañar a nuestros clientes durante toda la vida.
                     </p>
-
                 </div>
             </div>
         </div>
@@ -287,77 +273,7 @@
     </footer>
 
 
-    <!-- No se que hace esta parte -->
-
-    <div id="Contacto">
-        <form action="#" method="post">
-            <fieldset>
-                <legend>INICIAR SESIÓN</legend>
-                <label for="nombre">Nombre:</label><br>
-                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre"><br>
-
-                <label for="correo">Correo Electrónico:</label><br>
-                <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com"><br>
-
-                <label for="telefono">Número:</label><br>
-                <input type="text" id="telefono" name="telefono" placeholder="987654321"><br>
-
-                <label for="comentario">Comentario:</label><br>
-                <input type="text" id="comentario" name="comentario" placeholder="Tu comentario"><br>
-
-                <input type="submit" value="Enviar">
-            </fieldset>
-        </form>
-    </div>
-
-    <script>
-        // bra a que el DOM esté completamente cargado
-        window.addEventListener('DOMContentLoaded', () => {
-            const carrito = document.querySelector("#lista-carrito tbody");
-            const vaciarCarritoBtn = document.querySelector("#vaciar-carrito");
-            const agregarBtns = document.querySelectorAll(".agregar-carrito");
-
-            agregarBtns.forEach(btn => {
-                btn.addEventListener("click", e => {
-                    e.preventDefault();
-
-                    const imagen = btn.getAttribute("data-imagen");
-                    const nombre = btn.getAttribute("data-nombre");
-                    const precio = btn.getAttribute("data-precio");
-                    const id = btn.getAttribute("data-id");
-
-                    const existe = carrito.querySelector(`tr[data-id='${id}']`);
-                    if (!existe) {
-                        const fila = document.createElement("tr");
-                        fila.setAttribute("data-id", id);
-                        fila.innerHTML = `
-                    <td><img src="${imagen}" width="50"></td>
-                    <td>${nombre}</td>
-                    <td>S/. ${precio}</td>
-                    <td><a href="#" class="borrar-producto">X</a></td>
-                `;
-                        carrito.appendChild(fila);
-                    }
-                });
-            });
-
-            carrito.addEventListener("click", e => {
-                if (e.target.classList.contains("borrar-producto")) {
-                    e.preventDefault();
-                    e.target.closest("tr").remove();
-                }
-            });
-
-            vaciarCarritoBtn.addEventListener("click", e => {
-                e.preventDefault();
-                carrito.innerHTML = "";
-            });
-        });
-    </script>
-
-    <!-- Modal de Login -->
-    <div id="modalLogin"
-        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
+    <div id="modalLogin" class="modal-wrapper">
         <div class="modal-contenedor">
             <span class="cerrar-modal" onclick="cerrarModalLogin()">&times;</span>
             <h2>Iniciar Sesión</h2>
@@ -368,9 +284,7 @@
         </div>
     </div>
 
-    <!-- Modal de Registro -->
-    <div id="modalRegistro"
-        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
+    <div id="modalRegistro" class="modal-wrapper">
         <div class="modal-contenedor">
             <span class="cerrar-modal" onclick="cerrarModalRegistro()">&times;</span>
             <h2>Registrarse</h2>
@@ -380,87 +294,24 @@
         </div>
     </div>
 
-    <!-- Modal de información del producto con texto grande -->
-    <div id="modalProducto" style="
-             display: none;
-             position: fixed;
-             top: 0;
-             left: 0;
-             width: 100%;
-             height: 100%;
-             background: rgba(0,0,0,0.6);
-             justify-content: center;
-             align-items: center;
-             z-index: 9999;
-             ">
-        <div style="
-                 background: white;
-                 padding: 24px;
-                 border-radius: 16px;
-                 width: 600px;
-                 height: 420px;
-                 display: flex;
-                 gap: 20px;
-                 position: relative;
-                 overflow: hidden;
-                 font-family: 'Segoe UI', sans-serif;
-                 ">
+    <div id="modalProducto" class="modal-wrapper">
+        <div class="modal-contenedor modal-producto-detalle">
+            <span onclick="cerrarModalProducto()" class="cerrar-modal">&times;</span>
 
-            <!-- Botón cerrar -->
-            <span onclick="cerrarModalProducto()" style="
-                      position: absolute;
-                      top: 12px;
-                      right: 18px;
-                      cursor: pointer;
-                      font-size: 26px;
-                      color: #333;
-                      ">&times;</span>
-
-            <!-- LADO IZQUIERDO (imagen, nombre, precio) -->
-            <div style="flex: 1; text-align: center;">
-                <img id="modalImagen" src="" alt="Producto" style="
-                         width: 100%;
-                         height: 200px;
-                         object-fit: cover;
-                         border-radius: 10px;
-                         margin-bottom: 15px;
-                         ">
-                <h2 id="modalNombre" style="margin: 10px 0; font-size: 22px; color: #222;"></h2>
-                <p id="modalPrecio" style="font-weight: bold; font-size: 20px; color: #007bff;">Precio: <span
-                        style="font-size: 22px;" id="modalPrecioNum"></span></p>
-                <button id="btnComprarDesdeModal" style="
-                            padding: 10px 20px;
-                            background-color: #007bff;
-                            color: white;
-                            font-size: 16px;
-                            border: none;
-                            border-radius: 6px;
-                            cursor: pointer;
-                            margin-top: 12px;
-                            transition: background-color 0.3s ease;
-                            ">
+            <div class="modal-producto-left">
+                <img id="modalImagen" src="" alt="Producto">
+                <h2 id="modalNombre"></h2>
+                <p id="modalPrecio">Precio: <span id="modalPrecioNum"></span></p>
+                <button id="btnComprarDesdeModal">
                     Comprar
                 </button>
-
-
             </div>
 
-            <!-- LADO DERECHO (características) -->
-            <div style="flex: 1; overflow-y: auto;">
-                <h3 style="color:#007bff; margin-top: 0; font-size: 18px;">Características</h3>
-                <ul id="modalCaracteristicas" style="
-                        text-align: left;
-                        line-height: 2;
-                        padding-left: 20px;
-                        font-size: 16px;
-                        max-height: 320px;
-                        overflow-y: auto;
-                        margin: 0;
-                        ">
-                    <!-- JS insertará elementos aquí -->
-                </ul>
+            <div class="modal-producto-right">
+                <h3>Características</h3>
+                <ul id="modalCaracteristicas">
+                    </ul>
             </div>
-
         </div>
     </div>
 </body>
