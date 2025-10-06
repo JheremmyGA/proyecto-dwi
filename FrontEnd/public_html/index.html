@@ -13,6 +13,7 @@
     <script src="app.js" defer></script>
 </head>
 
+
 <body>
     <div class="callToAction">NOVEDADES DE TEMPORADA !!! 🔥🔥🔥</div>
 
@@ -51,17 +52,10 @@
                     <img src="imagenes/busqueda.png" alt="Buscar" />
                 </button>
             </div>
-            <!-- Botón de inicio de sesión -->
-            <div class="btn-login">
-                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión"
-                    style="background:none; border:none; padding:0; cursor:pointer;">
-                    <img src="imagenes/login.png" alt="login" class="icono-login">
-                </div>
-            </div>
 
             <!-- Ícono del carrito -->
             <div id="carrito-icono">
-                <img src="imagenes/carrito.png" alt="Carrito" />
+                <img src="imagenes/carrito2.png" alt="Carrito" />
                 <div id="carrito-contenido">
                     <table id="lista-carrito">
                         <thead>
@@ -77,6 +71,21 @@
                     <a href="#" id="vaciar-carrito">Vaciar Carrito</a>
                 </div>
             </div>
+
+            <!-- Botón de inicio de sesión -->
+            <div class="btn-login">
+                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión "
+                    style="background:none; border:none; padding:0; cursor:pointer;">
+                    <img src="imagenes/login.png" alt="login" class="icono-login">
+                </div>
+            </div>
+
+            <!-- Botón de Cerrar Sesión -->
+            <div class="btn-logout" onclick="cerrarSesion()" title="Cerrar sesión">
+                <img src="imagenes/salir.png" alt="Cerrar sesión" class="icono-logout">
+            </div>
+
+
         </div>
     </header>
 
@@ -90,7 +99,7 @@
             <a href="#" onclick="redirigir('contacto.html')">Contacto</a>
         </div>
     </div>
- 
+
     <!-- Inicio  -->
     <div id="inicio">
         <div class="hero">
@@ -216,13 +225,16 @@
                         En <span class="marca">KIVORA</span>, creemos que la verdadera esencia de una marca radica en su
                         propósito.
                         Nuestra misión es ofrecer prendas únicas, minimalistas y atemporales, creadas con materiales de
-                        alta calidad y fabricadas de manera responsable. Nos esforzamos por diseñar ropa que se adapte a las
-                        distintas personalidades, sin seguir las tendencias efímeras, sino apostando por piezas que puedan perdurar y ser parte
+                        alta calidad y fabricadas de manera responsable. Nos esforzamos por diseñar ropa que se adapte a
+                        las
+                        distintas personalidades, sin seguir las tendencias efímeras, sino apostando por piezas que
+                        puedan perdurar y ser parte
                         del estilo personal de cada individuo.
                     </p>
                     <p>
                         Nos apasiona el diseño minimalista, y es en él donde encontramos la sofisticación en lo simple.
-                        Cada prenda de <span class="marca">KIVORA</span> está pensada para ser versátil y elegante, ajustándose a diferentes
+                        Cada prenda de <span class="marca">KIVORA</span> está pensada para ser versátil y elegante,
+                        ajustándose a diferentes
                         estilos de vida. Queremos que cada pieza sea una inversión en calidad, funcionalidad y estilo,
                         pensada para acompañar a nuestros clientes durante toda la vida.
                     </p>
@@ -351,7 +363,7 @@
             <h2>Iniciar Sesión</h2>
             <input type="text" id="loginUsuario" placeholder="Usuario">
             <input type="password" id="loginClave" placeholder="Contraseña">
-            <button onclick="iniciarSesion()">Iniciar sesión</button>
+            <button onclick="iniciarSesion()">Iniciar sesión </button>
             <p class="alternativa">¿No tienes cuenta? <a href="#" onclick="mostrarModalRegistro()">Regístrate</a></p>
         </div>
     </div>

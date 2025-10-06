@@ -13,9 +13,11 @@ h2 {
 
 #Nosotros,
 #Mi-Tienda,
-#Catálogo {
+#Catálogo,
+#Contacto { /* Se añadió #Contacto */
   display: none;
 }
+
 /* ============================================== */
 
 /* ============= CALL TO ACTION  =============== */
@@ -31,13 +33,13 @@ h2 {
 }
 /* ============================================= */
 
-/* ============= HEADER PRINCIPAL (LOGO + LOGIN) ========== */
+/* ============= HEADER PRINCIPAL (LOGO + LOGIN + BUSQUEDA) ========== */
 header.header-principal {
   display: flex;
   justify-content: space-between; /* logo a la izquierda, iconos a la derecha */
   align-items: center; /* centrado vertical */
   padding: 15px 60px;
-  background-color: transparent; /* o color según fondo */
+  background-color: transparent;
   position: relative;
   z-index: 1000;
 }
@@ -54,45 +56,97 @@ header.header-principal {
   object-fit: contain;
 }
 
-/* ÍCONO LOGIN */
-.boton-login-icono {
+/* BARRA DE BÚSQUEDA */
+.barra-busqueda {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 4px 10px;
+  height: 34px;
+}
+
+.barra-busqueda input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+}
+
+.barra-busqueda button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.barra-busqueda button img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  opacity: 0.8;
+  background: transparent;
+}
+
+.barra-busqueda button:hover img {
+  opacity: 1;
+}
+
+/* ============ HEADER (ICONOS DE LOGIN, CARRITO Y LOGOUT) ============ */
+.header-derecha {
+  display: flex;
+  align-items: center;
+  gap: 18px; /* Espaciado uniforme entre íconos */
+  position: relative; /* Asegura que el carrito se posicione respecto a esto */
+}
+
+/* Estilo general para todos los íconos del header */
+.header-derecha img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+/* Efecto hover */
+.header-derecha img:hover {
+  opacity: 0.75;
+  transform: scale(1.05);
+}
+
+/* Íconos funcionales */
+.btn-login,
+.boton-login-icono,
+.btn-logout {
   background: none;
   border: none;
   padding: 0;
+  margin: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: opacity 0.3s ease;
+  justify-content: center;
 }
 
-.boton-login-icono:hover .icono-login {
-  opacity: 0.7;
-}
-
-.icono-login {
-  width: 20px;
-  height: 20px;
+.icono-login,
+.icono-logout,
+#carrito-icono img {
+  width: 28px;
+  height: 28px;
   object-fit: contain;
+  display: block;
 }
-/* ============================================== */
 
-/* ============= HEADER PRINCIPAL (CARRITO) ========== */
+/* CONTENIDO DEL CARRITO (DESPLEGABLE) - Única Definición */
 #carrito-icono {
   position: relative;
 }
 
-#carrito-icono img {
-  width: 34px;
-  height: 34px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-#carrito-icono:hover img {
-  transform: scale(1.1);
-}
-
-/* CONTENIDO DEL CARRITO (DESPLEGABLE) */
 #carrito-contenido {
   position: absolute;
   top: 45px;
@@ -106,9 +160,9 @@ header.header-principal {
   padding: 15px;
 }
 
-#carrito-icono:hover #carrito-contenido {
-  display: block;
-}
+/* Nota: El hover para mostrarlo debe manejarse en JS, no con CSS puro */
+/* #carrito-icono:hover #carrito-contenido { display: block; } */
+
 
 #lista-carrito {
   width: 100%;
@@ -321,7 +375,6 @@ header.header-principal {
 }
 /* ===================================================== */
 
-
 /* === FORMULARIO === */
 form {
   text-align: center;
@@ -332,11 +385,9 @@ form {
   margin: 40px auto;
 }
 
-
 input[type="text"],
 input[type="email"] {
   width: 80%;
-
 }
 
 input[type="submit"] {
@@ -347,105 +398,7 @@ input[type="submit"] {
   border-radius: 5px;
   cursor: pointer;
 }
-
-/* === HEADER (CARRITO + LOGIN) === */
-.header-derecha {
-  top: 20px;
-  right: 30px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  z-index: 1000;
-}
-
-#carrito-icono {
-  position: relative;
-  margin: 0;
-}
-
-#carrito-icono img {
-  width: 40px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-#carrito-icono:hover img {
-  transform: scale(1.1);
-}
-
-#carrito-contenido {
-  position: absolute;
-  top: 45px;
-  right: 0;
-  display: none;
-  width: 320px;
-  background-color: white;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  padding: 15px;
-}
-
-#carrito-icono:hover #carrito-contenido {
-  display: block;
-}
-#lista-carrito {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-#lista-carrito th,
-#lista-carrito td {
-  padding: 8px;
-  border-bottom: 1px solid #eee;
-  text-align: center;
-}
-
-#lista-carrito img {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-}
-
-#vaciar-carrito {
-  display: block;
-  background-color: #c0392b;
-  color: white;
-  padding: 10px;
-  margin-top: 10px;
-  text-align: center;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background 0.3s ease;
-}
-
-#vaciar-carrito:hover {
-  background-color: #e74c3c;
-}
-
-.eliminar-producto {
-  color: red;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 18px;
-}
-/* === Estilo bot === 
-.btn-login {
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.btn-login:hover {
-  background-color: #0056b3;
-} */
+/* ===================================================== */
 
 /* === HERO/CARRUSEL === */
 .hero {
@@ -527,10 +480,9 @@ input[type="submit"] {
 .arrow.right {
   right: 10px;
 }
+/* ===================================================== */
 
 /* === CARRUSEL DE CATEGORÍAS === */
-
-
 .carrusel-contenedor {
   position: relative;
   max-width: 100%;
@@ -613,8 +565,7 @@ input[type="submit"] {
 .scroll-btn.right {
   right: 10px;
 }
-
-
+/* ===================================================== */
 
 /* === BOTONES Y SECCIONES === */
 .agregar-carrito {
@@ -631,7 +582,7 @@ input[type="submit"] {
 }
 
 .agregar-carrito:hover {
-  background-color: #d60000;
+  background-color: #c0392b; /* Oscurecer un poco el rojo */
 }
 
 /* SECCIÓN MI-TIENDA ESTILO MODERNO */
@@ -727,7 +678,7 @@ input[type="submit"] {
 }
 
 .nosotros-layout img {
-  max-width: 50vw;    /* No pasa del 50% de la pantalla */
+  max-width: 50vw;
   width: 50%;
   border-radius: 12px;
   margin: 0;
@@ -736,11 +687,11 @@ input[type="submit"] {
 
 .texto-nosotros {
   flex: 1;
-  max-width: 50vw;    /* No pasa del 50% de la pantalla */
+  max-width: 50vw;
   font-size: 17px;
   line-height: 1.9;
   color: #333;
-  text-align: justify; /* Justifica el texto */
+  text-align: justify;
   background: none;
   border: none;
   box-shadow: none;
@@ -768,9 +719,7 @@ input[type="submit"] {
   font-weight: bold;
 }
 
-
-
-/* ANIMACIÓN PARA MI-TIENDA */
+/* ANIMACIÓN PRINCIPAL */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -782,38 +731,9 @@ input[type="submit"] {
   }
 }
 
-/* Contacto*/
-#Contacto {
-  display: none;
-}
-
-/* informacion productos*/
-
+/* Animación para modal de producto, usando la misma base */
 #modalProducto {
   animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-
-
-.boton-login-icono {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  box-shadow: none;
-}
-.boton-login-icono:hover .icono-login {
-  opacity: 0.7;
-}
-.icono-login {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
 }
 
 /* === FOOTER === */
@@ -872,95 +792,3 @@ input[type="submit"] {
   font-size: 14px;
   color: #ffffff;
 }
-          
-/* LOGO*/
-/* Asegúrate de que no haya márgenes/paddings innecesarios */
-body, html {
-  margin: 0;
-  padding: 0;
-}
-
-/* Contenedor principal del logo y el menú */
-.header {
-  display: flex;
-  justify-content: space-between; /* Alinea el logo y el menú a los extremos */
-  align-items: center; /* Alinea verticalmente al centro */
-  padding: 15px 30px; /* Reducido el padding para acercar más el contenido */
-}
-
-/* Ajustes para el logo */
-.logo-kivora {
-  display: flex;
-  align-items: center; /* Centra verticalmente el logo */
-  margin-right: 10px; /* Reduce el espacio entre el logo y el menú */
-}
-
-.logo-kivora img {
-  width: 100px;  /* Ajusta el tamaño del logo */
-  height: auto;  /* Mantiene la proporción */
-  object-fit: contain;
-}
-
-/* Estilo para el menú de navegación */
-nav {
-  display: flex;
-  gap: 20px; /* Espacio reducido entre los elementos del menú */
-}
-
-/* Ajustes a los enlaces del menú */
-nav a {
-  text-decoration: none;
-  color: #333; /* Ajusta el color según tu diseño */
-  padding: 10px;
-}
-
-
-
-/* BARRA DE BÚSQUEDA */
-#barra-busqueda {
-  display: flex;
-  align-items: center;
-}
-
-.barra-busqueda {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 4px 10px;
-  height: 34px;
-}
-
-.barra-busqueda input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  background: transparent;
-}
-
-.barra-busqueda button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
-
-.barra-busqueda button img {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-  opacity: 0.8;
-  background: transparent;
-}
-
-.barra-busqueda button:hover img {
-  opacity: 1;
-}
-
-
-
-

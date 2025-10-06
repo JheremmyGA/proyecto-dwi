@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarEstadoSesion();
 });
 
+
 // Ocultar todas las secciones
 function ocultarTodasLasSecciones() {
     const secciones = ["inicio", "Mi-Tienda", "Nosotros", "catalogo", "Contacto"];
@@ -80,44 +81,6 @@ function cerrarModalRegistro() {
 }
 
 // ============ LOGIN Y REGISTRO ============
-function registrarUsuario() {
-    const usuario = document.getElementById("registroUsuario").value.trim();
-    const clave = document.getElementById("registroClave").value.trim();
-
-    if (!usuario || !clave) {
-        alert("Complete todos los campos");
-        return;
-    }
-
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-    if (usuarios.find(u => u.usuario === usuario)) {
-        alert("El usuario ya existe");
-        return;
-    }
-
-    usuarios.push({ usuario, clave });
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-    alert("¡Registro exitoso!");
-    cerrarModalRegistro();
-    mostrarModalLogin();
-}
-
-function iniciarSesion() {
-    const usuario = document.getElementById("loginUsuario").value.trim();
-    const clave = document.getElementById("loginClave").value.trim();
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-
-    const existe = usuarios.find(u => u.usuario === usuario && u.clave === clave);
-    if (existe) {
-        localStorage.setItem("usuarioActivo", usuario);
-        actualizarEstadoSesion();
-        cerrarModalLogin();
-        alert(`Bienvenido ${usuario} 👋`);
-    } else {
-        alert("Usuario o contraseña incorrectos");
-    }
-}
-
 function actualizarEstadoSesion() {
     const activo = localStorage.getItem("usuarioActivo");
     const btnLogin = document.querySelector(".btn-login");
@@ -125,20 +88,23 @@ function actualizarEstadoSesion() {
     if (!btnLogin) return;
 
     if (activo) {
+        // Si hay usuario activo → mostrar saludo y botón de cerrar sesión
         btnLogin.innerHTML = `
-            <span style="font-weight: 500;">Hola, ${activo}</span>
-            <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar sesión</button>
+            <div class="usuario-activo">
+                <span style="font-weight: 500;">Hola, ${activo}</span>
+                <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar sesión</button>
+            </div>
         `;
     } else {
-        btnLogin.innerHTML = `<button onclick="mostrarModalLogin()">Iniciar sesión</button>`;
+        // Si no hay usuario → mostrar el ícono de login
+        btnLogin.innerHTML = `
+            <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión">
+                <img src="imagenes/login.png" alt="login" class="icono-login">
+            </div>
+        `;
     }
 }
 
-function cerrarSesion() {
-    localStorage.removeItem("usuarioActivo");
-    actualizarEstadoSesion();
-    alert("Has cerrado sesión");
-}
 
 // ============ PRODUCTOS ============
 const caracteristicasPorId = {
