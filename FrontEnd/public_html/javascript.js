@@ -89,15 +89,21 @@ function cerrarModalRegistro() {
 
 function actualizarEstadoSesion() {
     const usuarioActivo = localStorage.getItem("usuarioActivo");
-    const btnLoginDiv = document.querySelector(".btn-login"); 
-    
-    // El botón de logout siempre estará visible por el CSS.
+    const btnLoginDiv = document.querySelector(".btn-login"); // El contenedor principal
+    const btnLogoutDiv = document.querySelector(".btn-logout"); // El contenedor de logout
 
+    // Ocultar/Mostrar el botón de Login/Logout
     if (usuarioActivo) {
-        // Si el usuario está activo, oculta el botón de Login (ya que no lo necesita)
-        if (btnLoginDiv) btnLoginDiv.style.display = "none";    
+        // Mostrar icono de cerrar sesión y ocultar el de login
+        if (btnLogoutDiv) btnLogoutDiv.style.display = "block";
+        if (btnLoginDiv) btnLoginDiv.style.display = "none";
+        
+        // Opcional: Podrías añadir un saludo en el header si tienes un elemento para ello
+        // Ejemplo: document.getElementById("saludoUsuario").textContent = `Hola, ${usuarioActivo}`;
+
     } else {
-        // Si no hay sesión, muestra el botón de Login para que pueda entrar
+        // Mostrar icono de login y ocultar el de cerrar sesión
+        if (btnLogoutDiv) btnLogoutDiv.style.display = "none";
         if (btnLoginDiv) btnLoginDiv.style.display = "block";
     }
 }
