@@ -1,5 +1,6 @@
 package com.dwi.icommerce.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,23 +12,33 @@ import jakarta.persistence.Table;
 public class Genero {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id_genero;
+    @Column(name="id_genero")
+    private Long id;
     private String nombre; 
+    private String descripcion; 
 
     public Genero(Long id_genero, String nombre) {
-        this.id_genero = id_genero;
+        this.id = id_genero;
         this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Genero() {
     }
 
     public Long getId_genero() {
-        return id_genero;
+        return id;
     }
 
     public void setId_genero(Long id_genero) {
-        this.id_genero = id_genero;
+        this.id = id_genero;
     }
 
     public String getNombre() {

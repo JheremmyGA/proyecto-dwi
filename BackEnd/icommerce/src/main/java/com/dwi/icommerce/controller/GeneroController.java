@@ -47,7 +47,7 @@ public class GeneroController {
     @PostMapping
     public Genero CreateCategoria(@RequestBody Genero entity) {
         // falta validar que esa categoria no exista
-        Optional<Genero> temporada = genero_service.GetById(entity.getId_genero());
+        Optional<Genero> temporada = genero_service.GetByName(entity.getNombre());
         if(temporada.isPresent()) return new Genero();
 
         return genero_service.Create(entity);
@@ -62,6 +62,7 @@ public class GeneroController {
         if(genero_encontrada.isPresent()){
             Genero temp_actualizado = genero_encontrada.get();
             temp_actualizado.setNombre(newDTO.getNombre());
+            temp_actualizado.setDescripcion(newDTO.getDescripcion());
             return new ResponseEntity<>(genero_service.Create(temp_actualizado), HttpStatus.OK);
         }
 

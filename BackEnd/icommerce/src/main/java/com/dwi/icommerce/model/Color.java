@@ -8,36 +8,35 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="talla")
-public class Talla {
+@Table(name="color")
+public class Color {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_talla")
+    @Column(name="id_color")
     public Long id;
     public String nombre;
-
-    public Talla(){
-
+    
+    public Color() {
     }
 
-    public Talla (Long id_talla, String nombre){
-        this.id = id_talla;
+    public Color(Long id_color, String nombre) {
+        this.id = id_color;
         this.nombre = nombre;
     }
 
-    public Long getId_talla() {
+    public Long getId_color() {
         return id;
     }
 
-    public void setId_talla(Long id_talla) {
-        this.id = id_talla;
+    public void setId_color(Long id_color) {
+        this.id = id_color;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void SetNombre(String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 }
