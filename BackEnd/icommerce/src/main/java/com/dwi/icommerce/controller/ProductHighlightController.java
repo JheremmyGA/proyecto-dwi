@@ -30,28 +30,28 @@ public class ProductHighlightController {
     @GetMapping("/best-selling")
     public ResponseEntity<List<SoftMainProductDTO>> GetBestSelling() {
         Optional<List<ProductMain>> productsFind = service.GetBestSelling();
-        return GetAnswerApi(productsFind);
+        return GetAnswerAPI(productsFind);
     }
 
     @GetMapping("/liquidation")
     public ResponseEntity<List<SoftMainProductDTO>> GetLiquidation() {
         Optional<List<ProductMain>> productsFind = service.GetLiquidation();
-        return GetAnswerApi(productsFind);
+        return GetAnswerAPI(productsFind);
     }
     
     @GetMapping("/trending")
     public ResponseEntity<List<SoftMainProductDTO>> GetTrending() {
         Optional<List<ProductMain>> productsFind = service.GetTrending();
-        return GetAnswerApi(productsFind);
+        return GetAnswerAPI(productsFind);
     }
 
     @GetMapping("/news")
     public ResponseEntity<List<SoftMainProductDTO>> GetNews() {
         Optional<List<ProductMain>> productsFind = service.GetTrending();
-        return GetAnswerApi(productsFind);
+        return GetAnswerAPI(productsFind);
     }
 
-    private ResponseEntity<List<SoftMainProductDTO>> GetAnswerApi(Optional<List<ProductMain>> dataCheck){
+    private ResponseEntity<List<SoftMainProductDTO>> GetAnswerAPI(Optional<List<ProductMain>> dataCheck){
         if(dataCheck.isEmpty()) ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         
         List<SoftMainProductDTO> listaFinal = dataCheck.get().stream()
