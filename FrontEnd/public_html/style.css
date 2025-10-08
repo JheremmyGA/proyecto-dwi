@@ -57,6 +57,11 @@ header.header-principal {
   object-fit: contain;
 }
 
+.logo-kivora a img {
+  cursor: pointer;
+  display: block;
+}
+
 /* BARRA DE BÚSQUEDA */
 .barra-busqueda {
   display: flex;
