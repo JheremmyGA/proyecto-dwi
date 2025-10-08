@@ -85,11 +85,12 @@
         <aside class="barra-lateral-filtro">
 
             <h3>Sección</h3>
-            <h2>Niños</h2>
+            <h2 class="titulo-filtro">Niños</h2>
 
             <div class="grupo-filtro">
                 <label for="filtro-temporada">Temporada</label>
                 <select id="filtro-temporada">
+                    <option value="">Todo</option>
                     <option value="Verano">Verano</option>
                     <option value="Otoño">Otoño</option>
                     <option value="Invierno">Invierno</option>
@@ -100,6 +101,7 @@
             <div class="grupo-filtro">
                 <label for="filtro-marca">Marca</label>
                 <select id="filtro-marca">
+                    <option value="">Todo</option>
                     <option value="University Club">University Club</option>
                     <option value="Basement">Basement</option>
                     <option value="Levis">Levis</option>
@@ -110,12 +112,14 @@
             <div class="grupo-filtro">
                 <label for="filtro-categoria">Categoría</label>
                 <select id="filtro-categoria">
+                    <option value="">Todo</option>
                     <option value="Chaleco">Chaleco</option>
                     <option value="Casaca">Casaca</option>
                 </select>
             </div>
 
             <button id="boton-aplicar-filtros" class="boton-filtro">Filtrar</button>
+            <button id="boton-reset-filtros" class="boton-filtro" type="button">Limpiar</button>
         </aside>
 
         <main class="contenedor-cuadricula-productos">

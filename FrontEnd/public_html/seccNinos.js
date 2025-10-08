@@ -16,6 +16,7 @@ const filtroTemporada = document.getElementById('filtro-temporada');
 const filtroMarca = document.getElementById('filtro-marca');
 const filtroCategoria = document.getElementById('filtro-categoria');
 const botonAplicarFiltros = document.getElementById('boton-aplicar-filtros');
+const botonResetFiltros = document.getElementById('boton-reset-filtros');
 
 // 2. Función para crear la tarjeta de producto HTML
 function crearTarjetaProducto(producto) {
@@ -78,4 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Asignar el evento al botón de filtrar
     botonAplicarFiltros.addEventListener('click', aplicarFiltros);
+
+    // 3. Evento para el botón reset: vuelve a "Todo" y muestra todos los productos
+    botonResetFiltros?.addEventListener('click', () => {
+        if (filtroTemporada) filtroTemporada.value = '';
+        if (filtroMarca) filtroMarca.value = '';
+        if (filtroCategoria) filtroCategoria.value = '';
+        renderizarProductos(datosProductos);
+    });
 });
