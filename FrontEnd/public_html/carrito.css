@@ -2,7 +2,7 @@
 
 .carrito-page-main {
     max-width: 1200px;
-    margin: 40px auto;
+    margin: 100px auto;
     padding: 0 20px;
     font-family: 'Segoe UI', sans-serif;
 }
@@ -146,12 +146,12 @@
 }
 
 .btn-principal {
-    background-color: #007bff; /* Azul de tus modales (Checkout) */
+    background-color: #6b6666; /* Azul de tus modales (Checkout) */
     color: white;
 }
 
 .btn-principal:hover {
-    background-color: #0056b3;
+    background-color: #ccc;
     transform: translateY(-2px);
 }
 

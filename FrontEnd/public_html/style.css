@@ -259,7 +259,7 @@ header.header-principal {
 .modal-contenedor button {
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: #B80000;
   color: white;
   border: none;
   border-radius: 6px;
@@ -269,7 +269,7 @@ header.header-principal {
 }
 
 .modal-contenedor button:hover {
-  background-color: #0056b3;
+  background-color: #f47373;
 }
 
 .cerrar-modal {
