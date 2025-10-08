@@ -8,7 +8,7 @@
     <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <script src="javascript.js" defer></script>
-    <script src="app.js" defer></script>
+    <script src="carrito.js" defer></script> 
 </head>
 
 
@@ -49,23 +49,9 @@
                 </button>
             </div>
 
-            <div id="carrito-icono">
+            <a href="carrito.html" id="carrito-icono" title="Ver Carrito de Compras"> 
                 <img src="imagenes/carrito2.png" alt="Carrito" />
-                <div id="carrito-contenido">
-                    <table id="lista-carrito">
-                        <thead>
-                            <tr>
-                                <th>Imagen</th>
-                                <th>Nombre</th>
-                                <th>Precio</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <a href="#" id="vaciar-carrito">Vaciar Carrito</a>
-                </div>
-            </div>
+                </a>
 
             <div class="btn-login">
                 <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión">
@@ -302,7 +288,7 @@
                 <img id="modalImagen" src="" alt="Producto">
                 <h2 id="modalNombre"></h2>
                 <p id="modalPrecio">Precio: <span id="modalPrecioNum"></span></p>
-                <button id="btnComprarDesdeModal">
+                <button id="btnComprarDesdeModal" class="agregar-carrito">
                     Comprar
                 </button>
             </div>

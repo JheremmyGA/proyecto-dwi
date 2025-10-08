@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Kivora - Tu Carrito</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="carrito.css"> 
+    
+    <script src="carrito.js" defer></script> 
+</head>
+<body>
+    <header class="header-principal">
+        <div class="logo-kivora">
+            <a href="index.html"> 
+                <img src="imagenes/logoRedimension.png" alt="logo">
+            </a>
+        </div>
+        
+        <nav class="menu">
+            <div class="menu-enlaces">
+                <a href="index.html">Inicio</a>
+                <a href="catalogo.html">Catálogo</a>
+                <a href="temporada.html">Temporada</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="carrito-page-main">
+        <h1>🛒 Carrito de Compras</h1>
+        
+        <div class="contenedor-carrito-detalle">
+            <div class="tabla-carrito-wrapper">
+                <table id="lista-carrito" class="tabla-carrito-grande">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Nombre</th>
+                            <th>Subtotal</th>
+                            <th>Cantidad</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="resumen-carrito">
+                <h2>Resumen del Pedido</h2>
+                <p>Total a Pagar: <span id="total-final">S/. 0.00</span></p>
+
+                <div class="acciones-carrito">
+                    <button id="vaciar-carrito" class="btn-secundario">Vaciar Carrito</button>
+                    <button id="img-carrito" class="btn-principal">
+                        Proceder al Pago
+                    </button> 
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+    <div id="modal-pago" class="modal-wrapper" style="display: none;">
+        <div class="modal-contenedor">
+            <span id="cerrar-modal" class="cerrar-modal">&times;</span>
+            <h2>Opciones de Pago</h2>
+            <form id="formulario-pago">
+                <fieldset>
+                    <legend>Método de Pago</legend>
+                    <label>
+                        <input type="radio" name="metodo" value="tarjeta" required> Tarjeta de Crédito/Débito
+                    </label><br>
+                    <label>
+                        <input type="radio" name="metodo" value="paypal"> PayPal
+                    </label>
+                </fieldset>
+                <input type="text" id="numero-tarjeta" placeholder="Número de Tarjeta (simulado)" required>
+                <button type="submit">Finalizar Compra</button>
+            </form>
+        </div>
+    </div>
+    
+    <footer class="footer-kivora">
+        <div class="footer-copy">
+            © El contenido de esta página web está protegido por copyright y es propiedad de Kivora S.A.C 2025
+        </div>
+    </footer>
+</body>
+</html>
