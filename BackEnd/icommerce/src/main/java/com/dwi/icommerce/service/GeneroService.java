@@ -22,6 +22,10 @@ public class GeneroService {
         return repository.findById(id);
     }
 
+    public Optional<Genero> GetByName(String name){
+        return repository.findByNombre(name);
+    }
+
     public Genero Create(Genero new_Categoria){
         if(new_Categoria.getNombre() != "") {
             return repository.save(new_Categoria);

@@ -1,5 +1,6 @@
 package com.dwi.icommerce.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,17 +14,12 @@ import jakarta.persistence.Table;
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_producto;
+    @Column(name="id_producto")
+    private Long id;
 
     private String nombre;
     private String descripcion;
     private Double precio;
-    private int stock;
-
-    //Falta
-    //marca
-    //talla
-
     //registros de ingresos y salidas de productos en una tabla aparte
 
     @ManyToOne
@@ -35,28 +31,31 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name="id_genero")
     private Genero genero;
+    @ManyToOne
+    @JoinColumn(name="id_marca")
+    private Marca marca;
 
-    public Producto(Long id_producto, String nombre, String descripcion, Double precio, int stock, Categoria categoria,
-            Temporada temporada, Genero genero) {
-        this.id_producto = id_producto;
+    public Producto(Long id_producto, String nombre, String descripcion, Double precio, Categoria categoria,
+            Temporada temporada, Genero genero, Marca marca) {
+        this.id = id_producto;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
-        this.stock = stock;
         this.categoria = categoria;
         this.temporada = temporada;
         this.genero = genero;
+        this.marca = marca;
     }
 
     public Producto() {
     }
 
-    public Long getId_producto() {
-        return id_producto;
+    public Long getId() {
+        return id;
     }
 
-    public void setId_producto(Long id_producto) {
-        this.id_producto = id_producto;
+    public void setId(Long id_producto) {
+        this.id = id_producto;
     }
 
     public String getNombre() {
@@ -83,14 +82,6 @@ public class Producto {
         this.precio = precio;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
     public Categoria getCategoria() {
         return categoria;
     }
@@ -115,4 +106,11 @@ public class Producto {
         this.genero = genero;
     }
 
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
 }

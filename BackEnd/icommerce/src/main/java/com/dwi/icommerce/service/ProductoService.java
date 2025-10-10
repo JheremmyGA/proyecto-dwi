@@ -1,6 +1,7 @@
 package com.dwi.icommerce.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,14 @@ public class ProductoService {
     public Producto GetProduct(Long id) {
         return productoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+    }
+
+    public List<Producto> GetAllProductsByGenero(Long id_Genero){
+        return productoRepository.findByGeneroId(id_Genero);
+    }
+
+    public Optional<List<Producto>> GetAllProductsFilter(Long genero, Long temporada, Long marca, Long categoria){
+        return productoRepository.findFiltered(genero, temporada, marca, categoria);
     }
 
     public void deleteProduct(Long id) {
