@@ -1,3 +1,6 @@
+import * as HTTPS_Request from './HTTPRequest.js';
+import * as PERSISTENT_DATA from './PersistentData.js';
+
 // ============ UTILIDADES Y NAVEGACIÓN ============
 function redirigir(nombre) {
     window.location.href = nombre;
@@ -21,6 +24,28 @@ function mostrarSeccion(seccionId) {
     const seccion = document.getElementById(seccionId);
     if (seccion) seccion.style.display = "block";
     window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ============ CONFIGURACION DE GENEROS ============
+async function MostrarGeneros(){
+    const generos = await HTTPS_Request.GetGeneros();
+
+    if (!generos) return;
+
+    const menu = document.getElementById("categoria-menu");
+
+    menu.innerHTML = "";
+
+    generos.forEach(cat => {
+      const btn = document.createElement("button");
+      btn.textContent = cat.nombre;
+      btn.onclick = () => {
+        console.error(cat.id_genero);
+        PERSISTENT_DATA.SelectedGenero(cat.id_genero);
+        redirigir(`seccGeneric.html`);
+      };
+      menu.appendChild(btn);
+    });
 }
 
 // ============ CARRUSEL HORIZONTAL DE PRODUCTOS ============
@@ -151,6 +176,7 @@ function cerrarModalProducto() {
 
 document.addEventListener("DOMContentLoaded", () => {
     
+    MostrarGeneros();
     // Lógica para abrir el modal de producto al hacer clic en la imagen
     const imagenesProductos = document.querySelectorAll(".item img");
     imagenesProductos.forEach(img => {

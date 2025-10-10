@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sección Damas</title>
+    <link rel="stylesheet" href="seccGeneric.css">
+    <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Enlace al archivo JavaScript externo -->
+    <script type="module" src="javascript.js"></script>
+    <script type="module" src="HTTPRequest.js"></script>
+    <script type="module" src="PersistentData.js"></script>
+
+</head>
+<body>
+    <header class="header-principal">
+        <div class="logo-kivora">
+            <a href="index.html" aria-label="Ir al inicio">
+            <img src="imagenes/logoRedimension.png" alt="logo">
+            </a>
+        </div>
+
+        <div class="header-derecha">
+            <!-- Barra de búsqueda -->
+            <div class="barra-busqueda">
+                <input id="barra-busqueda" type="text" placeholder="¿Qué estás buscando?" />
+                <button type="submit">
+                    <img src="imagenes/busqueda.png" alt="Buscar" />
+                </button>
+            </div>
+            <!-- Botón de inicio de sesión -->
+            <div class="btn-login">
+                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión"
+                    style="background:none; border:none; padding:0; cursor:pointer;">
+                    <img src="imagenes/login.png" alt="login" class="icono-login">
+                </div>
+            </div>
+
+            <!-- Ícono del carrito -->
+            <div id="carrito-icono">
+                <img src="imagenes/carrito.png" alt="Carrito" />
+                <div id="carrito-contenido">
+                    <table id="lista-carrito">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <a href="#" id="vaciar-carrito">Vaciar Carrito</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="menu">
+        <!-- Enlaces de navegación -->
+        <div class="menu-enlaces">
+            <a href="#" onclick="redirigir('index.html')">Inicio</a>
+            <a href="#" onclick="redirigir('catalogo.html')">Catálogo</a>
+            <a href="#" onclick="redirigir('temporada.html')">Temporada</a>
+            <a href="#" onclick="redirigir('contacto.html')">Contacto</a>
+        </div>
+        </div>
+
+        <div class="menu-secciones">
+            <!-- Enlaces de navegación -->
+            <div class="menu-secciones-enlaces" id="categoria-menu">
+                <!-- <a href="#" onclick="redirigir('seccCaballeros.html')">Caballeros</a>
+                <a href="#" onclick="redirigir('seccDamas.html')">Damas</a>
+                <a href="#" onclick="redirigir('seccNinos.html')">Niños</a>
+                <a href="#" onclick="redirigir('seccNinas.html')">Niñas</a>-->
+            </div>
+        </div>
+
+        <div class="header-seccion">
+            <h1 class="titulo-seccion" id="titulo-seccion">Damas</h1>
+            <p class="descripcion-seccion" id="descripcion-seccion">Explora nuestra colección exclusiva para damas, diseñada para resaltar tu estilo y elegancia en cada ocasión. Desde prendas casuales hasta atuendos formales, encuentra la combinación perfecta que refleje tu personalidad y te haga sentir segura y hermosa.</p>
+        </div>
+
+        <div class="contenedor-principal">
+            <aside class="barra-lateral-filtro">
+
+                <h3>Sección</h3>
+                <h2 class="titulo-filtro">Damas</h2>
+
+                <div class="grupo-filtro">
+                    <label for="filtro-temporada">Temporada</label>
+                    <select id="filtro-temporada">
+                        <option value="">Todo</option>
+                        <option value="Verano">Verano</option>
+                        <option value="Otoño">Otoño</option>
+                        <option value="Invierno">Invierno</option>
+                        <option value="Primavera">Primavera</option>
+                    </select>
+                </div>
+
+                <div class="grupo-filtro">
+                    <label for="filtro-marca">Marca</label>
+                    <select id="filtro-marca">
+                        <option value="">Todo</option>
+                        <option value="University Club">University Club</option>
+                        <option value="Basement">Basement</option>
+                        <option value="Levis">Levis</option>
+                        <option value="Newport">Newport</option>
+                    </select>
+                </div>
+
+                <div class="grupo-filtro">
+                    <label for="filtro-categoria">Categoría</label>
+                    <select id="filtro-categoria">
+                        <option value="">Todo</option>
+                        <option value="Chaleco">Chaleco</option>
+                        <option value="Casaca">Casaca</option>
+                    </select>
+                </div>
+
+                <button id="boton-aplicar-filtros" class="boton-filtro">Filtrar</button>
+                <button id="boton-reset-filtros" class="boton-filtro" type="button">Limpiar</button>
+            </aside>
+
+            <main class="contenedor-cuadricula-productos">
+
+
+                <div class="cuadricula-productos" id="cuadricula-productos">
+                    </div>
+            </main>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="footer-kivora">
+        <div class="footer-logo">
+            <img src="imagenes/logo.png" alt="logo kivora">
+        </div>
+
+        <div class="footer-contenedor">
+            <div class="footer-col">
+                <h3>Nosotros</h3>
+                <ul>
+                    <li>La empresa</li>
+                    <li>Nuestras tiendas</li>
+                    <li>Ventas corporativas</li>
+                    <li>Trabaja con nosotros</li>
+                    <li>Política SIG</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Legales</h3>
+                <ul>
+                    <li>Políticas de privacidad</li>
+                    <li>Términos y condiciones</li>
+                    <li>Política de Modelo de prevención</li>
+                    <li>Política Anticorrupción</li>
+                    <li>Política de Lavado de Activo y terrorismo</li>
+                    <li>Política de Prevención de Delitos Tributarios y Contables</li>
+                    <li>Política de Prevención de Delitos Aduaneros</li>
+                    <li>Canal de Denuncias</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contáctanos</h3>
+                <ul>
+                    <li>Email: ventas@kivora.com.pe</li>
+                    <li>Teléfono: 01-12475320</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copy">
+            © El contenido de esta página web está protegido por copyright y es propiedad de Kivora S.A.C 2025
+        </div>
+    </footer>
+    <script type="module" src="seccGeneric.js"></script>
+</body>
+</html>

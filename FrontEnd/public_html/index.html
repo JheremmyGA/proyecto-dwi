@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <script src="javascript.js" defer></script>
+    <script type="module" src="javascript.js"></script>
+    <script type="module" src="HTTPRequest.js"></script>
+    <script type="module" src="PersistentData.js"></script>
     <script src="carrito.js" defer></script>
 </head>
 
@@ -92,11 +94,11 @@
             <button class="arrow right">&#10095;</button>
         </div>
 
-        <div class="categoria-menu">
+        <div class="categoria-menu" id="categoria-menu">
             <button id="btn-caballeros" onclick="redirigir('seccCaballeros.html')">Caballeros</button>
             <button id="btn-damas" onclick="redirigir('seccDamas.html')">Damas</button>
-            <button id="btn-ninos" onclick="redirigir('seccNinos.html')">Niños</button>
-            <button id="btn-ninas" onclick="redirigir('seccNinas.html')">Niñas</button>
+            <button id="btn-ninos" onclick="redirigir('seccNiños.html')">Niños</button>
+            <button id="btn-ninas" onclick="redirigir('seccNiñas.html')">Niñas</button>
         </div>
 
         <div class="Novedades">
