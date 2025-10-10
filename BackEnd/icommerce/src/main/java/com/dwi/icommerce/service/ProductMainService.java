@@ -19,14 +19,6 @@ public class ProductMainService {
         return repository.findAll();
     }
 
-    public List<ProductMain> GetAllProductMainsByGenero(Long id_Genero){
-        return repository.findByProductoGeneroId(id_Genero);
-    }
-
-    public Optional<List<ProductMain>> GetAllProductMainsFilter(Long genero, Long temporada, Long marca, Long categoria){
-        return repository.findFiltered(genero, temporada, marca, categoria);
-    }
-
     public ProductMain saveProduct(ProductMain producto) {
         return repository.save(producto);
     }
@@ -34,6 +26,10 @@ public class ProductMainService {
     public ProductMain GetProduct(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+    }
+
+    public Optional<List<ProductMain>> GetAllMainProductsByProduct(Long id){
+        return repository.findByProductoId(id);
     }
 
     public Optional<ProductMain> GetProductMainBySKU(String SKU){

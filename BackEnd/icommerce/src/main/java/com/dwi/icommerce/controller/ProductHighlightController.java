@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dwi.icommerce.DTO.SoftMainProductDTO;
-import com.dwi.icommerce.model.ProductMain;
+import com.dwi.icommerce.DTO.SoftCatalogProductDTO;
+import com.dwi.icommerce.model.Producto;
 import com.dwi.icommerce.service.ProductHighlightService;
 
 
@@ -28,34 +28,34 @@ public class ProductHighlightController {
     }
 
     @GetMapping("/best-selling")
-    public ResponseEntity<List<SoftMainProductDTO>> GetBestSelling() {
-        Optional<List<ProductMain>> productsFind = service.GetBestSelling();
+    public ResponseEntity<List<SoftCatalogProductDTO>> GetBestSelling() {
+        Optional<List<Producto>> productsFind = service.GetBestSelling();
         return GetAnswerAPI(productsFind);
     }
 
     @GetMapping("/liquidation")
-    public ResponseEntity<List<SoftMainProductDTO>> GetLiquidation() {
-        Optional<List<ProductMain>> productsFind = service.GetLiquidation();
+    public ResponseEntity<List<SoftCatalogProductDTO>> GetLiquidation() {
+        Optional<List<Producto>> productsFind = service.GetLiquidation();
         return GetAnswerAPI(productsFind);
     }
     
     @GetMapping("/trending")
-    public ResponseEntity<List<SoftMainProductDTO>> GetTrending() {
-        Optional<List<ProductMain>> productsFind = service.GetTrending();
+    public ResponseEntity<List<SoftCatalogProductDTO>> GetTrending() {
+        Optional<List<Producto>> productsFind = service.GetTrending();
         return GetAnswerAPI(productsFind);
     }
 
     @GetMapping("/news")
-    public ResponseEntity<List<SoftMainProductDTO>> GetNews() {
-        Optional<List<ProductMain>> productsFind = service.GetTrending();
+    public ResponseEntity<List<SoftCatalogProductDTO>> GetNews() {
+        Optional<List<Producto>> productsFind = service.GetTrending();
         return GetAnswerAPI(productsFind);
     }
 
-    private ResponseEntity<List<SoftMainProductDTO>> GetAnswerAPI(Optional<List<ProductMain>> dataCheck){
+    private ResponseEntity<List<SoftCatalogProductDTO>> GetAnswerAPI(Optional<List<Producto>> dataCheck){
         if(dataCheck.isEmpty()) ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         
-        List<SoftMainProductDTO> listaFinal = dataCheck.get().stream()
-            .map(a -> new SoftMainProductDTO(a))
+        List<SoftCatalogProductDTO> listaFinal = dataCheck.get().stream()
+            .map(a -> new SoftCatalogProductDTO(a))
             .collect(Collectors.toList());
         
         return ResponseEntity.status(HttpStatus.FOUND).body(listaFinal);

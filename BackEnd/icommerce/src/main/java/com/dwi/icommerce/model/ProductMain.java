@@ -25,13 +25,13 @@ public class ProductMain {
     @ManyToOne
     @JoinColumn(name="id_color")
     public Color color;
-    public Long stock;
+    public int stock;
     public String SKU;
 
     public ProductMain() {
     }
 
-    public ProductMain(String SKU, Color color, Long id_Product, Producto producto, Long stock, Talla talla) {
+    public ProductMain(String SKU, Color color, Long id_Product, Producto producto, int stock, Talla talla) {
         this.SKU = SKU;
         this.color = color;
         this.id = id_Product;
@@ -68,11 +68,11 @@ public class ProductMain {
         this.color = color;
     }
 
-    public Long getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(Long stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
