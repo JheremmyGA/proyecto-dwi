@@ -40,7 +40,6 @@ async function MostrarGeneros(){
       const btn = document.createElement("button");
       btn.textContent = cat.nombre;
       btn.onclick = () => {
-        console.error(cat.id_genero);
         PERSISTENT_DATA.SelectedGenero(cat.id_genero);
         redirigir(`seccGeneric.html`);
       };

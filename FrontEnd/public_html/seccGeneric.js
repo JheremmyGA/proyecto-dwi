@@ -79,7 +79,6 @@ function redirigir(nombre) {
 async function MostrarGeneroSelected(){
     const genero = await HTTPS_Request.GetGenero(PERSISTENT_DATA.GetSelectedGenero());
 
-    console.error(PERSISTENT_DATA.GetSelectedGenero());
     if (!genero) return;
 
     const titulo = document.getElementById("titulo-seccion");
