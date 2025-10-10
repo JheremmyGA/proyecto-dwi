@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+    <html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Temporada Kivora</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="seccDamas.css">
+        <link rel="stylesheet" href="temporada.css">
+
+        <script src="javascript.js" defer></script>
+        <script src="carrito.js" defer></script>
+        <script src="temporada.js" defer></script>
+        
+    </head>
+
+    <body>
+        <div class="callToAction">LOS MEJORES PRODUCTOS DE TEMPORADA!!! 🔥🔥🔥</div>
+
+        <header class="header-principal">
+            <div class="logo-kivora">
+                <a href="index.html" aria-label="Ir al inicio">
+                    <img src="imagenes/logoRedimension.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-derecha">
+                <div class="barra-busqueda">
+                    <input id="barra-busqueda" type="text" placeholder="¿Qué estás buscando?" />
+                    <button type="submit">
+                        <img src="imagenes/busqueda.png" alt="Buscar" />
+                    </button>
+                </div>
+
+                <a href="carrito.html" id="carrito-icono" title="Ver Carrito de Compras"> 
+                    <img src="imagenes/carrito2.png" alt="Carrito" />
+                    </a>
+
+                <div class="btn-login">
+                    <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión">
+                        <img src="imagenes/login.png" alt="login" class="icono-login">
+                    </div>
+                </div>
+
+                <div class="btn-logout" onclick="cerrarSesion()" title="Cerrar sesión">
+                    <img src="imagenes/salir.png" alt="Cerrar sesión" class="icono-logout">
+                </div>
+            </div>
+        </header>
+
+        <nav class="menu">
+            <div class="menu-enlaces">
+                <a href="index.html">Inicio</a>
+                <a href="catalogo.html">Catálogo</a>
+                <a href="temporada.html">Temporada</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+        </nav>
+        <div class="menu-secciones">
+            <!-- Enlaces de navegación -->
+            <div class="menu-secciones-enlaces">
+                <a href="#" onclick="redirigir('seccCaballeros.html')">Caballeros</a>
+                <a href="#" onclick="redirigir('seccDamas.html')">Damas</a>
+                <a href="#" onclick="redirigir('seccNinos.html')">Niños</a>
+                <a href="#" onclick="redirigir('seccNinas.html')">Niñas</a>
+            </div>
+        </div>
+
+        <div class="header-seccion">
+            <h1 class="titulo-seccion">Descubre la Colección Más Reciente: Primavera 2025</h1>
+            <p class="descripcion-seccion">¡La moda evoluciona y nosotros también! Explora las últimas tendencias de nuestra colección de temporada, recién llegada y lista para renovar tu armario. Hemos seleccionado cuidadosamente texturas frescas, colores vibrantes y siluetas innovadoras para que te mantengas a la vanguardia. Encuentra las prendas clave que definirán tu estilo este año y prepárate para brillar con cada look. No esperes más para llevarte lo más nuevo.</p>
+        </div>
+
+        <footer class="footer-kivora">
+            <div class="footer-logo">
+                <img src="imagenes/logo.png" alt="logo kivora">
+            </div>
+
+            <div class="footer-contenedor">
+                <div class="footer-col">
+                    <h3>Nosotros</h3>
+                    <ul>
+                        <li>La empresa</li>
+                        <li>Nuestras tiendas</li>
+                        <li>Ventas corporativas</li>
+                        <li>Trabaja con nosotros</li>
+                        <li>Política SIG</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Legales</h3>
+                    <ul>
+                        <li>Políticas de privacidad</li>
+                        <li>Términos y condiciones</li>
+                        <li>Política de Modelo de prevención</li>
+                        <li>Política Anticorrupción</li>
+                        <li>Política de Lavado de Activo y terrorismo</li>
+                        <li>Política de Prevención de Delitos Tributarios y Contables</li>
+                        <li>Política de Prevención de Delitos Aduaneros</li>
+                        <li>Canal de Denuncias</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contáctanos</h3>
+                    <ul>
+                        <li>Email: ventas@kivora.com.pe</li>
+                        <li>Teléfono: 01-12475320</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-copy">
+                © El contenido de esta página web está protegido por copyright y es propiedad de Kivora S.A.C 2025
+            </div>
+        </footer>
+
+    </body>
+</html>

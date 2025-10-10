@@ -1,105 +1,65 @@
-function mostrarMitienda() {
-    document.getElementById("inicio").style.display = "none";
-    document.getElementById("Mi-Tienda").style.display = "block";
+// ============ UTILIDADES Y NAVEGACIÓN ============
+function redirigir(nombre) {
+    window.location.href = nombre;
 }
 
-
-function mostrarNosotros() {
-    document.getElementById("inicio").style.display = "none";
-    document.getElementById("Nosotros").style.display = "block";
+function regresarInicio() {
+    mostrarSeccion("inicio");
 }
 
-function mostrarCatalogo() {
-    document.getElementById("inicio").style.display = "none";
-    document.getElementById("Mi-Tienda").style.display = "block";
-}
-
+// ============ CONTROL DE SECCIONES (SPA: Single Page Application) ============
 function ocultarTodasLasSecciones() {
-    document.getElementById('inicio').style.display = 'none';
-    document.getElementById('Mi-Tienda').style.display = 'none';
-    document.getElementById('Nosotros').style.display = 'none';
-    document.getElementById('Catálogo').style.display = 'none';
-    document.getElementById('inicio').style.display = 'none';
-    document.getElementById('Contacto').style.display = 'none';
+    const secciones = ["inicio", "Mi-Tienda", "Nosotros", "catalogo", "Contacto"];
+    secciones.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = "none";
+    });
 }
 
 function mostrarSeccion(seccionId) {
     ocultarTodasLasSecciones();
-    document.getElementById(seccionId).style.display = 'block';
+    const seccion = document.getElementById(seccionId);
+    if (seccion) seccion.style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-
-function regresarInicio() {
-    document.getElementById("inicio").style.display = "block";
-    document.getElementById("Nosotros").style.display = "none";
-}
-
-//carrusel
-
+// ============ CARRUSEL HORIZONTAL DE PRODUCTOS ============
 function scrollCarrusel(id, direccion) {
     const carrusel = document.getElementById(id);
-    const desplazamiento = 250; // píxeles a mover
-
+    const desplazamiento = 250;
     if (carrusel) {
-        carrusel.scrollBy({
-            left: direccion * desplazamiento,
-            behavior: 'smooth'
-        });
+        carrusel.scrollBy({ left: direccion * desplazamiento, behavior: "smooth" });
     }
 }
 
-
-
-const images = document.querySelectorAll('.hero img');
-const leftArrow = document.querySelector('.arrow.left');
-const rightArrow = document.querySelector('.arrow.right');
+// ============ CARRUSEL HERO ============
+const images = document.querySelectorAll(".hero img");
+const leftArrow = document.querySelector(".arrow.left");
+const rightArrow = document.querySelector(".arrow.right");
 
 let current = 0;
-
 function showImage(index) {
-    images.forEach((img, i) => {
-        img.classList.remove('active');
+    images.forEach(img => img.classList.remove("active"));
+    if (images.length > 0) {
+        images[index].classList.add("active");
+    }
+}
+
+// Inicialización del carrusel hero
+if (rightArrow && leftArrow && images.length > 0) {
+    rightArrow.addEventListener("click", () => {
+        current = (current + 1) % images.length;
+        showImage(current);
     });
-    images[index].classList.add('active');
-}
-
-rightArrow.addEventListener('click', () => {
-    current = (current + 1) % images.length;
-    showImage(current);
-});
-
-leftArrow.addEventListener('click', () => {
-    current = (current - 1 + images.length) % images.length;
-    showImage(current);
-});
-
-showImage(current); // Asegura que una imagen se muestre al cargar
-
-
-function regresarInicio() {
-    document.getElementById("inicio").style.display = "block";
-    document.getElementById("Nosotros").style.display = "none";
-    document.getElementById("Mi-Tienda").style.display = "none";
-    document.getElementById("Catálogo").style.display = "none";
-    document.getElementById("Contacto").style.display = "none";
-
-    // Desplaza la página al inicio
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+    leftArrow.addEventListener("click", () => {
+        current = (current - 1 + images.length) % images.length;
+        showImage(current);
     });
-}
-
-function mostrarModalLogin() {
-    document.getElementById("modalLogin").style.display = "flex";
-}
-
-function cerrarModalLogin() {
-    document.getElementById("modalLogin").style.display = "none";
+    showImage(current);
 }
 
 
-
+// ============ MODALES LOGIN / REGISTRO ============
 function mostrarModalLogin() {
     document.getElementById("modalLogin").style.display = "flex";
     document.getElementById("modalRegistro").style.display = "none";
@@ -118,60 +78,109 @@ function cerrarModalRegistro() {
     document.getElementById("modalRegistro").style.display = "none";
 }
 
+// ============ LÓGICA DE SESIÓN (SIMULADA CON localStorage) ============
+
+function actualizarEstadoSesion() {
+    const usuarioActivo = localStorage.getItem("usuarioActivo");
+    const btnLoginDiv = document.querySelector(".btn-login");
+    const btnLogoutDiv = document.querySelector(".btn-logout");
+
+    if (usuarioActivo) {
+        if (btnLogoutDiv) btnLogoutDiv.style.display = "block";
+        if (btnLoginDiv) btnLoginDiv.style.display = "none";
+    } else {
+        if (btnLogoutDiv) btnLogoutDiv.style.display = "none";
+        if (btnLoginDiv) btnLoginDiv.style.display = "block";
+    }
+}
+
+function iniciarSesion() {
+    const usuario = document.getElementById("loginUsuario").value;
+    const clave = document.getElementById("loginClave").value;
+
+    if (usuario && clave) {
+        localStorage.setItem("usuarioActivo", usuario);
+        cerrarModalLogin();
+        actualizarEstadoSesion();
+        alert(`Bienvenido, ${usuario}!`);
+    } else {
+        alert("Por favor, ingresa tu usuario y contraseña.");
+    }
+}
+
+function registrarUsuario() {
+    const usuario = document.getElementById("registroUsuario").value;
+    const clave = document.getElementById("registroClave").value;
+
+    if (usuario && clave) {
+        localStorage.setItem("usuarioActivo", usuario);
+        cerrarModalRegistro();
+        actualizarEstadoSesion();
+        alert(`¡Registro exitoso! Bienvenido, ${usuario}.`);
+    } else {
+        alert("Por favor, completa ambos campos para registrarte.");
+    }
+}
+
+function cerrarSesion() {
+    localStorage.removeItem("usuarioActivo");
+    actualizarEstadoSesion();
+    alert("Has cerrado sesión.");
+}
 
 
-// Características de los productos
+// ============ LÓGICA DE PRODUCTOS Y MODAL DE DETALLE ============
 const caracteristicasPorId = {
-    "201": ["Tela de alta calidad", "Estructura de madera", "Color gris moderno", "Para 3 personas"],
-    "202": ["Incluye puerto USB", "Cuero sintético", "Diseño seccional", "Color negro"],
-    "203": ["Tela lavable", "Relleno de espuma", "Diseño moderno"],
-    "204": ["Función cama", "Color azul verdoso", "Compacto y funcional"],
-
-    "205": ["Madera de pino", "4 puertas con espejo", "Color roble oscuro", "Amplio espacio interior"],
-    "206": ["Acabado mate blanco", "Puertas corredizas", "Incluye cajoneras", "Diseño moderno"],
-    "207": ["Estilo rústico", "Color nogal", "Compartimentos ajustables", "Resistente a la humedad"],
-    "208": ["Diseño minimalista", "Color gris claro", "Con cerradura de seguridad", "Fácil armado"],
-
-    "209": ["LED de bajo consumo", "Base metálica cromada", "Luz cálida regulable", "Altura ajustable"],
-    "210": ["Diseño vintage", "Pantalla de tela beige", "Interruptor táctil", "Ideal para salas o dormitorios"],
-    "211": ["Estilo industrial", "Color negro mate", "Cable textil visible", "Soporta focos Edison"],
-    "212": ["Luz RGB con control remoto", "Carga USB", "Modo nocturno", "Diseño moderno y compacto"],
-
-    "213": ["Mesa para 6 personas", "Madera maciza", "Incluye 6 sillas acolchadas", "Color nogal claro"],
-    "214": ["Mesa redonda", "Vidrio templado", "Base metálica negra", "Ideal para espacios pequeños"],
-    "215": ["Estilo escandinavo", "Incluye banco y sillas", "Acabado en blanco y madera clara", "Fácil limpieza"],
-    "216": ["Mesa extensible", "Hasta 8 personas", "Sillas con respaldo ergonómico", "Acabado resistente a rayaduras"],
-
+    "201": ["Material: Algodón Pima", "Corte: Slim Fit", "Color: Negro/Blanco", "Estilo: Casual"],
+    "202": ["Material: Poliéster", "Estilo: Trench Clásico", "Color: Beige", "Detalles: Cinto ajustable"],
+    "203": ["Material: Franela", "Diseño: Estampado", "Talla: S, M, L", "Ideal para invierno"],
+    "204": ["Material: Nylon", "Corte: Regular", "Capucha: Desmontable", "Impermeable"],
+    "301": ["Material: Piqué", "Marca: Lacoste", "Corte: Regular Fit", "Color: Múltiples"],
+    "302": ["Material: Algodón", "Corte: Oversize", "Diseño: Rayas", "Cuello: Redondo"],
+    "303": ["Material: Algodón", "Estilo: Básico", "Talla: 4 a 12", "Fácil de lavar"],
+    "304": ["Material: Piqué", "Marca: Coniglio", "Detalle: Logo bordado", "Ideal para verano"],
 };
 
+// Variable global que puede ser usada por carrito.js si es necesario, 
+// aunque la lógica de carrito ahora lee directamente de los data-attributes.
+let productoActual = {}; 
 
-// Mostrar info del producto al hacer clic
+function cerrarModalProducto() {
+    document.getElementById("modalProducto").style.display = "none";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    
+    // Lógica para abrir el modal de producto al hacer clic en la imagen
     const imagenesProductos = document.querySelectorAll(".item img");
-
     imagenesProductos.forEach(img => {
         img.addEventListener("click", () => {
             const contenedor = img.closest(".item");
-            const boton = contenedor.querySelector(".agregar-carrito");
+            // Obtener el enlace/botón de compra que contiene los datos
+            const botonCompraOriginal = contenedor.querySelector(".agregar-carrito");
 
-            const nombre = boton.getAttribute("data-nombre");
-            const precio = boton.getAttribute("data-precio");
-            const imagen = boton.getAttribute("data-imagen");
-            const id = boton.getAttribute("data-id");
-
+            const id = botonCompraOriginal.getAttribute("data-id");
+            const nombre = botonCompraOriginal.getAttribute("data-nombre");
+            const precio = botonCompraOriginal.getAttribute("data-precio");
+            const imagen = botonCompraOriginal.getAttribute("data-imagen");
+            
+            // Llenar el modal
             document.getElementById("modalNombre").textContent = nombre;
-            document.getElementById("modalPrecioNum").textContent = `S/. ${precio}`;
+            document.getElementById("modalPrecioNum").textContent = `${precio}`;
             document.getElementById("modalImagen").src = imagen;
 
-            productoActual = {
-                id,
-                nombre,
-                precio,
-                imagen
-            };
+            // *** CORRECCIÓN CLAVE: Transferir data-attributes al botón del modal ***
+            const btnModal = document.getElementById("btnComprarDesdeModal");
+            if (btnModal) {
+                btnModal.setAttribute("data-id", id);
+                btnModal.setAttribute("data-nombre", nombre);
+                btnModal.setAttribute("data-precio", precio);
+                btnModal.setAttribute("data-imagen", imagen);
+            }
+            // ***********************************************************************
 
             const lista = document.getElementById("modalCaracteristicas");
-            lista.innerHTML = ""; // limpia el contenido anterior
+            lista.innerHTML = "";
 
             const caracteristicas = caracteristicasPorId[id] || ["Sin información disponible"];
             caracteristicas.forEach(item => {
@@ -183,119 +192,8 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("modalProducto").style.display = "flex";
         });
     });
-});
-
-
-function cerrarModalProducto() {
-    document.getElementById("modalProducto").style.display = "none";
-}
-
-let productoActual = {}; // almacena el producto que se muestra en el modal
-
-document.getElementById("btnComprarDesdeModal").addEventListener("click", () => {
-    const carrito = document.querySelector("#lista-carrito tbody");
-
-    const existe = carrito.querySelector(`tr[data-id='${productoActual.id}']`);
-    if (!existe) {
-        const fila = document.createElement("tr");
-        fila.setAttribute("data-id", productoActual.id);
-        fila.innerHTML = `
-            <td><img src="${productoActual.imagen}" width="50"></td>
-            <td>${productoActual.nombre}</td>
-            <td>S/. ${productoActual.precio}</td>
-            <td><a href="#" class="borrar-producto">X</a></td>
-        `;
-        carrito.appendChild(fila);
-    }
-
-    // Opcional: cerrar modal después de comprar
-    cerrarModalProducto();
-
-    // Opcional: mostrar alerta temporal
-    alert("Producto agregado al carrito ✅");
-});
-
-
-
-// Mostrar/ocultar modales
-function mostrarModalLogin() {
-    document.getElementById("modalLogin").style.display = "flex";
-    document.getElementById("modalRegistro").style.display = "none";
-}
-function cerrarModalLogin() {
-    document.getElementById("modalLogin").style.display = "none";
-}
-function mostrarModalRegistro() {
-    document.getElementById("modalLogin").style.display = "none";
-    document.getElementById("modalRegistro").style.display = "flex";
-}
-function cerrarModalRegistro() {
-    document.getElementById("modalRegistro").style.display = "none";
-}
-
-// Guardar usuario en localStorage
-function registrarUsuario() {
-    const usuario = document.getElementById("registroUsuario").value.trim();
-    const clave = document.getElementById("registroClave").value.trim();
-
-    if (!usuario || !clave) {
-        alert("Complete todos los campos");
-        return;
-    }
-
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-    const existe = usuarios.find(u => u.usuario === usuario);
-
-    if (existe) {
-        alert("El usuario ya existe");
-        return;
-    }
-
-    usuarios.push({usuario, clave});
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-    alert("¡Registro exitoso!");
-    cerrarModalRegistro();
-    mostrarModalLogin();
-}
-
-// Iniciar sesión
-function iniciarSesion() {
-    const usuario = document.getElementById("loginUsuario").value.trim();
-    const clave = document.getElementById("loginClave").value.trim();
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-
-    const existe = usuarios.find(u => u.usuario === usuario && u.clave === clave);
-
-    if (existe) {
-        localStorage.setItem("usuarioActivo", usuario);
-        actualizarEstadoSesion();
-        cerrarModalLogin();
-    } else {
-        alert("Usuario o contraseña incorrectos");
-    }
-}
-
-// Mostrar mensaje si está logueado
-function actualizarEstadoSesion() {
-    const activo = localStorage.getItem("usuarioActivo");
-    const btnLogin = document.querySelector(".btn-login");
-
-    if (activo) {
-        btnLogin.innerHTML = `
-  <span style="font-weight: 500;">Hola, ${activo}</span>
-  <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar sesión</button>
-`;
-
-    } else {
-        btnLogin.innerHTML = `<button onclick="mostrarModalLogin()">Iniciar sesión</button>`;
-    }
-}
-
-// Cerrar sesión
-function cerrarSesion() {
-    localStorage.removeItem("usuarioActivo");
+    
+    // Inicialización al cargar la página
+    mostrarSeccion("inicio");
     actualizarEstadoSesion();
-}
-
-// Ejecutar al cargar la página
-document.addEventListener("DOMContentLoaded", actualizarEstadoSesion);
+});

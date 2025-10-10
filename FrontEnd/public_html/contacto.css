@@ -1,0 +1,135 @@
+.titulo-contacto {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 50px;
+  color: #B80000;
+}
+
+/* Estilos específicos para la página de contacto */
+.form-contacto {
+  max-width: 650px;
+
+  margin: 24px auto 60px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  box-sizing: border-box;
+  
+}
+
+.form-contacto .fila {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  justify-content: center; /* centra columnas dentro de la fila */
+}
+
+.form-contacto .campo {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-contacto .campo.full {
+  flex: 1 1 100%;
+}
+
+.form-contacto label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;  /* centra el texto del label */
+  width: 100%;
+}
+
+.form-contacto input[type="text"],
+.form-contacto input[type="email"],
+.form-contacto input[type="tel"],
+.form-contacto textarea {
+  padding: 10px 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  background: #fafafa;
+  width: 100%;           /* ocupa el ancho disponible de la .campo */
+  max-width: 420px;      /* limita ancho para que no sea excesivo */
+  box-sizing: border-box;
+}
+
+.form-contacto textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-contacto .acciones {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.btn-enviar,
+.btn-reset {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-enviar {
+  background-color: #B80000;
+  color: #fff;
+}
+
+.btn-enviar:hover { opacity: 0.95; }
+
+.btn-reset {
+  background: #eee;
+  color: #333;
+}
+
+/* Popup de confirmación */
+.contacto-popup {
+  position: fixed;
+  left: 50%;
+  top: 12%;
+  transform: translateX(-50%) translateY(-10px);
+  background: rgba(11,11,11,0.9);
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+  z-index: 99999;
+}
+
+.contacto-popup.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.popup-contenido p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+
+@media (min-width: 1400px) {
+  .form-contacto {
+    max-width: 700px;
+    width: 95%;
+  }
+}

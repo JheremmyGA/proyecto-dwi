@@ -1,0 +1,273 @@
+/* ============= CARACTERÍSTICAS DE LA PÁGINA CARRITO (carrito.html) ============= */
+
+.carrito-page-main {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.carrito-page-main h1 {
+    text-align: center;
+    color: #B80000; /* Color principal de la marca */
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+/* ================== CONTENEDOR PRINCIPAL: TABLA Y RESUMEN ================== */
+
+.contenedor-carrito-detalle {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap; /* Permite que el diseño se adapte a dispositivos más pequeños */
+}
+
+.tabla-carrito-wrapper {
+    flex: 3; /* Ocupa más espacio para la tabla */
+    min-width: 300px; /* Mínimo para que no se comprima demasiado */
+    overflow-x: auto; /* Permite el scroll si la tabla es demasiado ancha */
+}
+
+.tabla-carrito-grande {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden; /* Para que la sombra se vea bien con los bordes redondeados */
+}
+
+.tabla-carrito-grande thead {
+    background-color: #f8f8f8;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+.tabla-carrito-grande th {
+    padding: 15px 10px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+.tabla-carrito-grande td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    font-size: 15px;
+    text-align: center;
+}
+
+.tabla-carrito-grande tr:last-child td {
+    border-bottom: none;
+}
+
+/* Estilo para las celdas específicas */
+.tabla-carrito-grande td:nth-child(2) { text-align: left; } /* Nombre del producto a la izquierda */
+
+/* Imagen del producto */
+.tabla-carrito-grande td img {
+    border-radius: 4px;
+}
+
+/* Input de cantidad */
+.cantidad-producto {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    text-align: center;
+    width: 60px;
+}
+
+/* Enlace/botón de eliminar */
+.eliminar-producto {
+    color: #B80000; /* Rojo/Granate de la marca */
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.2s ease;
+}
+
+.eliminar-producto:hover {
+    color: #e74c3c;
+}
+
+/* ================== RESUMEN Y BOTONES DE ACCIÓN ================== */
+
+.resumen-carrito {
+    flex: 1;
+    min-width: 280px;
+    padding: 25px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    align-self: flex-start; /* Se pega a la parte superior */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.resumen-carrito h2 {
+    margin-top: 0;
+    font-size: 22px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+    color: #2c3e50;
+}
+
+.resumen-carrito p {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+#total-final {
+    font-weight: bold;
+    font-size: 24px;
+    color: #B80000; /* Color principal para el total */
+}
+
+.acciones-carrito {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn-principal,
+.btn-secundario {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-principal {
+    background-color: #6b6666; /* Azul de tus modales (Checkout) */
+    color: white;
+}
+
+.btn-principal:hover {
+    background-color: #ccc;
+    transform: translateY(-2px);
+}
+
+.btn-secundario {
+    background-color: #c0392b; /* Rojo de tu vaciar carrito (Acción de peligro) */
+    color: white;
+}
+
+.btn-secundario:hover {
+    background-color: #e74c3c;
+    transform: translateY(-2px);
+}
+
+/* ================== MODAL DE PAGO (REUTILIZA .modal-wrapper) ================== */
+
+#modal-pago .modal-contenedor {
+    width: 400px;
+    padding: 30px;
+}
+
+#modal-pago h2 {
+    color: #B80000;
+}
+
+#formulario-pago fieldset {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+#formulario-pago legend {
+    font-weight: bold;
+    color: #444;
+}
+
+#formulario-pago label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+#numero-tarjeta {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#formulario-pago button[type="submit"] {
+    background-color: #007bff;
+}
+
+#formulario-pago button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* ================== MEDIA QUERIES (ADAPTACIÓN MÓVIL) ================== */
+
+@media (max-width: 800px) {
+    .contenedor-carrito-detalle {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .tabla-carrito-wrapper,
+    .resumen-carrito {
+        min-width: 100%;
+    }
+    
+    .tabla-carrito-grande,
+    .tabla-carrito-grande tbody,
+    .tabla-carrito-grande tr,
+    .tabla-carrito-grande td {
+        display: block; /* Convertir a bloque para apilar celdas */
+    }
+
+    .tabla-carrito-grande thead {
+        display: none; /* Ocultar encabezado de la tabla */
+    }
+
+    .tabla-carrito-grande tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 6px;
+    }
+
+    .tabla-carrito-grande td {
+        text-align: right !important;
+        position: relative;
+        padding-left: 50%;
+        border: none;
+    }
+
+    .tabla-carrito-grande td::before {
+        content: attr(data-label); /* Usa data-label para mostrar el título de la columna */
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        color: #B80000;
+    }
+    
+    /* Configurar data-label en tu HTML si usas esta media query */
+    /* Ejemplo de fila:
+    <tr>
+        <td data-label="Producto"><img ...></td>
+        <td data-label="Nombre">Producto X</td>
+        ...
+    </tr>
+    */
+}
+
+@media (max-width: 500px) {
+    #modal-pago .modal-contenedor {
+        width: 90%;
+    }
+}
