@@ -30,9 +30,11 @@ body {
   text-align: center;        /* Centra el texto dentro del enlace */
   text-decoration: none;
   font-size: 16px;
+  background-color: #6b6666;
   font-weight: 500;
   transition: color 0.3s ease;
   color: white;
+  border: none;
 }
 
 .menu-secciones-enlaces button:hover {

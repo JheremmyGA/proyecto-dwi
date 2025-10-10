@@ -53,11 +53,11 @@ public class GeneroController {
         return genero_service.Create(entity);
     }
 
-    @PutMapping
-    public ResponseEntity<Genero> UpdateCategoria(@RequestBody Genero newDTO) {
-        if(newDTO.getId_genero() < 0) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PutMapping("/{id}")
+    public ResponseEntity<Genero> UpdateCategoria(@PathVariable Long id, @RequestBody Genero newDTO) {
+        if(id < 0) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        Optional<Genero> genero_encontrada = genero_service.GetById(newDTO.getId_genero());
+        Optional<Genero> genero_encontrada = genero_service.GetById(id);
 
         if(genero_encontrada.isPresent()){
             Genero temp_actualizado = genero_encontrada.get();
