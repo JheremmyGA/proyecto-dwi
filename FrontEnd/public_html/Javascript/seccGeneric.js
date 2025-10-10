@@ -1,5 +1,5 @@
-import * as HTTPS_Request from './HTTPRequest.js';
-import * as PERSISTENT_DATA from './PersistentData.js';
+import * as HTTPS_Request from '../Utils/HTTPRequest.js';
+import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 
 // 1. Datos de Productos (Simulación)
 const datosProductos = [

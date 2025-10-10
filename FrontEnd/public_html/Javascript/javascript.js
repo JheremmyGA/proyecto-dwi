@@ -1,8 +1,8 @@
-import * as HTTPS_Request from './HTTPRequest.js';
-import * as PERSISTENT_DATA from './PersistentData.js';
+import * as HTTPS_Request from '../Utils/HTTPRequest.js';
+import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 
 // ============ UTILIDADES Y NAVEGACIÓN ============
-function redirigir(nombre) {
+window.redirigir = function(nombre) {
     window.location.href = nombre;
 }
 
@@ -33,6 +33,8 @@ async function MostrarGeneros(){
     if (!generos) return;
 
     const menu = document.getElementById("categoria-menu");
+
+    if(!menu) return;
 
     menu.innerHTML = "";
 
