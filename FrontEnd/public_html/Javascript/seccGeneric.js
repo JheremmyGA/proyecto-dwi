@@ -4,9 +4,14 @@ import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 // 1. Datos de Productos (Simulación)
 const datosProductos = [
     // La imagen 'product_black.png' y 'product_white.png' son placeholders
-    { id: 1, nombre: 'Chaleco de traje', marca: 'University Club', temporada: 'Verano', categoria: 'Chaleco', precio: 'S/12.00', imagen: 'Zapatillas Urbanas Hombre New Balance.png', color: 'Negro' },
-    { id: 2, nombre: 'Chaleco de traje', marca: 'Basement', temporada: 'Otoño', categoria: 'Chaleco', precio: 'S/12.00', imagen: 'Zapatillas Urbanas Hombre New Balance.png', color: 'Blanco' },
-    { id: 3, nombre: 'Casaca en lona de algodón', marca: 'Levis', temporada: 'Invierno', categoria: 'Casaca', precio: 'S/12.00', imagen: 'Zapatillas Urbanas Hombre New Balance.png', color: 'Beige oscuro' },
+    { id: 1, nombre: 'Camisa Oxford Slim Fit', marca: 'KIVORA', temporada: 'Verano', categoria: 'Camisas', precio: 'S/89.00', imagen: 'camisa_oxford.png', color: 'Celeste' },
+    { id: 2, nombre: 'Polo Básico de Algodón', marca: 'KIVORA', temporada: 'Primavera', categoria: 'Polos', precio: 'S/59.00', imagen: 'polo_basico.png', color: 'Blanco' },
+    { id: 3, nombre: 'Pantalón Chino Stretch', marca: 'KIVORA', temporada: 'Otoño', categoria: 'Pantalones', precio: 'S/119.00', imagen: 'pantalon_chino.png', color: 'Beige' },
+    { id: 4, nombre: 'Casaca Denim Clásica', marca: 'KIVORA', temporada: 'Invierno', categoria: 'Casacas', precio: 'S/149.00', imagen: 'casaca_denim.png', color: 'Azul oscuro' },
+    { id: 5, nombre: 'Camisa de Lino Casual', marca: 'KIVORA', temporada: 'Verano', categoria: 'Camisas', precio: 'S/99.00', imagen: 'camisa_lino.png', color: 'Blanco' },
+    { id: 6, nombre: 'Polo con Cuello Redondo', marca: 'KIVORA', temporada: 'Primavera', categoria: 'Polos', precio: 'S/65.00', imagen: 'polo_redondo.png', color: 'Gris claro' },
+    { id: 7, nombre: 'Pantalón Jogger Urbano', marca: 'KIVORA', temporada: 'Otoño', categoria: 'Pantalones', precio: 'S/109.00', imagen: 'pantalon_jogger.png', color: 'Negro' },
+    { id: 8, nombre: 'Casaca Bomber Minimal', marca: 'KIVORA', temporada: 'Invierno', categoria: 'Casacas', precio: 'S/159.00', imagen: 'casaca_bomber.png', color: 'Verde oliva' }
 ];
 
 const cuadriculaProductos = document.getElementById('cuadricula-productos');
