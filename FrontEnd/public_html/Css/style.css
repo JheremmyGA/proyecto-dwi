@@ -656,7 +656,7 @@ input[type="submit"] {
 /* === BOTONES Y SECCIONES === */
 .agregar-carrito {
   display: inline-block;
-  background-color: #d60000;
+  background-color: #949191;
   color: white;
   padding: 10px 20px;
   border-radius: 8px;
@@ -668,7 +668,7 @@ input[type="submit"] {
 }
 
 .agregar-carrito:hover {
-  background-color: #c0392b;
+  background-color: #ccc;
 }
 
 /* SECCIÓN MI-TIENDA ESTILO MODERNO */

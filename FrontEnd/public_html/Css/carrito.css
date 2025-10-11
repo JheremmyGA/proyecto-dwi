@@ -194,17 +194,24 @@
     font-size: 15px;
 }
 
+.icono-metodo-pago {
+    width: 25%;
+    height: auto;
+    vertical-align: middle;
+    
+}
+
 #numero-tarjeta {
     width: 100%;
     box-sizing: border-box;
 }
 
 #formulario-pago button[type="submit"] {
-    background-color: #007bff;
+    background-color: #B80000;
 }
 
 #formulario-pago button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #ed8a8a;
 }
 
 /* ================== MEDIA QUERIES (ADAPTACIÓN MÓVIL) ================== */
