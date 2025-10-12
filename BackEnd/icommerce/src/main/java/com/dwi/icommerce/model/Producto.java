@@ -20,6 +20,8 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private Double precio;
+    @Column(name="preview_image_path")
+    private String PreviewImage;
     //registros de ingresos y salidas de productos en una tabla aparte
 
     @ManyToOne
@@ -35,12 +37,13 @@ public class Producto {
     @JoinColumn(name="id_marca")
     private Marca marca;
 
-    public Producto(Long id_producto, String nombre, String descripcion, Double precio, Categoria categoria,
+    public Producto(Long id_producto, String nombre, String descripcion, Double precio, String PreviewImage, Categoria categoria,
             Temporada temporada, Genero genero, Marca marca) {
         this.id = id_producto;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
+        this.PreviewImage = PreviewImage;
         this.categoria = categoria;
         this.temporada = temporada;
         this.genero = genero;
@@ -52,6 +55,14 @@ public class Producto {
 
     public Long getId() {
         return id;
+    }
+
+    public String getPreviewImage() {
+        return PreviewImage;
+    }
+
+    public void setPreviewImage(String previewImage) {
+        PreviewImage = previewImage;
     }
 
     public void setId(Long id_producto) {
