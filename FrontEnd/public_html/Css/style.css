@@ -878,3 +878,94 @@ input[type="submit"] {
   font-size: 14px;
   color: #ffffff;
 }
+
+
+/* ============= ÍCONO DEL CARRITO (Header) ============= */
+
+/* Contenedor principal del ícono, lo convertimos en un punto de referencia para el desplegable y el contador */
+#carrito-icono {
+    position: relative; 
+    display: inline-block; /* Necesario para que el position: relative funcione en línea */
+    cursor: pointer;
+    /* Ajustes para el ícono de imagen */
+    padding: 10px;
+}
+
+#carrito-icono img {
+    width: 30px; /* Ajusta el tamaño del ícono del carrito */
+    height: 30px;
+    vertical-align: middle;
+}
+
+/* 1. ESTILOS DEL CONTADOR (Del ejemplo anterior) */
+/* El ID en tu JS es 'contador-carrito' y la clase es 'contador-carrito' */
+#contador-carrito.contador-carrito { 
+    position: absolute;
+    top: 0px; /* Ajuste la posición vertical */
+    right: 0px; /* Ajuste la posición horizontal */
+    background-color: #B80000;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 50%; 
+    padding: 3px 6px; 
+    line-height: 1;
+    min-width: 12px;
+    text-align: center;
+    z-index: 100; /* Alto z-index para estar siempre encima */
+    display: none; /* Oculto por defecto, se maneja con JS */
+}
+
+/* 2. ESTILOS DEL CARRITO DESPLEGABLE */
+#carrito-contenido-desplegable {
+    display: none; /* <--- CLAVE: Ocultar por defecto */
+    position: absolute;
+    top: 100%; /* Aparece justo debajo del ícono */
+    right: 0;
+    width: 350px; /* Define el ancho del desplegable */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 50; /* Menor que el contador, pero alto */
+    padding: 10px;
+}
+
+/* Mostrar el contenido del carrito al pasar el mouse por el ícono */
+#carrito-icono:hover #carrito-contenido-desplegable {
+    display: block; /* <--- CLAVE: Mostrar al pasar el mouse */
+}
+
+/* Estilos internos para la tabla */
+#carrito-contenido-desplegable table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+#carrito-contenido-desplegable thead th {
+    font-size: 0.8rem;
+    color: #666;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+#carrito-contenido-desplegable tbody td {
+    font-size: 0.9rem;
+    padding: 5px 0;
+    vertical-align: middle;
+}
+
+#carrito-contenido-desplegable tbody img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+#vaciar-carrito {
+    display: block;
+    text-align: center;
+    color: #B80000;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding-top: 5px;
+}
