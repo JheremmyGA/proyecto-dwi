@@ -24,55 +24,6 @@ function cargarCarrito() {
 }
 
 
-// ============ Listeners ============
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Cargamos el carrito desde localStorage al iniciar cualquier página.
-    cargarCarrito();
-    
-    // 2. Si estamos en la página del carrito, renderizamos la tabla.
-    // Usamos 'listaCarrito' como proxy para verificar si estamos en la página del carrito
-    if (listaCarrito) {
-        carritoHTML(); 
-    }
-    
-    cargarEventListeners();
-});
-
-
-function cargarEventListeners() {
-    // Escucha clics para agregar productos en CUALQUIER página (index, catalogo, etc.)
-    document.body.addEventListener('click', agregarProductoAlCarrito);
-
-    // Los siguientes listeners solo tienen efecto en carrito.html
-    if (listaCarrito) {
-        listaCarrito.addEventListener("click", eliminarProducto);
-        listaCarrito.addEventListener('change', actualizarCantidad);
-        vaciarCarritoBtn?.addEventListener('click', vaciarCarrito);
-    }
-    
-    // ========== Listeners de Modales de Pago (solo aplica en carrito.html) ==========
-
-    btnCheckout?.addEventListener('click', () => {
-        if (articulosCarrito.length > 0) {
-            modalPago.style.display = 'flex';
-        } else {
-            alert("El carrito está vacío. Agrega productos para pagar.");
-        }
-    });
-
-    cerrarModalPago?.addEventListener('click', () => {
-        modalPago.style.display = 'none';
-    });
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modalPago) {
-            modalPago.style.display = 'none';
-        }
-    });
-    
-    formularioPago?.addEventListener('submit', realizarPago);
-}
-
 // ============ Funciones del Carrito ============
 
 /**
@@ -248,3 +199,60 @@ function realizarPago(e) {
         alert("Por favor, selecciona un método y escribe un número de tarjeta.");
     }
 }
+
+// ============ Expose Functions Globally ============
+window.agregarProductoAlCarrito = agregarProductoAlCarrito;
+window.eliminarProducto = eliminarProducto;
+window.vaciarCarrito = vaciarCarrito;
+window.carritoHTML = carritoHTML;
+window.actualizarCantidad = actualizarCantidad;
+
+// ============ Improved Initialization ============
+document.addEventListener('DOMContentLoaded', () => {
+    // Load carrito from localStorage
+    cargarCarrito();
+
+    // Check if carrito elements exist before initializing
+    if (listaCarrito) {
+        carritoHTML();
+        listaCarrito.addEventListener("click", eliminarProducto);
+        listaCarrito.addEventListener('change', actualizarCantidad);
+        vaciarCarritoBtn?.addEventListener('click', vaciarCarrito);
+    }
+
+    // Add global event listener for adding products
+    document.body.addEventListener('click', agregarProductoAlCarrito);
+
+    // Initialize modal-related events if modal elements exist
+    if (btnCheckout && modalPago && cerrarModalPago) {
+        btnCheckout.addEventListener('click', () => {
+            if (articulosCarrito.length > 0) {
+                modalPago.style.display = 'flex';
+            } else {
+                alert("El carrito está vacío. Agrega productos para pagar.");
+            }
+        });
+
+        cerrarModalPago.addEventListener('click', () => {
+            modalPago.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modalPago) {
+                modalPago.style.display = 'none';
+            }
+        });
+
+        formularioPago?.addEventListener('submit', realizarPago);
+    }
+
+    // ============ Add Event Listener for Carrito Icon ============
+    const carritoIcono = document.getElementById('carrito-icono');
+
+    if (carritoIcono) {
+        carritoIcono.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default link behavior
+            window.location.href = 'carrito.html'; // Redirect to carrito.html
+        });
+    }
+});
