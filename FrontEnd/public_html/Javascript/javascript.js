@@ -58,31 +58,7 @@ function scrollCarrusel(id, direccion) {
     }
 }
 
-// ============ CARRUSEL HERO ============
-const images = document.querySelectorAll(".hero img");
-const leftArrow = document.querySelector(".arrow.left");
-const rightArrow = document.querySelector(".arrow.right");
 
-let current = 0;
-function showImage(index) {
-    images.forEach(img => img.classList.remove("active"));
-    if (images.length > 0) {
-        images[index].classList.add("active");
-    }
-}
-
-// Inicialización del carrusel hero
-if (rightArrow && leftArrow && images.length > 0) {
-    rightArrow.addEventListener("click", () => {
-        current = (current + 1) % images.length;
-        showImage(current);
-    });
-    leftArrow.addEventListener("click", () => {
-        current = (current - 1 + images.length) % images.length;
-        showImage(current);
-    });
-    showImage(current);
-}
 
 
 // ============ MODALES LOGIN / REGISTRO ============
@@ -223,4 +199,45 @@ document.addEventListener("DOMContentLoaded", () => {
     // Inicialización al cargar la página
     mostrarSeccion("inicio");
     actualizarEstadoSesion();
+});
+
+// ============ Expose functions to global (for inline onclick attributes) ============
+// HTML uses inline attributes like onclick="iniciarSesion()" which run in the global scope.
+// Because this file is an ES module, functions are module-scoped; we must attach them to window.
+window.mostrarModalLogin = mostrarModalLogin;
+window.cerrarModalLogin = cerrarModalLogin;
+window.mostrarModalRegistro = mostrarModalRegistro;
+window.cerrarModalRegistro = cerrarModalRegistro;
+window.iniciarSesion = iniciarSesion;
+window.registrarUsuario = registrarUsuario;
+window.cerrarSesion = cerrarSesion;
+window.cerrarModalProducto = cerrarModalProducto;
+window.redirigir = redirigir;
+window.scrollCarrusel = scrollCarrusel;
+
+// ============ Re-initialize hero carousel when DOM is ready ============
+document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('.hero img');
+    const leftArrow = document.querySelector('.arrow.left');
+    const rightArrow = document.querySelector('.arrow.right');
+
+    let current = 0;
+    function showImage(index) {
+        images.forEach(img => img.classList.remove('active'));
+        if (images.length > 0) {
+            images[index].classList.add('active');
+        }
+    }
+
+    if (rightArrow && leftArrow && images.length > 0) {
+        rightArrow.addEventListener('click', () => {
+            current = (current + 1) % images.length;
+            showImage(current);
+        });
+        leftArrow.addEventListener('click', () => {
+            current = (current - 1 + images.length) % images.length;
+            showImage(current);
+        });
+        showImage(current);
+    }
 });

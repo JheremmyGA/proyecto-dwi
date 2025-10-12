@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
+    <title>Detalle de prenda</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kivora - Secciones</title>
+    <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../Css/style.css">
     <link rel="stylesheet" href="../Css/seccGeneric.css">
-    
+    <link rel="stylesheet" href="../Css/detalle_producto_prenda.css">
 
     <script type="module" src="../Utils/HTTPRequest.js"></script>
     <script type="module" src="../Utils/PersistentData.js"></script>
     <script type="module" src="../Javascript/javascript.js"></script>
-    <script type="module" src="../Javascript/seccGeneric.js"></script>
+    <script type="module" src="../Javascript/detalle_producto_prenda.js"></script>
     <script src="../Javascript/carrito.js" defer></script>
-</head>
+    
 
+</head>
 
 <body>
     <header class="header-principal">
@@ -42,8 +45,7 @@
 
             <!-- Ícono del carrito -->
             <div id="carrito-icono">
-                <img src="imagenes/carrito2.png" alt="Carrito" />
-                <span id="contador-carrito" class="contador-carrito"></span>
+                <img src="imagenes/carrito.png" alt="Carrito" />
                 <div id="carrito-contenido">
                     <table id="lista-carrito">
                         <thead>
@@ -62,6 +64,7 @@
         </div>
     </header>
 
+
     <main>
         <div class="menu">
         <!-- Enlaces de navegación -->
@@ -76,10 +79,6 @@
         <div class="menu-secciones">
             <!-- Enlaces de navegación -->
             <div class="menu-secciones-enlaces" id="categoria-menu">
-                <!-- <a href="#" onclick="redirigir('seccCaballeros.html')">Caballeros</a>
-                <a href="#" onclick="redirigir('seccDamas.html')">Damas</a>
-                <a href="#" onclick="redirigir('seccNinos.html')">Niños</a>
-                <a href="#" onclick="redirigir('seccNinas.html')">Niñas</a>-->
             </div>
         </div>
 
@@ -88,54 +87,99 @@
             <p class="descripcion-seccion" id="descripcion-seccion"></p>
         </div>
 
-        <div class="contenedor-principal">
-            <aside class="barra-lateral-filtro">
+       
+        <div class="contenedor-cuadricula-productos">
+            <div class="cuadricula-productos" id="cuadricula-productos">
+                <!-- Productos insertados por JS -->
+        </div>
 
-                <h3>Sección</h3>
-                <h2 class="titulo-filtro">Damas</h2>
 
-                <div class="grupo-filtro">
-                    <label for="filtro-temporada">Temporada</label>
-                    <select id="filtro-temporada">
-                        <option value="">Todo</option>
-                        <option value="Verano">Verano</option>
-                        <option value="Otoño">Otoño</option>
-                        <option value="Invierno">Invierno</option>
-                        <option value="Primavera">Primavera</option>
-                    </select>
+        <section class="detalle_producto">
+            <!-- Encabezado del Producto -->
+            <div id="product-header" class="product-header">
+                <h2 id="product-name" class="product-name"></h2>
+                <p id="product-brand" class="product-brand"></p>
+            </div>
+
+            <div class="detail-grid">
+                <!-- Zona de Imágenes -->
+                <div>
+                    <div class="flex-grow">
+                        <img id="main-product-image"
+                            class="product-image image-main"
+                            src=""
+                            alt="Imagen principal del producto">
+                    </div>
                 </div>
 
-                <div class="grupo-filtro">
-                    <label for="filtro-marca">Marca</label>
-                    <select id="filtro-marca">
-                        <option value="">Todo</option>
-                        <option value="University Club">University Club</option>
-                        <option value="Basement">Basement</option>
-                        <option value="Levis">Levis</option>
-                        <option value="Newport">Newport</option>
-                    </select>
-                </div>
+                <!-- Zona de Opciones e Información -->
+                <div class="product-options">
+                    <!-- Color -->
+                    <div id="product-color-selector">
+                        <p class="product-meta">Color: <span id="selected-color-name" class="selected-color-name"></span></p>
+                        <div id="color-swatches" class="swatches">
+                            <!-- Swatches de color se insertarán aquí por JS -->
+                        </div>
+                    </div>
 
-                <div class="grupo-filtro">
-                    <label for="filtro-categoria">Categoría</label>
-                    <select id="filtro-categoria">
-                        <option value="">Todo</option>
-                        <option value="Chaleco">Chaleco</option>
-                        <option value="Casaca">Casaca</option>
-                    </select>
-                </div>
+                    <!-- Tallas -->
+                    <div id="product-size-selector">
+                        <p class="product-meta">Talla:</p>
+                        <div id="size-buttons" class="size-buttons">
+                            <!-- Botones de talla se insertarán aquí por JS -->
+                        </div>
+                    </div>
 
-                <button id="boton-aplicar-filtros" class="boton-filtro">Filtrar</button>
-                <button id="boton-reset-filtros" class="boton-filtro" type="button">Limpiar</button>
-            </aside>
+                    <!-- Stock -->
+                    <div class="section-divider">
+                        <p class="product-meta">
+                            Disponible: <span id="current-stock" class="current-stock">--</span> existencias
+                        </p>
+                    </div>
 
-            <div class="contenedor-cuadricula-productos">
-                <div class="cuadricula-productos" id="cuadricula-productos">
+                    <!-- Cantidad y Precio -->
+                    <div class="qty-price-row">
+                        <!-- Selector de Cantidad -->
+                        <div class="qty-controls">
+                            <p class="product-meta">Cantidad</p>
+                            <button onclick="handleQuantityChange(-1)" class="qty-btn" id="btn-decrement">-</button>
+                            <input type="number" id="quantity-input" value="1" min="1" class="quantity-input" readonly>
+                            <button onclick="handleQuantityChange(1)" class="qty-btn" id="btn-increment">+</button>
+                        </div>
+
+                        <!-- Precio -->
+                        <div class="price-area">
+                            <p class="product-meta">Precio</p>
+                            <p id="product-price" class="product-price">S/ 0.00</p>
+                        </div>
+                    </div>
+
+                    <!-- Botón de Acción Único -->
+                    <div class="flex flex-col space-y-3 pt-6">
+                        <button id="add-to-cart-btn" class="w-full bg-red-600 text-white py-3 rounded-xl font-bold hover:bg-red-700 transition duration-300 shadow-md disabled:bg-gray-400">
+                            Añadir al carrito
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </section>
 
+        <!-- SECCIONES INFERIORES: Lo más vendidos & Liquidación -->
+        <div class="novedades">
+            <h2>Lo más vendidos</h2>
+            <div id="loMasVendidos" class="cuadricula-productos">
+                <!-- Productos insertados por JS -->
+            </div>
+        </div>
+
+        <div class="categoria" >
+            <h2>Liquidación</h2>
+            <div id="liquidacion" class="cuadricula-productos">
+                <!-- Productos insertados por JS -->
+            </div>
+        </div>
+
+    </main>
 
     <!-- Footer -->
     <footer class="footer-kivora">
@@ -179,5 +223,6 @@
             © El contenido de esta página web está protegido por copyright y es propiedad de Kivora S.A.C 2025
         </div>
     </footer>
+
 </body>
 </html>
