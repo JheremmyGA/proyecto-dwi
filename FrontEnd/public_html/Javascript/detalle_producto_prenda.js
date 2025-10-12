@@ -1,11 +1,9 @@
 
 // --- DATOS SIMULADOS DEL PRODUCTO PRINCIPAL ---
 const productData = {
-    id: 101,
     nombre: "Chaleco de traje",
     marca: "Basement",
     precio: 50.00,
-    moneda: "S/",
     imagenes: {
         Negro: "imagenes/hombre/Poleras/Poleron Doo.png",
         Blanco: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png",
@@ -23,7 +21,7 @@ const productData = {
 };
 
 // --- DATOS SIMULADOS PARA SECCIONES INFERIORES ---
-const relatedProducts = [
+const productosPrueba = [
     { nombre: "Loose Jeans", marca: "Basement", precio: 12.00, imagen: "imagenes/hombre/Poleras/Poleron Doo.png" },
     { nombre: "Chaleco de traje", marca: "Basement", precio: 12.00, imagen: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png"},
     { nombre: "Casaca en lona de algodón", marca: "Basement", precio: 12.00, imagen: "imagenes/hombre/Poleras/Poleron Doo.png" },
@@ -37,7 +35,7 @@ let selectedQuantity = 1;
 
 
 
-function initializeProductView() {
+function iniciarVistaProductos() {
     // Encabezado y precio
     const nameEl = document.getElementById('product-name');
     const brandEl = document.getElementById('product-brand');
@@ -45,11 +43,11 @@ function initializeProductView() {
 
     if (nameEl) nameEl.textContent = productData.nombre;
     if (brandEl) brandEl.textContent = productData.marca;
-    if (priceEl) priceEl.textContent = `${productData.moneda} ${productData.precio.toFixed(2)}`;
+        if (priceEl) priceEl.textContent = `S/ ${productData.precio.toFixed(2)}`;
 
     // Secciones inferiores
-    renderRelatedProducts('loMasVendidos', relatedProducts, 'bg-white text-gray-900');
-    renderRelatedProducts('liquidacion', relatedProducts, 'bg-white text-gray-900');
+    renderProductosPrueba('loMasVendidos', productosPrueba);
+    renderProductosPrueba('liquidacion', productosPrueba);
 
     // Selectores y UI
     renderColorSelector();
@@ -100,7 +98,7 @@ function renderSizeButtons() {
 
         const button = document.createElement('button');
         button.textContent = talla;
-        button.className = `size-button px-4 py-2 border rounded-xl font-semibold text-gray-800 ${talla === selectedSize ? 'selected' : 'border-gray-300'} ${isDisabled ? 'disabled' : ''}`;
+        button.className = `size-button ${talla === selectedSize ? 'selected' : 'border-gray-300'} ${isDisabled ? 'disabled' : ''}`;
         button.disabled = isDisabled;
 
         button.onclick = () => {
@@ -132,26 +130,26 @@ function updateStockDisplay() {
     );
     const stock = currentOption ? currentOption.stock : 0;
 
-    const stockEl = document.getElementById('current-stock');
+    const stockEl = document.getElementById('stock-disponible');
     if (stockEl) {
         stockEl.textContent = stock;
         stockEl.className = `font-bold ${stock > 0 ? 'text-green-600' : 'text-red-600'}`;
     }
 
-    const addToCartBtn = document.getElementById('add-to-cart-btn');
-    if (addToCartBtn) {
+    const agregarCarrito = document.getElementById('agregarCarrito');
+    if (agregarCarrito) {
         if (stock > 0) {
-            addToCartBtn.disabled = false;
-            addToCartBtn.textContent = 'Añadir al carrito';
+            agregarCarrito.disabled = false;
+            agregarCarrito.textContent = 'Añadir al carrito';
         } else {
-            addToCartBtn.disabled = true;
-            addToCartBtn.textContent = 'Agotado';
+            agregarCarrito.disabled = true;
+            agregarCarrito.textContent = 'Agotado';
         }
     }
 
     // Reset quantity and controls
     selectedQuantity = 1;
-    const qtyInput = document.getElementById('quantity-input');
+    const qtyInput = document.getElementById('cantidad-seleccionada');
     if (qtyInput) qtyInput.value = selectedQuantity;
     updateQuantityButtons();
 }
@@ -189,38 +187,37 @@ function handleQuantityChange(change) {
     else if (newQuantity > maxStock) newQuantity = maxStock;
 
     selectedQuantity = newQuantity;
-    const qtyInput = document.getElementById('quantity-input');
+    const qtyInput = document.getElementById('cantidad-seleccionada');
     if (qtyInput) qtyInput.value = selectedQuantity;
     updateQuantityButtons(maxStock);
 }
 
 function updateQuantityButtons(maxStock) {
-    const stockVal = (typeof maxStock === 'number' && maxStock >= 0) ? maxStock : parseInt(document.getElementById('current-stock')?.textContent || '0', 10);
-    const btnDecrement = document.getElementById('btn-decrement');
-    const btnIncrement = document.getElementById('btn-increment');
+    const stockVal = (typeof maxStock === 'number' && maxStock >= 0) ? maxStock : parseInt(document.getElementById('stock-disponible')?.textContent || '0', 10);
+    const btnDecrement = document.getElementById('btn-decremento');
+    const btnIncrement = document.getElementById('btn-incremento');
 
     if (btnDecrement) btnDecrement.disabled = selectedQuantity <= 1;
     if (btnIncrement) btnIncrement.disabled = selectedQuantity >= stockVal || stockVal === 0;
 }
 
 function updateMainImage(newUrl) {
-    const mainImage = document.getElementById('main-product-image');
+    const mainImage = document.getElementById('imagen-producto-principal');
     if (mainImage && newUrl) mainImage.src = newUrl;
 }
 
-/* Render products in bottom sections */
-function renderRelatedProducts(containerId, products, cardClasses) {
+
+function renderProductosPrueba(containerId, products) {
     const container = document.getElementById(containerId);
     if (!container) return;
     container.innerHTML = '';
 
-    // Reutilizar la clase .tarjeta-producto para mantener el mismo estilo
     products.forEach(product => {
         const tarjeta = document.createElement('div');
-        tarjeta.className = 'tarjeta-producto';
+        tarjeta.className = 'contenedor-prendas';
         tarjeta.innerHTML = `
             <img src="${product.imagen}" alt="${product.nombre}">
-            <p class="precio">${product.moneda || productData.moneda} ${product.precio.toFixed(2)}</p>
+                <p class="precio">S/ ${product.precio.toFixed(2)}</p>
             <p class="nombre">${product.nombre}</p>
             <p class="marca">${product.marca}</p>
         `;
@@ -238,7 +235,7 @@ window.handleQuantityChange = handleQuantityChange;
 window.handleSizeChange = handleSizeChange;
 window.handleColorChange = handleColorChange;
 window.redirigir = redirigir;
-window.initializeProductView = initializeProductView;
+window.iniciarVistaProductos = iniciarVistaProductos;
 
 /* Initialize when DOM ready */
-document.addEventListener('DOMContentLoaded', initializeProductView);
+document.addEventListener('DOMContentLoaded', iniciarVistaProductos);
