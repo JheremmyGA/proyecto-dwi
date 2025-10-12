@@ -4,6 +4,9 @@ const listaCarrito = document.querySelector("#lista-carrito tbody");
 const vaciarCarritoBtn = document.getElementById("vaciar-carrito"); 
 const btnCheckout = document.getElementById('img-carrito'); 
 
+// Nuevo elemento para el contador en el header (debe existir en index.html y otras páginas)
+const contadorCarrito = document.getElementById('contador-carrito'); 
+
 let articulosCarrito = []; 
 
 // Modales de Pago
@@ -21,6 +24,29 @@ function guardarCarrito() {
 function cargarCarrito() {
     const carritoGuardado = localStorage.getItem('articulosCarrito');
     articulosCarrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+}
+
+// ============ FUNCIONES DE CONTADOR ============
+
+/**
+ * Calcula el número total de ítems (sumando cantidades) y actualiza el icono.
+ */
+function actualizarContadorCarrito() {
+    if (!contadorCarrito) return; // Salir si el elemento no existe
+
+    // Calcula el total sumando la propiedad 'cantidad' de todos los artículos
+    const totalItems = articulosCarrito.reduce((total, articulo) => {
+        return total + (parseInt(articulo.cantidad) || 0); 
+    }, 0);
+
+    // Muestra/Oculta el contador y actualiza el valor
+    if (totalItems > 0) {
+        contadorCarrito.textContent = totalItems;
+        contadorCarrito.style.display = 'block'; 
+    } else {
+        contadorCarrito.textContent = 0;
+        contadorCarrito.style.display = 'none'; 
+    }
 }
 
 
@@ -65,6 +91,7 @@ function agregarProductoAlCarrito(e) {
         }
 
         guardarCarrito(); // GUARDAR en localStorage
+        actualizarContadorCarrito(); // <--- ACTUALIZAR CONTADOR
         alert(`"${infoProducto.nombre}" agregado al carrito. Ve a carrito.html para revisar.`);
     }
 }
@@ -82,6 +109,7 @@ function eliminarProducto(e) {
 
         guardarCarrito();
         carritoHTML();
+        actualizarContadorCarrito(); // <--- ACTUALIZAR CONTADOR
     }
 }
 
@@ -108,6 +136,7 @@ function actualizarCantidad(e) {
 
         guardarCarrito();
         carritoHTML();
+        actualizarContadorCarrito(); // <--- ACTUALIZAR CONTADOR
     }
 }
 
@@ -178,6 +207,7 @@ function vaciarCarrito() {
     articulosCarrito = []; 
     guardarCarrito();
     carritoHTML();
+    actualizarContadorCarrito(); // <--- ACTUALIZAR CONTADOR
     alert("Se ha vaciado el carrito.");
 }
 
@@ -211,6 +241,7 @@ window.actualizarCantidad = actualizarCantidad;
 document.addEventListener('DOMContentLoaded', () => {
     // Load carrito from localStorage
     cargarCarrito();
+    actualizarContadorCarrito(); // <--- LLAMADA INICIAL AL CARGAR LA PÁGINA
 
     // Check if carrito elements exist before initializing
     if (listaCarrito) {
@@ -256,3 +287,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+
+
+
+
+
+
