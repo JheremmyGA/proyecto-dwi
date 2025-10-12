@@ -3,7 +3,7 @@ import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 
 // 1. Datos de Productos (Simulación)
 const datosProductos = [
-    // La imagen 'product_black.png' y 'product_white.png' son placeholders
+    // Las imágenes 'product_black.png' y 'product_white.png' son marcadores de posición
     { id: 1, nombre: 'Camisa Oxford Slim Fit', marca: 'University Club', temporada: 'Verano', categoria: 'Camisas', precio: 'S/89.00', imagen: 'camisa_oxford.png'},
     { id: 2, nombre: 'Polo Básico de Algodón', marca: 'Basement', temporada: 'Primavera', categoria: 'Polos', precio: 'S/59.00', imagen: 'polo_basico.png'},
     { id: 3, nombre: 'Pantalón Chino Stretch', marca: 'University Club', temporada: 'Otoño', categoria: 'Pantalones', precio: 'S/119.00', imagen: 'pantalon_chino.png'},
@@ -22,7 +22,7 @@ const datosProductos = [
     { id: 16, nombre: 'Casaca Bomber Minimal', marca: 'Newport', temporada: 'Invierno', categoria: 'Casacas', precio: 'S/159.00', imagen: 'casaca_bomber.png'}
 ];
 
-// DOM elements will be looked up when DOM is ready to avoid nulls.
+// Los elementos del DOM se buscarán cuando el DOM esté listo para evitar valores nulos.
 let cuadriculaProductos = null;
 let filtroTemporada = null;
 let filtroMarca = null;
@@ -30,10 +30,10 @@ let filtroCategoria = null;
 let botonAplicarFiltros = null;
 let botonResetFiltros = null;
 
-// Helper: get selected values from a <select>. Treat empty string ("") as no selection.
+// Ayuda: obtener valores seleccionados de un <select>. Tratar la cadena vacía ("") como sin selección.
 function getSelectedValues(select) {
     if (!select) return [];
-    // For single-selects, selectedOptions will contain one option; for 'Todo' value=='' we ignore it.
+    // Para selects simples, selectedOptions contendrá una opción; para 'Todo' value=='' lo ignoramos.
     const values = Array.from(select.selectedOptions).map(o => (o.value || '').trim()).filter(v => v !== '');
     return values;
 }
@@ -45,23 +45,28 @@ function crearTarjetaProducto(producto) {
     tarjeta.setAttribute('data-marca', producto.marca);
     tarjeta.setAttribute('data-temporada', producto.temporada);
     tarjeta.setAttribute('data-categoria', producto.categoria);
-    // Extraer precio numérico para data-precio (ej: 'S/89.00' -> '89.00')
-    const precioData = String(producto.precio || '').replace(/[^\d.]/g, '').trim();
 
     tarjeta.innerHTML = `
         <img src="${producto.imagen}" alt="${producto.nombre}">
         <p class="precio">${producto.precio}</p>
         <p class="nombre">${producto.nombre}</p>
         <p class="marca">${producto.marca}</p>
-        <p class="color">${producto.color}</p>
-        <a href="#" class="agregar-carrito" data-id="${producto.id}" data-nombre="${producto.nombre}" data-precio="${precioData}" data-imagen="${producto.imagen}">Agregar al carrito</a>
+        <button class="ver-detalle" onclick="redirigirDetalle(${producto.id})">Ver detalle</button>
     `;
     return tarjeta;
 }
 
+// Función para redirigir a la página de detalle del producto
+function redirigirDetalle(productId) {
+    window.location.href = `detalle_producto_prenda.html?id=${productId}`;
+}
+
+// Exponer la función redirigirDetalle al ámbito global
+window.redirigirDetalle = redirigirDetalle;
+
 // 3. Función para renderizar todos los productos
 function renderizarProductos(productos) {
-    cuadriculaProductos.innerHTML = ''; // Limpia el grid
+    cuadriculaProductos.innerHTML = ''; // Limpia la cuadrícula
     productos.forEach(producto => {
         cuadriculaProductos.appendChild(crearTarjetaProducto(producto));
     });
@@ -100,7 +105,7 @@ function redirigir(nombre) {
     window.location.href = nombre;
 }
 
-// ============ CONFIGURACION DE GENEROS ============
+// ============ CONFIGURACIÓN DE GÉNEROS ============
 async function MostrarGeneroSelected(){
     const genero = await HTTPS_Request.GetGenero(PERSISTENT_DATA.GetSelectedGenero());
 
@@ -113,7 +118,7 @@ async function MostrarGeneroSelected(){
     const descripcion = document.getElementById("descripcion-seccion");
     descripcion.innerHTML = "";
     descripcion.innerHTML = genero.descripcion;
-    // Actualizar el título del bloque de filtros (sidebar) para reflejar la sección seleccionada
+    // Actualizar el título del bloque de filtros (barra lateral) para reflejar la sección seleccionada
     const tituloFiltro = document.querySelector('.titulo-filtro');
     if (tituloFiltro) tituloFiltro.textContent = genero.nombre;
 }
@@ -122,7 +127,7 @@ async function MostrarGeneroSelected(){
 document.addEventListener('DOMContentLoaded', () => {
     MostrarGeneroSelected();
     // 1. Inicializar la cuadrícula con todos los productos al cargar
-    // Lookup DOM elements now (safe)
+    // Buscar elementos del DOM ahora (seguro)
     cuadriculaProductos = document.getElementById('cuadricula-productos');
     filtroTemporada = document.getElementById('filtro-temporada');
     filtroMarca = document.getElementById('filtro-marca');

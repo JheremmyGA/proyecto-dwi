@@ -654,7 +654,7 @@ input[type="submit"] {
 /* ===================================================== */
 
 /* === BOTONES Y SECCIONES === */
-.agregar-carrito {
+.ver-detalle {
   display: inline-block;
   background-color: #949191;
   color: white;
@@ -667,7 +667,7 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-.agregar-carrito:hover {
+.ver-detalle:hover {
   background-color: #ccc;
 }
 
