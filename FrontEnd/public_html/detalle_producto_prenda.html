@@ -104,36 +104,36 @@
             <div class="detail-grid">
                 <!-- Zona de Imágenes -->
                 <div>
-                    <div class="flex-grow">
-                        <img id="main-product-image"
+                    <div>
+                        <img id="imagen-producto-principal"
                             class="product-image image-main"
                             src=""
-                            alt="Imagen principal del producto">
+                            alt="Producto seleccionado">
                     </div>
                 </div>
 
                 <!-- Zona de Opciones e Información -->
-                <div class="product-options">
+                <div class="informacion-producto">
                     <!-- Color -->
-                    <div id="product-color-selector">
-                        <p class="product-meta">Color: <span id="selected-color-name" class="selected-color-name"></span></p>
+                    <div id="color-producto">
+                        <p class="texto-descripcion">Color: <span id="selected-color-name" class="selected-color-name"></span></p>
                         <div id="color-swatches" class="swatches">
                             <!-- Swatches de color se insertarán aquí por JS -->
                         </div>
                     </div>
 
                     <!-- Tallas -->
-                    <div id="product-size-selector">
-                        <p class="product-meta">Talla:</p>
+                    <div id="talla-producto">
+                        <p class="texto-descripcion">Talla:</p>
                         <div id="size-buttons" class="size-buttons">
                             <!-- Botones de talla se insertarán aquí por JS -->
                         </div>
                     </div>
 
                     <!-- Stock -->
-                    <div class="section-divider">
-                        <p class="product-meta">
-                            Disponible: <span id="current-stock" class="current-stock">--</span> existencias
+                    <div class="existencias-producto">
+                        <p class="texto-descripcion">
+                            Disponible: <span id="stock-disponible" class="stock-disponible">--</span> existencias
                         </p>
                     </div>
 
@@ -141,22 +141,22 @@
                     <div class="qty-price-row">
                         <!-- Selector de Cantidad -->
                         <div class="qty-controls">
-                            <p class="product-meta">Cantidad</p>
-                            <button onclick="handleQuantityChange(-1)" class="qty-btn" id="btn-decrement">-</button>
-                            <input type="number" id="quantity-input" value="1" min="1" class="quantity-input" readonly>
-                            <button onclick="handleQuantityChange(1)" class="qty-btn" id="btn-increment">+</button>
+                            <p class="texto-descripcion">Cantidad</p>
+                            <button onclick="handleQuantityChange(-1)" class="btn-cantidad" id="btn-decremento">-</button>
+                            <input type="number" id="cantidad-seleccionada" value="1" min="1" class="cantidad-seleccionada" readonly>
+                            <button onclick="handleQuantityChange(1)" class="btn-cantidad" id="btn-incremento">+</button>
                         </div>
 
                         <!-- Precio -->
                         <div class="price-area">
-                            <p class="product-meta">Precio</p>
+                            <p class="texto-descripcion">Precio</p>
                             <p id="product-price" class="product-price">S/ 0.00</p>
                         </div>
                     </div>
 
                     <!-- Botón de Acción Único -->
-                    <div class="flex flex-col space-y-3 pt-6">
-                        <button id="add-to-cart-btn" class="w-full bg-red-600 text-white py-3 rounded-xl font-bold hover:bg-red-700 transition duration-300 shadow-md disabled:bg-gray-400">
+                    <div>
+                        <button id="agregarCarrito">
                             Añadir al carrito
                         </button>
                     </div>

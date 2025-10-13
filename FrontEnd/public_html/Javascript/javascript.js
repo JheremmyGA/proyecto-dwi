@@ -111,16 +111,28 @@ function iniciarSesion() {
 }
 
 function registrarUsuario() {
-    const usuario = document.getElementById("registroUsuario").value;
-    const clave = document.getElementById("registroClave").value;
+    // 1. Obtener los valores de TODOS los campos
+    const nombre = document.getElementById("registroUsuario").value; // Nombre Completo
+    const apellido = document.getElementById("registroApellido").value; // Apellido Completo (Nuevo)
+    const correo = document.getElementById("registroCorreo").value; // Correo Electrónico (Nuevo)
+    const clave = document.getElementById("registroClave").value; // Contraseña 
 
-    if (usuario && clave) {
-        localStorage.setItem("usuarioActivo", usuario);
+    // 2. Validar que todos los campos estén llenos
+    if (nombre && apellido && correo && clave) {
+        // En un escenario real, aquí se enviarían los datos a un servidor.
+        // Aquí solo simulamos el inicio de sesión con el nombre completo.
+        
+        // Puedes guardar el nombre completo para el saludo
+        const nombreCompleto = `${nombre} ${apellido}`; 
+        
+        // Usamos el nombre completo como 'usuario activo' para la simulación
+        localStorage.setItem("usuarioActivo", nombreCompleto); 
+        
         cerrarModalRegistro();
         actualizarEstadoSesion();
-        alert(`¡Registro exitoso! Bienvenido, ${usuario}.`);
+        alert(`¡Registro exitoso! Bienvenido, ${nombreCompleto}. Tu correo es: ${correo}`);
     } else {
-        alert("Por favor, completa ambos campos para registrarte.");
+        alert("Por favor, completa todos los campos para registrarte: Nombre, Apellido, Correo y Contraseña.");
     }
 }
 

@@ -11,7 +11,7 @@ h2 {
   text-align: center;
 }
 
-/* Oculta secciones que se manejan por JS/redirección */
+/* Oculta seciones que se manejan por JS/redirección */
 #Nosotros,
 #Mi-Tienda,
 #Catálogo,
@@ -617,17 +617,23 @@ input[type="submit"] {
   font-size: 15px;
 }
 
-.item button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 4px;
-  cursor: pointer;
+.item .agregar-carrito, /* Agrega el estilo al enlace "Comprar" */
+.item button { /* Mantiene el estilo para cualquier otro botón */
+display: inline-block; /* NECESARIO para que el enlace se comporte como bloque y tome padding */
+text-decoration: none; /* Quita el subrayado del enlace */
+text-align: center; 
+background-color: #ff0000;
+color: white;
+border: none;
+padding: 8px 14px;
+border-radius: 4px;
+cursor: pointer;
+margin-top: 5px; 
 }
 
+.item .agregar-carrito:hover, /* Agrega el efecto hover al enlace */
 .item button:hover {
-  background-color: #0056b3;
+background-color: #ff3300;
 }
 
 .scroll-btn {
