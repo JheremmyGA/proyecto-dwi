@@ -46,6 +46,10 @@ public class ProductoService {
         productoExistente.setNombre(datosNuevos.getNombre());
         productoExistente.setDescripcion(datosNuevos.getDescripcion());
         productoExistente.setPrecio(datosNuevos.getPrecio());
+        productoExistente.setMarca(datosNuevos.getMarca());
+        productoExistente.setTemporada(datosNuevos.getTemporada());
+        productoExistente.setGenero(datosNuevos.getGenero());
+        productoExistente.setCategoria(datosNuevos.getCategoria());
 
         return productoRepository.save(productoExistente);
     }
