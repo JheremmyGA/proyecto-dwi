@@ -19,8 +19,8 @@ import com.dwi.icommerce.DTO.SoftCatalogProductDTO;
 import com.dwi.icommerce.DTO.TallaColorStockDTO;
 import com.dwi.icommerce.model.ProductMain;
 import com.dwi.icommerce.model.Producto;
-import com.dwi.icommerce.service.ProductoService;
 import com.dwi.icommerce.service.ProductMainService;
+import com.dwi.icommerce.service.ProductoService;
 
 @RestController
 @RequestMapping("/api/catalog")
@@ -46,7 +46,7 @@ public class CatalogController {
             .map(a -> new SoftCatalogProductDTO(a))
             .collect(Collectors.toList());
         
-        return ResponseEntity.status(HttpStatus.FOUND).body(listaFinal);
+        return ResponseEntity.status(HttpStatus.OK).body(listaFinal);
     }
 
     @GetMapping("/all/genero/filter")
@@ -62,7 +62,7 @@ public class CatalogController {
             .map(a -> new SoftCatalogProductDTO(a))
             .collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(listaFinal);
+        return ResponseEntity.status(HttpStatus.OK).body(listaFinal);
     }
     
     // </editor-fold>
@@ -80,7 +80,7 @@ public class CatalogController {
             .collect(Collectors.toList());
         }
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(new ExtendedCatalogProductDTO(producto, tallas_colores));
+        return ResponseEntity.status(HttpStatus.OK).body(new ExtendedCatalogProductDTO(producto, tallas_colores));
     }
     
 }

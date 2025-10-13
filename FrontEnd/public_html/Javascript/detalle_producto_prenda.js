@@ -1,24 +1,5 @@
-
-// --- DATOS SIMULADOS DEL PRODUCTO PRINCIPAL ---
-const productData = {
-    nombre: "Chaleco de traje",
-    marca: "Basement",
-    precio: 50.00,
-    imagenes: {
-        Negro: "imagenes/hombre/Poleras/Poleron Doo.png",
-        Blanco: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png",
-    },
-    tallasColores: [
-        { id: 1, talla: "S", color: "Negro", stock: 5, sku: "001N_S" },
-        { id: 2, talla: "M", color: "Negro", stock: 12, sku: "001N_M" },
-        { id: 3, talla: "L", color: "Negro", stock: 8, sku: "001N_L" },
-        { id: 4, talla: "XL", color: "Negro", stock: 1, sku: "001N_XL" },
-        { id: 5, talla: "S", color: "Blanco", stock: 20, sku: "001B_S" },
-        { id: 6, talla: "M", color: "Blanco", stock: 15, sku: "001B_M" },
-        { id: 7, talla: "L", color: "Blanco", stock: 0, sku: "001B_L" },
-        { id: 8, talla: "XL", color: "Blanco", stock: 3, sku: "001B_XL" }
-    ]
-};
+import * as HTTPS_Request from '../Utils/HTTPRequest.js';
+import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 
 // --- DATOS SIMULADOS PARA SECCIONES INFERIORES ---
 const productosPrueba = [
@@ -28,34 +9,53 @@ const productosPrueba = [
     { nombre: "Zapatos Derby", marca: "Basement", precio: 12.00, imagen: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png" }
 ];
 
+const productData = {
+    imagenes: {
+        Negro: "imagenes/hombre/Poleras/Poleron Doo.png",
+        Blanco: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png",
+    }
+};
+
+
 // --- ESTADO GLOBAL ---
-let selectedColor = productData.tallasColores[0].color;
-let selectedSize = productData.tallasColores[0].talla;
+let selectedColor;
+let selectedSize;
 let selectedQuantity = 1;
+let detalleProducto;
 
 
+async function MostrarDetalleProducto(){
 
-function iniciarVistaProductos() {
+    detalleProducto = await HTTPS_Request.GetDetalleProducto(PERSISTENT_DATA.GetSelectedProductDetails());
+    if (!detalleProducto) return;
+
+    selectedColor = detalleProducto.tallasColores[0].color;
+    selectedSize = detalleProducto.tallasColores[0].talla;
+
     // Encabezado y precio
     const nameEl = document.getElementById('product-name');
     const brandEl = document.getElementById('product-brand');
     const priceEl = document.getElementById('product-price');
 
-    if (nameEl) nameEl.textContent = productData.nombre;
-    if (brandEl) brandEl.textContent = productData.marca;
-        if (priceEl) priceEl.textContent = `S/ ${productData.precio.toFixed(2)}`;
+    if (nameEl) nameEl.textContent = detalleProducto.nombre;
+    if (brandEl) brandEl.textContent = detalleProducto.marca;
+    if (priceEl) priceEl.textContent = `S/ ${detalleProducto.precio.toFixed(2)}`;
 
-    // Secciones inferiores
-    renderProductosPrueba('loMasVendidos', productosPrueba);
-    renderProductosPrueba('liquidacion', productosPrueba);
-
-    // Selectores y UI
+    renderCurrentColorTitle();
     renderColorSelector();
     updateMainImage(productData.imagenes[selectedColor]);
     renderSizeButtons();
     updateStockDisplay();
     updateQuantityButtons();
+}
 
+function MostrarVistaProductos() {
+    
+    // Secciones inferiores
+    renderProductosPrueba('loMasVendidos', productosPrueba);
+    renderProductosPrueba('liquidacion', productosPrueba);
+
+    // Selectores y UI
     const selColorEl = document.getElementById('selected-color-name');
     if (selColorEl) selColorEl.textContent = selectedColor;
 }
@@ -66,7 +66,7 @@ function renderColorSelector() {
     if (!colorSwatchesDiv) return;
     colorSwatchesDiv.innerHTML = '';
 
-    const uniqueColors = [...new Set(productData.tallasColores.map(item => item.color))];
+    const uniqueColors = [...new Set(detalleProducto.tallasColores.map(item => item.color))];
 
     uniqueColors.forEach(color => {
         const colorHex = color === 'Negro' ? '000000' : 'FFFFFF';
@@ -88,8 +88,8 @@ function renderSizeButtons() {
     if (!sizeButtonsDiv) return;
     sizeButtonsDiv.innerHTML = '';
 
-    const allSizes = [...new Set(productData.tallasColores.map(item => item.talla))];
-    const colorOptions = productData.tallasColores.filter(item => item.color === selectedColor);
+    const allSizes = [...new Set(detalleProducto.tallasColores.map(item => item.talla))];
+    const colorOptions = detalleProducto.tallasColores.filter(item => item.color === selectedColor);
 
     allSizes.forEach(talla => {
         const option = colorOptions.find(item => item.talla === talla);
@@ -125,7 +125,7 @@ function renderSizeButtons() {
 
 /* Stock display and add-to-cart state */
 function updateStockDisplay() {
-    const currentOption = productData.tallasColores.find(item =>
+    const currentOption = detalleProducto.tallasColores.find(item =>
         item.color === selectedColor && item.talla === selectedSize
     );
     const stock = currentOption ? currentOption.stock : 0;
@@ -159,14 +159,18 @@ function handleColorChange(newColor) {
     if (newColor === selectedColor) return;
     selectedColor = newColor;
 
-    const selColorEl = document.getElementById('selected-color-name');
-    if (selColorEl) selColorEl.textContent = newColor;
-
     const newImageUrl = productData.imagenes[newColor];
     updateMainImage(newImageUrl);
+    renderCurrentColorTitle();
     renderColorSelector();
     renderSizeButtons();
     updateStockDisplay();
+}
+
+function renderCurrentColorTitle(){
+    const selColorEl = document.getElementById('selected-color-name');
+    if (selColorEl) selColorEl.textContent = selectedColor;
+
 }
 
 function handleSizeChange(newSize) {
@@ -176,7 +180,7 @@ function handleSizeChange(newSize) {
 }
 
 function handleQuantityChange(change) {
-    const currentOption = productData.tallasColores.find(item =>
+    const currentOption = detalleProducto.tallasColores.find(item =>
         item.color === selectedColor && item.talla === selectedSize
     );
     const maxStock = currentOption ? currentOption.stock : 0;
@@ -235,7 +239,10 @@ window.handleQuantityChange = handleQuantityChange;
 window.handleSizeChange = handleSizeChange;
 window.handleColorChange = handleColorChange;
 window.redirigir = redirigir;
-window.iniciarVistaProductos = iniciarVistaProductos;
+//window.iniciarVistaProductos = iniciarVistaProductos;
 
 /* Initialize when DOM ready */
-document.addEventListener('DOMContentLoaded', iniciarVistaProductos);
+document.addEventListener('DOMContentLoaded', ()=>{
+    MostrarDetalleProducto();
+    MostrarVistaProductos();
+});
