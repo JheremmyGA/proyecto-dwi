@@ -29,6 +29,26 @@ const datosProductos = [
     { id: 16, nombre: 'Casaca Bomber Minimal', marca: 'Newport', temporada: 'Invierno', categoria: 'Casacas', precio: 'S/159.00', imagen: 'casaca_bomber.png'}
 ];
 
+// --- DATOS SIMULADOS DEL PRODUCTO PRINCIPAL ---
+const detalleProducto = {
+    nombre: "Chaleco de traje",
+    marca: "Basement",
+    precio: 50.00,
+    imagenes: {
+        Negro: "imagenes/hombre/Poleras/Poleron Doo.png",
+        Blanco: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png",
+    },
+    tallasColores: [
+        { id: 1, talla: "S", color: "Negro", stock: 5, sku: "001N_S" },
+        { id: 2, talla: "M", color: "Negro", stock: 12, sku: "001N_M" },
+        { id: 3, talla: "L", color: "Negro", stock: 8, sku: "001N_L" },
+        { id: 4, talla: "XL", color: "Negro", stock: 1, sku: "001N_XL" },
+        { id: 5, talla: "S", color: "Blanco", stock: 20, sku: "001B_S" },
+        { id: 6, talla: "M", color: "Blanco", stock: 15, sku: "001B_M" },
+        { id: 7, talla: "L", color: "Blanco", stock: 0, sku: "001B_L" },
+        { id: 8, talla: "XL", color: "Blanco", stock: 3, sku: "001B_XL" }
+    ]
+};
 
 
 export async function GetGeneros() {
@@ -68,6 +88,8 @@ export async function GetGenero(id){
         method: "GET"
       });   
 
+      
+
       if (!response.ok) {
         throw new Error("Error en la respuesta del servidor: " + response.status);
       } 
@@ -83,14 +105,19 @@ export async function GetGenero(id){
 }
 
 export async function GetCatalogByGenger(id) {
-  if(!useBackEnd){
+    if(!useBackEnd){
       return datosProductos;
     }
 
     try {
-      const response = await fetch(`http://localhost:9530/api/catalog/all/genero/${id}?`, {
+      const response = await fetch(`http://localhost:9530/api/catalog/all/genero/${id}`, {
         method: "GET"
       });   
+
+      // Si no hay contenido, retornamos null o un array vacío
+      if (response.status === 204) {
+        return []; // o null según prefieras
+      }
 
       if (!response.ok) {
         throw new Error("Error en la respuesta del servidor: " + response.status);
@@ -106,23 +133,119 @@ export async function GetCatalogByGenger(id) {
     }
 }
 
-/*
-export function CargarCategorias() {
-    try {
-      return fetch("http://localhost:9530/api/categoria", {
-                    method: "GET",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
-                    }).then(res => res.json());
+export async function GetTemporadas() {
+    if(!useBackEnd){
+      return datosProductos;
+    }
 
-      const lista = document.getElementById("productos");
-      data.forEach(p => {
-        const li = document.createElement("li");
-        li.textContent = `${p.nombre} - $${p.precio}`;
-        lista.appendChild(li);
-      });
+    try {
+      const response = await fetch(`http://localhost:9530/api/temporada`, {
+        method: "GET"
+      });   
+
+      // Si no hay contenido, retornamos null o un array vacío
+      if (response.status === 204) {
+        return []; // o null según prefieras
+      }
+
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del servidor: " + response.status);
+      } 
+
+      const data = await response.json();  
+
+      return data; // solo retornas la data
+
     } catch (error) {
       console.error("Error:", error);
+      return null; // opcional: retorna null si hay error
     }
-  }
-  */
+}
+
+export async function GetMarcas() {
+    if(!useBackEnd){
+      return datosProductos;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:9530/api/marca`, {
+        method: "GET"
+      });   
+
+      // Si no hay contenido, retornamos null o un array vacío
+      if (response.status === 204) {
+        return []; // o null según prefieras
+      }
+
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del servidor: " + response.status);
+      } 
+
+      const data = await response.json();  
+
+      return data; // solo retornas la data
+
+    } catch (error) {
+      console.error("Error:", error);
+      return null; // opcional: retorna null si hay error
+    }
+}
+
+export async function GetCategorias() {
+    if(!useBackEnd){
+      return datosProductos;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:9530/api/categoria`, {
+        method: "GET"
+      });   
+
+      // Si no hay contenido, retornamos null o un array vacío
+      if (response.status === 204) {
+        return []; // o null según prefieras
+      }
+
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del servidor: " + response.status);
+      } 
+
+      const data = await response.json();  
+
+      return data; // solo retornas la data
+
+    } catch (error) {
+      console.error("Error:", error);
+      return null; // opcional: retorna null si hay error
+    }
+}
+
+export async function GetDetalleProducto(id) {
+    if(!useBackEnd){
+      return detalleProducto;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:9530/api/catalog/producto/${id}`, {
+        method: "GET"
+      });   
+
+      // Si no hay contenido, retornamos null o un array vacío
+      if (response.status === 204) {
+        return []; // o null según prefieras
+      }
+
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del servidor: " + response.status);
+      } 
+
+      const data = await response.json();  
+
+      return data; // solo retornas la data
+
+    } catch (error) {
+      console.error("Error:", error);
+      return null; // opcional: retorna null si hay error
+    }
+}
+

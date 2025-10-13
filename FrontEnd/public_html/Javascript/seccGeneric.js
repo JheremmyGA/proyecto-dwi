@@ -30,14 +30,21 @@ function crearTarjetaProducto(producto) {
         <p class="precio">${producto.precio}</p>
         <p class="nombre">${producto.nombre}</p>
         <p class="marca">${producto.marca}</p>
-        <button class="ver-detalle" onclick="redirigirDetalle(${producto.id})">Ver detalle</button>
+        <button class="ver-detalle">Ver detalle</button>
     `;
+
+    const btnDetalle = tarjeta.querySelector('.ver-detalle');
+    btnDetalle.addEventListener('click', () => {
+        PERSISTENT_DATA.SelectProductDetails(producto.id);
+        redirigirDetalle();
+    });
+    
     return tarjeta;
 }
 
 // Función para redirigir a la página de detalle del producto
 function redirigirDetalle(productId) {
-    window.location.href = `detalle_producto_prenda.html?id=${productId}`;
+    window.location.href = `detalle_producto_prenda.html`;
 }
 
 // Exponer la función redirigirDetalle al ámbito global
@@ -106,8 +113,41 @@ async function MostrarGeneroSelected(){
     if (tituloFiltro) tituloFiltro.textContent = genero.nombre;
 }
 
+// ============ CONFIGURACIÓN FILTROS ============
+async function MostrarFiltros(){
+    const temporadas = await HTTPS_Request.GetTemporadas();
+    if (!temporadas) return;
+    crearFiltros("filtro-temporada", temporadas);
+
+    const categorias = await HTTPS_Request.GetCategorias();
+    if (!categorias) return;
+    crearFiltros("filtro-categoria", categorias);
+
+    const marcas = await HTTPS_Request.GetMarcas();
+    if (!marcas) return;
+    crearFiltros("filtro-marca", marcas);
+}
+
+function crearFiltros(id, data){
+    const filtro = document.getElementById(id);
+    filtro.innerHTML = ''; // Limpia la cuadrícula
+    filtro.appendChild(crearFiltro("","Todo"));
+    data.forEach(data => {
+        filtro.appendChild(crearFiltro(data.nombre, data.nombre));
+    });
+}
+
+function crearFiltro(value, text){
+    const optionTodo = document.createElement("option");
+        optionTodo.value = value; // valor vacío
+        optionTodo.text = text;
+
+    return optionTodo;
+}
+
 // 5. Inicialización y Evento del Botón
 document.addEventListener('DOMContentLoaded', () => {
+    MostrarFiltros();
     MostrarGeneroSelected();
     // 1. Inicializar la cuadrícula con todos los productos al cargar
     // Buscar elementos del DOM ahora (seguro)
