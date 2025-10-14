@@ -124,4 +124,5 @@ public class Producto {
     public void setMarca(Marca marca) {
         this.marca = marca;
     }
+    
 }
