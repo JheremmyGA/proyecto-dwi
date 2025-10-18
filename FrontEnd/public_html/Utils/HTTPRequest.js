@@ -29,7 +29,7 @@ const detalleProducto = {
     marca: "Basement",
     precio: 50.00,
     imagenes: {
-        Negro: "imagenes/hombre/Poleras/Poleron Doo.png",
+        Negro: "imagenes/hombre/Polo/Polo Petit Piqué Hombre Lacoste.png",
         Blanco: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png",
     },
     tallasColores: [
