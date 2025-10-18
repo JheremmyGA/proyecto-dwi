@@ -11,7 +11,7 @@ const productosPrueba = [
 
 const productData = {
     imagenes: {
-        Negro: "imagenes/hombre/Poleras/Poleron Doo.png",
+        Negro: "imagenes/hombre/Polo/Polo Petit Piqué Hombre Lacoste.png",
         Blanco: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png",
     }
 };

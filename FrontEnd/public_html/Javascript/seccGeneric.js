@@ -26,7 +26,7 @@ function crearTarjetaProducto(producto) {
     tarjeta.setAttribute('data-categoria', producto.categoria);
 
     tarjeta.innerHTML = `
-        <img src=""../imagenes/${producto.PreviewImage}" alt="${producto.nombre}">
+        <img src="${producto.PreviewImage}" alt="${producto.nombre}">
         <p class="precio">S/.${producto.precio}</p>
         <p class="nombre">${producto.nombre}</p>
         <p class="marca">${producto.marca}</p>
