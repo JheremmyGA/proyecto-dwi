@@ -56,43 +56,64 @@ function actualizarContadorCarrito() {
  * Agrega un producto al carrito.
  */
 function agregarProductoAlCarrito(e) {
-    if (e.target.classList.contains('agregar-carrito')) {
-        // *** CORRECCIÓN CLAVE: Prevenir el comportamiento por defecto (el salto a #) ***
+    // Permitir la ejecución si es el botón de detalle de producto ('agregarCarrito') 
+    // O si tiene la clase que usas en otras páginas ('agregar-carrito').
+    if (e.target.classList.contains('agregar-carrito') || e.target.id === 'agregarCarrito') {
+        
         e.preventDefault(); 
         
         const btn = e.target;
-        
-        // Lee los data-attributes del elemento clickeado (enlace de carrusel o botón de modal)
-        const infoProducto = {
-            imagen: btn.getAttribute("data-imagen"),
-            nombre: btn.getAttribute("data-nombre"),
-            precio: btn.getAttribute("data-precio"),
-            id: btn.getAttribute("data-id"),
-            cantidad: 1
-        };
+        let infoProducto = {};
 
-        if (!infoProducto.id || !infoProducto.nombre || !infoProducto.precio) {
-            console.error("No se pudo obtener la información completa del producto/curso.");
-            alert("Error: No se pudo agregar el producto. Información incompleta.");
+        // Lógica para obtener los datos.
+        // Si el evento tiene una propiedad 'detail' (usado en llamadas directas o eventos custom)
+        if (e.detail && e.detail.producto) {
+            infoProducto = e.detail.producto;
+        } else {
+             // Caso por defecto (productos de catálogo/carrusel que usan data-attributes)
+            // Esto cubre tanto el fakeEvent de detalle_producto_prenda.js como los botones de catálogo
+            infoProducto = {
+                imagen: btn.getAttribute("data-imagen"),
+                nombre: btn.getAttribute("data-nombre"),
+                precio: btn.getAttribute("data-precio"),
+                id: btn.getAttribute("data-id"),
+                // Si viene del detalle, data-cantidad existe. Si viene de catálogo, será null o 1 (se usa 1 por defecto)
+                cantidad: parseInt(btn.getAttribute("data-cantidad")) || 1 
+            };
+        }
+        
+        // Convertir el precio a float (es importante para que los cálculos sean correctos)
+        const precioLimpio = String(infoProducto.precio).replace('S/.', '').trim();
+        infoProducto.precio = parseFloat(precioLimpio);
+
+        // Si vienes de la página de detalle y no se configuró bien la llamada:
+        if (!infoProducto.id || !infoProducto.nombre || isNaN(infoProducto.precio)) {
+            console.error("No se pudo obtener la información completa del producto.");
+            alert("Error: No se pudo agregar el producto. Información incompleta o precio inválido.");
             return;
         }
 
+        // El resto de la lógica de sumar/añadir se mantiene:
         const existe = articulosCarrito.some(articulo => articulo.id === infoProducto.id);
         
         if (existe) {
             articulosCarrito = articulosCarrito.map(articulo => {
                 if (articulo.id === infoProducto.id) {
-                    articulo.cantidad++;
+                    // Sumar la cantidad proporcionada (en detalle es selectedQuantity)
+                    articulo.cantidad += (infoProducto.cantidad || 1); 
                 }
                 return articulo;
             });
         } else {
+            // Asegurarse de que el nuevo producto tiene una cantidad.
+            infoProducto.cantidad = infoProducto.cantidad || 1; 
             articulosCarrito = [...articulosCarrito, infoProducto];
         }
 
         guardarCarrito(); // GUARDAR en localStorage
+        carritoHTML(); // Llamar a esto para actualizar el mini-carrito en la misma página
         actualizarContadorCarrito(); // <--- ACTUALIZAR CONTADOR
-        alert(`"${infoProducto.nombre}" agregado al carrito. Ve a carrito.html para revisar.`);
+        alert(`"${infoProducto.nombre}" agregado al carrito.`);
     }
 }
 
@@ -236,12 +257,14 @@ window.eliminarProducto = eliminarProducto;
 window.vaciarCarrito = vaciarCarrito;
 window.carritoHTML = carritoHTML;
 window.actualizarCantidad = actualizarCantidad;
+// Exponer la función de actualización del contador globalmente si es necesario
+window.actualizarContadorCarrito = actualizarContadorCarrito; 
 
-// ============ Improved Initialization ============
+// ============ Initialization ============
 document.addEventListener('DOMContentLoaded', () => {
     // Load carrito from localStorage
     cargarCarrito();
-    actualizarContadorCarrito(); // <--- LLAMADA INICIAL AL CARGAR LA PÁGINA
+    actualizarContadorCarrito(); // LLAMADA INICIAL al cargar la página
 
     // Check if carrito elements exist before initializing
     if (listaCarrito) {
@@ -251,8 +274,13 @@ document.addEventListener('DOMContentLoaded', () => {
         vaciarCarritoBtn?.addEventListener('click', vaciarCarrito);
     }
 
-    // Add global event listener for adding products
-    document.body.addEventListener('click', agregarProductoAlCarrito);
+    // CORRECCIÓN CLAVE: Restablecer listener para los botones de catálogo/inicio.
+
+    document.body.addEventListener('click', (e) => {
+         if (e.target.classList.contains('agregar-carrito')) {
+            agregarProductoAlCarrito(e);
+         }
+    });
 
     // Initialize modal-related events if modal elements exist
     if (btnCheckout && modalPago && cerrarModalPago) {
@@ -278,18 +306,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============ Add Event Listener for Carrito Icon ============
-    const carritoIcono = document.getElementById('carrito-icono');
+    // Asumo que el ícono principal del carrito tiene el ID 'carrito-icono'
+    const carritoIcono = document.getElementById('carrito-icono'); 
 
     if (carritoIcono) {
         carritoIcono.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent default link behavior
-            window.location.href = 'carrito.html'; // Redirect to carrito.html
+            e.preventDefault(); 
+            window.location.href = 'carrito.html'; 
         });
     }
 });
-
-
-
 
 
 

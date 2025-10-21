@@ -1,5 +1,5 @@
 let generosCache = null;
-const useBackEnd = true;
+const useBackEnd = false;
 
 const generosStatic = [
     // La imagen 'product_black.png' y 'product_white.png' son placeholders
