@@ -21,7 +21,7 @@ h2 {
 
 /* ============================================== */
 
-/* ============= CALL TO ACTION  =============== */
+/* ============= CALL TO ACTION =============== */
 .callToAction {
   text-align: center;
   font-size: 12px;
@@ -136,6 +136,11 @@ header.header-principal {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* ✅ CORRECCIÓN AÑADIDA: Oculta el botón de cerrar sesión por defecto */
+.btn-logout {
+    display: none; 
 }
 
 
@@ -470,30 +475,7 @@ header.header-principal {
 }
 /* ===================================================== */
 
-/* === FORMULARIO === */
-form {
-  text-align: center;
-  border: 1px solid #ccc;
-  padding: 20px;
-  width: 300px;
-  border-radius: 10px;
-  margin: 40px auto;
-}
 
-input[type="text"],
-input[type="email"] {
-  width: 80%;
-}
-
-input[type="submit"] {
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-/* ===================================================== */
 
 /* === HERO/CARRUSEL === */
 .hero {
