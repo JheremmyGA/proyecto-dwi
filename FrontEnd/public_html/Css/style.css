@@ -190,7 +190,7 @@ header.header-principal {
   display: block;
   background-color: #c0392b;
   color: white;
-  padding: 10px;
+  padding: 11px;
   margin-top: 10px;
   text-align: center;
   border-radius: 5px;
@@ -202,7 +202,16 @@ header.header-principal {
 #vaciar-carrito:hover {
   background-color: #e74c3c;
 }
-
+/*
+#vaciar-carrito {
+    display: block;
+    text-align: center;
+    color: #B80000;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding-top: 5px;
+}
+*/
 .eliminar-producto {
   color: red;
   font-weight: bold;
@@ -965,13 +974,4 @@ background-color: #ff3300;
     width: 50px;
     height: 50px;
     object-fit: cover;
-}
-
-#vaciar-carrito {
-    display: block;
-    text-align: center;
-    color: #B80000;
-    text-decoration: none;
-    font-size: 0.9rem;
-    padding-top: 5px;
 }
