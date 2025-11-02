@@ -9,10 +9,16 @@
     <link rel="stylesheet" href="../Css/style.css">
 
 
+    <link rel="stylesheet" href="../Css/style.css"> 
+    <link rel="stylesheet" href="../Css/Login.css"> 
+
+
     <script type="module" src="../Javascript/javascript.js"></script>
     <script type="module" src="../Utils/HTTPRequest.js"></script>
     <script type="module" src="../Utils/PersistentData.js"></script>
-    <script src="../Javascript/carrito.js" defer></script>
+    <script src="../Javascript/carrito.js" defer></script> 
+    <script src="../Javascript/Login.js" defer></script> 
+    
 </head>
 
 
@@ -62,9 +68,9 @@
             </a>
 
             <div class="btn-login">
-                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión">
+                <a href="Login.html" class="boton-login-icono" title="Iniciar sesión"> 
                     <img src="imagenes/login.png" alt="login" class="icono-login">
-                </div>
+                </a>
             </div>
 
             <div class="btn-logout" onclick="cerrarSesion()" title="Cerrar sesión">
@@ -265,50 +271,6 @@
         </div>
     </footer>
 
-
-    <div id="modalLogin" class="modal-wrapper">
-        <div class="modal-contenedor">
-            <span class="cerrar-modal" onclick="cerrarModalLogin()">&times;</span>
-            <h2>Iniciar Sesión</h2>
-            <input type="text" id="loginUsuario" placeholder="Usuario">
-            <input type="password" id="loginClave" placeholder="Contraseña">
-            <button onclick="iniciarSesion()">Iniciar sesión </button>
-            <p class="alternativa">¿No tienes cuenta? <a href="#" onclick="mostrarModalRegistro()">Regístrate</a></p>
-        </div>
-    </div>
-
-    <div id="modalRegistro" class="modal-wrapper">
-        <div class="modal-contenedor">
-            <span class="cerrar-modal" onclick="cerrarModalRegistro()">&times;</span>
-            <h2>Registrarse</h2>
-            <input type="text" id="registroUsuario" placeholder="Nombre Completo">
-            <input type="text" id="registroApellido" placeholder="Apellido Completo">
-            <input type="email" id="registroCorreo" placeholder="Correo Electrónico">
-            <input type="password" id="registroClave" placeholder="Contraseña">
-            <button onclick="registrarUsuario()">Registrarse</button>
-        </div>
-    </div>
-
-    <div id="modalProducto" class="modal-wrapper">
-        <div class="modal-contenedor modal-producto-detalle">
-            <span onclick="cerrarModalProducto()" class="cerrar-modal">&times;</span>
-
-            <div class="modal-producto-left">
-                <img id="modalImagen" src="" alt="Producto">
-                <h2 id="modalNombre"></h2>
-                <p id="modalPrecio">Precio: <span id="modalPrecioNum"></span></p>
-                <button id="btnComprarDesdeModal" class="agregar-carrito">
-                    Comprar
-                </button>
-            </div>
-
-            <div class="modal-producto-right">
-                <h3>Características</h3>
-                <ul id="modalCaracteristicas">
-                </ul>
-            </div>
-        </div>
-    </div>
-</body>
+    </body>
 
 </html>

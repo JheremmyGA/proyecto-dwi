@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión - Kivora store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../Css/style.css"> 
+    
+    <link rel="stylesheet" href="../Css/Login.css">
+    <script src="../Javascript/Login.js" defer></script> 
+     
+</head>
+
+<body class="login-body">
+    <header class="login-header">
+        <div class="logo-kivora">
+            <a href="index.html" aria-label="Ir al inicio">
+                <img src="imagenes/logoRedimension.png" alt="logo Kivora">
+            </a>
+        </div>
+    </header>
+
+    <div class="login-contenedor">
+        <h2>Iniciar Sesión</h2>
+        
+        <form id="login-form">
+            <label for="correo">Correo electrónico</label>
+            <input type="text" id="correo" name="correo" required>
+
+            <label for="contrasena">Contraseña</label>
+            <input type="password" id="contrasena" name="contrasena" required>
+
+            <button type="submit">Ingresar</button>
+        </form>
+
+        <p class="alternativa-registro">
+            ¿Aún no tienes cuenta? <a href="Registro.html">Regístrate</a>
+        </p>
+    </div>
+
+    <script>
+        window.addEventListener('mouseover', initLandbot, { once: true });
+        window.addEventListener('touchstart', initLandbot, { once: true });
+        var myLandbot;
+        function initLandbot() {
+            if (!myLandbot) {
+                var s = document.createElement('script');
+                s.type = "module"
+                s.async = true;
+                s.addEventListener('load', function () {
+                    var myLandbot = new Landbot.Livechat({
+                        configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3172682-HHQJEGAWPEJ3XF03/index.json',
+                    });
+                });
+                s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+                var x = document.getElementsByTagName('script')[0];
+                x.parentNode.insertBefore(s, x);
+            }
+        }
+    </script>
+    
+    <script src="../Javascript/login.js"></script> 
+</body>
+</html>
