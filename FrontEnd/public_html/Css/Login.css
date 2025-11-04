@@ -1,0 +1,114 @@
+/* ======================================================== */
+/* ================ ESTILOS ESPECÍFICOS DE LOGIN/REGISTRO ===================== */
+
+/* Contenedor principal para centrar la caja en la pantalla */
+.login-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Usa 100vh para asegurar que ocupe toda la altura de la vista (viewport height) */
+    min-height: 100vh; 
+    background-color: #f8f9fa; /* Fondo ligeramente gris para contraste */
+    background-image: url('../imagenes/fondo.jpg');
+    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+    background-position: center; /* Centra la imagen de fondo */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo para el logo en la página de Login */
+.login-header {
+    /* El logo debe estar siempre en la parte superior */
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Ajusta el logo para que se vea más grande y centrado si el diseño lo requiere */
+    text-align: center;
+}
+
+.login-header .logo-kivora img {
+    height: 70px; /* Tamaño ajustado para el logo */
+    width: auto;
+    object-fit: contain;
+}
+
+/* Estilo de la caja principal del formulario */
+.login-contenedor {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 350px; 
+    max-width: 90%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); 
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    margin-top: 100px; /* Baja un poco el contenedor para dejar espacio al logo */
+}
+
+.login-contenedor h2 {
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* Estilos para los campos de entrada */
+.login-contenedor label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.login-contenedor input[type="text"],
+.login-contenedor input[type="password"] {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box; 
+    font-size: 15px;
+}
+
+/* Estilo para el botón Ingresar */
+.login-contenedor button {
+    width: 100%;
+    padding: 12px;
+    background-color: #B80000; 
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.login-contenedor button:hover {
+    background-color: #a00000;
+}
+
+/* Estilos para el enlace de Registrarse */
+.alternativa-registro {
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: center;
+    color: #555;
+}
+
+.alternativa-registro a {
+    color: #B80000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.alternativa-registro a:hover {
+    text-decoration: underline;
+}
+/* ======================================================== */

@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kivora - Secciones</title>
+    <!--Estilos-->
     <link rel="stylesheet" href="../Css/style.css">
     <link rel="stylesheet" href="../Css/seccGeneric.css">
-    
+    <link rel="stylesheet" href="../Css/Login.css">
 
+    <!--Scripts-->
     <script type="module" src="../Utils/HTTPRequest.js"></script>
     <script type="module" src="../Utils/PersistentData.js"></script>
     <script type="module" src="../Javascript/javascript.js"></script>
     <script type="module" src="../Javascript/seccGeneric.js"></script>
     <script src="../Javascript/carrito.js" defer></script>
+    <script src="../Javascript/Login.js" defer></script>
+
+
 </head>
 
 
@@ -20,7 +26,7 @@
     <header class="header-principal">
         <div class="logo-kivora">
             <a href="index.html" aria-label="Ir al inicio">
-            <img src="imagenes/logoRedimension.png" alt="logo">
+                <img src="imagenes/logoRedimension.png" alt="logo">
             </a>
         </div>
 
@@ -34,10 +40,13 @@
             </div>
             <!-- Botón de inicio de sesión -->
             <div class="btn-login">
-                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión"
-                    style="background:none; border:none; padding:0; cursor:pointer;">
+                <a href="Login.html" class="boton-login-icono" title="Iniciar sesión">
                     <img src="imagenes/login.png" alt="login" class="icono-login">
-                </div>
+                </a>
+            </div>
+
+            <div class="btn-logout" onclick="cerrarSesion()" title="Cerrar sesión">
+                <img src="imagenes/salir.png" alt="Cerrar sesión" class="icono-logout">
             </div>
 
             <!-- Ícono del carrito -->
@@ -59,27 +68,29 @@
                     <a href="#" id="vaciar-carrito">Vaciar Carrito</a>
                 </div>
             </div>
+
+
         </div>
     </header>
 
     <main>
         <div class="menu">
-        <!-- Enlaces de navegación -->
-        <div class="menu-enlaces">
-            <a href="#" onclick="redirigir('index.html')">Inicio</a>
-            <a href="#" onclick="redirigir('catalogo.html')">Catálogo</a>
-            <a href="#" onclick="redirigir('temporada.html')">Temporada</a>
-            <a href="#" onclick="redirigir('contacto.html')">Contacto</a>
-        </div>
+            <!-- Enlaces de navegación -->
+            <div class="menu-enlaces">
+                <a href="#" onclick="redirigir('index.html')">Inicio</a>
+                <a href="#" onclick="redirigir('seccGeneric.html')">Catálogo</a>
+                <a href="#" onclick="redirigir('temporada.html')">Temporada</a>
+                <a href="#" onclick="redirigir('contacto.html')">Contacto</a>
+            </div>
         </div>
 
         <div class="menu-secciones">
             <!-- Enlaces de navegación -->
             <div class="menu-secciones-enlaces" id="categoria-menu">
-                <!-- <a href="#" onclick="redirigir('seccCaballeros.html')">Caballeros</a>
-                <a href="#" onclick="redirigir('seccDamas.html')">Damas</a>
-                <a href="#" onclick="redirigir('seccNinos.html')">Niños</a>
-                <a href="#" onclick="redirigir('seccNinas.html')">Niñas</a>-->
+                <a href="#" onclick="redirigir('seccGeneric.html')">Caballeros</a>
+                <a href="#" onclick="redirigir('seccGeneric.html')">Damas</a>
+                <a href="#" onclick="redirigir('seccGeneric.html')">Niños</a>
+                <a href="#" onclick="redirigir('seccGeneric.html')">Niñas</a>
             </div>
         </div>
 
@@ -180,4 +191,5 @@
         </div>
     </footer>
 </body>
+
 </html>

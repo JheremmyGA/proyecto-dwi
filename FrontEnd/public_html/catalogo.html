@@ -20,34 +20,36 @@
         <div class="callToAction">GRAN VARIEDAD DE PRODUCTOS!!! 🔥🔥🔥</div>
 
         <header class="header-principal">
-            <div class="logo-kivora">
-                <a href="index.html" aria-label="Ir al inicio">
-                    <img src="imagenes/logoRedimension.png" alt="logo">
-                </a>
+        <div class="logo-kivora">
+            <a href="index.html" aria-label="Ir al inicio">
+                <img src="imagenes/logoRedimension.png" alt="logo">
+            </a>
+        </div>
+
+        <div class="header-derecha">
+            <div class="barra-busqueda">
+                <input id="barra-busqueda" type="text" placeholder="¿Qué estás buscando?" />
+                <button type="submit">
+                    <img src="imagenes/busqueda.png" alt="Buscar" />
+                </button>
             </div>
-            <div class="header-derecha">
-                <div class="barra-busqueda">
-                    <input id="barra-busqueda" type="text" placeholder="¿Qué estás buscando?" />
-                    <button type="submit">
-                        <img src="imagenes/busqueda.png" alt="Buscar" />
-                    </button>
-                </div>
 
-                <a href="carrito.html" id="carrito-icono" title="Ver Carrito de Compras"> 
-                    <img src="imagenes/carrito2.png" alt="Carrito" />
-                    </a>
+            <a href="carrito.html" id="carrito-icono" title="Ver Carrito de Compras">
+                <img src="imagenes/carrito2.png" alt="Carrito" />
+                <span id="contador-carrito" class="contador-carrito">
+            </a>
 
-                <div class="btn-login">
-                    <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión">
-                        <img src="imagenes/login.png" alt="login" class="icono-login">
-                    </div>
-                </div>
-
-                <div class="btn-logout" onclick="cerrarSesion()" title="Cerrar sesión">
-                    <img src="imagenes/salir.png" alt="Cerrar sesión" class="icono-logout">
+            <div class="btn-login">
+                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión">
+                    <img src="imagenes/login.png" alt="login" class="icono-login">
                 </div>
             </div>
-        </header>
+
+            <div class="btn-logout" onclick="cerrarSesion()" title="Cerrar sesión">
+                <img src="imagenes/salir.png" alt="Cerrar sesión" class="icono-logout">
+            </div>
+        </div>
+    </header>
 
         <nav class="menu">
             <div class="menu-enlaces">
@@ -61,10 +63,10 @@
         <div class="menu-secciones">
             <!-- Enlaces de navegación -->
             <div class="menu-secciones-enlaces" id="categoria-menu">
-                <a href="#" onclick="redirigir('seccCaballeros.html')">Caballeros</a>
-                <a href="#" onclick="redirigir('seccDamas.html')">Damas</a>
-                <a href="#" onclick="redirigir('seccNinos.html')">Niños</a>
-                <a href="#" onclick="redirigir('seccNinas.html')">Niñas</a>
+                <a href="#" onclick="redirigir('seccGeneric.html')">Caballeros</a>
+                <a href="#" onclick="redirigir('seccGeneric.html')">Damas</a>
+                <a href="#" onclick="redirigir('seccGeneric.html')">Niños</a>
+                <a href="#" onclick="redirigir('seccGeneric.html')">Niñas</a>
             </div>
         </div>
 

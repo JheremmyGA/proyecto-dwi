@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - Kivora store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../Css/style.css"> 
+    
+    <link rel="stylesheet" href="../Css/login.css"> 
+</head>
+
+<body class="login-body">
+    
+    <header class="login-header">
+        <div class="logo-kivora">
+            <a href="index.html" aria-label="Ir al inicio">
+                <img src="imagenes/logoRedimension.png" alt="logo Kivora">
+            </a>
+        </div>
+    </header>
+
+    <div class="login-contenedor">
+        <h2>Crear Cuenta</h2>
+        
+        <form id="registro-form">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required>
+            
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" name="apellido" required>
+
+            <label for="correo_registro">Correo electrónico</label>
+            <input type="text" id="correo_registro" name="correo_registro" required>
+
+            <label for="contrasena_registro">Contraseña</label>
+            <input type="password" id="contrasena_registro" name="contrasena_registro" required>
+
+            <button type="submit">Registrarme</button>
+        </form>
+
+        <p class="alternativa-registro">
+            ¿Ya tienes cuenta? <a href="Login.html">Inicia Sesión</a>
+        </p>
+    </div>
+
+    <script>
+        window.addEventListener('mouseover', initLandbot, { once: true });
+        window.addEventListener('touchstart', initLandbot, { once: true });
+        var myLandbot;
+        function initLandbot() {
+            if (!myLandbot) {
+                var s = document.createElement('script');
+                s.type = "module"
+                s.async = true;
+                s.addEventListener('load', function () {
+                    var myLandbot = new Landbot.Livechat({
+                        configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3172682-HHQJEGAWPEJ3XF03/index.json',
+                    });
+                });
+                s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+                var x = document.getElementsByTagName('script')[0];
+                x.parentNode.insertBefore(s, x);
+            }
+        }
+    </script>
+    
+    <script src="../Javascript/registro.js"></script> 
+</body>
+</html>

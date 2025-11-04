@@ -9,21 +9,24 @@
     <link rel="stylesheet" href="../Css/style.css">
     <link rel="stylesheet" href="../Css/seccGeneric.css">
     <link rel="stylesheet" href="../Css/detalle_producto_prenda.css">
+    <link rel="stylesheet" href="../Css/Login.css">
 
     <script type="module" src="../Utils/HTTPRequest.js"></script>
     <script type="module" src="../Utils/PersistentData.js"></script>
     <script type="module" src="../Javascript/javascript.js"></script>
     <script type="module" src="../Javascript/detalle_producto_prenda.js"></script>
     <script src="../Javascript/carrito.js" defer></script>
-    
+    <script src="../Javascript/Login.js" defer></script> 
+
 
 </head>
 
 <body>
+
     <header class="header-principal">
         <div class="logo-kivora">
             <a href="index.html" aria-label="Ir al inicio">
-            <img src="imagenes/logoRedimension.png" alt="logo">
+                <img src="imagenes/logoRedimension.png" alt="logo">
             </a>
         </div>
 
@@ -37,15 +40,19 @@
             </div>
             <!-- Botón de inicio de sesión -->
             <div class="btn-login">
-                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión"
-                    style="background:none; border:none; padding:0; cursor:pointer;">
+                <a href="Login.html" class="boton-login-icono" title="Iniciar sesión">
                     <img src="imagenes/login.png" alt="login" class="icono-login">
-                </div>
+                </a>
+            </div>
+
+            <div class="btn-logout" onclick="cerrarSesion()" title="Cerrar sesión">
+                <img src="imagenes/salir.png" alt="Cerrar sesión" class="icono-logout">
             </div>
 
             <!-- Ícono del carrito -->
             <div id="carrito-icono">
-                <img src="imagenes/carrito.png" alt="Carrito" />
+                <img src="imagenes/carrito2.png" alt="Carrito" />
+                <span id="contador-carrito" class="contador-carrito"></span>
                 <div id="carrito-contenido">
                     <table id="lista-carrito">
                         <thead>
@@ -67,13 +74,13 @@
 
     <main>
         <div class="menu">
-        <!-- Enlaces de navegación -->
-        <div class="menu-enlaces">
-            <a href="#" onclick="redirigir('index.html')">Inicio</a>
-            <a href="#" onclick="redirigir('catalogo.html')">Catálogo</a>
-            <a href="#" onclick="redirigir('temporada.html')">Temporada</a>
-            <a href="#" onclick="redirigir('contacto.html')">Contacto</a>
-        </div>
+            <!-- Enlaces de navegación -->
+            <div class="menu-enlaces">
+                <a href="#" onclick="redirigir('index.html')">Inicio</a>
+                <a href="#" onclick="redirigir('seccGeneric.html')">Catálogo</a>
+                <a href="#" onclick="redirigir('temporada.html')">Temporada</a>
+                <a href="#" onclick="redirigir('contacto.html')">Contacto</a>
+            </div>
         </div>
 
         <div class="menu-secciones">
@@ -87,97 +94,99 @@
             <p class="descripcion-seccion" id="descripcion-seccion"></p>
         </div>
 
-       
+
         <div class="contenedor-cuadricula-productos">
             <div class="cuadricula-productos" id="cuadricula-productos">
                 <!-- Productos insertados por JS -->
-        </div>
-
-
-        <section class="detalle_producto">
-            <!-- Encabezado del Producto -->
-            <div id="product-header" class="product-header">
-                <h2 id="product-name" class="product-name"></h2>
-                <p id="product-brand" class="product-brand"></p>
             </div>
 
-            <div class="detail-grid">
-                <!-- Zona de Imágenes -->
-                <div>
-                    <div>
-                        <img id="imagen-producto-principal"
-                            class="product-image image-main"
-                            src=""
-                            alt="Producto seleccionado">
-                    </div>
+
+            <section class="detalle_producto">
+                <!-- Encabezado del Producto -->
+                <div id="product-header" class="product-header">
+                    <h2 id="product-name" class="product-name"></h2>
+                    <p id="product-brand" class="product-brand"></p>
                 </div>
 
-                <!-- Zona de Opciones e Información -->
-                <div class="informacion-producto">
-                    <!-- Color -->
-                    <div id="color-producto">
-                        <p class="texto-descripcion">Color: <span id="selected-color-name" class="selected-color-name"></span></p>
-                        <div id="color-swatches" class="swatches">
-                            <!-- Swatches de color se insertarán aquí por JS -->
-                        </div>
-                    </div>
-
-                    <!-- Tallas -->
-                    <div id="talla-producto">
-                        <p class="texto-descripcion">Talla:</p>
-                        <div id="size-buttons" class="size-buttons">
-                            <!-- Botones de talla se insertarán aquí por JS -->
-                        </div>
-                    </div>
-
-                    <!-- Stock -->
-                    <div class="existencias-producto">
-                        <p class="texto-descripcion">
-                            Disponible: <span id="stock-disponible" class="stock-disponible">--</span> existencias
-                        </p>
-                    </div>
-
-                    <!-- Cantidad y Precio -->
-                    <div class="qty-price-row">
-                        <!-- Selector de Cantidad -->
-                        <div class="qty-controls">
-                            <p class="texto-descripcion">Cantidad</p>
-                            <button onclick="handleQuantityChange(-1)" class="btn-cantidad" id="btn-decremento">-</button>
-                            <input type="number" id="cantidad-seleccionada" value="1" min="1" class="cantidad-seleccionada" readonly>
-                            <button onclick="handleQuantityChange(1)" class="btn-cantidad" id="btn-incremento">+</button>
-                        </div>
-
-                        <!-- Precio -->
-                        <div class="price-area">
-                            <p class="texto-descripcion">Precio</p>
-                            <p id="product-price" class="product-price">S/ 0.00</p>
-                        </div>
-                    </div>
-
-                    <!-- Botón de Acción Único -->
+                <div class="detail-grid">
+                    <!-- Zona de Imágenes -->
                     <div>
-                        <button id="agregarCarrito">
-                            Añadir al carrito
-                        </button>
+                        <div>
+                            <img id="imagen-producto-principal" class="product-image image-main" src=""
+                                alt="Producto seleccionado">
+                        </div>
+                    </div>
+
+                    <!-- Zona de Opciones e Información -->
+                    <div class="informacion-producto">
+                        <!-- Color -->
+                        <div id="color-producto">
+                            <p class="texto-descripcion">Color: <span id="selected-color-name"
+                                    class="selected-color-name"></span></p>
+                            <div id="color-swatches" class="swatches">
+                                <!-- Swatches de color se insertarán aquí por JS -->
+                            </div>
+                        </div>
+
+                        <!-- Tallas -->
+                        <div id="talla-producto">
+                            <p class="texto-descripcion">Talla:</p>
+                            <div id="size-buttons" class="size-buttons">
+                                <!-- Botones de talla se insertarán aquí por JS -->
+                            </div>
+                        </div>
+
+                        <!-- Stock -->
+                        <div class="existencias-producto">
+                            <p class="texto-descripcion">
+                                Disponible: <span id="stock-disponible" class="stock-disponible">--</span> existencias
+                            </p>
+                        </div>
+
+                        <!-- Cantidad y Precio -->
+                        <div class="qty-price-row">
+                            <!-- Selector de Cantidad -->
+                            <div class="qty-controls">
+                                <p class="texto-descripcion">Cantidad</p>
+                                <button onclick="handleQuantityChange(-1)" class="btn-cantidad"
+                                    id="btn-decremento">-</button>
+                                <input type="number" id="cantidad-seleccionada" value="1" min="1"
+                                    class="cantidad-seleccionada" readonly>
+                                <button onclick="handleQuantityChange(1)" class="btn-cantidad"
+                                    id="btn-incremento">+</button>
+                            </div>
+
+                            <!-- Precio -->
+                            <div class="price-area">
+                                <p class="texto-descripcion">Precio</p>
+                                <p id="product-price" class="product-price">S/ 0.00</p>
+                            </div>
+                        </div>
+
+                        <!-- Botón de Acción Único -->
+                        <div>
+                            <button id="agregarCarrito">
+                                Añadir al carrito
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- SECCIONES INFERIORES: Lo más vendidos & Liquidación -->
-        <div class="novedades">
-            <h2>Lo más vendidos</h2>
-            <div id="loMasVendidos" class="cuadricula-productos">
-                <!-- Productos insertados por JS -->
+            <!-- SECCIONES INFERIORES: Lo más vendidos & Liquidación -->
+            <div class="novedades">
+                <h2>Lo más vendidos</h2>
+                <div id="loMasVendidos" class="cuadricula-productos">
+                    <!-- Productos insertados por JS -->
+                </div>
             </div>
-        </div>
 
-        <div class="categoria" >
-            <h2>Liquidación</h2>
-            <div id="liquidacion" class="cuadricula-productos">
-                <!-- Productos insertados por JS -->
+            <div class="categoria">
+                <h2>Liquidación</h2>
+                <div id="liquidacion" class="cuadricula-productos">
+                    <!-- Productos insertados por JS -->
+                </div>
             </div>
-        </div>
 
     </main>
 
@@ -225,4 +234,5 @@
     </footer>
 
 </body>
+
 </html>

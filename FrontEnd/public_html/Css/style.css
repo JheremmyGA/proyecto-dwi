@@ -21,7 +21,7 @@ h2 {
 
 /* ============================================== */
 
-/* ============= CALL TO ACTION  =============== */
+/* ============= CALL TO ACTION =============== */
 .callToAction {
   text-align: center;
   font-size: 12px;
@@ -138,6 +138,11 @@ header.header-principal {
   justify-content: center;
 }
 
+/* ✅ CORRECCIÓN AÑADIDA: Oculta el botón de cerrar sesión por defecto */
+.btn-logout {
+    display: none; 
+}
+
 
 .icono-login,
 .icono-logout,
@@ -190,7 +195,7 @@ header.header-principal {
   display: block;
   background-color: #c0392b;
   color: white;
-  padding: 10px;
+  padding: 11px;
   margin-top: 10px;
   text-align: center;
   border-radius: 5px;
@@ -202,7 +207,16 @@ header.header-principal {
 #vaciar-carrito:hover {
   background-color: #e74c3c;
 }
-
+/*
+#vaciar-carrito {
+    display: block;
+    text-align: center;
+    color: #B80000;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding-top: 5px;
+}
+*/
 .eliminar-producto {
   color: red;
   font-weight: bold;
@@ -461,30 +475,7 @@ header.header-principal {
 }
 /* ===================================================== */
 
-/* === FORMULARIO === */
-form {
-  text-align: center;
-  border: 1px solid #ccc;
-  padding: 20px;
-  width: 300px;
-  border-radius: 10px;
-  margin: 40px auto;
-}
 
-input[type="text"],
-input[type="email"] {
-  width: 80%;
-}
-
-input[type="submit"] {
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-/* ===================================================== */
 
 /* === HERO/CARRUSEL === */
 .hero {
@@ -965,13 +956,4 @@ background-color: #ff3300;
     width: 50px;
     height: 50px;
     object-fit: cover;
-}
-
-#vaciar-carrito {
-    display: block;
-    text-align: center;
-    color: #B80000;
-    text-decoration: none;
-    font-size: 0.9rem;
-    padding-top: 5px;
 }
