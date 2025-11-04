@@ -20,12 +20,11 @@
 
 /* Estilo para el logo en la página de Login */
 .login-header {
-    /* El logo debe estar siempre en la parte superior */
+    /* El logo debe estar siempre en la parte superior, centrado */
     position: absolute;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    /* Ajusta el logo para que se vea más grande y centrado si el diseño lo requiere */
     text-align: center;
 }
 
@@ -38,14 +37,16 @@
 /* Estilo de la caja principal del formulario */
 .login-contenedor {
     background: white;
-    padding: 30px;
+    padding: 40px; /* Aumentamos el padding para hacerlo más amplio */
     border-radius: 12px;
     width: 350px; 
     max-width: 90%;
+    /* Ajuste para que se centre perfectamente en la pantalla */
+    margin: 0; 
+    
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); 
     text-align: center;
     font-family: 'Segoe UI', sans-serif;
-    margin-top: 100px; /* Baja un poco el contenedor para dejar espacio al logo */
 }
 
 .login-contenedor h2 {
@@ -64,6 +65,7 @@
     color: #555;
 }
 
+/* Asegura que los campos de correo y contraseña tengan el mismo estilo */
 .login-contenedor input[type="text"],
 .login-contenedor input[type="password"] {
     width: 100%;
@@ -76,7 +78,7 @@
 }
 
 /* Estilo para el botón Ingresar */
-.login-contenedor button {
+.login-contenedor button[type="submit"] {
     width: 100%;
     padding: 12px;
     background-color: #B80000; 
@@ -90,7 +92,7 @@
     margin-top: 10px;
 }
 
-.login-contenedor button:hover {
+.login-contenedor button[type="submit"]:hover {
     background-color: #a00000;
 }
 
@@ -112,3 +114,4 @@
     text-decoration: underline;
 }
 /* ======================================================== */
+
