@@ -6,6 +6,7 @@ import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 // =======================================================================
 
 // Redirige a otra página (útil para el menú y los botones de Generos)
+// Exportada globalmente (window.) para ser usada en los onclick del HTML
 window.redirigir = function(nombre) {
     window.location.href = nombre;
 }
@@ -21,67 +22,73 @@ window.scrollCarrusel = function(id, direccion) {
 
 // Cierra el modal de detalle del producto
 window.cerrarModalProducto = function() {
-    document.getElementById("modalProducto").style.display = "none";
+    // Necesitas asegurar que el modalProducto exista en tu index.html o esté siendo importado.
+    const modal = document.getElementById("modalProducto");
+    if (modal) {
+        modal.style.display = "none";
+    }
 }
 
 // =======================================================================
-// ========================= CONTROL DE NAVEGACIÓN (SPA) =================
-// =======================================================================
-
-function ocultarTodasLasSecciones() {
-    // Se excluyen Login, Registro y secciones que ahora son archivos HTML separados
-    const secciones = ["inicio", "Mi-Tienda", "Nosotros", "catalogo", "Contacto"];
-    secciones.forEach(id => {
-        const el = document.getElementById(id);
-        // La sección "inicio" debe usar display: block, otras usan display: flex si tienen layout especial
-        if (el) el.style.display = "none";
-    });
-}
-
-function mostrarSeccion(seccionId) {
-    ocultarTodasLasSecciones();
-    const seccion = document.getElementById(seccionId);
-    if (seccion) seccion.style.display = "block"; // o 'flex' si la sección tiene layout flex
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-// =======================================================================
-// ========================= LÓGICA DE SESIÓN (ÍCONOS) =====================
+// ========================= LÓGICA DE SESIÓN (HEADER) =====================
 // =======================================================================
 
 /**
- * Verifica si el usuario está logeado (usando la clave guardada por login.js)
- * y actualiza la visibilidad de los iconos en el Header.
+ * Verifica si el usuario está logeado y actualiza el header para
+ * mostrar el nombre y el botón de Administrador si aplica.
  */
 function actualizarEstadoSesion() {
-    // La clave de sesión que guarda login.js es 'usuarioLogeado'
-    const logeado = localStorage.getItem("usuarioLogeado");
-    const btnLoginDiv = document.querySelector(".btn-login");
-    const btnLogoutDiv = document.querySelector(".btn-logout");
+    // 1. Obtener los elementos del Header
+    const contenedorAnonimo = document.getElementById('contenedor-anonimo');
+    const contenedorLogueado = document.getElementById('contenedor-logueado');
+    const nombreUsuarioSpan = document.getElementById('nombre-usuario');
+    const btnAdmin = document.getElementById('btn-admin');
 
-    if (logeado === 'true') {
-        // Logeado: Muestra Logout, Oculta Login
-        if (btnLogoutDiv) btnLogoutDiv.style.display = "flex"; // Usar 'flex' para layout del header
-        if (btnLoginDiv) btnLoginDiv.style.display = "none";
+    // 2. Obtener datos de LocalStorage
+    // CLAVE: Esto asegura que el nombre se muestra tras un login exitoso
+    const logueado = localStorage.getItem('usuarioLogeado') === 'true';
+    const nombre = localStorage.getItem('nombreUsuario') || 'Usuario';
+    const rol = localStorage.getItem('rolUsuario'); 
+
+    if (logeado) {
+        // Usuario logueado: Ocultar anónimo, mostrar logueado
+        if (contenedorAnonimo) contenedorAnonimo.style.display = 'none';
+        // Usamos 'flex' para alinear los íconos (el valor original es 'block' o 'flex')
+        if (contenedorLogueado) contenedorLogueado.style.display = 'flex'; 
+
+        // Mostrar nombre en el span
+        if (nombreUsuarioSpan) {
+            nombreUsuarioSpan.textContent = `Hola, ${nombre}`;
+        }
+
+        // Mostrar/Ocultar botón de Administrador
+        if (btnAdmin) {
+            if (rol === 'admin') {
+                btnAdmin.style.display = 'block'; 
+            } else {
+                btnAdmin.style.display = 'none'; 
+            }
+        }
     } else {
-        // No Logeado: Muestra Login, Oculta Logout
-        if (btnLogoutDiv) btnLogoutDiv.style.display = "none";
-        if (btnLoginDiv) btnLoginDiv.style.display = "flex";
+        // Usuario anónimo: Mostrar anónimo, ocultar logueado
+        if (contenedorAnonimo) contenedorAnonimo.style.display = 'flex'; // Usamos 'flex' por el layout
+        if (contenedorLogueado) contenedorLogueado.style.display = 'none';
     }
 }
 
 /**
- * Elimina la sesión y actualiza el Header.
+ * Elimina la sesión (usuarioLogeado, nombreUsuario, rolUsuario) y recarga.
  * Se llama desde el 'onclick' del botón de Cerrar Sesión.
  */
 window.cerrarSesion = function() {
-    // Elimina la clave que indica que el usuario está activo
+    // Elimina todas las claves de sesión importantes
     localStorage.removeItem("usuarioLogeado");
     localStorage.removeItem("nombreUsuario"); 
+    localStorage.removeItem("rolUsuario"); 
     
-    // Opcional: Redirigir o simplemente recargar la página principal
-    alert("Has cerrado sesión.");
-    window.location.href = 'index.html'; // Redirige para asegurar que todo se limpie
+    // Redirige a la página principal para asegurar que el header se actualice
+    // y para salir de la página de Admin/Perfil si el usuario estaba allí.
+    window.location.href = 'index.html'; 
 }
 
 // =======================================================================
@@ -89,17 +96,21 @@ window.cerrarSesion = function() {
 // =======================================================================
 
 async function MostrarGeneros(){
+    // *Asegúrate de que la función GetGeneros() está definida y exportada en HTTPRequest.js*
     const generos = await HTTPS_Request.GetGeneros();
     const menu = document.getElementById("categoria-menu");
 
     if (!generos || !menu) return;
 
+    // Limpia los botones de géneros estáticos del HTML
     menu.innerHTML = "";
 
+    // Agrega los géneros dinámicos (asumiendo que cat.nombre y cat.id_genero existen)
     generos.forEach(cat => {
         const btn = document.createElement("button");
         btn.textContent = cat.nombre;
         btn.onclick = () => {
+            // *Asegúrate de que la función SelectedGenero() está definida y exportada en PersistentData.js*
             PERSISTENT_DATA.SelectedGenero(cat.id_genero);
             redirigir(`seccGeneric.html`);
         };
@@ -125,6 +136,7 @@ const caracteristicasPorId = {
 };
 
 function setupModalDetalle() {
+    // Esta función asume que tienes el HTML del modal en algún lugar de tu index.html
     const imagenesProductos = document.querySelectorAll(".item img");
     imagenesProductos.forEach(img => {
         img.addEventListener("click", () => {
@@ -140,7 +152,8 @@ function setupModalDetalle() {
             
             // Llenar el modal
             document.getElementById("modalNombre").textContent = nombre;
-            document.getElementById("modalPrecioNum").textContent = `${precio}`;
+            // Usar toFixed(2) para el formato de moneda si es necesario
+            document.getElementById("modalPrecioNum").textContent = `${parseFloat(precio).toFixed(2)}`; 
             document.getElementById("modalImagen").src = imagen;
 
             // Transferir data-attributes al botón de Añadir al Carrito del modal
@@ -154,15 +167,20 @@ function setupModalDetalle() {
 
             // Llenar las características
             const lista = document.getElementById("modalCaracteristicas");
-            lista.innerHTML = "";
-            const caracteristicas = caracteristicasPorId[id] || ["Sin información disponible"];
-            caracteristicas.forEach(item => {
-                const li = document.createElement("li");
-                li.textContent = item;
-                lista.appendChild(li);
-            });
+            if (lista) {
+                lista.innerHTML = "";
+                const caracteristicas = caracteristicasPorId[id] || ["Sin información disponible"];
+                caracteristicas.forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent = item;
+                    lista.appendChild(li);
+                });
+            }
 
-            document.getElementById("modalProducto").style.display = "flex";
+            const modal = document.getElementById("modalProducto");
+            if (modal) {
+                 modal.style.display = "flex";
+            }
         });
     });
 }
@@ -202,9 +220,27 @@ document.addEventListener("DOMContentLoaded", () => {
     MostrarGeneros();
     setupModalDetalle();
     
-    // Inicialización de la navegación (muestra la sección de inicio)
-    mostrarSeccion("inicio");
-    
-    // 🔥 ACTUALIZACIÓN DE ESTADO DE SESIÓN (Muestra Login o Logout)
+    // 🔥 FUNCIÓN CLAVE: ACTUALIZACIÓN DE ESTADO DE SESIÓN 
+    // Esto se ejecuta en cada carga de página para mostrar/ocultar el nombre y el botón de admin
     actualizarEstadoSesion();
+});
+
+
+// Mostrar u ocultar el menú del usuario al hacer clic en el botón
+document.addEventListener("DOMContentLoaded", () => {
+    const btnUsuario = document.getElementById("nombre-usuario");
+    const menuUsuario = document.querySelector(".usuario-menu");
+
+    if (btnUsuario && menuUsuario) {
+        btnUsuario.addEventListener("click", () => {
+            menuUsuario.classList.toggle("activo");
+        });
+    }
+
+    // Cerrar el menú si se hace clic fuera de él
+    document.addEventListener("click", (event) => {
+        if (!event.target.closest(".usuario-dropdown")) {
+            if (menuUsuario) menuUsuario.classList.remove("activo");
+        }
+    });
 });

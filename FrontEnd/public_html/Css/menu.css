@@ -1,6 +1,9 @@
 /* FONTS GOOGLE */
 @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
+
+
+
 /* VARIABLES */
 
 :root {
@@ -8,6 +11,9 @@
     --azul-opacidad: white;
     --bg-menu: #B80000;
     --bg-body: #fafdff;
+    --color-primary: #B80000;
+    --color-background: #f3f4f6; /* Gris Claro */
+    --color-text: #333333;
 }
 
 /* GENERALES */
@@ -21,12 +27,37 @@
 body {
     font-family: 'Quicksand', sans-serif;
     color: var(--blanco);
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 150px; /* Mismo ancho que menu-dashboard */
+    transition: margin-left .3s ease;
+}
+
+.main-content.menu-open {
+    margin-left: 300px; /* Ancho del menú cuando está abierto */
 }
 
 a {
     text-decoration: none;
     color: inherit;
 }
+
+/* Estilo para el fondo del encabezado */
+.header-bg {
+    background-color: white;
+    border-bottom: 1px solid #e5e7eb; /* Línea divisoria gris */
+}
+
+/* Estilo para el texto principal del sistema */
+.welcome-text {
+    color: var(--color-primary);
+}
+
+
 /* LAYOUT */
 
 .menu-dashboard {
@@ -35,6 +66,10 @@ a {
     background: var(--bg-menu);
     padding: 20px;
     transition: max-width .3s ease;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
 }
 
 .top-menu {

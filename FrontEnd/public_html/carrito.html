@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Kivora - Tu Carrito</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../Css/style.css">
-    <link rel="stylesheet" href="../Css/carrito.css"> 
-    
+    <link rel="stylesheet" href="../Css/carrito.css">
+
     <script type="module" src="../Javascript/javascript.js" defer></script>
-    <script src="../Javascript/carrito.js" defer></script> 
+    <script src="../Javascript/carrito.js" defer></script>
+
+  
+    <link rel="stylesheet" href="../Css/Login.css">
+
+    <script type="module" src="../Utils/HTTPRequest.js"></script>
+    <script type="module" src="../Utils/PersistentData.js"></script>
+    <script type="module" src="../Javascript/javascript.js" defer></script>
+
+
+    <script src="../Javascript/Login.js" defer></script>
+
+    <script src="../Javascript/carrito.js" defer></script>
+
 </head>
+
 <body>
 
     <div class="callToAction">LAS MEJORES OFERTAS EN KIVORA !!! 🔥🔥🔥</div>
@@ -30,19 +45,29 @@
                 </button>
             </div>
 
-            <a href="carrito.html" id="carrito-icono" title="Ver Carrito de Compras"> 
+            <a href="carrito.html" id="carrito-icono" title="Ver Carrito de Compras">
                 <img src="imagenes/carrito2.png" alt="Carrito" />
-                </a>
+                <span id="contador-carrito" class="contador-carrito"></span>
+            </a>
 
-            <div class="btn-login">
-                <div onclick="mostrarModalLogin()" class="boton-login-icono" title="Iniciar sesión">
+            <div id="contenedor-anonimo" class="btn-login-contenedor">
+                <a href="Login.html" class="boton-login-icono" title="Iniciar sesión">
                     <img src="imagenes/login.png" alt="login" class="icono-login">
+                </a>
+            </div>
+
+            <div id="contenedor-logueado" class="menu-usuario" style="display:none;">
+                <div class="usuario-dropdown">
+                    <button class="usuario-btn" id="nombre-usuario">Hola, Usuario ▼</button>
+                    <div class="usuario-menu">
+                        <a href="#">Mi cuenta</a>
+                        <a href="#">Mis CMR Puntos</a>
+                        <a href="carrito.html">Mi carrito</a>
+                        <a href="#" onclick="cerrarSesion()">Cerrar sesión</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="btn-logout" onclick="cerrarSesion()" title="Cerrar sesión">
-                <img src="imagenes/salir.png" alt="Cerrar sesión" class="icono-logout">
-            </div>
         </div>
     </header>
 
@@ -57,7 +82,7 @@
 
     <main class="carrito-page-main">
         <h1>🛒 Carrito de Compras</h1>
-        
+
         <div class="contenedor-carrito-detalle">
             <div class="tabla-carrito-wrapper">
                 <table id="lista-carrito" class="tabla-carrito-grande">
@@ -71,7 +96,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
 
@@ -83,11 +108,11 @@
                     <button id="vaciar-carrito" class="btn-secundario">Vaciar Carrito</button>
                     <button id="img-carrito" class="btn-principal">
                         Proceder al Pago
-                    </button> 
+                    </button>
                 </div>
             </div>
         </div>
-        
+
     </main>
 
     <div id="modal-pago" class="modal-wrapper" style="display: none;">
@@ -111,7 +136,7 @@
             </form>
         </div>
     </div>
-    
+
     <footer class="footer-kivora">
         <div class="footer-logo">
             <img src="imagenes/logo.png" alt="logo kivora">
@@ -154,4 +179,5 @@
         </div>
     </footer>
 </body>
+
 </html>

@@ -4,49 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Dashboard</title>
+    <title>Vista de administrador</title>
     <!-- BOX ICONS -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link href='https://cdn.boxicons.com/3.0.3/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="Css/menu.css">
     <!-- CUSTOM JS -->
     <script src="Javascript/menu.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
     <div class="menu-dashboard">
         <!-- TOP MENU -->
         <div class="top-menu">
-            <div class="logo">
+            <a href="menu.html" class="logo">
                 <img src="imagenes/logo.png" alt="">
                 <span>Administrador</span>
-            </div>
+            </a>
             <div class="toggle">
                 <i class='bx bx-menu'></i>
             </div>
         </div>
         <!-- MENU -->
         <div class="menu">
-            <div class="enlace">
+            <a href="dashboard.html" class="enlace">
                 <i class="bx bx-grid-alt"></i>
                 <span>Dashboard</span>
-            </div>
+            </a>
 
-            <div class="enlace">
+            <a href="inventario.html" class="enlace">
                 <i class="bx bx-file-blank"></i>
                 <span>Inventario</span>
-            </div>
+            </a>
 
-            <div class="enlace">
+            <a href="ventas.html" class="enlace">
                 <i class="bx bx-cart"></i>
                 <span>Ventas</span>
-            </div>
+            </a>
 
-            <div class="enlace">
+            <a href="index.html" class="enlace">
                 <i class="bx bx-user"></i>
-                <a href="index.html"><span>Vista usuario</span></a>
-            </div>
+                <span>Vista usuario</span>
+            </a>
 
 
             <div class="enlace">
@@ -61,6 +62,40 @@
 
         </div>
     </div>
-    
+
+    <div class="main-content">
+        <!-- BARRA SUPERIOR (HEADER) -->
+        <header class="header-bg shadow-md sticky top-0 z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                <!-- Título del Sistema -->
+                <h1 class="text-2xl font-bold text-gray-800">
+                    Sistema Administrador de <span class="welcome-text"> Kivora</span>
+                </h1>
+            
+            <!-- Nombre y Reloj en Tiempo Real -->
+            <div class="flex items-center space-x-4">
+                <span class="text-md font-semibold text-gray-700">Bienvenido, Admin</span> <!-- Aquí ira el nombre de la persona q' ingresa -->
+                <span id="datetime" class="text-sm text-gray-500 font-medium"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL (Centrado) -->
+    <main class="min-h-screen flex items-center justify-center p-4" style="margin-top: -64px;">
+        <div class="bg-white p-10 md:p-16 rounded-2xl shadow-2xl text-center max-w-lg w-full transform transition-transform duration-500 hover:scale-[1.01]">
+            <!-- Icono de bienvenida (simulado) -->
+            <div class="mx-auto mb-6 w-16 h-16 flex items-center justify-center rounded-full welcome-text border-2 border-current">
+                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.103A.905.905 0 0120.5 4.772v14.456a.905.905 0 01-1.282.658L10 16.5m0-9L19.218 5.772a.905.905 0 011.282.658L20.5 19.228a.905.905 0 01-1.282.658L10 16.5M5 12h.01"></path></svg>
+            </div>
+
+            <h2 class="text-4xl font-extrabold text-gray-900 mb-2">Bienvenido al administrador</h2>
+            <p class="text-xl text-gray-600 mb-6">
+                Has ingresado al sistema de administración de Kivora.
+            </p>
+            <p class="text-md font-medium welcome-text">
+                Tu gestión eficiente es clave para el éxito.
+            </p>
+        </div>
+    </main>
 </body>
 </html>
