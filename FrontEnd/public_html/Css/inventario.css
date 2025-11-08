@@ -1,0 +1,395 @@
+:root {
+    --color-principal: #B80000; /* Rojo principal (Kivora/Marca) */
+    --color-fondo-claro: #f5f6f9; /* Gris Claro */
+    --color-texto-principal: #333;
+    --color-texto-claro: #ffffff;
+    --color-exito: #4CAF50; /* Verde para 'Actualizar' */
+    --color-peligro: #f44336; /* Rojo para 'Eliminar' */
+    --ancho-menu-abierto: 250px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif; /* Usando Inter para un look moderno */
+}
+
+body {
+    background-color: var(--color-fondo-claro);
+    display: flex; /* Usamos flex para posicionar el menú y el contenido */
+}
+
+/* Estilo del contenedor principal del dashboard y menú */
+.menu-dashboard {
+    width: var(--ancho-menu-abierto);
+    height: 100vh;
+    background-color: var(--color-principal);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estado colapsado (simulado) */
+.menu-dashboard.colapsado {
+    width: 70px;
+}
+
+/* ============================================== */
+/* SECCIÓN DEL MENÚ LATERAL (menu.css) */
+/* ============================================== */
+.top-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    height: 80px; /* Altura fija para el logo */
+}
+
+.top-menu .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-texto-claro);
+}
+
+.top-menu .logo img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    filter: invert(1); /* Simula el logo blanco */
+}
+
+.top-menu .logo span {
+    margin-left: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.top-menu .toggle {
+    cursor: pointer;
+    color: var(--color-texto-claro);
+    font-size: 1.5rem;
+}
+
+/* Contenedor de enlaces del menú */
+.menu {
+    padding: 10px 0;
+    height: calc(100% - 180px); /* Espacio para logo y pie de página */
+    overflow-y: auto;
+}
+
+.menu a.enlace {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    margin: 5px 0;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+    border-left: 5px solid transparent;
+}
+
+/* Estilo para el enlace activo */
+.menu a.enlace[href="inventario.html"] {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: var(--color-texto-claro);
+    border-left: 5px solid var(--color-texto-claro);
+}
+
+.menu .enlace i {
+    font-size: 1.3rem;
+    min-width: 30px; /* Asegura el espacio para el ícono */
+}
+
+.menu .enlace span {
+    margin-left: 15px;
+    font-weight: 500;
+}
+
+.menu .enlace:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: var(--color-texto-claro);
+}
+
+/* Contenedor de usuario y pie de página */
+.menu-pie {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    color: var(--color-texto-claro);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.menu-pie i {
+    font-size: 1.8rem;
+    margin-right: 10px;
+}
+
+.menu-pie .info span {
+    display: block;
+    font-size: 0.8rem;
+}
+
+.menu-pie .info .rol {
+    font-weight: 300;
+    opacity: 0.8;
+}
+
+
+/* ============================================== */
+/* SECCIÓN DEL CONTENIDO PRINCIPAL (inventario.css) */
+/* ============================================== */
+.contenedor-principal {
+    flex-grow: 1;
+    margin-left: var(--ancho-menu-abierto); /* Desplazamiento por el menú fijo */
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Header de la sección (Título, Botones de acción) */
+.cabecera-inventario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 0 10px;
+}
+
+.titulo-seccion {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-texto-principal);
+}
+
+/* Buscador y Filtros */
+.acciones-cabecera {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.buscador-contenedor {
+    position: relative;
+}
+
+.buscador-contenedor i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.buscador-contenedor input {
+    padding: 10px 10px 10px 35px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 300px;
+    font-size: 0.9rem;
+}
+
+.boton-filtros {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* Botones de Acción Global */
+.grupo-botones {
+    display: flex;
+    gap: 10px;
+}
+
+.boton-accion-principal {
+    background-color: var(--color-principal);
+    color: var(--color-texto-claro);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.boton-accion-principal:hover {
+    background-color: #8f0000;
+}
+
+.boton-accion-secundario {
+    background-color: #e0e0e0;
+    color: var(--color-texto-principal);
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+/* Contenedor de la tabla */
+.tabla-contenedor {
+    background-color: var(--color-texto-claro);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+}
+
+.tabla-inventario {
+    width: 100%;
+    border-collapse: separate; /* Permite bordes redondeados */
+    border-spacing: 0 5px; /* Espacio entre filas */
+}
+
+.tabla-inventario th {
+    text-align: left;
+    padding: 15px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: black;
+    text-transform: uppercase;
+}
+
+.tabla-inventario td {
+    background-color: var(--color-fondo);
+    padding: 15px 10px;
+    font-size: 0.9rem;
+    color: #666;
+    border-bottom: 1px solid #eee;
+}
+
+.tabla-inventario tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Botones de acción de fila */
+.boton-tabla {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: opacity 0.2s;
+    margin-right: 5px;
+}
+
+.boton-tabla:hover {
+    opacity: 0.8;
+}
+
+.boton-actualizar {
+    background-color: var(--color-exito);
+    color: var(--color-texto-claro);
+}
+
+.boton-eliminar {
+    background-color: var(--color-peligro);
+    color: var(--color-texto-claro);
+}
+
+/* Icono de advertencia */
+.icono-advertencia {
+    color: #ff9800; /* Naranja/Ámbar */
+    font-size: 1.4rem;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 10px;
+    transition: transform 0.2s;
+}
+
+.icono-advertencia:hover {
+    transform: scale(1.1);
+}
+
+/* Estilos del modal (advertencia) */
+.modal-fondo {
+    /* Oculto por defecto */
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-contenido {
+    background-color: var(--color-texto-claro);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+}
+
+.icono-alerta-grande {
+    color: #ff9800;
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+.modal-contenido h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--color-texto-principal);
+}
+
+.modal-contenido p {
+    color: #666;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.boton-revisar {
+    background-color: var(--color-principal);
+    color: var(--color-texto-claro);
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.boton-revisar:hover {
+    background-color: #8f0000;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    .menu-dashboard {
+        /* Por defecto oculto en móviles */
+        transform: translateX(calc(-1 * var(--ancho-menu-abierto))); 
+    }
+    .contenedor-principal {
+        margin-left: 0;
+    }
+    .cabecera-inventario {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .acciones-cabecera {
+        flex-wrap: wrap;
+        margin-top: 15px;
+    }
+    .buscador-contenedor input {
+        width: 100%;
+    }
+}
