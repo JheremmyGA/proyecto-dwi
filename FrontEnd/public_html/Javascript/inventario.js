@@ -18,32 +18,27 @@ const datosProductos = [
 
 // Stock máximo para mostrar advertencia (de 10 a menos)
 const UMBRAL_ADVERTENCIA = 10;
-let productoSeleccionadoSKU = null; // NUEVA VARIABLE: Para guardar el SKU del producto en acción.
+let productoSeleccionadoSKU = null; // Para guardar el SKU del producto seleccionado
 
 // ==============================================
 // LÓGICA DEL INVENTARIO
 // ==============================================
 
-/**
- * Renderiza las filas de la tabla de productos a partir de los datos.
- */
 function renderizarProductos(productos) {
     const cuerpoTabla = document.getElementById('cuerpo-tabla-productos');
-    if (!cuerpoTabla) return; // Validación básica
+    if (!cuerpoTabla) return;
 
-    cuerpoTabla.innerHTML = ''; // Limpiar la tabla antes de renderizar
+    cuerpoTabla.innerHTML = '';
 
     productos.forEach(producto => {
-        // Determinar si el producto tiene bajo stock
         const necesitaAdvertencia = producto.stock <= UMBRAL_ADVERTENCIA;
-        
-        // Crear la fila
+
         const fila = document.createElement('tr');
-        
-        // Contenido de la fila (LÍNEAS MODIFICADAS: Se añade data-sku y onclick para los nuevos modales)
+        // Mostrar nombre concatenado con talla si existe (por ejemplo: "Camisa XL")
+        const nombreMostrar = producto.nombre + (producto.talla ? ` ${producto.talla}` : '');
         fila.innerHTML = `
             <td class="sku">${producto.sku}</td>
-            <td class="nombre">${producto.nombre}</td>
+            <td class="nombre">${nombreMostrar}</td>
             <td class="stock">
                 ${producto.stock}
                 ${necesitaAdvertencia ? `<i class='bx bxs-error-alt icono-advertencia' onclick="mostrarModal('modal-advertencia')"></i>` : ''}
@@ -53,140 +48,130 @@ function renderizarProductos(productos) {
                 <button class="boton-tabla boton-eliminar" data-sku="${producto.sku}" onclick="mostrarModalEliminar(this)">ELIMINAR</button>
             </td>
         `;
-        
         cuerpoTabla.appendChild(fila);
     });
 }
 
-/**
- * Muestra un modal por su ID. (MODIFICADA: Acepta un ID para ser genérica)
- * @param {string} idModal - ID del elemento modal a mostrar.
- */
+// ==============================================
+// FUNCIONES DE MODALES
+// ==============================================
 function mostrarModal(idModal) {
     const modal = document.getElementById(idModal);
-    if (modal) {
-        modal.style.display = 'flex'; // Mostrar el modal
-    }
+    if (modal) modal.style.display = 'flex';
 }
 
-/**
- * Cierra un modal por su ID. (MODIFICADA: Acepta un ID para ser genérica)
- * @param {string} idModal - ID del elemento modal a cerrar.
- */
 function cerrarModal(idModal) {
     const modal = document.getElementById(idModal);
-    if (modal) {
-        modal.style.display = 'none'; // Ocultar el modal
-    }
+    if (modal) modal.style.display = 'none';
 }
 
-
 // ==============================================
-// NUEVAS FUNCIONES DE MODAL ESPECÍFICO
+// MODALES DE ACTUALIZAR Y ELIMINAR
 // ==============================================
-
-/**
- * NUEVA FUNCIÓN: Muestra el modal de Actualizar Producto, precargando los datos.
- * @param {HTMLElement} boton - El botón que disparó el evento (contiene data-sku).
- */
 function mostrarModalActualizar(boton) {
     const sku = boton.getAttribute('data-sku');
     const producto = datosProductos.find(p => p.sku === sku);
-    
+
     if (producto) {
-        productoSeleccionadoSKU = sku; // Guarda el SKU para su uso posterior en la actualización
-        
-        // Cargar datos en el formulario del modal
+        productoSeleccionadoSKU = sku;
         document.getElementById('update-sku').value = producto.sku;
         document.getElementById('update-nombre').value = producto.nombre;
         document.getElementById('update-stock').value = producto.stock;
-        
         mostrarModal('modal-actualizar');
     }
 }
 
-/**
- * NUEVA FUNCIÓN: Muestra el modal de Confirmación de Eliminación.
- * @param {HTMLElement} boton - El botón que disparó el evento (contiene data-sku).
- */
 function mostrarModalEliminar(boton) {
     const sku = boton.getAttribute('data-sku');
     const producto = datosProductos.find(p => p.sku === sku);
-    
+
     if (producto) {
-        productoSeleccionadoSKU = sku; // Guarda el SKU para su uso posterior en la eliminación
-        // Actualiza el nombre del producto en el texto del modal
-        document.getElementById('nombre-producto-eliminar').textContent = producto.nombre; 
+        productoSeleccionadoSKU = sku;
+        document.getElementById('nombre-producto-eliminar').textContent = producto.nombre;
         mostrarModal('modal-eliminar');
     }
 }
 
-/**
- * NUEVA FUNCIÓN: Maneja el envío del formulario de actualización (simulado).
- * Se llama desde el event listener del formulario.
- */
 function manejarActualizacion(evento) {
     evento.preventDefault();
-    
+
     const sku = document.getElementById('update-sku').value;
-    // Asegura que el stock sea un número entero
     const nuevoStock = parseInt(document.getElementById('update-stock').value);
+
     if (isNaN(nuevoStock) || nuevoStock < 0) {
-        alert('Por favor ingresa un valor numérico válido para el stock (0 o mayor).');
+        alert('Por favor ingresa un valor válido para el stock (0 o mayor).');
         return false;
     }
-    
-    // Buscar y actualizar el producto en los datos dummy
+
     const indice = datosProductos.findIndex(p => p.sku === sku);
     if (indice !== -1) {
         datosProductos[indice].stock = nuevoStock;
-        
-        console.log(`Producto ${sku} actualizado a stock: ${nuevoStock}`);
         cerrarModal('modal-actualizar');
-        renderizarProductos(datosProductos); // Refrescar la tabla con los nuevos datos
+        renderizarProductos(datosProductos);
     } else {
         console.error("Error: Producto no encontrado.");
     }
-    return false;
 }
 
-/**
- * NUEVA FUNCIÓN: Simula la ejecución de la eliminación del producto.
- * Se llama al presionar 'Aceptar' en el modal de eliminación.
- */
 function ejecutarEliminacion() {
     if (productoSeleccionadoSKU) {
-        // Encontrar el índice del producto por su SKU
         const indice = datosProductos.findIndex(p => p.sku === productoSeleccionadoSKU);
         if (indice !== -1) {
-            // Eliminar el producto del array usando splice
             datosProductos.splice(indice, 1);
-            
-            console.log(`Producto ${productoSeleccionadoSKU} eliminado.`);
             cerrarModal('modal-eliminar');
-            renderizarProductos(datosProductos); // Refrescar la tabla
+            renderizarProductos(datosProductos);
         } else {
             console.error("Error: Producto no encontrado durante la eliminación.");
         }
     }
 }
 
+// ==============================================
+//  NUEVA FUNCIÓN: AGREGAR PRODUCTO
+// ==============================================
+function manejarAgregar(evento) {
+    evento.preventDefault();
+
+    const sku = document.getElementById('add-sku').value.trim();
+    const nombre = document.getElementById('add-nombre').value.trim();
+    const stock = parseInt(document.getElementById('add-stock').value.trim());
+
+    if (!sku || !nombre || isNaN(stock) || stock < 0) {
+        alert("Por favor completa los campos correctamente antes de agregar un producto.");
+        return;
+    }
+
+    // Verificar si el SKU ya existe
+    const existe = datosProductos.some(p => p.sku === sku);
+    if (existe) {
+        alert("El SKU ya existe. Usa otro SKU para agregar un nuevo producto.");
+        return;
+    }
+
+    // Crear nuevo producto y agregarlo al inicio del array (aparecerá primero en la tabla)
+    const talla = document.getElementById('add-talla').value.trim();
+    const nuevoProducto = { sku, nombre, stock, talla };
+    datosProductos.unshift(nuevoProducto);
+
+    // Cerrar modal, limpiar campos y renderizar tabla
+    cerrarModal('modal-agregar');
+    renderizarProductos(datosProductos);
+
+    // Limpiar el formulario
+    evento.target.reset();
+
+    console.log(`Producto agregado: ${nombre} (SKU: ${sku}, Stock: ${stock})`);
+}
 
 // ==============================================
-// LÓGICA DEL MENÚ LATERAL (menu.js - Sin cambios funcionales)
+// LÓGICA DEL MENÚ LATERAL
 // ==============================================
-
-/**
- * Maneja el toggle (colapsar/expandir) del menú lateral.
- */
 function inicializarMenuToggle() {
     const botonToggle = document.getElementById('boton-toggle-menu');
     const menuLateral = document.getElementById('menu-lateral') || document.querySelector('.menu-dashboard');
     const contenedorPrincipal = document.querySelector('.contenedor-principal');
 
-    // Si no existe el botón toggle, no hacemos nada (evita errores en páginas que no lo tienen)
     if (!botonToggle || !menuLateral) {
-        // Aplicar ajuste inicial si existe contenedorPrincipal y menuLateral tiene ancho por CSS
         if (contenedorPrincipal && window.innerWidth > 768) {
             contenedorPrincipal.style.marginLeft = 'var(--ancho-menu-abierto)';
         }
@@ -194,44 +179,38 @@ function inicializarMenuToggle() {
     }
 
     botonToggle.addEventListener('click', () => {
-        // Toggle de la clase para colapsar/expandir el menú
         menuLateral.classList.toggle('colapsado');
-        
-        // Ajustar el margen del contenido principal (solo en desktop)
+
         if (window.innerWidth > 768) {
-            if (menuLateral.classList.contains('colapsado')) {
-                if (contenedorPrincipal) contenedorPrincipal.style.marginLeft = '70px';
-            } else {
-                if (contenedorPrincipal) contenedorPrincipal.style.marginLeft = 'var(--ancho-menu-abierto)';
-            }
+            contenedorPrincipal.style.marginLeft = menuLateral.classList.contains('colapsado') ? '70px' : 'var(--ancho-menu-abierto)';
         } else {
-            // En móviles, el menú se superpone, no se ajusta el margen
-            menuLateral.classList.toggle('-translate-x-full'); // Simula ocultar/mostrar en móvil si se implementa
+            menuLateral.classList.toggle('-translate-x-full');
         }
     });
 
-    // Ajuste inicial para el contenedor principal
     if (contenedorPrincipal && window.innerWidth > 768) {
-         contenedorPrincipal.style.marginLeft = 'var(--ancho-menu-abierto)';
+        contenedorPrincipal.style.marginLeft = 'var(--ancho-menu-abierto)';
     }
 }
 
 // ==============================================
-// INICIALIZACIÓN DE LA VISTA (MODIFICADA: Agrega listener al formulario)
+// INICIALIZACIÓN DE LA VISTA
 // ==============================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Renderizar la tabla de productos
     renderizarProductos(datosProductos);
-    
-    // Inicializar el reloj (si la tienes fuera de la inicialización de menú)
-    // updateDateTime();
-    // setInterval(updateDateTime, 1000); 
-    
     inicializarMenuToggle();
 
-    // NUEVA LÍNEA: Asignar el manejador de eventos al formulario de actualización
+    // Formulario actualizar
     const formActualizar = document.getElementById('formulario-actualizar');
-    if (formActualizar) {
-        formActualizar.addEventListener('submit', manejarActualizacion);
+    if (formActualizar) formActualizar.addEventListener('submit', manejarActualizacion);
+
+    // Formulario agregar
+    const formAgregar = document.getElementById('formulario-agregar');
+    if (formAgregar) formAgregar.addEventListener('submit', manejarAgregar);
+
+    // Botón "AGREGAR" para abrir el modal
+    const botonAgregar = document.querySelector('.boton-accion-principal');
+    if (botonAgregar) {
+        botonAgregar.addEventListener('click', () => mostrarModal('modal-agregar'));
     }
 });

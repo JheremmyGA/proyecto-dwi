@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -68,55 +69,104 @@
         </div>
 
     </div>
-    
+
     <div class="main-content">
-    <div class="contenedor-principal">
-        <!-- Cabecera y acciones de la vista -->
-        <div class="cabecera-inventario">
-            <h2 class="titulo-seccion">Administrar Productos</h2>
-            
-            <div class="acciones-cabecera">
-                <!-- Buscador -->
-                <div class="buscador-contenedor">
-                    <i class='bx bx-search'></i>
-                    <input type="text" placeholder="Buscar..." class="input-buscador">
+        <div class="contenedor-principal">
+            <!-- Cabecera y acciones de la vista -->
+            <div class="cabecera-inventario">
+                <h2 class="titulo-seccion">Administrar Productos</h2>
+
+                <div class="acciones-cabecera">
+                    <!-- Buscador -->
+                    <div class="buscador-contenedor">
+                        <i class='bx bx-search'></i>
+                        <input type="text" placeholder="Buscar..." class="input-buscador">
+                    </div>
+                    <!-- Filtros (simulado) -->
+                    <button class="boton-filtros">
+                        <i class='bx bx-filter' style="margin-right: 5px;"></i>
+                        Filtros
+                    </button>
+
+                    <!-- Botones de Acción Global -->
+                    <div class="grupo-botones">
+                        <button class="boton-accion-principal">AGREGAR</button>
+
+                    </div>
                 </div>
-                <!-- Filtros (simulado) -->
-                <button class="boton-filtros">
-                    <i class='bx bx-filter' style="margin-right: 5px;"></i>
-                    Filtros
-                </button>
-                
-                <!-- Botones de Acción Global -->
-                <div class="grupo-botones">
-                    <button class="boton-accion-principal">AGREGAR</button>
-                    <!-- Iconos de vista (simulados) -->
-                    <button class="boton-accion-secundario"><i class='bx bx-list-ul'></i></button>
-                    <button class="boton-accion-secundario"><i class='bx bx-table'></i></button>
+                <!-- Modal de Agregar Producto -->
+                <div id="modal-agregar" class="modal-fondo">
+                    <div class="modal-contenido" style="max-width: 900px;">
+                        <h3 style="margin-bottom: 25px; text-align: left;">Agregar Nuevo Producto</h3>
+                        <form id="formulario-agregar" class="form-grid">
+                            <div class="form-grupo">
+                                <label for="add-sku">SKU</label>
+                                <input type="text" id="add-sku" placeholder="Ej. 204362" required>
+                            </div>
+                            <div class="form-grupo">
+                                <label for="add-nombre">Nombre</label>
+                                <input type="text" id="add-nombre" placeholder="Ej. Camisa Oxford Slim Fit" required>
+                            </div>
+                            <div class="form-grupo">
+                                <label for="add-marca">Marca</label>
+                                <input type="text" id="add-marca" placeholder="Ej. University Club" required>
+                            </div>
+
+                            <div class="form-grupo">
+                                <label for="add-temporada">Temporada</label>
+                                <input type="text" id="add-temporada" placeholder="Ej. Verano" required>
+                            </div>
+                            <div class="form-grupo">
+                                <label for="add-categoria">Categoría</label>
+                                <input type="text" id="add-categoria" placeholder="Ej. Camisas" required>
+                            </div>
+                            <div class="form-grupo">
+                                <label for="add-color">Color</label>
+                                <input type="text" id="add-color" placeholder="Ej. Blanco" required>
+                            </div>
+
+                            <div class="form-grupo">
+                                <label for="add-talla">Talla</label>
+                                <input type="text" id="add-talla" placeholder="Ej. XL" required>
+                            </div>
+                            <div class="form-grupo">
+                                <label for="add-stock">Stock</label>
+                                <input type="number" id="add-stock" min="0" placeholder="Ej. 21" required>
+                            </div>
+                            <div class="form-grupo">
+                                <label for="add-precio">Precio</label>
+                                <input type="text" id="add-precio" placeholder="Ej. S/89.00" required>
+                            </div>
+
+                            <!-- Botones -->
+                            <div style="margin-top: 30px; display: flex; justify-content: flex-end; gap: 10px; grid-column: 1 / -1;">
+                                <button type="button" class="boton-cancelar" onclick="cerrarModal('modal-agregar')">Cancelar</button>
+                                <button type="submit" class="boton-confirmar">Agregar Producto</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+
+
             </div>
 
-            <!-- Botón VOLVER -->
-            <button class="boton-accion-principal" style="background-color: var(--color-peligro);">VOLVER</button>
+            <!-- Tabla de Inventario -->
+            <div class="tabla-contenedor">
+                <table class="tabla-inventario">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">SKU</th>
+                            <th style="width: 45%;">Nombre</th>
+                            <th style="width: 10%;">Stock</th>
+                            <th style="width: 30%;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo-tabla-productos">
+                        <!-- Filas de productos se insertarán aquí por JavaScript -->
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <!-- Tabla de Inventario -->
-        <div class="tabla-contenedor">
-            <table class="tabla-inventario">
-                <thead>
-                    <tr>
-                        <th style="width: 15%;">SKU</th>
-                        <th style="width: 45%;">Nombre</th>
-                        <th style="width: 10%;">Stock</th>
-                        <th style="width: 30%;">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="cuerpo-tabla-productos">
-                    <!-- Filas de productos se insertarán aquí por JavaScript -->
-                </tbody>
-            </table>
-        </div>
-    </div>
     </div>
 
     <!-- Modal de Advertencia -->
@@ -131,9 +181,9 @@
 
     <!-- Modal de Actualizar -->
     <div id="modal-actualizar" class="modal-fondo">
-        <div class="modal-contenido" style="max-width: 500px;">
+        <div class="modal-contenido" style="max-width: 900px;">
             <h3 style="margin-bottom: 25px; text-align: left;">Editar Producto</h3>
-            <form id="formulario-actualizar">
+            <form id="formulario-actualizar" class="form-grid">
                 <div class="form-grupo">
                     <label for="update-sku">SKU</label>
                     <input type="text" id="update-sku" readonly>
@@ -147,26 +197,30 @@
                     <!-- El stock se puede editar -->
                     <input type="number" id="update-stock" min="0">
                 </div>
-                
+
                 <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
-                    <button type="button" class="boton-cancelar" onclick="cerrarModal('modal-actualizar')">Cancelar</button>
+                    <button type="button" class="boton-cancelar"
+                        onclick="cerrarModal('modal-actualizar')">Cancelar</button>
                     <button type="submit" class="boton-confirmar">Actualizar Producto</button>
                 </div>
             </form>
         </div>
     </div>
-    
+
     <!-- Modal de Eliminación -->
     <div id="modal-eliminar" class="modal-fondo">
         <div class="modal-contenido">
             <i class='bx bx-trash icono-alerta-grande' style="color: var(--color-peligro);"></i>
             <h3>Confirmar Eliminación</h3>
-            <p>¿Está seguro de que desea eliminar el producto <span id="nombre-producto-eliminar" style="font-weight: 700;">[Nombre del Producto]</span>?</p>
+            <p>¿Está seguro de que desea eliminar el producto <span id="nombre-producto-eliminar"
+                    style="font-weight: 700;">[Nombre del Producto]</span>?</p>
             <div style="display: flex; justify-content: center; gap: 10px;">
                 <button class="boton-cancelar" onclick="cerrarModal('modal-eliminar')">Cancelar</button>
-                <button class="boton-confirmar" style="background-color: var(--color-peligro);" onclick="ejecutarEliminacion()">Aceptar</button>
+                <button class="boton-confirmar" style="background-color: var(--color-peligro);"
+                    onclick="ejecutarEliminacion()">Aceptar</button>
             </div>
         </div>
     </div>
 </body>
+
 </html>

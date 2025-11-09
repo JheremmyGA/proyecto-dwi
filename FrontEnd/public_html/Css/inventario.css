@@ -225,8 +225,33 @@
     color: var(--color-texto-principal);
 }
 
-.form-grupo input:read-only {
+.form-grupo input[readonly] {
     background-color: #f1f1f1;
+}
+
+/* Grid layout for forms that need multiple columns (used in modal actualizar) */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.form-grid .form-grupo {
+    margin-bottom: 0; /* grid gap provides spacing */
+}
+
+/* Responsive: collapse columns on narrower screens */
+@media (max-width: 900px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 520px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
 }
         
 .icono-alerta-grande {
