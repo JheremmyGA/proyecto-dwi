@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Ventas</title>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://cdn.boxicons.com/3.0.3/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    
+    <style>
+        /* ============================================== */
+        /* VARIABLES Y GENERALES */
+        /* ============================================== */
+        :root {
+            --blanco: #ffffff;
+            --azul-opacidad: white;
+            --bg-menu: #B80000;
+            --bg-body: #fafdff;
+            --color-primary: #B80000;
+            --color-fondo-claro: #f5f6f9;
+            --color-texto-principal: #333;
+            --color-texto-claro: #ffffff;
+            --color-exito: #4CAF50;
+            --color-peligro: #f44336;
+            --ancho-menu-cerrado: 150px;
+            --ancho-menu-abierto: 300px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Contenedor principal para el menú y el contenido */
+        .menu-dashboard {
+            max-width: var(--ancho-menu-cerrado);
+            height: 100vh;
+            background: var(--bg-menu);
+            padding: 20px;
+            transition: max-width .3s ease;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        /* Estilos del estado OPEN (Menú expandido) */
+        .menu-dashboard.open {
+            max-width: var(--ancho-menu-abierto);
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: var(--ancho-menu-cerrado);
+            transition: margin-left .3s ease;
+        }
+
+        .main-content.menu-open {
+            margin-left: var(--ancho-menu-abierto);
+        }
+
+        /* Títulos y cabeceras */
+        .titulo-seccion {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-texto-principal);
+        }
+
+        /* Estilos de tabla base (tomados de Inventario.css) */
+        .tabla-contenedor {
+            background-color: var(--blanco);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+
+        .tabla-ventas { /* Usamos un nombre específico para esta tabla */
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 5px;
+        }
+
+        .tabla-ventas th {
+            text-align: left;
+            padding: 15px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: black;
+            text-transform: uppercase;
+        }
+
+        .tabla-ventas td {
+            background-color: var(--color-fondo-claro);
+            padding: 15px 10px;
+            font-size: 0.9rem;
+            color: #666;
+            border-bottom: 1px solid #eee;
+        }
+        
+        /* Estilos para los inputs dentro de la tabla (Unidades) */
+        .tabla-ventas input[type="text"],
+        .tabla-ventas input[type="number"] {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px;
+            text-align: center;
+            width: 60px; /* Ancho fijo para Unid. */
+            font-size: 0.9rem;
+            color: var(--color-texto-principal);
+            background-color: var(--blanco);
+        }
+        
+        .tabla-ventas .importe-total {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--color-texto-principal);
+            background-color: #e0e0e0;
+            padding: 8px 15px;
+            border-radius: 6px;
+        }
+
+        /* Estilos para el área de búsqueda y filtros */
+        .cabecera-ventas {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+
+        .buscador-filtros {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .buscador-contenedor {
+            position: relative;
+        }
+
+        .buscador-contenedor i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        
+        .buscador-contenedor input {
+            padding: 10px 10px 10px 35px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 300px;
+            font-size: 0.9rem;
+        }
+        
+        .boton-filtro-fecha, .boton-accion-secundario {
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--color-texto-principal);
+        }
+
+        /* Estilo para el botón VOLVER */
+        .boton-volver {
+            background-color: var(--color-peligro);
+            color: var(--color-texto-claro);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        /* Puedes agregar media queries aquí si lo necesitas */
+    </style>
+</head>
+
+<body>
+
+    <div class="menu-dashboard" id="menu-lateral">
+        <div class="top-menu">
+            <a href="menu.html" class="logo">
+                <img src="imagenes/logo.png" alt="KIVORA Logo">
+                <span>Administrador</span>
+            </a>
+            <div class="toggle">
+                <i class='bx bx-menu'></i>
+            </div>
+        </div>
+        <div class="menu">
+            <a href="dashboard.html" class="enlace">
+                <i class="bx bx-tachometer"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="inventario.html" class="enlace">
+                <i class="bx bx-package"></i>
+                <span>Inventario</span>
+            </a>
+
+            <a href="ventas.html" class="enlace activo"> <i class="bx bx-dollar-circle"></i>
+                <span>Ventas</span>
+            </a>
+            
+            <a href="Login.html" class="enlace">
+                <i class='bx bx-log-out'></i> 
+                <span>Salir</span>
+            </a>
+        </div>
+        
+        <div class="menu-pie">
+            <a href="menu.html" class="enlace" style="margin:0; border: none; padding: 10px 0; width: 100%;">
+                <i class="bx bx-user"></i>
+                <div class="info">
+                    <span style="font-weight: 700;">Stefa Chavez</span>
+                    <span class="rol">Administrador</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="main-content" id="main-content">
+        <div class="contenedor-principal">
+            
+            <div class="cabecera-ventas">
+                <h2 class="titulo-seccion">Histórico de ventas</h2>
+                
+                <div class="buscador-filtros">
+                    <div class="buscador-contenedor">
+                        <i class='bx bx-search'></i>
+                        <input type="text" placeholder="Buscar..." class="input-buscador">
+                    </div>
+                    
+                    <button class="boton-filtro-fecha" title="Filtrar por Fecha">
+                        <i class='bx bx-calendar'></i>
+                    </button>
+                    
+                    <button class="boton-accion-secundario" title="Limpiar Filtros">
+                        <i class='bx bx-x'></i>
+                    </button>
+
+                    <button class="boton-volver">VOLVER</button>
+                </div>
+            </div>
+
+            <div class="tabla-contenedor">
+                <table class="tabla-ventas">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Fecha</th>
+                            <th style="width: 10%;">ID Boleta</th>
+                            <th style="width: 30%;">Producto</th>
+                            <th style="width: 7%;">Unid.</th>
+                            <th style="width: 10%; text-align: right;">Costo (S/.)</th>
+                            <th style="width: 10%; text-align: right;">Venta (S/.)</th>
+                            <th style="width: 10%; text-align: right;">Sub-total (S/.)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo-tabla-ventas">
+                        </tbody>
+                </table>
+                
+                <div style="display: flex; justify-content: flex-end; align-items: center; padding-top: 15px;">
+                    <span style="font-weight: 700; color: var(--color-texto-principal); margin-right: 20px;">IMPORTE TOTAL:</span>
+                    <span id="importe-total" class="importe-total">0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==============================================
+        // DATOS DUMMY DE VENTAS
+        // ==============================================
+        const datosVentas = [
+            { fecha: '02/04/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90, venta: 32.00, subtotal: 32.00 },
+            { fecha: '02/04/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90, venta: 32.00, subtotal: 32.00 },
+            { fecha: '02/04/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90, venta: 32.00, subtotal: 32.00 },
+            { fecha: '02/04/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90, venta: 32.00, subtotal: 32.00 },
+            { fecha: '02/04/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90, venta: 32.00, subtotal: 32.00 },
+            { fecha: '02/04/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90, venta: 32.00, subtotal: 32.00 },
+            { fecha: '02/04/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90, venta: 32.00, subtotal: 32.00 },
+            { fecha: '02/04/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90, venta: 32.00, subtotal: 32.00 },
+            { fecha: '02/04/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90, venta: 32.00, subtotal: 32.00 },
+            { fecha: '02/04/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90, venta: 32.00, subtotal: 32.00 },
+            // Simulamos muchas filas para el scroll
+            { fecha: '02/04/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90, venta: 32.00, subtotal: 32.00 },
+            { fecha: '03/04/2025', boleta: '888888', producto: 'Pantalón Chino Slim Fit', unid: 2, costo: 40.00, venta: 85.00, subtotal: 170.00 },
+            { fecha: '03/04/2025', boleta: '888888', producto: 'Polo de piqué', unid: 1, costo: 20.00, venta: 45.00, subtotal: 45.00 },
+        ];
+
+        // ==============================================
+        // LÓGICA DE RENDERIZADO Y CÁLCULO
+        // ==============================================
+
+        /**
+         * Renderiza las filas de la tabla de ventas y calcula el importe total.
+         * @param {Array<Object>} ventas - Los datos de ventas a renderizar.
+         */
+        function renderizarVentas(ventas) {
+            const cuerpoTabla = document.getElementById('cuerpo-tabla-ventas');
+            const totalDisplay = document.getElementById('importe-total');
+            let importeTotal = 0;
+
+            if (!cuerpoTabla || !totalDisplay) return;
+
+            cuerpoTabla.innerHTML = ''; // Limpiar la tabla
+
+            ventas.forEach(item => {
+                const fila = document.createElement('tr');
+                
+                // Calcular subtotal real (aunque se usa el dato dummy, es buena práctica)
+                const subtotal = item.unid * item.venta; 
+                importeTotal += subtotal;
+
+                fila.innerHTML = `
+                    <td>${item.fecha}</td>
+                    <td>${item.boleta}</td>
+                    <td>${item.producto}</td>
+                    <td><input type="number" value="${item.unid}" readonly style="width: 45px;"></td>
+                    <td style="text-align: right;">${item.costo.toFixed(2)}</td>
+                    <td style="text-align: right;">${item.venta.toFixed(2)}</td>
+                    <td style="text-align: right;">${subtotal.toFixed(2)}</td>
+                `;
+                
+                cuerpoTabla.appendChild(fila);
+            });
+
+            // Mostrar el importe total
+            totalDisplay.textContent = importeTotal.toFixed(2);
+        }
+        
+        // ==============================================
+        // LÓGICA DE FILTROS Y BÚSQUEDA (Simulado)
+        // ==============================================
+        
+        /**
+         * Realiza la búsqueda y filtrado de los datos de ventas.
+         * @param {string} query - El texto de búsqueda.
+         */
+        function buscarVentas(query) {
+            query = query.toLowerCase().trim();
+            
+            if (!query) return datosVentas; // Si no hay query, devuelve todos los datos
+
+            return datosVentas.filter(item => 
+                item.producto.toLowerCase().includes(query) ||
+                item.boleta.toLowerCase().includes(query)
+            );
+        }
+
+        /**
+         * Limpia la búsqueda y los filtros.
+         */
+        function limpiarTodo() {
+            const input = document.querySelector('.input-buscador');
+            if (input) input.value = '';
+            // Aquí iría la lógica para limpiar filtros de fecha si existieran
+
+            renderizarVentas(datosVentas);
+        }
+
+
+        // ==============================================
+        // LÓGICA DEL MENÚ Y TIEMPO (De tus archivos JS)
+        // ==============================================
+        
+        // Asumiendo que esta lógica está en menu.js y se ejecuta globalmente
+        const toggle = document.querySelector(".toggle");
+        const menuDashboard = document.querySelector(".menu-dashboard");
+        const mainContent = document.querySelector('.main-content');
+        const iconoMenu = toggle ? toggle.querySelector("i") : null;
+        
+        if (toggle && menuDashboard && mainContent) {
+            toggle.addEventListener("click", () => {
+                menuDashboard.classList.toggle("open");
+                mainContent.classList.toggle('menu-open');
+
+                if(iconoMenu.classList.contains("bx-menu")){
+                    iconoMenu.classList.replace("bx-menu", "bx-x");
+                }else {
+                    iconoMenu.classList.replace("bx-x", "bx-menu");
+                }
+            });
+        }
+        
+        /**
+         * Función para actualizar la fecha y hora en tiempo real.
+         */
+        function updateDateTime() {
+            // Esta función no se usa directamente en esta vista, pero la mantengo como placeholder si se agrega un span con ID="datetime"
+        }
+
+
+        // ==============================================
+        // INICIALIZACIÓN
+        // ==============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Renderizar la tabla de ventas al cargar
+            renderizarVentas(datosVentas);
+            
+            // Asignar listeners a los botones de acción
+            
+            // Listener para el buscador
+            const inputBuscador = document.querySelector('.input-buscador');
+            if (inputBuscador) {
+                inputBuscador.addEventListener('input', (e) => {
+                    const resultados = buscarVentas(e.target.value);
+                    renderizarVentas(resultados);
+                });
+            }
+            
+            // Listener para limpiar todo
+            const botonLimpiar = document.querySelector('.boton-accion-secundario');
+            if (botonLimpiar) {
+                botonLimpiar.addEventListener('click', limpiarTodo);
+            }
+        });
+    </script>
+</body>
+</html>

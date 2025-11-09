@@ -193,12 +193,7 @@ function inicializarMenuToggle() {
     }
 }
 
-// ==============================================
-// INICIALIZACIÓN DE LA VISTA
-// ==============================================
-// ==============================================
-// FUNCIONES DE BÚSQUEDA Y FILTRADO
-// ==============================================
+
 let filtrosActivos = {
     stockMin: null,
     stockMax: null

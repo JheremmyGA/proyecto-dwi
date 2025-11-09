@@ -10,10 +10,12 @@
     <link href='https://cdn.boxicons.com/3.0.3/fonts/basic/boxicons.min.css' rel='stylesheet'>
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="Css/menu.css">
+    <link rel="stylesheet" href="Css/inventario.css">
     <link rel="stylesheet" href="Css/ventas.css">
     <!-- CUSTOM JS -->
     <script src="Javascript/menu.js" defer></script>
     <script src="Javascript/ventas.js" defer></script>
+    <script src="Javascript/inventario.js" defer></script>
 </head>
 <body>
 
@@ -67,6 +69,55 @@
         </div>
 
     </div>
-    
+
+    <div class="main-content" id="main-content">
+        <div class="contenedor-principal">
+            
+            <div class="cabecera-ventas">
+                <h2 class="titulo-seccion">Histórico de ventas</h2>
+                
+                <div class="buscador-filtros">
+                    <div class="buscador-contenedor">
+                        <i class='bx bx-search'></i>
+                        <input type="text" placeholder="Buscar..." class="input-buscador">
+                    </div>
+                    
+                    <button class="boton-filtro-fecha" title="Filtrar por Fecha">
+                        <i class='bx bx-calendar'></i>
+                    </button>
+                    
+                    <button class="boton-accion-secundario" title="Limpiar Filtros">
+                        <i class='bx bx-x'></i>
+                    </button>
+
+                    <button class="boton-volver">VOLVER</button>
+                </div>
+            </div>
+
+            <div class="tabla-contenedor">
+                <table class="tabla-ventas">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Fecha</th>
+                            <th style="width: 10%;">ID Boleta</th>
+                            <th style="width: 30%;">Producto</th>
+                            <th style="width: 7%;">Unid.</th>
+                            <th style="width: 10%; text-align: right;">Costo (S/.)</th>
+                            <th style="width: 10%; text-align: right;">Venta (S/.)</th>
+                            <th style="width: 10%; text-align: right;">Sub-total (S/.)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo-tabla-ventas">
+                        </tbody>
+                </table>
+                
+                <div style="display: flex; justify-content: flex-end; align-items: center; padding-top: 15px;">
+                    <span style="font-weight: 700; color: var(--color-texto-principal); margin-right: 20px;">IMPORTE TOTAL:</span>
+                    <span id="importe-total" class="importe-total">0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

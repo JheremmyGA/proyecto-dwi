@@ -1,0 +1,130 @@
+       :root {
+            --blanco: #ffffff;
+            --azul-opacidad: white;
+            --bg-menu: #B80000;
+            --bg-body: #fafdff;
+            --color-primary: #B80000;
+            --color-fondo-claro: #f5f6f9;
+            --color-texto-principal: #333;
+            --color-texto-claro: #ffffff;
+            --color-exito: #4CAF50;
+            --color-peligro: #f44336;
+ 
+        }
+
+        /* Títulos y cabeceras */
+        .titulo-seccion {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-texto-principal);
+        }
+
+        /* Estilos de tabla base (tomados de Inventario.css) */
+        .tabla-contenedor {
+            background-color: var(--blanco);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+
+        .tabla-ventas { /* Usamos un nombre específico para esta tabla */
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 5px;
+        }
+
+        .tabla-ventas th {
+            text-align: left;
+            padding: 15px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: black;
+            text-transform: uppercase;
+        }
+
+        .tabla-ventas td {
+            background-color: var(--color-fondo-claro);
+            padding: 15px 10px;
+            font-size: 0.9rem;
+            color: #666;
+            border-bottom: 1px solid #eee;
+        }
+        
+        /* Estilos para los inputs dentro de la tabla (Unidades) */
+        .tabla-ventas input[type="text"],
+        .tabla-ventas input[type="number"] {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px;
+            text-align: center;
+            width: 60px; /* Ancho fijo para Unid. */
+            font-size: 0.9rem;
+            color: var(--color-texto-principal);
+            background-color: var(--blanco);
+        }
+        
+        .tabla-ventas .importe-total {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--color-texto-principal);
+            background-color: #e0e0e0;
+            padding: 8px 15px;
+            border-radius: 6px;
+        }
+
+        /* Estilos para el área de búsqueda y filtros */
+        .cabecera-ventas {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+
+        .buscador-filtros {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .buscador-contenedor {
+            position: relative;
+        }
+
+        .buscador-contenedor i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        
+        .buscador-contenedor input {
+            padding: 10px 10px 10px 35px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 300px;
+            font-size: 0.9rem;
+        }
+        
+        .boton-filtro-fecha, .boton-accion-secundario {
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--color-texto-principal);
+        }
+
+        /* Estilo para el botón VOLVER */
+        .boton-volver {
+            background-color: var(--color-peligro);
+            color: var(--color-texto-claro);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
