@@ -5,142 +5,7 @@
     --color-texto-claro: #ffffff;
     --color-exito: #4CAF50; /* Verde para 'Actualizar' */
     --color-peligro: #f44336; /* Rojo para 'Eliminar' */
-    --ancho-menu-abierto: 250px;
-}
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif; /* Usando Inter para un look moderno */
-}
-
-body {
-    background-color: var(--color-fondo-claro);
-    display: flex; /* Usamos flex para posicionar el menú y el contenido */
-}
-
-/* Estilo del contenedor principal del dashboard y menú */
-.menu-dashboard {
-    width: var(--ancho-menu-abierto);
-    height: 100vh;
-    background-color: var(--color-principal);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    transition: all 0.3s ease;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Estado colapsado (simulado) */
-.menu-dashboard.colapsado {
-    width: 70px;
-}
-
-/* ============================================== */
-/* SECCIÓN DEL MENÚ LATERAL (menu.css) */
-/* ============================================== */
-.top-menu {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    height: 80px; /* Altura fija para el logo */
-}
-
-.top-menu .logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--color-texto-claro);
-}
-
-.top-menu .logo img {
-    width: 35px;
-    height: 35px;
-    object-fit: contain;
-    filter: invert(1); /* Simula el logo blanco */
-}
-
-.top-menu .logo span {
-    margin-left: 10px;
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-
-.top-menu .toggle {
-    cursor: pointer;
-    color: var(--color-texto-claro);
-    font-size: 1.5rem;
-}
-
-/* Contenedor de enlaces del menú */
-.menu {
-    padding: 10px 0;
-    height: calc(100% - 180px); /* Espacio para logo y pie de página */
-    overflow-y: auto;
-}
-
-.menu a.enlace {
-    display: flex;
-    align-items: center;
-    padding: 12px 20px;
-    margin: 5px 0;
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    transition: background-color 0.2s, color 0.2s;
-    border-left: 5px solid transparent;
-}
-
-/* Estilo para el enlace activo */
-.menu a.enlace[href="inventario.html"] {
-    background-color: rgba(0, 0, 0, 0.2);
-    color: var(--color-texto-claro);
-    border-left: 5px solid var(--color-texto-claro);
-}
-
-.menu .enlace i {
-    font-size: 1.3rem;
-    min-width: 30px; /* Asegura el espacio para el ícono */
-}
-
-.menu .enlace span {
-    margin-left: 15px;
-    font-weight: 500;
-}
-
-.menu .enlace:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: var(--color-texto-claro);
-}
-
-/* Contenedor de usuario y pie de página */
-.menu-pie {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    color: var(--color-texto-claro);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.menu-pie i {
-    font-size: 1.8rem;
-    margin-right: 10px;
-}
-
-.menu-pie .info span {
-    display: block;
-    font-size: 0.8rem;
-}
-
-.menu-pie .info .rol {
-    font-weight: 300;
-    opacity: 0.8;
 }
 
 
@@ -338,6 +203,32 @@ body {
     position: relative;
 }
 
+/* Estilos específicos del formulario */
+.form-grupo {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.form-grupo label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.form-grupo input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: var(--color-texto-principal);
+}
+
+.form-grupo input:read-only {
+    background-color: #f1f1f1;
+}
+        
 .icono-alerta-grande {
     color: #ff9800;
     font-size: 4rem;
@@ -357,19 +248,31 @@ body {
     line-height: 1.5;
 }
 
-.boton-revisar {
-    background-color: var(--color-principal);
-    color: var(--color-texto-claro);
+.boton-revisar,
+.boton-confirmar,
+.boton-cancelar {
     padding: 12px 30px;
     border: none;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s;
+    margin: 5px;
 }
 
 .boton-revisar:hover {
     background-color: #8f0000;
+}
+
+.boton-revisar,
+.boton-confirmar {
+    background-color: var(--color-primary);
+    color: var(--blanco);
+}
+
+.boton-cancelar {
+    background-color: #e0e0e0;
+    color: var(--color-texto-principal);
 }
 
 /* Ajuste para móviles */

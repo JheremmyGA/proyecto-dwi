@@ -51,30 +51,26 @@
                 <span>Vista usuario</span>
             </a>
 
-
-            <div class="enlace">
-                <i class="bx bx-cog"></i>
-                <span>Configuración</span>
-            </div>
-
-            <div class="enlace">
+            <a href="Login.html" class="enlace">
                 <i class='bx  bx-arrow-in-down-left-square'></i>
                 <span>Salir</span>
-            </div>
+            </a>
 
         </div>
         <div class="menu-pie">
-            <a href="index.html" class="enlace" style="margin:0; border: none; padding: 10px 0; width: 100%;">
-                <i class='bx bx-arrow-in-down-left-square'></i>
+            <a href="menu.html" class="enlace" style="margin:0; border: none; padding: 10px 0; width: 100%;">
+                <i class="bx bx-user"></i>
                 <div class="info">
-                    <span style="font-weight: 700;">Stefa Chavez</span> <!--- Nombre del usuario -->
+                    <span style="font-weight: 700;">Marcelo M.</span> <!--- Nombre del usuario -->
                     <span class="rol">Administrador</span>
                 </div>
             </a>
         </div>
 
     </div>
-        <div class="contenedor-principal">
+    
+    <div class="main-content">
+    <div class="contenedor-principal">
         <!-- Cabecera y acciones de la vista -->
         <div class="cabecera-inventario">
             <h2 class="titulo-seccion">Administrar Productos</h2>
@@ -121,13 +117,55 @@
             </table>
         </div>
     </div>
+    </div>
 
-        <div id="modal-advertencia" class="modal-fondo" style="display: none;">
+    <!-- Modal de Advertencia -->
+    <div id="modal-advertencia" class="modal-fondo" style="display: none;">
         <div class="modal-contenido">
             <i class='bx bxs-error-circle icono-alerta-grande'></i>
             <h3>Atención</h3>
             <p>Se notifica que hay baja o nula disponibilidad de los productos mencionados.</p>
-            <button class="boton-revisar" onclick="cerrarModal()">Revisar</button>
+            <button class="boton-revisar" onclick="cerrarModal('modal-advertencia')">Revisar</button>
+        </div>
+    </div>
+
+    <!-- Modal de Actualizar -->
+    <div id="modal-actualizar" class="modal-fondo">
+        <div class="modal-contenido" style="max-width: 500px;">
+            <h3 style="margin-bottom: 25px; text-align: left;">Editar Producto</h3>
+            <form id="formulario-actualizar">
+                <div class="form-grupo">
+                    <label for="update-sku">SKU</label>
+                    <input type="text" id="update-sku" readonly>
+                </div>
+                <div class="form-grupo">
+                    <label for="update-nombre">Nombre</label>
+                    <input type="text" id="update-nombre" readonly>
+                </div>
+                <div class="form-grupo">
+                    <label for="update-stock">Stock</label>
+                    <!-- El stock se puede editar -->
+                    <input type="number" id="update-stock" min="0">
+                </div>
+                
+                <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
+                    <button type="button" class="boton-cancelar" onclick="cerrarModal('modal-actualizar')">Cancelar</button>
+                    <button type="submit" class="boton-confirmar">Actualizar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal de Eliminación -->
+    <div id="modal-eliminar" class="modal-fondo">
+        <div class="modal-contenido">
+            <i class='bx bx-trash icono-alerta-grande' style="color: var(--color-peligro);"></i>
+            <h3>Confirmar Eliminación</h3>
+            <p>¿Está seguro de que desea eliminar el producto <span id="nombre-producto-eliminar" style="font-weight: 700;">[Nombre del Producto]</span>?</p>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+                <button class="boton-cancelar" onclick="cerrarModal('modal-eliminar')">Cancelar</button>
+                <button class="boton-confirmar" style="background-color: var(--color-peligro);" onclick="ejecutarEliminacion()">Aceptar</button>
+            </div>
         </div>
     </div>
 </body>
