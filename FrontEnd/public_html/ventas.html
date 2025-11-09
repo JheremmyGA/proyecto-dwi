@@ -10,10 +10,12 @@
     <link href='https://cdn.boxicons.com/3.0.3/fonts/basic/boxicons.min.css' rel='stylesheet'>
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="Css/menu.css">
+    <link rel="stylesheet" href="Css/inventario.css">
     <link rel="stylesheet" href="Css/ventas.css">
     <!-- CUSTOM JS -->
-    <script src="Javascript/menu.js" defer></script>
+    
     <script src="Javascript/ventas.js" defer></script>
+    <script src="Javascript/inventario.js" defer></script>
 </head>
 <body>
 
@@ -67,6 +69,62 @@
         </div>
 
     </div>
-    
+
+    <div class="main-content" id="main-content">
+        <div class="contenedor-principal">
+            
+            <div class="cabecera-ventas">
+                <h2 class="titulo-seccion">Histórico de ventas</h2>
+                
+                <div class="buscador-filtros">
+                    <div class="buscador-contenedor">
+                        <i class='bx bx-search'></i>
+                        <input type="text" placeholder="Buscar ID Boleta..." class="input-buscador">
+                    </div>
+                    <!-- Área donde se muestran filtros activos como badges -->
+                    <div class="filtros-activos" aria-live="polite"></div>
+                    
+                        <div class="filtro-fecha-contenedor">
+                            <button class="boton-filtro-fecha" title="Filtrar por Fecha">
+                                <i class='bx bx-calendar'></i>
+                            </button>
+                            <div class="filtro-fecha-rango" style="display: none;">
+                                <input type="date" class="input-fecha-inicio" aria-label="Fecha inicio">
+                                <span class="separador-fecha">a</span>
+                                <input type="date" class="input-fecha-fin" aria-label="Fecha fin">
+                                <button class="boton-aplicar-fecha" title="Aplicar filtro">Aplicar</button>
+                            </div>
+                        </div>
+                    
+                    <button class="boton-accion-secundario" title="Limpiar Filtros">
+                        <i class='bx bx-x'></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="tabla-contenedor">
+                <table class="tabla-ventas">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Fecha</th>
+                            <th style="width: 10%;">ID Boleta</th>
+                            <th style="width: 38%;">Producto</th>
+                            <th style="width: 7%;">Unid.</th>
+                            <th style="width: 15%; text-align: right;">Costo (S/.)</th>
+                            <th style="width: 15%; text-align: right;">Sub-total (S/.)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo-tabla-ventas">
+                    </tbody>
+                </table>
+                
+                <div style="display: flex; justify-content: flex-end; align-items: center; padding-top: 15px;">
+                    <span class="importe-total">IMPORTE TOTAL:</span>
+                    <span id="importe-total" class="importe-total">10.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

@@ -80,7 +80,7 @@
                     <!-- Buscador -->
                     <div class="buscador-contenedor">
                         <i class='bx bx-search'></i>
-                        <input type="text" placeholder="Buscar..." class="input-buscador">
+                        <input type="text" placeholder="Buscar SKU..." class="input-buscador">
                     </div>
                     <!-- Filtros (simulado) -->
                     <button class="boton-filtros">
@@ -219,6 +219,34 @@
                 <button class="boton-confirmar" style="background-color: var(--color-peligro);"
                     onclick="ejecutarEliminacion()">Aceptar</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal de Filtros -->
+    <div id="modal-filtros" class="modal-fondo">
+        <div class="modal-contenido" style="max-width: 500px;">
+            <h3 style="margin-bottom: 25px; text-align: left;">Filtrar por Stock</h3>
+            <form id="formulario-filtros" class="form-grid">
+                <div class="form-grupo" style="grid-column: span 2;">
+                    <label for="filtro-stock-min" class="modal-titulo">Stock Mínimo</label>
+                    <input type="number" id="filtro-stock-min" min="0" placeholder="Ej. 0">
+                </div>
+                <div class="form-grupo" style="grid-column: span 2;">
+                    <label for="filtro-stock-max" class="modal-titulo">Stock Máximo</label>
+                    <input type="number" id="filtro-stock-max" min="0" placeholder="Ej. 100">
+                </div>
+                <div style="margin-top: 30px; display: flex; justify-content: space-between; gap: 10px; grid-column: span 2;">
+
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="boton-confirmar" onclick="aplicarFiltros()">Aplicar Filtros</button>
+                        <button type="button" class="boton-cancelar" onclick="cerrarModal('modal-filtros')">Cancelar</button>
+                    </div>
+                        <button type="button" class="boton-limpiar" onclick="limpiarFiltros()" style="background-color: #6c757d;">
+                        <i class='bx bx-reset' style="margin-right: 5px;"></i>
+                        Limpiar Filtros
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </body>

@@ -193,12 +193,91 @@ function inicializarMenuToggle() {
     }
 }
 
-// ==============================================
-// INICIALIZACIÓN DE LA VISTA
-// ==============================================
+
+let filtrosActivos = {
+    stockMin: null,
+    stockMax: null
+};
+
+function buscarProductos(query) {
+    query = query.toLowerCase().trim();
+    
+    // Aplicar filtros de stock si están activos
+    let productosFiltrados = datosProductos;
+    if (filtrosActivos.stockMin !== null || filtrosActivos.stockMax !== null) {
+        productosFiltrados = productosFiltrados.filter(producto => {
+            let cumpleFiltros = true;
+            if (filtrosActivos.stockMin !== null) {
+                cumpleFiltros = cumpleFiltros && producto.stock >= filtrosActivos.stockMin;
+            }
+            if (filtrosActivos.stockMax !== null) {
+                cumpleFiltros = cumpleFiltros && producto.stock <= filtrosActivos.stockMax;
+            }
+            return cumpleFiltros;
+        });
+    }
+
+    // Si no hay búsqueda por SKU, retornar los productos filtrados
+    if (!query) {
+        return productosFiltrados;
+    }
+    
+    // Filtrar productos por SKU
+    return productosFiltrados.filter(producto => 
+        producto.sku.toLowerCase().includes(query)
+    );
+}
+
+function limpiarFiltros() {
+    // Limpiar los campos del formulario
+    document.getElementById('filtro-stock-min').value = '';
+    document.getElementById('filtro-stock-max').value = '';
+    
+    // Resetear los filtros activos
+    filtrosActivos.stockMin = null;
+    filtrosActivos.stockMax = null;
+
+    // Obtener el valor actual del buscador
+    const inputBuscador = document.querySelector('.input-buscador');
+    const resultados = buscarProductos(inputBuscador ? inputBuscador.value : '');
+    
+    renderizarProductos(resultados);
+    cerrarModal('modal-filtros');
+}
+
+function aplicarFiltros() {
+    const stockMin = document.getElementById('filtro-stock-min').value;
+    const stockMax = document.getElementById('filtro-stock-max').value;
+
+    filtrosActivos.stockMin = stockMin === '' ? null : parseInt(stockMin);
+    filtrosActivos.stockMax = stockMax === '' ? null : parseInt(stockMax);
+
+    // Obtener el valor actual del buscador
+    const inputBuscador = document.querySelector('.input-buscador');
+    const resultados = buscarProductos(inputBuscador ? inputBuscador.value : '');
+    
+    renderizarProductos(resultados);
+    cerrarModal('modal-filtros');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     renderizarProductos(datosProductos);
     inicializarMenuToggle();
+
+    // Inicializar botón de filtros
+    const botonFiltros = document.querySelector('.boton-filtros');
+    if (botonFiltros) {
+        botonFiltros.addEventListener('click', () => mostrarModal('modal-filtros'));
+    }
+
+    // Inicializar búsqueda
+    const inputBuscador = document.querySelector('.input-buscador');
+    if (inputBuscador) {
+        inputBuscador.addEventListener('input', (e) => {
+            const resultados = buscarProductos(e.target.value);
+            renderizarProductos(resultados);
+        });
+    }
 
     // Formulario actualizar
     const formActualizar = document.getElementById('formulario-actualizar');

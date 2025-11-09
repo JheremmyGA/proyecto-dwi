@@ -273,9 +273,28 @@
     line-height: 1.5;
 }
 
+.modal-titulo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--color-texto-principal);
+}
+
+.boton-cancelar {
+    background-color: #e0e0e0;
+    color: var(--color-texto-principal);
+}
+
+.boton-limpiar {
+    background-color: #6c757d;
+    color: var(--color-texto-claro);
+}
+
+
 .boton-revisar,
 .boton-confirmar,
-.boton-cancelar {
+.boton-cancelar,
+.boton-limpiar {
     padding: 12px 30px;
     border: none;
     border-radius: 8px;
@@ -295,10 +314,7 @@
     color: var(--blanco);
 }
 
-.boton-cancelar {
-    background-color: #e0e0e0;
-    color: var(--color-texto-principal);
-}
+
 
 /* Ajuste para móviles */
 @media (max-width: 768px) {
