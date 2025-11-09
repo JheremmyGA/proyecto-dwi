@@ -62,11 +62,15 @@
             color: var(--color-texto-principal);
             background-color: var(--blanco);
         }
-        
+        .importe-total{
+            font-weight: 700; 
+            color: var(--color-texto-principal); 
+            margin-right: 20px;
+        }
         .tabla-ventas .importe-total {
             font-weight: 700;
             font-size: 1.1rem;
-            color: var(--color-texto-principal);
+            color: black;
             background-color: #e0e0e0;
             padding: 8px 15px;
             border-radius: 6px;
@@ -128,3 +132,97 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
+
+            /* Estilos para el filtro de fecha */
+            .filtro-fecha-contenedor {
+                position: relative;
+                display: inline-block;
+            }
+
+            .input-fecha {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                margin-top: 5px;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                background-color: white;
+                z-index: 1000;
+                font-family: inherit;
+                font-size: 0.9rem;
+            }
+
+            /* Rango de fechas */
+            .filtro-fecha-rango {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                margin-top: 8px;
+                padding: 10px;
+                background: #fff;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                z-index: 1000;
+                box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+            }
+
+            .filtro-fecha-rango input[type="date"] {
+                padding: 6px 8px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                background: #fff;
+                font-size: 0.9rem;
+            }
+
+            .separador-fecha {
+                color: #666;
+                font-weight: 600;
+            }
+
+            .boton-aplicar-fecha {
+                background: var(--color-primary);
+                color: #fff;
+                border: none;
+                padding: 6px 10px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            /* Badges para filtros activos */
+            .filtros-activos {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                margin-left: 8px;
+            }
+
+            .filtro-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: #f3f4f6;
+                color: #222;
+                padding: 6px 8px;
+                border-radius: 999px;
+                font-size: 0.85rem;
+                border: 1px solid #e2e8f0;
+            }
+
+            .filtro-badge .filtro-text {
+                font-weight: 600;
+            }
+
+            .filtro-badge .badge-close {
+                background: transparent;
+                border: none;
+                font-size: 1.1rem;
+                line-height: 1;
+                cursor: pointer;
+                color: #666;
+                padding: 0 4px;
+            }
