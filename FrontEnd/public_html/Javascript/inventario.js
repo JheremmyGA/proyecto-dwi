@@ -196,9 +196,33 @@ function inicializarMenuToggle() {
 // ==============================================
 // INICIALIZACIÓN DE LA VISTA
 // ==============================================
+// ==============================================
+// FUNCIÓN DE BÚSQUEDA
+// ==============================================
+function buscarProductos(query) {
+    query = query.toLowerCase().trim();
+    if (!query) {
+        return datosProductos; // Si no hay búsqueda, retornar todos los productos
+    }
+    
+    // Filtrar productos por SKU
+    return datosProductos.filter(producto => 
+        producto.sku.toLowerCase().includes(query)
+    );
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     renderizarProductos(datosProductos);
     inicializarMenuToggle();
+
+    // Inicializar búsqueda
+    const inputBuscador = document.querySelector('.input-buscador');
+    if (inputBuscador) {
+        inputBuscador.addEventListener('input', (e) => {
+            const resultados = buscarProductos(e.target.value);
+            renderizarProductos(resultados);
+        });
+    }
 
     // Formulario actualizar
     const formActualizar = document.getElementById('formulario-actualizar');
