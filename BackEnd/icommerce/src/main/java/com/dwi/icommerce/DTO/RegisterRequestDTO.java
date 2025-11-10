@@ -1,12 +1,12 @@
 package com.dwi.icommerce.DTO;
 
-public class RegisterUsuarioDTO {
+public class RegisterRequestDTO {
     private final String nombre;
     private final String apellido;
     private final String correo;
     private final String contraseña;
 
-    public RegisterUsuarioDTO(String apellido, String contraseña, String correo, String nombre) {
+    public RegisterRequestDTO(String apellido, String contraseña, String correo, String nombre) {
         this.apellido = apellido;
         this.contraseña = contraseña;
         this.correo = correo;
