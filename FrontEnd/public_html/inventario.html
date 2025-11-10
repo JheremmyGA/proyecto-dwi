@@ -94,19 +94,29 @@
 
                     </div>
                 </div>
+
                 <!-- Modal de Agregar Producto -->
                 <div id="modal-agregar" class="modal-fondo">
-                    <div class="modal-contenido" style="max-width: 900px;">
-                        <h3 style="margin-bottom: 25px; text-align: left;">Agregar Nuevo Producto</h3>
+                    <div class="modal-contenido" style="max-width: 850px;">
+                        <h3 style="margin-bottom: 20px; text-align: left;">Agregar Nuevo Producto</h3>
                         <form id="formulario-agregar" class="form-grid">
+
+                            <h4 style="grid-column: 1 / -1; margin-bottom: 10px;">Detalles Generales</h4>
+
                             <div class="form-grupo">
-                                <label for="add-sku">SKU</label>
-                                <input type="text" id="add-sku" placeholder="Ej. 204362" required>
+                                <label for="add-sku">SKU Principal</label>
+                                <input type="text" id="add-sku" placeholder="Ej. 204362 (Código principal)" required>
+                            </div>
+
+                            <div class="form-grupo">
+                                <label for="add-stock">Stock Total Inicial</label>
+                                <input type="number" id="add-stock" min="0" placeholder="Ej. 50" required>
                             </div>
                             <div class="form-grupo">
                                 <label for="add-nombre">Nombre</label>
                                 <input type="text" id="add-nombre" placeholder="Ej. Camisa Oxford Slim Fit" required>
                             </div>
+
                             <div class="form-grupo">
                                 <label for="add-marca">Marca</label>
                                 <input type="text" id="add-marca" placeholder="Ej. University Club" required>
@@ -116,36 +126,75 @@
                                 <label for="add-temporada">Temporada</label>
                                 <input type="text" id="add-temporada" placeholder="Ej. Verano" required>
                             </div>
+
                             <div class="form-grupo">
                                 <label for="add-categoria">Categoría</label>
                                 <input type="text" id="add-categoria" placeholder="Ej. Camisas" required>
                             </div>
-                            <div class="form-grupo">
-                                <label for="add-color">Color</label>
-                                <input type="text" id="add-color" placeholder="Ej. Blanco" required>
-                            </div>
 
-                            <div class="form-grupo">
-                                <label for="add-talla">Talla</label>
-                                <input type="text" id="add-talla" placeholder="Ej. XL" required>
-                            </div>
-                            <div class="form-grupo">
-                                <label for="add-stock">Stock</label>
-                                <input type="number" id="add-stock" min="0" placeholder="Ej. 21" required>
-                            </div>
                             <div class="form-grupo">
                                 <label for="add-precio">Precio</label>
                                 <input type="text" id="add-precio" placeholder="Ej. S/89.00" required>
                             </div>
 
-                            <!-- Botones -->
-                            <div style="margin-top: 30px; display: flex; justify-content: flex-end; gap: 10px; grid-column: 1 / -1;">
-                                <button type="button" class="boton-cancelar" onclick="cerrarModal('modal-agregar')">Cancelar</button>
+                            <div class="form-grupo imagen-producto" style="grid-column: 1 / -1;">
+                                <label for="add-imagen-general">Imagen del producto</label>
+                                <div class="contenedor-imagen">
+                                    <input type="file" id="add-imagen-general" class="input-hidden-file"
+                                        accept="image/*">
+
+                                    <label for="add-imagen-general" class="custom-file-upload">
+                                        <i class="fas fa-image"></i> Subir Imagen
+                                    </label>
+                                    <span id="nombre-archivo-general" class="nombre-archivo">Ningún archivo
+                                        seleccionado</span>
+                                    <img id="preview-general" class="preview-imagen" src="" alt="Vista previa"
+                                        style="display:none;">
+                                </div>
+                            </div>
+
+                            <h4 style="grid-column: 1 / -1; margin-top: 25px;">Detalles Específicos</h4>
+
+                            <div id="contenedor-variaciones" class="variaciones-contenedor"
+                                style="grid-column: 1 / -1;">
+                                <div class="variacion-item">
+                                    <input type="text" placeholder="SKU (Ej. 204362)" class="input-sku" required>
+                                    <input type="text" placeholder="Talla (Ej. M)" class="input-talla" required>
+                                    <input type="text" placeholder="Color (Ej. Azul)" class="input-color" required>
+                                    <input type="number" placeholder="Cantidad" min="0" class="input-stock" required>
+
+                                    <div class="form-grupo-archivo">
+                                        <input type="file" id="variacion-initial-file" accept="image/*"
+                                            class="input-hidden-file input-imagen">
+
+                                        <label for="variacion-initial-file" class="custom-file-upload">
+                                            <i class="fas fa-image"></i> Subir Imagen
+                                        </label>
+                                        <img class="preview-imagen" src="" alt="Vista previa" style="display:none;">
+                                    </div>
+
+                                    <button type="button" class="btn-eliminar-variacion"
+                                        title="Eliminar variación">×</button>
+                                </div>
+                            </div>
+
+                            <div style="grid-column: 1 / -1; margin-top: 10px;">
+                                <button type="button" id="btn-agregar-variacion" class="boton-secundario">+ Agregar
+                                    variación</button>
+                            </div>
+
+                            <div
+                                style="margin-top: 30px; display: flex; justify-content: flex-end; gap: 10px; grid-column: 1 / -1;">
+                                <button type="button" class="boton-cancelar"
+                                    onclick="cerrarModal('modal-agregar')">Cancelar</button>
                                 <button type="submit" class="boton-confirmar">Agregar Producto</button>
                             </div>
                         </form>
                     </div>
                 </div>
+
+
+
 
 
             </div>
@@ -235,13 +284,17 @@
                     <label for="filtro-stock-max" class="modal-titulo">Stock Máximo</label>
                     <input type="number" id="filtro-stock-max" min="0" placeholder="Ej. 100">
                 </div>
-                <div style="margin-top: 30px; display: flex; justify-content: space-between; gap: 10px; grid-column: span 2;">
+                <div
+                    style="margin-top: 30px; display: flex; justify-content: space-between; gap: 10px; grid-column: span 2;">
 
                     <div style="display: flex; gap: 10px;">
-                        <button type="button" class="boton-confirmar" onclick="aplicarFiltros()">Aplicar Filtros</button>
-                        <button type="button" class="boton-cancelar" onclick="cerrarModal('modal-filtros')">Cancelar</button>
+                        <button type="button" class="boton-confirmar" onclick="aplicarFiltros()">Aplicar
+                            Filtros</button>
+                        <button type="button" class="boton-cancelar"
+                            onclick="cerrarModal('modal-filtros')">Cancelar</button>
                     </div>
-                        <button type="button" class="boton-limpiar" onclick="limpiarFiltros()" style="background-color: #6c757d;">
+                    <button type="button" class="boton-limpiar" onclick="limpiarFiltros()"
+                        style="background-color: #6c757d;">
                         <i class='bx bx-reset' style="margin-right: 5px;"></i>
                         Limpiar Filtros
                     </button>

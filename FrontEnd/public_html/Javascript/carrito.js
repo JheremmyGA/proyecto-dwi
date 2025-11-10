@@ -32,22 +32,20 @@ function cargarCarrito() {
  * Calcula el número total de ítems (sumando cantidades) y actualiza el icono.
  */
 function actualizarContadorCarrito() {
-    if (!contadorCarrito) return; // Salir si el elemento no existe
+    if (!contadorCarrito) return;
 
-    // Calcula el total sumando la propiedad 'cantidad' de todos los artículos
-    const totalItems = articulosCarrito.reduce((total, articulo) => {
-        return total + (parseInt(articulo.cantidad) || 0); 
-    }, 0);
+    // 🔹 Solo contar productos únicos, no las cantidades
+    const totalProductosUnicos = articulosCarrito.length;
 
-    // Muestra/Oculta el contador y actualiza el valor
-    if (totalItems > 0) {
-        contadorCarrito.textContent = totalItems;
-        contadorCarrito.style.display = 'block'; 
+    if (totalProductosUnicos > 0) {
+        contadorCarrito.textContent = totalProductosUnicos;
+        contadorCarrito.style.display = 'block';
     } else {
         contadorCarrito.textContent = 0;
-        contadorCarrito.style.display = 'none'; 
+        contadorCarrito.style.display = 'none';
     }
 }
+
 
 
 // ============ Funciones del Carrito ============

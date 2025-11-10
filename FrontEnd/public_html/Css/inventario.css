@@ -1,20 +1,25 @@
 :root {
+    /* Colores Principales */
     --color-principal: #B80000; /* Rojo principal (Kivora/Marca) */
-    --color-fondo-claro: #f5f6f9; /* Gris Claro */
+    --color-fondo-claro: #f5f6f9;
     --color-texto-principal: #333;
     --color-texto-claro: #ffffff;
-    --color-exito: #4CAF50; /* Verde para 'Actualizar' */
-    --color-peligro: #f44336; /* Rojo para 'Eliminar' */
+    --color-exito: #4CAF50;
+    --color-peligro: #f44336;
 
+    /* Variables de Estructura */
+    --ancho-menu-abierto: 250px;
+    --color-fondo: #f9f9f9;
+    --color-borde: #ccc;
+    --color-secundario: #a0a0a0; /* Definición de color secundario para el botón */
 }
-
 
 /* ============================================== */
 /* SECCIÓN DEL CONTENIDO PRINCIPAL (inventario.css) */
 /* ============================================== */
 .contenedor-principal {
     flex-grow: 1;
-    margin-left: var(--ancho-menu-abierto); /* Desplazamiento por el menú fijo */
+    margin-left: var(--ancho-menu-abierto);
     padding: 20px;
     transition: margin-left 0.3s ease;
 }
@@ -33,6 +38,7 @@
     font-weight: 700;
     color: var(--color-texto-principal);
 }
+
 
 /* Buscador y Filtros */
 .acciones-cabecera {
@@ -62,7 +68,7 @@
 }
 
 .boton-filtros {
-    background-color: #f1f1f1;
+    background-color: #ffffff;
     border: 1px solid #ccc;
     padding: 10px 15px;
     border-radius: 8px;
@@ -76,19 +82,30 @@
     gap: 10px;
 }
 
+
+/* Estilos para el botón de acción principal */
 .boton-accion-principal {
-    background-color: var(--color-principal);
+    background: linear-gradient(135deg, #b80000, #d32f2f);
     color: var(--color-texto-claro);
-    padding: 10px 20px;
+    padding: 12px 26px;
     border: none;
-    border-radius: 8px;
-    font-weight: 600;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(184, 0, 0, 0.3);
 }
 
 .boton-accion-principal:hover {
-    background-color: #8f0000;
+    background: linear-gradient(135deg, #8f0000, #b71c1c);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(184, 0, 0, 0.4);
+}
+
+.boton-accion-principal:active {
+    transform: scale(0.98);
 }
 
 .boton-accion-secundario {
@@ -112,8 +129,8 @@
 
 .tabla-inventario {
     width: 100%;
-    border-collapse: separate; /* Permite bordes redondeados */
-    border-spacing: 0 5px; /* Espacio entre filas */
+    border-collapse: separate;
+    border-spacing: 0 5px;
 }
 
 .tabla-inventario th {
@@ -163,9 +180,9 @@
     color: var(--color-texto-claro);
 }
 
-/* Icono de advertencia */
+/* Icono de advertencia en fila */
 .icono-advertencia {
-    color: #ff9800; /* Naranja/Ámbar */
+    color: #ff9800;
     font-size: 1.4rem;
     cursor: pointer;
     vertical-align: middle;
@@ -177,10 +194,13 @@
     transform: scale(1.1);
 }
 
-/* Estilos del modal (advertencia) */
+/* ===================================================== */
+/* ESTILOS DE MODALES (Unificado) */
+/* ===================================================== */
+
+/* === Modal fondo general === */
 .modal-fondo {
-    /* Oculto por defecto */
-    display: none; 
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -190,6 +210,22 @@
     z-index: 2000;
     justify-content: center;
     align-items: center;
+    overflow: auto;
+}
+
+/* 🧩 Animación al mostrar modal */
+.modal-fondo.mostrar {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-contenido {
@@ -197,82 +233,25 @@
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-    position: relative;
-}
-
-/* Estilos específicos del formulario */
-.form-grupo {
+    max-width: 1100px; /* ✅ Aumentado para que entre el botón */
+    width: 95%;
     text-align: left;
-    margin-bottom: 15px;
+    position: relative;
+    max-height: 90vh; /* Altura máxima del modal (ajustable) */
+    overflow-y: auto; /* Activa el scroll vertical interno */
+    color: #222;
 }
 
-.form-grupo label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 5px;
-    font-size: 0.9rem;
+
+/* Clase para modales de advertencia (más pequeños y centrados) */
+.modal-contenido.advertencia {
+    max-width: 400px;
+    text-align: center;
+    padding: 40px;
 }
 
-.form-grupo input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-    color: var(--color-texto-principal);
-}
-
-.form-grupo input[readonly] {
-    background-color: #f1f1f1;
-}
-
-/* Grid layout for forms that need multiple columns (used in modal actualizar) */
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    align-items: start;
-}
-
-.form-grid .form-grupo {
-    margin-bottom: 0; /* grid gap provides spacing */
-}
-
-/* Responsive: collapse columns on narrower screens */
-@media (max-width: 900px) {
-    .form-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 520px) {
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-}
-        
-.icono-alerta-grande {
-    color: #ff9800;
-    font-size: 4rem;
-    margin-bottom: 15px;
-}
-
-.modal-contenido h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--color-texto-principal);
-}
-
-.modal-contenido p {
-    color: #666;
-    margin-bottom: 25px;
-    line-height: 1.5;
-}
-
+/* Títulos dentro del modal */
+.modal-contenido h3,
 .modal-titulo {
     font-size: 1.5rem;
     font-weight: 700;
@@ -280,51 +259,273 @@
     color: var(--color-texto-principal);
 }
 
-.boton-cancelar {
-    background-color: #e0e0e0;
+.modal-contenido h4 {
+    color: #444;
+    font-size: 1.125rem; /* 18px */
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* Icono de alerta grande para modales de advertencia */
+.icono-alerta-grande {
+    color: #ff9800;
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+.modal-contenido.advertencia p {
+    color: #666;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+/* ===================================================== */
+/* ESTILOS DE FORMULARIO (Unificado) */
+/* ===================================================== */
+
+/* Grid layout for forms that need multiple columns */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* ✅ Más espacio horizontal */
+    gap: 20px;
+    align-items: start;
+}
+
+
+/* Grupo de campos */
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenedor específico para el campo de imagen */
+.form-grupo.imagen-producto {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+
+.form-grupo label {
+    font-size: 0.9rem; /* 14px */
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.form-grupo input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    background-color: #fff;
     color: var(--color-texto-principal);
 }
 
-.boton-limpiar {
-    background-color: #6c757d;
-    color: var(--color-texto-claro);
+.form-grupo input:focus {
+    border-color: var(--color-principal);
+}
+
+.form-grupo input[readonly] {
+    background-color: #f1f1f1;
+}
+
+/* Solución para el campo de subir archivo */
+
+/* 1. Oculta el input de archivo nativo */
+.input-hidden-file {
+    display: none !important; /* CLAVE: Fuerza la ocultación del botón nativo */
 }
 
 
+/* 2. Estilo para el label que actúa como botón "Seleccionar archivo" o "Subir Imagen" */
+.custom-file-upload {
+    display: inline-block;
+    padding: 8px 15px; 
+    background-color: #e0e0e0;
+    color: var(--color-texto-principal);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    max-width: 100px; 
+    flex-shrink: 0; 
+}
+
+.custom-file-upload:hover {
+    background-color: #c4c4c4;
+}
+
+/* 3. Estilo para el campo que MUESTRA el nombre del archivo (si aplica) */
+.nombre-archivo {
+    padding: 10px; 
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    background-color: #fafafa;
+    font-size: 0.9rem;
+    cursor: default; 
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    min-height: 40px; 
+    width: 100%; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ===================================================== */
+/* VARIACIONES DE PRODUCTO (Corregido el contenedor) */
+/* ===================================================== */
+
+.variaciones-contenedor {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Estilo de fila de variación */
+.variacion-item {
+    display: grid;
+    /* Columnas: SKU | Talla | Color | Cantidad | Imagen (minmax) | Botón Eliminar (40px) */
+    grid-template-columns: 1fr 1fr 1fr 1fr minmax(100px, 1fr) 40px; /* Ajuste para dar espacio a la imagen */
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+/* Contenedor específico del botón de archivo en la variación */
+.form-grupo-archivo {
+    /* CLAVE: Contenedor que centra y oculta el input file nativo */
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+    overflow: hidden; /* Oculta cualquier parte del input nativo que intente desbordarse */
+    min-width: 100px; 
+    height: 100%;
+}
+
+.variacion-item input {
+    padding: 8px;
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+.preview-imagen {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+    display: block;
+}
+
+.btn-eliminar-variacion {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    line-height: 1;
+    justify-self: center;
+    transition: background-color 0.2s;
+}
+
+.btn-eliminar-variacion:hover {
+    background-color: #e03535;
+}
+
+/* ===================================================== */
+/* ESTILOS DE BOTONES MODALES (Unificado) */
+/* ===================================================== */
+
+/* Bloque unificado para botones de modales/acciones */
 .boton-revisar,
 .boton-confirmar,
 .boton-cancelar,
-.boton-limpiar {
+.boton-limpiar,
+.boton-secundario {
     padding: 12px 30px;
     border: none;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
     margin: 5px;
+    font-size: 1rem;
 }
 
-.boton-revisar:hover {
-    background-color: #8f0000;
-}
-
+/* Botón Principal (Confirmar, Revisar) */
 .boton-revisar,
 .boton-confirmar {
-    background-color: var(--color-primary);
-    color: var(--blanco);
+    background-color: var(--color-principal); /* Rojo principal */
+    color: var(--color-texto-claro);
+    padding: 10px 20px;
 }
 
+.boton-revisar:hover,
+.boton-confirmar:hover {
+    background-color: #8f0000;
+    transform: translateY(-2px);
+}
 
+/* Botón Secundario (Cancelar, Limpiar, Secundario general) */
+.boton-cancelar,
+.boton-limpiar,
+.boton-secundario {
+    background-color: #e0e0e0;
+    color: var(--color-texto-principal);
+    border: 1px solid #ccc;
+}
 
-/* Ajuste para móviles */
+.boton-cancelar:hover,
+.boton-limpiar:hover,
+.boton-secundario:hover {
+    background-color: #c4c4c4;
+}
+
+/* ===================================================== */
+/* Responsive */
+/* ===================================================== */
+@media (max-width: 900px) {
+    /* Formulario: 2 columnas en pantallas medianas */
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
+    /* Menú y Contenido Principal */
     .menu-dashboard {
-        /* Por defecto oculto en móviles */
-        transform: translateX(calc(-1 * var(--ancho-menu-abierto))); 
+        transform: translateX(calc(-1 * var(--ancho-menu-abierto)));
     }
     .contenedor-principal {
         margin-left: 0;
     }
+    
+    /* Cabecera de Inventario */
     .cabecera-inventario {
         flex-direction: column;
         align-items: flex-start;
@@ -336,4 +537,106 @@
     .buscador-contenedor input {
         width: 100%;
     }
+    
+    /* Variaciones: Se rompe la fila */
+    .variacion-item {
+        grid-template-columns: 1fr 1fr; /* Simplificar a 2 columnas en móviles */
+        padding: 15px;
+    }
+    .btn-eliminar-variacion {
+        grid-column: span 2; /* Ocupa todo el ancho en móviles */
+        width: 100%;
+        height: 40px;
+    }
+}
+
+@media (max-width: 520px) {
+    /* Formulario: 1 columna en pantallas pequeñas */
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Botón visual para subir imagen (si aún lo usas) */
+.boton-subir-imagen {
+    background-color: var(--color-principal);
+    color: var(--color-texto-claro);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.boton-subir-imagen:hover {
+    background-color: #990000;
+}
+
+/* ==== ARREGLO PARA EL BOTÓN DE SUBIR IMAGEN EN DETALLES ESPECÍFICOS ==== */
+.variaciones-contenedor {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.variacion-item {
+    display: flex;
+    flex-wrap: wrap; /* ✅ Permite que los elementos bajen si no hay espacio */
+    gap: 10px;
+    align-items: center;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+/* Campos de texto dentro de cada variación */
+.variacion-item input[type="text"],
+.variacion-item input[type="number"] {
+    flex: 1 1 150px; /* ✅ Se ajustan al espacio disponible */
+    min-width: 120px;
+}
+
+/* Contenedor del botón subir imagen */
+.variacion-item .form-grupo-archivo {
+    flex: 0 0 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Botón de subir imagen */
+.variacion-item .custom-file-upload {
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.variacion-item .custom-file-upload:hover {
+    background-color: #ddd;
+}
+
+/* Botón de eliminar variación (la X roja) */
+.btn-eliminar-variacion {
+    background: #ff4b4b;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-eliminar-variacion:hover {
+    background: #d93636;
 }
