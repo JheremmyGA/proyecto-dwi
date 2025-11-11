@@ -110,22 +110,73 @@
 
                             <div class="form-grupo">
                                 <label for="add-marca">Marca</label>
-                                <input type="text" id="add-marca" placeholder="Ej. University Club" required>
+                                <select id="add-marca" required>
+                                    <option value="">Seleccionar Marca</option>
+                                    <option value="Sybilla">Sybilla</option>
+                                    <option value="Basement">Basement</option>
+                                    <option value="Denimlab">Denimlab</option>
+                                    <option value="Mossimo">Mossimo</option>
+                                    <option value="Mango">Mango</option>
+                                    <option value="Adidas">Adidas</option>
+                                    <option value="Puma">Puma</option>
+                                    <option value="Tommy Hilfiger">Tommy Hilfiger</option>
+                                    <option value="Calvin Klein">Calvin Klein</option>
+                                    <option value="Bercliff">Bercliff</option>
+                                    <option value="Newport">Newport</option>
+                                    <option value="Apology">Apology</option>
+                                    <option value="Lewis">Lewis</option>
+                                    <option value="Cortefiel">Cortefiel</option>
+                                    <option value="American Abbey">American Abbey</option>
+                                </select>
                             </div>
 
                             <div class="form-grupo">
                                 <label for="add-temporada">Temporada</label>
-                                <input type="text" id="add-temporada" placeholder="Ej. Verano" required>
+                                <select id="add-temporada" required>
+                                    <option value="">Seleccionar Temporada</option>
+                                    <option value="Invierno">Invierno</option>
+                                    <option value="Otoño">Otoño</option>
+                                    <option value="Primavera">Primavera</option>
+                                    <option value="Verano">Verano</option>
+                                </select>
                             </div>
 
                             <div class="form-grupo">
                                 <label for="add-categoria">Categoría</label>
-                                <input type="text" id="add-categoria" placeholder="Ej. Camisas" required>
+                                <select id="add-categoria" required onchange="actualizarTallasAgregar()">
+                                    <option value="">Seleccionar Categoría</option>
+                                    <option value="Abrigo">Abrigo</option>
+                                    <option value="Blusa">Blusa</option>
+                                    <option value="Camisa">Camisa</option>
+                                    <option value="Cárdigan">Cárdigan</option>
+                                    <option value="Chaqueta">Chaqueta</option>
+                                    <option value="Falda">Falda</option>
+                                    <option value="Jean">Jean</option>
+                                    <option value="Pantalón">Pantalón</option>
+                                    <option value="Pijama">Pijama</option>
+                                    <option value="Polo">Polo</option>
+                                    <option value="Ropa Deportiva">Ropa Deportiva</option>
+                                    <option value="Ropa Interior">Ropa Interior</option>
+                                    <option value="Suéter">Suéter</option>
+                                    <option value="Traje de Baño">Traje de Baño</option>
+                                    <option value="Vestido">Vestido</option>
+                                </select>
                             </div>
 
                             <div class="form-grupo">
                                 <label for="add-precio">Precio</label>
                                 <input type="text" id="add-precio" placeholder="Ej. S/89.00" required>
+                            </div>
+
+                            <div class="form-grupo">
+                                <label for="add-genero">Género</label>
+                                <select id="add-genero" required onchange="actualizarTallasAgregar()">
+                                    <option value="">Seleccionar Género</option>
+                                    <option value="Caballeros">Caballeros</option>
+                                    <option value="Damas">Damas</option>
+                                    <option value="Niños">Niños</option>
+                                    <option value="Niñas">Niñas</option>
+                                </select>
                             </div>
 
                             <div class="form-grupo imagen-producto" style="grid-column: 1 / -1;">
@@ -150,8 +201,22 @@
                                 style="grid-column: 1 / -1;">
                                 <div class="variacion-item">
                                     <input type="text" placeholder="SKU (Ej. 204362)" class="input-sku" required>
-                                    <input type="text" placeholder="Talla (Ej. M)" class="input-talla" required>
-                                    <input type="text" placeholder="Color (Ej. Azul)" class="input-color" required>
+                                    <select class="input-talla" required>
+                                        <option value="">Seleccionar Talla</option>
+                                    </select>
+                                    <select class="input-color" required>
+                                        <option value="">Seleccionar Color</option>
+                                        <option value="Negro">Negro</option>
+                                        <option value="Blanco">Blanco</option>
+                                        <option value="Rojo">Rojo</option>
+                                        <option value="Azul Marino">Azul Marino</option>
+                                        <option value="Beige">Beige</option>
+                                        <option value="Verde Militar">Verde Militar</option>
+                                        <option value="Gris Melange">Gris Melange</option>
+                                        <option value="Burdeo">Burdeo</option>
+                                        <option value="Mostaza">Mostaza</option>
+                                        <option value="Rosado Pastel">Rosado Pastel</option>
+                                    </select>
                                     <input type="number" placeholder="Cantidad" min="0" class="input-stock" required>
 
                                     <div class="form-grupo-archivo">
@@ -239,17 +304,57 @@
 
                 <div class="form-grupo">
                     <label for="update-marca">Marca</label>
-                    <input type="text" id="update-marca" readonly>
+                    <select id="update-marca" disabled>
+                        <option value="">Seleccionar Marca</option>
+                        <option value="Sybilla">Sybilla</option>
+                        <option value="Basement">Basement</option>
+                        <option value="Denimlab">Denimlab</option>
+                        <option value="Mossimo">Mossimo</option>
+                        <option value="Mango">Mango</option>
+                        <option value="Adidas">Adidas</option>
+                        <option value="Puma">Puma</option>
+                        <option value="Tommy Hilfiger">Tommy Hilfiger</option>
+                        <option value="Calvin Klein">Calvin Klein</option>
+                        <option value="Bercliff">Bercliff</option>
+                        <option value="Newport">Newport</option>
+                        <option value="Apology">Apology</option>
+                        <option value="Lewis">Lewis</option>
+                        <option value="Cortefiel">Cortefiel</option>
+                        <option value="American Abbey">American Abbey</option>
+                    </select>
                 </div>
 
                 <div class="form-grupo">
                     <label for="update-temporada">Temporada</label>
-                    <input type="text" id="update-temporada" readonly>
+                    <select id="update-temporada" disabled>
+                        <option value="">Seleccionar Temporada</option>
+                        <option value="Invierno">Invierno</option>
+                        <option value="Otoño">Otoño</option>
+                        <option value="Primavera">Primavera</option>
+                        <option value="Verano">Verano</option>
+                    </select>
                 </div>
 
                 <div class="form-grupo">
                     <label for="update-categoria">Categoría</label>
-                    <input type="text" id="update-categoria" readonly>
+                    <select id="update-categoria" disabled>
+                        <option value="">Seleccionar Categoría</option>
+                        <option value="Abrigo">Abrigo</option>
+                        <option value="Blusa">Blusa</option>
+                        <option value="Camisa">Camisa</option>
+                        <option value="Cárdigan">Cárdigan</option>
+                        <option value="Chaqueta">Chaqueta</option>
+                        <option value="Falda">Falda</option>
+                        <option value="Jean">Jean</option>
+                        <option value="Pantalón">Pantalón</option>
+                        <option value="Pijama">Pijama</option>
+                        <option value="Polo">Polo</option>
+                        <option value="Ropa Deportiva">Ropa Deportiva</option>
+                        <option value="Ropa Interior">Ropa Interior</option>
+                        <option value="Suéter">Suéter</option>
+                        <option value="Traje de Baño">Traje de Baño</option>
+                        <option value="Vestido">Vestido</option>
+                    </select>
                 </div>
 
                 <div class="form-grupo">
@@ -257,16 +362,41 @@
                     <input type="text" id="update-precio" readonly>
                 </div>
 
+                <div class="form-grupo">
+                    <label for="update-genero">Género</label>
+                    <select id="update-genero" disabled>
+                        <option value="">Seleccionar Género</option>
+                        <option value="Caballeros">Caballeros</option>
+                        <option value="Damas">Damas</option>
+                        <option value="Niños">Niños</option>
+                        <option value="Niñas">Niñas</option>
+                    </select>
+                </div>
+
                 <h4 style="grid-column: 1 / -1; margin-top: 20px; margin-bottom: 10px;">Detalles de la Variación</h4>
 
                 <div class="form-grupo">
                     <label for="update-talla">Talla</label>
-                    <input type="text" id="update-talla" readonly>
+                    <select id="update-talla" disabled>
+                        <option value="">Seleccionar Talla</option>
+                    </select>
                 </div>
 
                 <div class="form-grupo">
                     <label for="update-color">Color</label>
-                    <input type="text" id="update-color" readonly>
+                    <select id="update-color" disabled>
+                        <option value="">Seleccionar Color</option>
+                        <option value="Negro">Negro</option>
+                        <option value="Blanco">Blanco</option>
+                        <option value="Rojo">Rojo</option>
+                        <option value="Azul Marino">Azul Marino</option>
+                        <option value="Beige">Beige</option>
+                        <option value="Verde Militar">Verde Militar</option>
+                        <option value="Gris Melange">Gris Melange</option>
+                        <option value="Burdeo">Burdeo</option>
+                        <option value="Mostaza">Mostaza</option>
+                        <option value="Rosado Pastel">Rosado Pastel</option>
+                    </select>
                 </div>
 
                 <div class="form-grupo">

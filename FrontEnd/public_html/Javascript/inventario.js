@@ -2,20 +2,20 @@
 // DATOS DUMMY Y VARIABLES GLOBALES
 // ==============================================
 const datosProductos = [
-    { sku: '378291', nombre: 'Camiseta de algodón V-Neck', marca: 'Nike', temporada: 'Verano', categoria: 'Camisetas', precio: 49.99, talla: 'XL', color: 'Blanco', cantidad: 40, ruta: 'imagenes/camiseta-blanca-xl.jpg' },
-    { sku: '904562', nombre: 'Pantalón chino Slim Fit', marca: 'Dockers', temporada: 'Invierno', categoria: 'Pantalones', precio: 89.99, talla: '34', color: 'Gris', cantidad: 56, ruta: 'imagenes/pantalon-gris-34.jpg' },
-    { sku: '125078', nombre: 'Saco de lana Herringbone', marca: 'Hugo Boss', temporada: 'Invierno', categoria: 'Sacos', precio: 199.99, talla: 'L', color: 'Marrón', cantidad: 19, ruta: 'imagenes/saco-marron-l.jpg' },
-    { sku: '639145', nombre: 'Polo de piqué Regular Fit', marca: 'Lacoste', temporada: 'Verano', categoria: 'Polos', precio: 79.99, talla: 'S', color: 'Verde', cantidad: 79, ruta: 'imagenes/polo-verde-s.jpg' },
-    { sku: '852730', nombre: 'Vestido de flores A-Line', marca: 'Zara', temporada: 'Primavera', categoria: 'Vestidos', precio: 59.99, talla: 'M', color: 'Multicolor', cantidad: 19, ruta: 'imagenes/vestido-flores-m.jpg' },
-    { sku: '416893', nombre: 'Blusa de seda con lazo', marca: 'Calvin Klein', temporada: 'Primavera', categoria: 'Blusas', precio: 69.99, talla: 'XS', color: 'Rosa', cantidad: 35, ruta: 'imagenes/blusa-rosa-xs.jpg' },
-    { sku: '770514', nombre: 'Falda de mezclilla High-Waist', marca: 'Levi\'s', temporada: 'Verano', categoria: 'Faldas', precio: 44.99, talla: '28', color: 'Azul Oscuro', cantidad: 64, ruta: 'imagenes/falda-azul-28.jpg' },
-    { sku: '293687', nombre: 'Chaqueta de cuero Biker', marca: 'Harley Davidson', temporada: 'Invierno', categoria: 'Chaquetas', precio: 299.99, talla: 'L', color: 'Negro', cantidad: 88, ruta: 'imagenes/chaqueta-negra-l.jpg' },
-    { sku: '501429', nombre: 'Playera con estampado dino', marca: 'Disney', temporada: 'Verano', categoria: 'Playeras Niños', precio: 19.99, talla: '8', color: 'Verde', cantidad: 10, ruta: 'imagenes/playera-dino-8.jpg' },
-    { sku: '184963', nombre: 'Sudadera con capucha y cierre', marca: 'Adidas', temporada: 'Invierno', categoria: 'Sudaderas', precio: 89.99, talla: '10', color: 'Gris', cantidad: 26, ruta: 'imagenes/sudadera-gris-10.jpg' },
-    { sku: '957302', nombre: 'Pijama de franela de cuadros', marca: 'Hanes', temporada: 'Invierno', categoria: 'Pijamas', precio: 39.99, talla: '6', color: 'Azul/Blanco', cantidad: 28, ruta: 'imagenes/pijama-cuadros-6.jpg' },
-    { sku: '621058', nombre: 'Polo deportivas Air Max', marca: 'Nike', temporada: 'Verano', categoria: 'Polos', precio: 59.99, talla: 'M', color: 'Negro', cantidad: 12, ruta: 'imagenes/polo-negro-m.jpg' },
-    { sku: '917302', nombre: 'Pijama de franela de cuadros', marca: 'Hanes', temporada: 'Invierno', categoria: 'Pijamas', precio: 39.99, talla: '6', color: 'Rojo/Blanco', cantidad: 28, ruta: 'imagenes/pijama-rojo-6.jpg' },
-    { sku: '911058', nombre: 'Pantalones deportivas', marca: 'Puma', temporada: 'Verano', categoria: 'Pantalones', precio: 49.99, talla: 'S', color: 'Azul', cantidad: 15, ruta: 'imagenes/pantalones-azul-s.jpg' }
+    { sku: '378291', nombre: 'Camiseta de algodón V-Neck', marca: 'Adidas', temporada: 'Verano', categoria: 'Camisa', precio: 49.99, genero: 'Caballeros', talla: 'XL', color: 'Blanco', cantidad: 40, ruta: 'imagenes/camiseta-blanca-xl.jpg' },
+    { sku: '904562', nombre: 'Pantalón chino Slim Fit', marca: 'Mossimo', temporada: 'Invierno', categoria: 'Pantalón', precio: 89.99, genero: 'Caballeros', talla: '34', color: 'Gris Melange', cantidad: 56, ruta: 'imagenes/pantalon-gris-34.jpg' },
+    { sku: '125078', nombre: 'Saco de lana Herringbone', marca: 'Tommy Hilfiger', temporada: 'Invierno', categoria: 'Abrigo', precio: 199.99, genero: 'Caballeros', talla: 'L', color: 'Burdeo', cantidad: 19, ruta: 'imagenes/saco-marron-l.jpg' },
+    { sku: '639145', nombre: 'Polo de piqué Regular Fit', marca: 'Lacoste', temporada: 'Verano', categoria: 'Polo', precio: 79.99, genero: 'Caballeros', talla: 'S', color: 'Verde Militar', cantidad: 79, ruta: 'imagenes/polo-verde-s.jpg' },
+    { sku: '852730', nombre: 'Vestido de flores A-Line', marca: 'Mango', temporada: 'Primavera', categoria: 'Vestido', precio: 59.99, genero: 'Damas', talla: 'M', color: 'Rojo', cantidad: 19, ruta: 'imagenes/vestido-flores-m.jpg' },
+    { sku: '416893', nombre: 'Blusa de seda con lazo', marca: 'Calvin Klein', temporada: 'Primavera', categoria: 'Blusa', precio: 69.99, genero: 'Damas', talla: 'S', color: 'Rosado Pastel', cantidad: 35, ruta: 'imagenes/blusa-rosa-xs.jpg' },
+    { sku: '770514', nombre: 'Falda de mezclilla High-Waist', marca: 'Denimlab', temporada: 'Verano', categoria: 'Falda', precio: 44.99, genero: 'Damas', talla: '28', color: 'Azul Marino', cantidad: 64, ruta: 'imagenes/falda-azul-28.jpg' },
+    { sku: '293687', nombre: 'Chaqueta de cuero Biker', marca: 'Lewis', temporada: 'Invierno', categoria: 'Chaqueta', precio: 299.99, genero: 'Caballeros', talla: 'L', color: 'Negro', cantidad: 88, ruta: 'imagenes/chaqueta-negra-l.jpg' },
+    { sku: '501429', nombre: 'Playera con estampado dino', marca: 'Puma', temporada: 'Verano', categoria: 'Polo', precio: 19.99, genero: 'Niños', talla: '8', color: 'Verde Militar', cantidad: 10, ruta: 'imagenes/playera-dino-8.jpg' },
+    { sku: '184963', nombre: 'Sudadera con capucha y cierre', marca: 'Adidas', temporada: 'Invierno', categoria: 'Ropa Deportiva', precio: 89.99, genero: 'Caballeros', talla: 'L', color: 'Gris Melange', cantidad: 26, ruta: 'imagenes/sudadera-gris-10.jpg' },
+    { sku: '957302', nombre: 'Pijama de franela de cuadros', marca: 'Hanes', temporada: 'Invierno', categoria: 'Pijama', precio: 39.99, genero: 'Niñas', talla: '6', color: 'Azul Marino', cantidad: 28, ruta: 'imagenes/pijama-cuadros-6.jpg' },
+    { sku: '621058', nombre: 'Polo deportivas Air Max', marca: 'Adidas', temporada: 'Verano', categoria: 'Polo', precio: 59.99, genero: 'Caballeros', talla: 'M', color: 'Negro', cantidad: 12, ruta: 'imagenes/polo-negro-m.jpg' },
+    { sku: '917302', nombre: 'Pijama de franela de cuadros', marca: 'Hanes', temporada: 'Invierno', categoria: 'Pijama', precio: 39.99, genero: 'Niñas', talla: '6', color: 'Rojo', cantidad: 28, ruta: 'imagenes/pijama-rojo-6.jpg' },
+    { sku: '911058', nombre: 'Pantalones deportivos', marca: 'Puma', temporada: 'Verano', categoria: 'Pantalón', precio: 49.99, genero: 'Damas', talla: 'S', color: 'Azul Marino', cantidad: 15, ruta: 'imagenes/pantalones-azul-s.jpg' }
 ];
 
 // Stock máximo para mostrar advertencia (de 10 a menos)
@@ -81,12 +81,16 @@ function mostrarModalActualizar(boton) {
         document.getElementById('update-temporada').value = producto.temporada || '';
         document.getElementById('update-categoria').value = producto.categoria || '';
         document.getElementById('update-precio').value = producto.precio || '';
+        document.getElementById('update-genero').value = producto.genero || '';
         document.getElementById('update-sku').value = producto.sku || '';
-        document.getElementById('update-talla').value = producto.talla || '';
         document.getElementById('update-color').value = producto.color || '';
         
         // Campo editable: Cantidad
         document.getElementById('update-cantidad').value = producto.cantidad || 0;
+        
+        // Actualizar tallas basado en género y categoría, luego establecer el valor
+        actualizarTallasActualizar();
+        document.getElementById('update-talla').value = producto.talla || '';
         
         mostrarModal('modal-actualizar');
     }
@@ -149,9 +153,10 @@ function manejarAgregar(evento) {
     const temporada = document.getElementById('add-temporada').value.trim();
     const categoria = document.getElementById('add-categoria').value.trim();
     const precio = parseFloat(document.getElementById('add-precio').value.trim());
+    const genero = document.getElementById('add-genero').value.trim();
     const imagenGeneral = document.getElementById('add-imagen-general').value.trim();
 
-    if (!nombre || !marca || !temporada || !categoria || isNaN(precio) || precio < 0) {
+    if (!nombre || !marca || !temporada || !categoria || !genero || isNaN(precio) || precio < 0) {
         alert("Por favor completa todos los campos generales correctamente.");
         return;
     }
@@ -197,6 +202,7 @@ function manejarAgregar(evento) {
             temporada: temporada,
             categoria: categoria,
             precio: precio,
+            genero: genero,
             talla: variacion.talla,
             color: variacion.color,
             cantidad: variacion.cantidad,
@@ -206,13 +212,91 @@ function manejarAgregar(evento) {
 
     // ===== MOSTRAR EN CONSOLA TODA LA INFORMACIÓN =====
     console.log('=== PRODUCTO AGREGADO ===');
-    console.log('Detalles Generales:', { nombre, marca, temporada, categoria, precio });
+    console.log('Detalles Generales:', { nombre, marca, temporada, categoria, precio, genero });
     console.log('Detalles Específicos (Variaciones):', variaciones);
 
     cerrarModal('modal-agregar');
     renderizarProductos(datosProductos);
 
     evento.target.reset();
+}
+
+// ==============================================
+// FUNCIONES DE ACTUALIZACIÓN DE TALLAS
+// ==============================================
+
+// Función para actualizar tallas en modal AGREGAR
+function actualizarTallasAgregar() {
+    const generoSelect = document.getElementById('add-genero');
+    const categoriaSelect = document.getElementById('add-categoria');
+    const genero = generoSelect.value;
+    const categoria = categoriaSelect.value;
+    
+    // Encontrar todos los selects de talla en las variaciones
+    const contenedor = document.getElementById('contenedor-variaciones');
+    const tallaSelects = contenedor.querySelectorAll('.input-talla');
+    
+    let opciones = [];
+    
+    if (genero === 'Caballeros' || genero === 'Damas') {
+        // Verificar si es prenda superior o inferior
+        const categoriasSuperiores = ['Blusa', 'Camisa', 'Polo', 'Cárdigan', 'Suéter', 'Ropa Deportiva', 'Ropa Interior', 'Abrigo', 'Chaqueta'];
+        
+        if (categoriasSuperiores.includes(categoria)) {
+            opciones = ['S', 'M', 'L', 'XL'];
+        } else {
+            opciones = ['28', '30', '32', '34', '36', '38', '40'];
+        }
+    } else if (genero === 'Niños' || genero === 'Niñas') {
+        opciones = ['2', '4', '6', '8', '10', '12', '14', '16'];
+    }
+    
+    // Actualizar todos los selects de talla
+    tallaSelects.forEach(select => {
+        const valorActual = select.value;
+        select.innerHTML = '<option value="">Seleccionar Talla</option>';
+        opciones.forEach(opcion => {
+            const option = document.createElement('option');
+            option.value = opcion;
+            option.textContent = opcion;
+            select.appendChild(option);
+        });
+        select.value = valorActual;
+    });
+}
+
+// Función para actualizar tallas en modal ACTUALIZAR
+function actualizarTallasActualizar() {
+    const generoSelect = document.getElementById('update-genero');
+    const categoriaSelect = document.getElementById('update-categoria');
+    const genero = generoSelect.value;
+    const categoria = categoriaSelect.value;
+    
+    const tallaSelect = document.getElementById('update-talla');
+    const valorActual = tallaSelect.value;
+    
+    let opciones = [];
+    
+    if (genero === 'Caballeros' || genero === 'Damas') {
+        const categoriasSuperiores = ['Blusa', 'Camisa', 'Polo', 'Cárdigan', 'Suéter', 'Ropa Deportiva', 'Ropa Interior', 'Abrigo', 'Chaqueta'];
+        
+        if (categoriasSuperiores.includes(categoria)) {
+            opciones = ['S', 'M', 'L', 'XL'];
+        } else {
+            opciones = ['28', '30', '32', '34', '36', '38', '40'];
+        }
+    } else if (genero === 'Niños' || genero === 'Niñas') {
+        opciones = ['2', '4', '6', '8', '10', '12', '14', '16'];
+    }
+    
+    tallaSelect.innerHTML = '<option value="">Seleccionar Talla</option>';
+    opciones.forEach(opcion => {
+        const option = document.createElement('option');
+        option.value = opcion;
+        option.textContent = opcion;
+        tallaSelect.appendChild(option);
+    });
+    tallaSelect.value = valorActual;
 }
 
 // ==============================================
@@ -328,8 +412,22 @@ document.getElementById('btn-agregar-variacion').addEventListener('click', () =>
     
     nueva.innerHTML = `
         <input type="text" placeholder="SKU (Ej. 204362)" class="input-sku" required>
-        <input type="text" placeholder="Talla (Ej. M)" class="input-talla" required>
-        <input type="text" placeholder="Color (Ej. Azul)" class="input-color" required>
+        <select class="input-talla" required>
+            <option value="">Seleccionar Talla</option>
+        </select>
+        <select class="input-color" required>
+            <option value="">Seleccionar Color</option>
+            <option value="Negro">Negro</option>
+            <option value="Blanco">Blanco</option>
+            <option value="Rojo">Rojo</option>
+            <option value="Azul Marino">Azul Marino</option>
+            <option value="Beige">Beige</option>
+            <option value="Verde Militar">Verde Militar</option>
+            <option value="Gris Melange">Gris Melange</option>
+            <option value="Burdeo">Burdeo</option>
+            <option value="Mostaza">Mostaza</option>
+            <option value="Rosado Pastel">Rosado Pastel</option>
+        </select>
         <input type="number" placeholder="Cantidad" min="0" class="input-stock" required>
         
         <div class="form-grupo-archivo" style="display:flex; flex-direction: column; align-items: center; justify-content: center;">
@@ -346,6 +444,8 @@ document.getElementById('btn-agregar-variacion').addEventListener('click', () =>
         <button type="button" class="btn-eliminar-variacion" title="Eliminar variación">×</button>
     `;
     contenedor.appendChild(nueva);
+    // Actualizar tallas después de agregar la variación
+    actualizarTallasAgregar();
 });
 
 // 2. Eliminar variación (se mantiene igual, asegurando la eliminación del padre)

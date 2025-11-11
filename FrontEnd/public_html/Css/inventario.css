@@ -340,6 +340,34 @@
     background-color: #f1f1f1;
 }
 
+.form-grupo select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    background-color: #fff;
+    color: var(--color-texto-principal);
+    cursor: pointer;
+}
+
+.form-grupo select:focus {
+    border-color: var(--color-principal);
+}
+
+.form-grupo select[readonly] {
+    background-color: #f1f1f1;
+    cursor: not-allowed;
+}
+
+.form-grupo select[disabled] {
+    background-color: #f1f1f1;
+    cursor: not-allowed;
+    color: #999;
+    opacity: 0.7;
+}
+
 /* Solución para el campo de subir archivo */
 
 /* 1. Oculta el input de archivo nativo */
@@ -604,6 +632,24 @@
 .variacion-item input[type="number"] {
     flex: 1 1 150px; /* ✅ Se ajustan al espacio disponible */
     min-width: 120px;
+}
+
+/* Campos select dentro de cada variación */
+.variacion-item select {
+    flex: 1 1 150px;
+    min-width: 120px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background-color: #fff;
+    color: var(--color-texto-principal);
+    cursor: pointer;
+    outline: none;
+}
+
+.variacion-item select:focus {
+    border-color: var(--color-principal);
 }
 
 /* Contenedor del botón subir imagen */
