@@ -24,6 +24,10 @@ public class Color {
         this.nombre = nombre;
     }
 
+    public Color(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Long getId_color() {
         return id;
     }

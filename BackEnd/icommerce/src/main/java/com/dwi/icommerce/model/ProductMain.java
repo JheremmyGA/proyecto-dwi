@@ -27,17 +27,28 @@ public class ProductMain {
     public Color color;
     public int stock;
     public String SKU;
+    @Column(name="preview_image_path")
+    private String PreviewImage;
 
     public ProductMain() {
     }
 
-    public ProductMain(String SKU, Color color, Long id_Product, Producto producto, int stock, Talla talla) {
+    public ProductMain(String SKU, Color color, Long id_Product, Producto producto, int stock, Talla talla, String PreviewImage) {
         this.SKU = SKU;
         this.color = color;
         this.id = id_Product;
         this.producto = producto;
         this.stock = stock;
         this.talla = talla;
+        this.PreviewImage = PreviewImage;
+    }
+
+    public String getPreviewImage() {
+        return PreviewImage;
+    }
+
+    public void setPreviewImage(String previewImage) {
+        PreviewImage = previewImage;
     }
 
     public Long getId() {

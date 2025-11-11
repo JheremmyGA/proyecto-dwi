@@ -26,6 +26,14 @@ public class ColorService {
         return repository.findByNombre(name);
     }
 
+    public Color findByNombre(String nombre){
+        Optional<Color> element =  repository.findByNombre(nombre);
+        if ((element.isPresent())) {
+            return element.get();
+        }
+        else return Create(new Color(nombre));
+    }
+
     public Color Create(Color new_color){
         if(new_color.getNombre() != "") {
             return repository.save(new_color);

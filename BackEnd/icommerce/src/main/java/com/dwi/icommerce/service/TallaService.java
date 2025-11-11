@@ -22,6 +22,14 @@ public class TallaService {
         return repository.findById(id);
     }
 
+    public Talla findByNombre(String nombre){
+        Optional<Talla> element =  repository.findByNombre(nombre);
+        if ((element.isPresent())) {
+            return element.get();
+        }
+        else return Create(new Talla(nombre));
+    }
+
     public Talla Create(Talla new_Talla){
         if(new_Talla.getNombre() != "") {
             return repository.save(new_Talla);

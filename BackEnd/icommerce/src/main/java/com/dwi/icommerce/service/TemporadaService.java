@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dwi.icommerce.model.Marca;
 import com.dwi.icommerce.model.Temporada;
 import com.dwi.icommerce.repository.TemporadaRepository;
 
@@ -20,6 +21,14 @@ public class TemporadaService {
 
     public Optional<Temporada> GetById(Long id){
         return temporada_repository.findById(id);
+    }
+
+    public Temporada findByNombre(String nombre){
+        Optional<Temporada> element =  temporada_repository.findByNombre(nombre);
+        if ((element.isPresent())) {
+            return element.get();
+        }
+        else return Create(new Temporada(nombre));
     }
 
     public Temporada Create(Temporada new_Categoria){

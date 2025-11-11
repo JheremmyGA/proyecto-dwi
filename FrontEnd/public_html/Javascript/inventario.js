@@ -1,3 +1,6 @@
+import * as HTTPS_Request from '../Utils/HTTPRequest.js';
+import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
+
 // ==============================================
 // DATOS DUMMY Y VARIABLES GLOBALES
 // ==============================================
@@ -540,6 +543,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // Botón "AGREGAR" para abrir el modal
     const botonAgregar = document.querySelector('.boton-accion-principal');
     if (botonAgregar) {
-        botonAgregar.addEventListener('click', () => mostrarModal('modal-agregar'));
+        botonAgregar.addEventListener('click', () => {
+            mostrarModal('modal-agregar');
+            MostrarFiltros();
+        });
     }
 });
+
+async function MostrarFiltros(){
+    const temporadas = await HTTPS_Request.GetTemporadas();
+    if (!temporadas) return;
+    crearFiltros("add-temporada", temporadas);
+
+    const categorias = await HTTPS_Request.GetCategorias();
+    if (!categorias) return;
+    crearFiltros("add-categoria", categorias);
+
+    const marcas = await HTTPS_Request.GetMarcas();
+    if (!marcas) return;
+    crearFiltros("add-marca", marcas);
+}
+
+function crearFiltros(id, data){
+    const filtro = document.getElementById(id);
+    filtro.innerHTML = ''; // Limpia la cuadrícula
+    data.forEach(data => {
+        filtro.appendChild(crearFiltro(data.nombre, data.nombre));
+    });
+}
+
+function crearFiltro(value, text){
+    const optionTodo = document.createElement("option");
+        optionTodo.value = value; // valor vacío
+        optionTodo.text = text;
+
+    return optionTodo;
+}
