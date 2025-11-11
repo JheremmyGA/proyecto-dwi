@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Panel de Control | Resumen</title>
     <!-- BOX ICONS -->
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link href='https://cdn.boxicons.com/3.0.3/fonts/basic/boxicons.min.css' rel='stylesheet'>
-    <!-- CUSTOM CSS -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="Css/menu.css">
     <link rel="stylesheet" href="Css/dashboard.css">
-    <!-- CUSTOM JS -->
     <script src="Javascript/menu.js" defer></script>
     <script src="Javascript/dashboard.js" defer></script>
 </head>
+
 <body>
 
     <div class="menu-dashboard">
-        <!-- TOP MENU -->
         <div class="top-menu">
             <a href="menu.html" class="logo">
                 <img src="imagenes/logo.png" alt="">
@@ -28,29 +28,24 @@
                 <i class='bx bx-menu'></i>
             </div>
         </div>
-        <!-- MENU -->
         <div class="menu">
-            <a href="dashboard.html" class="enlace">
+            <a href="dashboard.html" class="enlace active">
                 <i class="bx bx-grid-alt"></i>
                 <span>Dashboard</span>
             </a>
-
             <a href="inventario.html" class="enlace">
                 <i class="bx bx-file-blank"></i>
                 <span>Inventario</span>
             </a>
-
             <a href="ventas.html" class="enlace">
                 <i class="bx bx-cart"></i>
                 <span>Ventas</span>
             </a>
-
             <a href="index.html" class="enlace">
                 <i class="bx bx-user"></i>
-                <span>Vista usuario</span>
+                <span>Vista del usuario</span>
             </a>
-
-            <a href="Login.html" class="enlace">
+            <a href="Login.html" class="enlace salir">
                 <i class='bx  bx-arrow-in-down-left-square'></i>
                 <span>Salir</span>
             </a>
@@ -60,13 +55,81 @@
             <a href="menu.html" class="enlace" style="margin:0; border: none; padding: 10px 0; width: 100%;">
                 <i class="bx bx-user"></i>
                 <div class="info">
-                    <span style="font-weight: 700;">Marcelo M.</span> <!--- Nombre del usuario -->
+                    <span style="font-weight: 700;">Marcelo M.</span>
                     <span class="rol">Administrador</span>
                 </div>
             </a>
         </div>
-
     </div>
-    
+
+    <div class="main-content">
+        <div class="contenedor-principal">
+            <h2 class="titulo-seccion">Dashboard general </h2>
+
+            <div class="top-widgets-grid">
+                <div class="kpi-card customers">
+                    <i class='bx bx-user icono-kpi'></i>
+                    <div class="info">
+                        <span class="descripcion">Clientes</span>
+                        <span class="valor">3,782</span>
+                        <span class="indicador up">↑ 11.0%</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card orders">
+                    <i class='bx bx-cube-alt icono-kpi'></i>
+                    <div class="info">
+                        <span class="descripcion">Pedidos</span>
+                        <span class="valor">5,359</span>
+                        <span class="indicador down">↓ 9.05%</span>
+                    </div>
+                </div>
+
+                <div class="grafico-card monthly-target">
+                    <h3>Meta Mensual</h3>
+                    <div class="target-body">
+                        <div class="canvas-contenedor-small">
+                            <canvas id="chart-monthly-target"></canvas>
+                            <div class="target-percentage" id="target-percentage">75.55%</div>
+                        </div>
+                        <p class="target-info">Hoy ganaste $3,287, es más alto que el mes pasado.</p>
+                        <div class="target-details">
+                            <div><span class="detail-label">Meta</span> <span class="detail-value down">$20K ↓</span>
+                            </div>
+                            <div><span class="detail-label">Ingresos</span> <span class="detail-value up">$20K ↑</span>
+                            </div>
+                            <div><span class="detail-label">Hoy</span> <span class="detail-value up">$20K ↑</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="graficos-inferiores-grid">
+
+                <div class="grafico-card monthly-sales">
+                    <h3>Ventas Mensuales</h3>
+                    <div class="canvas-contenedor-large">
+                        <canvas id="chart-monthly-sales"></canvas>
+                    </div>
+                </div>
+
+                <div class="grafico-card statistics">
+                    <h3>Estadísticas</h3>
+                    <div class="tabs">
+                        <button class="tab-button active">General</button>
+                        <button class="tab-button">Ventas</button>
+                        <button class="tab-button">Ingresos</button>
+                        <span class="date-range">🗓 6 - 12 Mar, 2025</span>
+                    </div>
+                    <div class="canvas-contenedor-large">
+                        <canvas id="chart-statistics"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </body>
+
 </html>
