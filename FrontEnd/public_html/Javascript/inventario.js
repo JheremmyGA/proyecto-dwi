@@ -228,9 +228,12 @@ function inicializarMenuToggle() {
     const menuLateral = document.getElementById('menu-lateral') || document.querySelector('.menu-dashboard');
     const contenedorPrincipal = document.querySelector('.contenedor-principal');
 
+    // Si no hay botón explícito para toggle o no se encontró el menú, mantenemos
+    // el contenedor principal sin margen (full-width) por defecto.
     if (!botonToggle || !menuLateral) {
         if (contenedorPrincipal && window.innerWidth > 768) {
-            contenedorPrincipal.style.marginLeft = 'var(--ancho-menu-abierto)';
+            // Asegurar estado inicial collapsed -> margin 0
+            contenedorPrincipal.style.marginLeft = '0';
         }
         return;
     }
@@ -239,14 +242,17 @@ function inicializarMenuToggle() {
         menuLateral.classList.toggle('colapsado');
 
         if (window.innerWidth > 768) {
-            contenedorPrincipal.style.marginLeft = menuLateral.classList.contains('colapsado') ? '70px' : 'var(--ancho-menu-abierto)';
+            // Cuando el menú está abierto (no colapsado) aplicamos el ancho definido,
+            // cuando está colapsado dejamos margin 0 (full-width) o un pequeño offset si prefieres.
+            contenedorPrincipal.style.marginLeft = menuLateral.classList.contains('colapsado') ? '0' : 'var(--ancho-menu-abierto)';
         } else {
             menuLateral.classList.toggle('-translate-x-full');
         }
     });
 
+    // Estado inicial: content full-width (collapsed). JS will apply open margin when toggled.
     if (contenedorPrincipal && window.innerWidth > 768) {
-        contenedorPrincipal.style.marginLeft = 'var(--ancho-menu-abierto)';
+        contenedorPrincipal.style.marginLeft = '0';
     }
 }
 

@@ -19,7 +19,9 @@
 /* ============================================== */
 .contenedor-principal {
     flex-grow: 1;
-    margin-left: var(--ancho-menu-abierto);
+    /* Iniciamos sin margen para que el contenido sea full-width por defecto.
+       El JS aplicará el margen cuando el menú esté abierto. */
+    margin-left: 0;
     padding: 20px;
     transition: margin-left 0.3s ease;
 }
@@ -245,9 +247,14 @@
 
 /* Clase para modales de advertencia (más pequeños y centrados) */
 .modal-contenido.advertencia {
-    max-width: 400px;
+    max-width: 420px;
     text-align: center;
-    padding: 40px;
+    /* Center and stack contents vertically for small confirmation/alert modals */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 28px 22px;
 }
 
 /* Títulos dentro del modal */
