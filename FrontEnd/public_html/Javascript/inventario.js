@@ -2,18 +2,20 @@
 // DATOS DUMMY Y VARIABLES GLOBALES
 // ==============================================
 const datosProductos = [
-    { sku: '378291', nombre: 'Camiseta de algodón V-Neck XL', stock: 40 },
-    { sku: '904562', nombre: 'Pantalón chino Slim Fit 34', stock: 56 },
-    { sku: '125078', nombre: 'Saco de lana Herringbone L', stock: 19 },
-    { sku: '639145', nombre: 'Polo de piqué Regular Fit S', stock: 79 },
-    { sku: '852730', nombre: 'Vestido de flores A-Line M', stock: 19 },
-    { sku: '416893', nombre: 'Blusa de seda con lazo XS', stock: 35 },
-    { sku: '770514', nombre: 'Falda de mezclilla High-Waist 28', stock: 64 },
-    { sku: '293687', nombre: 'Chaqueta de cuero Biker L', stock: 88 },
-    { sku: '501429', nombre: 'Playera con estampado dino 8', stock: 10 }, // Stock límite (Advertencia)
-    { sku: '184963', nombre: 'Sudadera con capucha y cierre 10', stock: 26 },
-    { sku: '957302', nombre: 'Pijama de franela de cuadros 6', stock: 28 },
-    { sku: '621058', nombre: 'Zapatillas deportivas Air Max 42', stock: 10 } // Stock límite (Advertencia)
+    { sku: '378291', nombre: 'Camiseta de algodón V-Neck', marca: 'Adidas', temporada: 'Verano', categoria: 'Camisa', precio: 49.99, genero: 'Caballeros', talla: 'XL', color: 'Blanco', cantidad: 40, ruta: 'imagenes/camiseta-blanca-xl.jpg' },
+    { sku: '904562', nombre: 'Pantalón chino Slim Fit', marca: 'Mossimo', temporada: 'Invierno', categoria: 'Pantalón', precio: 89.99, genero: 'Caballeros', talla: '34', color: 'Gris Melange', cantidad: 56, ruta: 'imagenes/pantalon-gris-34.jpg' },
+    { sku: '125078', nombre: 'Saco de lana Herringbone', marca: 'Tommy Hilfiger', temporada: 'Invierno', categoria: 'Abrigo', precio: 199.99, genero: 'Caballeros', talla: 'L', color: 'Burdeo', cantidad: 19, ruta: 'imagenes/saco-marron-l.jpg' },
+    { sku: '639145', nombre: 'Polo de piqué Regular Fit', marca: 'Lacoste', temporada: 'Verano', categoria: 'Polo', precio: 79.99, genero: 'Caballeros', talla: 'S', color: 'Verde Militar', cantidad: 79, ruta: 'imagenes/polo-verde-s.jpg' },
+    { sku: '852730', nombre: 'Vestido de flores A-Line', marca: 'Mango', temporada: 'Primavera', categoria: 'Vestido', precio: 59.99, genero: 'Damas', talla: 'M', color: 'Rojo', cantidad: 19, ruta: 'imagenes/vestido-flores-m.jpg' },
+    { sku: '416893', nombre: 'Blusa de seda con lazo', marca: 'Calvin Klein', temporada: 'Primavera', categoria: 'Blusa', precio: 69.99, genero: 'Damas', talla: 'S', color: 'Rosado Pastel', cantidad: 35, ruta: 'imagenes/blusa-rosa-xs.jpg' },
+    { sku: '770514', nombre: 'Falda de mezclilla High-Waist', marca: 'Denimlab', temporada: 'Verano', categoria: 'Falda', precio: 44.99, genero: 'Damas', talla: '28', color: 'Azul Marino', cantidad: 64, ruta: 'imagenes/falda-azul-28.jpg' },
+    { sku: '293687', nombre: 'Chaqueta de cuero Biker', marca: 'Lewis', temporada: 'Invierno', categoria: 'Chaqueta', precio: 299.99, genero: 'Caballeros', talla: 'L', color: 'Negro', cantidad: 88, ruta: 'imagenes/chaqueta-negra-l.jpg' },
+    { sku: '501429', nombre: 'Playera con estampado dino', marca: 'Puma', temporada: 'Verano', categoria: 'Polo', precio: 19.99, genero: 'Niños', talla: '8', color: 'Verde Militar', cantidad: 10, ruta: 'imagenes/playera-dino-8.jpg' },
+    { sku: '184963', nombre: 'Sudadera con capucha y cierre', marca: 'Adidas', temporada: 'Invierno', categoria: 'Ropa Deportiva', precio: 89.99, genero: 'Caballeros', talla: 'L', color: 'Gris Melange', cantidad: 26, ruta: 'imagenes/sudadera-gris-10.jpg' },
+    { sku: '957302', nombre: 'Pijama de franela de cuadros', marca: 'Hanes', temporada: 'Invierno', categoria: 'Pijama', precio: 39.99, genero: 'Niñas', talla: '6', color: 'Azul Marino', cantidad: 28, ruta: 'imagenes/pijama-cuadros-6.jpg' },
+    { sku: '621058', nombre: 'Polo deportivas Air Max', marca: 'Adidas', temporada: 'Verano', categoria: 'Polo', precio: 59.99, genero: 'Caballeros', talla: 'M', color: 'Negro', cantidad: 12, ruta: 'imagenes/polo-negro-m.jpg' },
+    { sku: '917302', nombre: 'Pijama de franela de cuadros', marca: 'Hanes', temporada: 'Invierno', categoria: 'Pijama', precio: 39.99, genero: 'Niñas', talla: '6', color: 'Rojo', cantidad: 28, ruta: 'imagenes/pijama-rojo-6.jpg' },
+    { sku: '911058', nombre: 'Pantalones deportivos', marca: 'Puma', temporada: 'Verano', categoria: 'Pantalón', precio: 49.99, genero: 'Damas', talla: 'S', color: 'Azul Marino', cantidad: 15, ruta: 'imagenes/pantalones-azul-s.jpg' }
 ];
 
 // Stock máximo para mostrar advertencia (de 10 a menos)
@@ -31,15 +33,14 @@ function renderizarProductos(productos) {
     cuerpoTabla.innerHTML = '';
 
     productos.forEach(producto => {
-        const necesitaAdvertencia = producto.stock <= UMBRAL_ADVERTENCIA;
+        const necesitaAdvertencia = producto.cantidad <= UMBRAL_ADVERTENCIA;
 
         const fila = document.createElement('tr');
-        const nombreMostrar = producto.nombre + (producto.talla ? ` ${producto.talla}` : '');
         fila.innerHTML = `
             <td class="sku">${producto.sku}</td>
-            <td class="nombre">${nombreMostrar}</td>
+            <td class="nombre">${producto.nombre}</td>
             <td class="stock">
-                ${producto.stock}
+                ${producto.cantidad}
                 ${necesitaAdvertencia ? `<i class='bx bxs-error-alt icono-advertencia' onclick="mostrarModal('modal-advertencia')"></i>` : ''}
             </td>
             <td class="acciones">
@@ -73,9 +74,24 @@ function mostrarModalActualizar(boton) {
 
     if (producto) {
         productoSeleccionadoSKU = sku;
-        document.getElementById('update-sku').value = producto.sku;
-        document.getElementById('update-nombre').value = producto.nombre;
-        document.getElementById('update-stock').value = producto.stock;
+        
+        // Llenar campos informativos (readonly)
+        document.getElementById('update-nombre').value = producto.nombre || '';
+        document.getElementById('update-marca').value = producto.marca || '';
+        document.getElementById('update-temporada').value = producto.temporada || '';
+        document.getElementById('update-categoria').value = producto.categoria || '';
+        document.getElementById('update-precio').value = producto.precio || '';
+        document.getElementById('update-genero').value = producto.genero || '';
+        document.getElementById('update-sku').value = producto.sku || '';
+        document.getElementById('update-color').value = producto.color || '';
+        
+        // Campo editable: Cantidad
+        document.getElementById('update-cantidad').value = producto.cantidad || 0;
+        
+        // Actualizar tallas basado en género y categoría, luego establecer el valor
+        actualizarTallasActualizar();
+        document.getElementById('update-talla').value = producto.talla || '';
+        
         mostrarModal('modal-actualizar');
     }
 }
@@ -95,16 +111,16 @@ function manejarActualizacion(evento) {
     evento.preventDefault();
 
     const sku = document.getElementById('update-sku').value;
-    const nuevoStock = parseInt(document.getElementById('update-stock').value);
+    const nuevaCantidad = parseInt(document.getElementById('update-cantidad').value);
 
-    if (isNaN(nuevoStock) || nuevoStock < 0) {
-        alert('Por favor ingresa un valor válido para el stock (0 o mayor).');
+    if (isNaN(nuevaCantidad) || nuevaCantidad < 0) {
+        alert('Por favor ingresa un valor válido para la cantidad (0 o mayor).');
         return false;
     }
 
     const indice = datosProductos.findIndex(p => p.sku === sku);
     if (indice !== -1) {
-        datosProductos[indice].stock = nuevoStock;
+        datosProductos[indice].cantidad = nuevaCantidad;
         cerrarModal('modal-actualizar');
         renderizarProductos(datosProductos);
     } else {
@@ -131,30 +147,156 @@ function ejecutarEliminacion() {
 function manejarAgregar(evento) {
     evento.preventDefault();
 
-    const sku = document.getElementById('add-sku').value.trim();
+    // ===== INPUTS GENERALES =====
     const nombre = document.getElementById('add-nombre').value.trim();
-    const stock = parseInt(document.getElementById('add-stock').value.trim());
+    const marca = document.getElementById('add-marca').value.trim();
+    const temporada = document.getElementById('add-temporada').value.trim();
+    const categoria = document.getElementById('add-categoria').value.trim();
+    const precio = parseFloat(document.getElementById('add-precio').value.trim());
+    const genero = document.getElementById('add-genero').value.trim();
+    const imagenGeneral = document.getElementById('add-imagen-general').value.trim();
 
-    if (!sku || !nombre || isNaN(stock) || stock < 0) {
-        alert("Por favor completa los campos correctamente antes de agregar un producto.");
+    if (!nombre || !marca || !temporada || !categoria || !genero || isNaN(precio) || precio < 0) {
+        alert("Por favor completa todos los campos generales correctamente.");
         return;
     }
 
-    const existe = datosProductos.some(p => p.sku === sku);
-    if (existe) {
-        alert("El SKU ya existe. Usa otro SKU para agregar un nuevo producto.");
+    // ===== INPUTS DE DETALLES ESPECÍFICOS (VARIACIONES) =====
+    const variaciones = [];
+    const contenedorVariaciones = document.getElementById('contenedor-variaciones');
+    const itemsVariacion = contenedorVariaciones.querySelectorAll('.variacion-item');
+
+    itemsVariacion.forEach((item) => {
+        const sku = item.querySelector('.input-sku').value.trim();
+        const talla = item.querySelector('.input-talla').value.trim();
+        const color = item.querySelector('.input-color').value.trim();
+        const cantidad = parseInt(item.querySelector('.input-stock').value.trim());
+        const inputArchivo = item.querySelector('.input-imagen');
+        const ruta = inputArchivo && inputArchivo.files.length > 0 ? inputArchivo.files[0].name : '';
+
+        if (!sku || !talla || !color || isNaN(cantidad) || cantidad < 0) {
+            alert("Por favor completa todos los campos de detalles específicos (SKU, Talla, Color, Cantidad).");
+            return;
+        }
+
+        variaciones.push({
+            sku,
+            talla,
+            color,
+            cantidad,
+            ruta
+        });
+    });
+
+    if (variaciones.length === 0) {
+        alert("Por favor agrega al menos una variación (SKU, Talla, Color, Cantidad).");
         return;
     }
 
-    const talla = document.getElementById('add-talla').value.trim();
-    const nuevoProducto = { sku, nombre, stock, talla };
-    datosProductos.unshift(nuevoProducto);
+    // ===== AGREGAR CADA VARIACIÓN COMO UNA FILA EN LA TABLA =====
+    variaciones.forEach(variacion => {
+        datosProductos.unshift({
+            sku: variacion.sku,
+            nombre: nombre,
+            marca: marca,
+            temporada: temporada,
+            categoria: categoria,
+            precio: precio,
+            genero: genero,
+            talla: variacion.talla,
+            color: variacion.color,
+            cantidad: variacion.cantidad,
+            ruta: variacion.ruta
+        });
+    });
+
+    // ===== MOSTRAR EN CONSOLA TODA LA INFORMACIÓN =====
+    console.log('=== PRODUCTO AGREGADO ===');
+    console.log('Detalles Generales:', { nombre, marca, temporada, categoria, precio, genero });
+    console.log('Detalles Específicos (Variaciones):', variaciones);
 
     cerrarModal('modal-agregar');
     renderizarProductos(datosProductos);
 
     evento.target.reset();
-    console.log(`Producto agregado: ${nombre} (SKU: ${sku}, Stock: ${stock})`);
+}
+
+// ==============================================
+// FUNCIONES DE ACTUALIZACIÓN DE TALLAS
+// ==============================================
+
+// Función para actualizar tallas en modal AGREGAR
+function actualizarTallasAgregar() {
+    const generoSelect = document.getElementById('add-genero');
+    const categoriaSelect = document.getElementById('add-categoria');
+    const genero = generoSelect.value;
+    const categoria = categoriaSelect.value;
+    
+    // Encontrar todos los selects de talla en las variaciones
+    const contenedor = document.getElementById('contenedor-variaciones');
+    const tallaSelects = contenedor.querySelectorAll('.input-talla');
+    
+    let opciones = [];
+    
+    if (genero === 'Caballeros' || genero === 'Damas') {
+        // Verificar si es prenda superior o inferior
+        const categoriasSuperiores = ['Blusa', 'Camisa', 'Polo', 'Cárdigan', 'Suéter', 'Ropa Deportiva', 'Ropa Interior', 'Abrigo', 'Chaqueta'];
+        
+        if (categoriasSuperiores.includes(categoria)) {
+            opciones = ['S', 'M', 'L', 'XL'];
+        } else {
+            opciones = ['28', '30', '32', '34', '36', '38', '40'];
+        }
+    } else if (genero === 'Niños' || genero === 'Niñas') {
+        opciones = ['2', '4', '6', '8', '10', '12', '14', '16'];
+    }
+    
+    // Actualizar todos los selects de talla
+    tallaSelects.forEach(select => {
+        const valorActual = select.value;
+        select.innerHTML = '<option value="">Seleccionar Talla</option>';
+        opciones.forEach(opcion => {
+            const option = document.createElement('option');
+            option.value = opcion;
+            option.textContent = opcion;
+            select.appendChild(option);
+        });
+        select.value = valorActual;
+    });
+}
+
+// Función para actualizar tallas en modal ACTUALIZAR
+function actualizarTallasActualizar() {
+    const generoSelect = document.getElementById('update-genero');
+    const categoriaSelect = document.getElementById('update-categoria');
+    const genero = generoSelect.value;
+    const categoria = categoriaSelect.value;
+    
+    const tallaSelect = document.getElementById('update-talla');
+    const valorActual = tallaSelect.value;
+    
+    let opciones = [];
+    
+    if (genero === 'Caballeros' || genero === 'Damas') {
+        const categoriasSuperiores = ['Blusa', 'Camisa', 'Polo', 'Cárdigan', 'Suéter', 'Ropa Deportiva', 'Ropa Interior', 'Abrigo', 'Chaqueta'];
+        
+        if (categoriasSuperiores.includes(categoria)) {
+            opciones = ['S', 'M', 'L', 'XL'];
+        } else {
+            opciones = ['28', '30', '32', '34', '36', '38', '40'];
+        }
+    } else if (genero === 'Niños' || genero === 'Niñas') {
+        opciones = ['2', '4', '6', '8', '10', '12', '14', '16'];
+    }
+    
+    tallaSelect.innerHTML = '<option value="">Seleccionar Talla</option>';
+    opciones.forEach(opcion => {
+        const option = document.createElement('option');
+        option.value = opcion;
+        option.textContent = opcion;
+        tallaSelect.appendChild(option);
+    });
+    tallaSelect.value = valorActual;
 }
 
 // ==============================================
@@ -174,10 +316,10 @@ function buscarProductos(query) {
         productosFiltrados = productosFiltrados.filter(producto => {
             let cumpleFiltros = true;
             if (filtrosActivos.stockMin !== null) {
-                cumpleFiltros = cumpleFiltros && producto.stock >= filtrosActivos.stockMin;
+                cumpleFiltros = cumpleFiltros && producto.cantidad >= filtrosActivos.stockMin;
             }
             if (filtrosActivos.stockMax !== null) {
-                cumpleFiltros = cumpleFiltros && producto.stock <= filtrosActivos.stockMax;
+                cumpleFiltros = cumpleFiltros && producto.cantidad <= filtrosActivos.stockMax;
             }
             return cumpleFiltros;
         });
@@ -257,7 +399,7 @@ function inicializarMenuToggle() {
 }
 
 // ==============================================
-// 🛠️ LÓGICA DE VARIACIONES Y GESTIÓN DE ARCHIVOS (UNIFICADO Y CORREGIDO)
+// LÓGICA DE VARIACIONES Y GESTIÓN DE ARCHIVOS (UNIFICADO Y CORREGIDO)
 // ==============================================
 
 // 1. Manejo Dinámico de Variaciones (CORREGIDO PARA EL BOTÓN)
@@ -270,8 +412,22 @@ document.getElementById('btn-agregar-variacion').addEventListener('click', () =>
     
     nueva.innerHTML = `
         <input type="text" placeholder="SKU (Ej. 204362)" class="input-sku" required>
-        <input type="text" placeholder="Talla (Ej. M)" class="input-talla" required>
-        <input type="text" placeholder="Color (Ej. Azul)" class="input-color" required>
+        <select class="input-talla" required>
+            <option value="">Seleccionar Talla</option>
+        </select>
+        <select class="input-color" required>
+            <option value="">Seleccionar Color</option>
+            <option value="Negro">Negro</option>
+            <option value="Blanco">Blanco</option>
+            <option value="Rojo">Rojo</option>
+            <option value="Azul Marino">Azul Marino</option>
+            <option value="Beige">Beige</option>
+            <option value="Verde Militar">Verde Militar</option>
+            <option value="Gris Melange">Gris Melange</option>
+            <option value="Burdeo">Burdeo</option>
+            <option value="Mostaza">Mostaza</option>
+            <option value="Rosado Pastel">Rosado Pastel</option>
+        </select>
         <input type="number" placeholder="Cantidad" min="0" class="input-stock" required>
         
         <div class="form-grupo-archivo" style="display:flex; flex-direction: column; align-items: center; justify-content: center;">
@@ -288,6 +444,8 @@ document.getElementById('btn-agregar-variacion').addEventListener('click', () =>
         <button type="button" class="btn-eliminar-variacion" title="Eliminar variación">×</button>
     `;
     contenedor.appendChild(nueva);
+    // Actualizar tallas después de agregar la variación
+    actualizarTallasAgregar();
 });
 
 // 2. Eliminar variación (se mantiene igual, asegurando la eliminación del padre)
@@ -347,14 +505,6 @@ document.addEventListener('change', function (event) {
         handleImagePreview(target, preview);
     }
 });
-
-// ==============================================
-// INICIALIZACIÓN DE LA APLICACIÓN
-// ==============================================
-// ... (El resto de la inicialización se mantiene)
-
-
-
 
 
 // ==============================================
