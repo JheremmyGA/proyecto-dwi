@@ -2,12 +2,10 @@ package com.dwi.icommerce.service;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.Base64.Decoder;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.stereotype.Service;
 
 import com.dwi.icommerce.model.Usuario;

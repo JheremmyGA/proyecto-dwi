@@ -1,6 +1,9 @@
 package com.dwi.icommerce.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,8 +22,12 @@ public class Token {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String token;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "token_type", length = 10)
     private TokenType tokenType = TokenType.BEARER;
+    @Column(name="revoked")
     private boolean revoked; 
+    @Column(name = "expired")
     private boolean expired;
     @ManyToOne 
     @JoinColumn(name = "user_id")

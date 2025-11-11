@@ -1,7 +1,5 @@
-/**
- * registro.js
- * Maneja la lógica de la página de Registro.
- */
+import * as HTTPS_Request from '../Utils/HTTPRequest.js';
+import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const registroForm = document.getElementById('registro-form');
@@ -20,19 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 2. Validación básica (verificar que todos los campos estén llenos)
             if (nombre && apellido && correo && contrasena) {
-                
-                // REGISTRO EXITOSO (SIMULADO):
-                
-                // NOTA: En un sistema real, aquí se enviarían los datos a un servidor.
-                
-                // 3. Iniciar sesión automáticamente tras el registro
-                localStorage.setItem('usuarioLogeado', 'true');
-                localStorage.setItem('nombreUsuario', nombreCompleto); 
-
-                // **Se omite el alert para una experiencia de usuario más limpia.**
-                
-                // 4. Redirigir a la página principal
-                window.location.href = 'index.html';
+                const UserData = {
+                    nombre: nombre,
+                    apellido: apellido,
+                    correo: correo,
+                    contraseña: contrasena
+                };
+                Register(UserData);
 
             } else {
                 // Mensaje simple si falta algún campo
@@ -41,3 +33,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+async function Register(UserData){
+    const TokenData = await HTTPS_Request.Registro(UserData);
+    console.error(TokenData);
+
+    if (TokenData === null) {
+        console.log("Registro fallido o incompleto. No se intentará iniciar sesión.");
+        return; 
+    }
+
+    //localStorage.setItem('usuarioLogeado', 'true');
+    PERSISTENT_DATA.SetNombreUsuario(UserData.nombre);
+    PERSISTENT_DATA.SetTokenData(TokenData.access_token);
+    PERSISTENT_DATA.SetUsuarioLogeado('true');
+    PERSISTENT_DATA.SetRol(TokenData.role);
+
+    window.location.href = 'index.html';
+}

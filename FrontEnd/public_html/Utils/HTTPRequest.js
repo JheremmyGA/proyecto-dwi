@@ -243,3 +243,63 @@ export async function GetDetalleProducto(id) {
     }
 }
 
+export async function Registro(userData) {
+    try {
+        const respuesta = await fetch(`http://localhost:9530/auth/register`, {
+            method: 'POST', 
+            
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify(userData) 
+        });
+
+        if (respuesta.status === 204) {
+          return null;
+        }
+
+        if (!respuesta.ok) {
+            const errorData = await respuesta.json();
+            throw new Error(`Error ${respuesta.status}: ${errorData.message || 'Fallo en el registro.'}`);
+        }
+
+        const data = await respuesta.json();
+        return data;
+
+    } catch (error) {
+      console.error("Fallo en el proceso de registro:", error.message);
+      return null;
+    }
+}
+
+export async function Login(userData) {
+  try {
+      const respuesta = await fetch(`http://localhost:9530/auth/login`, {
+          method: 'POST', 
+          
+          headers: {
+              'Content-Type': 'application/json'
+          },
+
+          body: JSON.stringify(userData) 
+      });
+
+      if (respuesta.status === 204) {
+        return null;
+      }
+
+      if (!respuesta.ok) {
+          const errorData = await respuesta.json();
+          throw new Error(`Error ${respuesta.status}: ${errorData.message || 'Fallo en el registro.'}`);
+      }
+
+      const data = await respuesta.json();
+      return data;
+
+  } catch (error) {
+    console.error("Fallo en el proceso de registro:", error.message);
+    return null;
+  }
+}
+

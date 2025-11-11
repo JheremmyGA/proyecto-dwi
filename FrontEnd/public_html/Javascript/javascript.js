@@ -46,9 +46,9 @@ function actualizarEstadoSesion() {
 
     // 2. Obtener datos de LocalStorage
     // CLAVE: Esto asegura que el nombre se muestra tras un login exitoso
-    const logueado = localStorage.getItem('usuarioLogeado') === 'true';
-    const nombre = localStorage.getItem('nombreUsuario') || 'Usuario';
-    const rol = localStorage.getItem('rolUsuario'); 
+    const logeado = PERSISTENT_DATA.GetUsuarioLogeado() === 'true';
+    const nombre = PERSISTENT_DATA.GetNombreUsuario() || 'Usuario';
+    const rol = PERSISTENT_DATA.GetRol() || 'usuario';
 
     if (logeado) {
         // Usuario logueado: Ocultar anónimo, mostrar logueado
@@ -82,10 +82,12 @@ function actualizarEstadoSesion() {
  */
 window.cerrarSesion = function() {
     // Elimina todas las claves de sesión importantes
-    localStorage.removeItem("usuarioLogeado");
-    localStorage.removeItem("nombreUsuario"); 
-    localStorage.removeItem("rolUsuario"); 
-    
+      
+    PERSISTENT_DATA.SetNombreUsuario('');
+    PERSISTENT_DATA.SetTokenData('');
+    PERSISTENT_DATA.SetUsuarioLogeado('false');
+    PERSISTENT_DATA.SetRol('');
+
     // Redirige a la página principal para asegurar que el header se actualice
     // y para salir de la página de Admin/Perfil si el usuario estaba allí.
     window.location.href = 'index.html'; 

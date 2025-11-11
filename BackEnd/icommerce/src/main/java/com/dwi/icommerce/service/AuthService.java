@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.wavefront.WavefrontProperties.TokenType;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.dwi.icommerce.DTO.LoginRequestDTO;
@@ -52,7 +50,7 @@ public class AuthService {
 
         SaveUserToken(usuarioSave, jwtToken);
 
-        return new TokenResponseDTO(jwtToken,refreshToken);
+        return new TokenResponseDTO(jwtToken,refreshToken, usuarioSave.getRol().toString());
     }
 
     private void SaveUserToken(Usuario user, String jwtToken){
@@ -77,7 +75,7 @@ public class AuthService {
         RevokeAllUserTokens(userFind.get());
         SaveUserToken(userFind.get(), jwtToken);
 
-        return new TokenResponseDTO(jwtToken, refreshToken);
+        return new TokenResponseDTO(jwtToken, refreshToken, userFind.get().getRol().toString());
     }
 
     private void RevokeAllUserTokens(Usuario user){

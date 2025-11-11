@@ -1,3 +1,6 @@
+import * as HTTPS_Request from '../Utils/HTTPRequest.js';
+import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
+
 /**
  * login.js actualizado FINAL
  * - Admin: admin@kivora.com / admin1234
@@ -5,8 +8,6 @@
  * - Si es admin, al volver al index se muestra "Panel Admin"
  */
 
-const ADMIN_CORREO = 'admin@kivora.com';
-const ADMIN_PASS = 'admin1234';
 const MIN_LENGTH = 3;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -19,48 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-
-            const correoInput = document.getElementById('correo').value.trim();
-            const contrasenaInput = document.getElementById('contrasena').value.trim();
-
-            let nombre = '';
-            let rol = '';
-            let loginExitoso = false;
-            let mensaje = '';
-
-            if (!correoInput || !contrasenaInput) {
-                mensaje = 'Por favor, ingrese correo y contraseña.';
-            } 
-            else if (correoInput === ADMIN_CORREO && contrasenaInput === ADMIN_PASS) {
-                nombre = 'Administrador KIVORA';
-                rol = 'admin';
-                loginExitoso = true;
-            } 
-            else if (correoInput.length >= MIN_LENGTH && contrasenaInput.length >= MIN_LENGTH) {
-                nombre = correoInput.split('@')[0] || 'Usuario';
-                rol = 'user';
-                loginExitoso = true;
-            } 
-            else {
-                mensaje = 'Credenciales incorrectas o incompletas.';
-            }
-
-            if (loginExitoso) {
-                const usuario = { nombre, correo: correoInput, rol };
-                localStorage.setItem('usuarioLogueado', JSON.stringify(usuario));
-
-                // 🔹 Siempre redirige al index (sin importar el rol)
-                window.location.href = 'index.html';
-            } else {
-                mensajeError ? mensajeError.textContent = mensaje : alert(mensaje);
-            }
+            Login();
         });
     }
 
     // =========================================================
     // MOSTRAR NOMBRE + MENÚ DESPLEGABLE + BOTÓN ADMIN SI APLICA
     // =========================================================
-    const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
+    const usuarioLogueado = JSON.parse(PERSISTENT_DATA.GetUsuarioLogeado());
     const contAnonimo = document.getElementById('contenedor-anonimo');
     const contLogueado = document.getElementById('contenedor-logueado');
     const nombreUsuario = document.getElementById('nombre-usuario');
@@ -69,19 +36,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (usuarioLogueado && contAnonimo && contLogueado && nombreUsuario) {
         contAnonimo.style.display = 'none';
         contLogueado.style.display = 'flex';
-        nombreUsuario.textContent = `Hola, ${usuarioLogueado.nombre} `;
+        const logeado = PERSISTENT_DATA.GetUsuarioLogeado() === 'true';
+        const nombre = PERSISTENT_DATA.GetNombreUsuario() || 'Usuario';
+        const rol = PERSISTENT_DATA.GetRol() || 'usuario';
+        nombreUsuario.textContent = `Hola, ${nombre} `;
 
         // Limpiar el menú antes de construirlo
         if (menuUsuario) {
             menuUsuario.innerHTML = `
                 <a href="Usuario.html">Mi cuenta</a>
-                <a href="#">Mis CMR Puntos</a>
                 <a href="carrito.html">Mi carrito</a>
                 <a href="#" onclick="cerrarSesion()">Cerrar sesión</a>
             `;
 
             // 🔹 Si es administrador, agrega el botón "Panel Admin"
-            if (usuarioLogueado.rol === 'admin') {
+            if (PERSISTENT_DATA.GetRol() === 'Admin') {
                 const enlaceAdmin = document.createElement('a');
                 enlaceAdmin.href = 'Administrador.html';
                 enlaceAdmin.textContent = 'Panel Admin';
@@ -92,11 +61,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+async function Login(){
+    const correoInput = document.getElementById('correo').value.trim();
+    const contrasenaInput = document.getElementById('contrasena').value.trim();
+
+    if (!correoInput || !contrasenaInput) {
+        mensaje = 'Por favor, ingrese correo y contraseña.';
+    } 
+    
+    const UserData = {
+        correo: correoInput,
+        contraseña: contrasenaInput
+    };
+    const TokenData = await HTTPS_Request.Login(UserData);
+
+    if (TokenData === null) {
+        console.log("Login fallido o incompleto. No se intentará iniciar sesión.");
+        return; 
+    }
+
+    const nombre = correoInput.split('@')[0] || 'Usuario';
+    PERSISTENT_DATA.SetNombreUsuario(nombre);
+    PERSISTENT_DATA.SetTokenData(TokenData.access_token);
+    PERSISTENT_DATA.SetUsuarioLogeado('true');
+    PERSISTENT_DATA.SetRol(TokenData.role);
+
+    window.location.href = 'index.html';
+}
+
 // =========================================================
 // CERRAR SESIÓN
 // =========================================================
 function cerrarSesion() {
-    localStorage.removeItem('usuarioLogueado');
+      
+    PERSISTENT_DATA.SetNombreUsuario('');
+    PERSISTENT_DATA.SetTokenData('');
+    PERSISTENT_DATA.SetUsuarioLogeado('false');
+    PERSISTENT_DATA.SetRol('');
+
     alert('Sesión cerrada correctamente');
     window.location.href = 'index.html';
 }
