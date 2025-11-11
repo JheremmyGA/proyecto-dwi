@@ -34,7 +34,6 @@ function renderizarProductos(productos) {
         const necesitaAdvertencia = producto.stock <= UMBRAL_ADVERTENCIA;
 
         const fila = document.createElement('tr');
-        // Mostrar nombre concatenado con talla si existe (por ejemplo: "Camisa XL")
         const nombreMostrar = producto.nombre + (producto.talla ? ` ${producto.talla}` : '');
         fila.innerHTML = `
             <td class="sku">${producto.sku}</td>
@@ -57,12 +56,12 @@ function renderizarProductos(productos) {
 // ==============================================
 function mostrarModal(idModal) {
     const modal = document.getElementById(idModal);
-    if (modal) modal.style.display = 'flex';
+    if (modal) modal.classList.add('mostrar');
 }
 
 function cerrarModal(idModal) {
     const modal = document.getElementById(idModal);
-    if (modal) modal.style.display = 'none';
+    if (modal) modal.classList.remove('mostrar');
 }
 
 // ==============================================
@@ -127,7 +126,7 @@ function ejecutarEliminacion() {
 }
 
 // ==============================================
-//  NUEVA FUNCIÓN: AGREGAR PRODUCTO
+// FUNCIÓN: AGREGAR PRODUCTO
 // ==============================================
 function manejarAgregar(evento) {
     evento.preventDefault();
@@ -141,58 +140,26 @@ function manejarAgregar(evento) {
         return;
     }
 
-    // Verificar si el SKU ya existe
     const existe = datosProductos.some(p => p.sku === sku);
     if (existe) {
         alert("El SKU ya existe. Usa otro SKU para agregar un nuevo producto.");
         return;
     }
 
-    // Crear nuevo producto y agregarlo al inicio del array (aparecerá primero en la tabla)
     const talla = document.getElementById('add-talla').value.trim();
     const nuevoProducto = { sku, nombre, stock, talla };
     datosProductos.unshift(nuevoProducto);
 
-    // Cerrar modal, limpiar campos y renderizar tabla
     cerrarModal('modal-agregar');
     renderizarProductos(datosProductos);
 
-    // Limpiar el formulario
     evento.target.reset();
-
     console.log(`Producto agregado: ${nombre} (SKU: ${sku}, Stock: ${stock})`);
 }
 
 // ==============================================
-// LÓGICA DEL MENÚ LATERAL
+// LÓGICA DE BÚSQUEDA Y FILTROS
 // ==============================================
-function inicializarMenuToggle() {
-    const botonToggle = document.getElementById('boton-toggle-menu');
-    const menuLateral = document.getElementById('menu-lateral') || document.querySelector('.menu-dashboard');
-    const contenedorPrincipal = document.querySelector('.contenedor-principal');
-
-    if (!botonToggle || !menuLateral) {
-        if (contenedorPrincipal && window.innerWidth > 768) {
-            contenedorPrincipal.style.marginLeft = 'var(--ancho-menu-abierto)';
-        }
-        return;
-    }
-
-    botonToggle.addEventListener('click', () => {
-        menuLateral.classList.toggle('colapsado');
-
-        if (window.innerWidth > 768) {
-            contenedorPrincipal.style.marginLeft = menuLateral.classList.contains('colapsado') ? '70px' : 'var(--ancho-menu-abierto)';
-        } else {
-            menuLateral.classList.toggle('-translate-x-full');
-        }
-    });
-
-    if (contenedorPrincipal && window.innerWidth > 768) {
-        contenedorPrincipal.style.marginLeft = 'var(--ancho-menu-abierto)';
-    }
-}
-
 
 let filtrosActivos = {
     stockMin: null,
@@ -202,7 +169,6 @@ let filtrosActivos = {
 function buscarProductos(query) {
     query = query.toLowerCase().trim();
     
-    // Aplicar filtros de stock si están activos
     let productosFiltrados = datosProductos;
     if (filtrosActivos.stockMin !== null || filtrosActivos.stockMax !== null) {
         productosFiltrados = productosFiltrados.filter(producto => {
@@ -217,27 +183,22 @@ function buscarProductos(query) {
         });
     }
 
-    // Si no hay búsqueda por SKU, retornar los productos filtrados
     if (!query) {
         return productosFiltrados;
     }
     
-    // Filtrar productos por SKU
     return productosFiltrados.filter(producto => 
-        producto.sku.toLowerCase().includes(query)
+        producto.sku.toLowerCase().includes(query) || producto.nombre.toLowerCase().includes(query)
     );
 }
 
 function limpiarFiltros() {
-    // Limpiar los campos del formulario
     document.getElementById('filtro-stock-min').value = '';
     document.getElementById('filtro-stock-max').value = '';
     
-    // Resetear los filtros activos
     filtrosActivos.stockMin = null;
     filtrosActivos.stockMax = null;
 
-    // Obtener el valor actual del buscador
     const inputBuscador = document.querySelector('.input-buscador');
     const resultados = buscarProductos(inputBuscador ? inputBuscador.value : '');
     
@@ -252,7 +213,6 @@ function aplicarFiltros() {
     filtrosActivos.stockMin = stockMin === '' ? null : parseInt(stockMin);
     filtrosActivos.stockMax = stockMax === '' ? null : parseInt(stockMax);
 
-    // Obtener el valor actual del buscador
     const inputBuscador = document.querySelector('.input-buscador');
     const resultados = buscarProductos(inputBuscador ? inputBuscador.value : '');
     
@@ -260,6 +220,146 @@ function aplicarFiltros() {
     cerrarModal('modal-filtros');
 }
 
+// ==============================================
+// LÓGICA DEL MENÚ LATERAL
+// ==============================================
+function inicializarMenuToggle() {
+    const botonToggle = document.getElementById('boton-toggle-menu');
+    const menuLateral = document.getElementById('menu-lateral') || document.querySelector('.menu-dashboard');
+    const contenedorPrincipal = document.querySelector('.contenedor-principal');
+
+    // Si no hay botón explícito para toggle o no se encontró el menú, mantenemos
+    // el contenedor principal sin margen (full-width) por defecto.
+    if (!botonToggle || !menuLateral) {
+        if (contenedorPrincipal && window.innerWidth > 768) {
+            // Asegurar estado inicial collapsed -> margin 0
+            contenedorPrincipal.style.marginLeft = '0';
+        }
+        return;
+    }
+
+    botonToggle.addEventListener('click', () => {
+        menuLateral.classList.toggle('colapsado');
+
+        if (window.innerWidth > 768) {
+            // Cuando el menú está abierto (no colapsado) aplicamos el ancho definido,
+            // cuando está colapsado dejamos margin 0 (full-width) o un pequeño offset si prefieres.
+            contenedorPrincipal.style.marginLeft = menuLateral.classList.contains('colapsado') ? '0' : 'var(--ancho-menu-abierto)';
+        } else {
+            menuLateral.classList.toggle('-translate-x-full');
+        }
+    });
+
+    // Estado inicial: content full-width (collapsed). JS will apply open margin when toggled.
+    if (contenedorPrincipal && window.innerWidth > 768) {
+        contenedorPrincipal.style.marginLeft = '0';
+    }
+}
+
+// ==============================================
+// 🛠️ LÓGICA DE VARIACIONES Y GESTIÓN DE ARCHIVOS (UNIFICADO Y CORREGIDO)
+// ==============================================
+
+// 1. Manejo Dinámico de Variaciones (CORREGIDO PARA EL BOTÓN)
+document.getElementById('btn-agregar-variacion').addEventListener('click', () => {
+    const contenedor = document.getElementById('contenedor-variaciones');
+    const nueva = document.createElement('div');
+    nueva.classList.add('variacion-item');
+    // Generar un ID único para el input de archivo (necesario para el label)
+    const uniqueId = `file-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    
+    nueva.innerHTML = `
+        <input type="text" placeholder="SKU (Ej. 204362)" class="input-sku" required>
+        <input type="text" placeholder="Talla (Ej. M)" class="input-talla" required>
+        <input type="text" placeholder="Color (Ej. Azul)" class="input-color" required>
+        <input type="number" placeholder="Cantidad" min="0" class="input-stock" required>
+        
+        <div class="form-grupo-archivo" style="display:flex; flex-direction: column; align-items: center; justify-content: center;">
+            
+            <input type="file" id="${uniqueId}" class="input-hidden-file input-imagen" accept="image/*" title="Subir imagen">
+            
+            <label for="${uniqueId}" class="custom-file-upload">
+                <i class="fas fa-image"></i> Subir Imagen
+            </label>
+            
+            <img class="preview-imagen" src="" alt="Vista previa" style="display:none; margin-top: 5px; width: 50px; height: 50px;">
+        </div>
+
+        <button type="button" class="btn-eliminar-variacion" title="Eliminar variación">×</button>
+    `;
+    contenedor.appendChild(nueva);
+});
+
+// 2. Eliminar variación (se mantiene igual, asegurando la eliminación del padre)
+document.addEventListener('click', e => {
+    if (e.target.classList.contains('btn-eliminar-variacion')) {
+        // Eliminar el contenedor principal de la variación
+        e.target.closest('.variacion-item').remove();
+    }
+});
+
+
+// ... (Toda la lógica anterior del JS)
+
+// 3. Lógica de Previsualización de Imágenes (General y Variaciones - UNIFICADO)
+document.addEventListener('change', function (event) {
+    const target = event.target;
+    
+    // Función para manejar la previsualización
+    const handleImagePreview = (fileInput, previewElement) => {
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                previewElement.src = e.target.result;
+                previewElement.style.display = 'block';
+                // Añadimos una verificación de tamaño si estás en el modal de variaciones
+                if (previewElement.closest('.variacion-item')) {
+                    previewElement.style.width = '50px';
+                    previewElement.style.height = '50px';
+                }
+            };
+            reader.readAsDataURL(file);
+        } else {
+            previewElement.src = '';
+            previewElement.style.display = 'none';
+        }
+    };
+
+    // Caso A: Imagen General
+    if (target.id === 'add-imagen-general' && target.type === 'file') {
+        // CORRECCIÓN: Usa 'preview-general' según tu HTML
+        const preview = document.getElementById('preview-general'); 
+        
+        // Actualiza el texto en el span que muestra el nombre del archivo
+        const nameDisplay = document.getElementById('nombre-archivo-general'); 
+        
+        if (nameDisplay && target.files.length > 0) {
+            nameDisplay.textContent = target.files[0].name;
+        } else if (nameDisplay) {
+            nameDisplay.textContent = 'Ningún archivo seleccionado';
+        }
+        handleImagePreview(target, preview);
+        
+    // Caso B: Imágenes de Variaciones (Usamos la clase 'input-imagen' en el input[type="file"])
+    } else if (target.classList.contains('input-imagen') && target.type === 'file') {
+        const preview = target.closest('.form-grupo-archivo').querySelector('.preview-imagen');
+        handleImagePreview(target, preview);
+    }
+});
+
+// ==============================================
+// INICIALIZACIÓN DE LA APLICACIÓN
+// ==============================================
+// ... (El resto de la inicialización se mantiene)
+
+
+
+
+
+// ==============================================
+// INICIALIZACIÓN DE LA APLICACIÓN
+// ==============================================
 document.addEventListener('DOMContentLoaded', () => {
     renderizarProductos(datosProductos);
     inicializarMenuToggle();
