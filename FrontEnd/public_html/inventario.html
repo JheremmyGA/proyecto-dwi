@@ -104,15 +104,6 @@
                             <h4 style="grid-column: 1 / -1; margin-bottom: 10px;">Detalles Generales</h4>
 
                             <div class="form-grupo">
-                                <label for="add-sku">SKU Principal</label>
-                                <input type="text" id="add-sku" placeholder="Ej. 204362 (Código principal)" required>
-                            </div>
-
-                            <div class="form-grupo">
-                                <label for="add-stock">Stock Total Inicial</label>
-                                <input type="number" id="add-stock" min="0" placeholder="Ej. 50" required>
-                            </div>
-                            <div class="form-grupo">
                                 <label for="add-nombre">Nombre</label>
                                 <input type="text" id="add-nombre" placeholder="Ej. Camisa Oxford Slim Fit" required>
                             </div>
@@ -233,23 +224,58 @@
         <div class="modal-contenido" style="max-width: 900px;">
             <h3 style="margin-bottom: 25px; text-align: left;">Editar Producto</h3>
             <form id="formulario-actualizar" class="form-grid">
+                
+                <h4 style="grid-column: 1 / -1; margin-bottom: 10px;">Información del Producto</h4>
+
                 <div class="form-grupo">
                     <label for="update-sku">SKU</label>
                     <input type="text" id="update-sku" readonly>
                 </div>
+
                 <div class="form-grupo">
                     <label for="update-nombre">Nombre</label>
                     <input type="text" id="update-nombre" readonly>
                 </div>
+
                 <div class="form-grupo">
-                    <label for="update-stock">Stock</label>
-                    <!-- El stock se puede editar -->
-                    <input type="number" id="update-stock" min="0">
+                    <label for="update-marca">Marca</label>
+                    <input type="text" id="update-marca" readonly>
                 </div>
 
-                <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
-                    <button type="button" class="boton-cancelar"
-                        onclick="cerrarModal('modal-actualizar')">Cancelar</button>
+                <div class="form-grupo">
+                    <label for="update-temporada">Temporada</label>
+                    <input type="text" id="update-temporada" readonly>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="update-categoria">Categoría</label>
+                    <input type="text" id="update-categoria" readonly>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="update-precio">Precio</label>
+                    <input type="text" id="update-precio" readonly>
+                </div>
+
+                <h4 style="grid-column: 1 / -1; margin-top: 20px; margin-bottom: 10px;">Detalles de la Variación</h4>
+
+                <div class="form-grupo">
+                    <label for="update-talla">Talla</label>
+                    <input type="text" id="update-talla" readonly>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="update-color">Color</label>
+                    <input type="text" id="update-color" readonly>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="update-cantidad">Cantidad</label>
+                    <input type="number" id="update-cantidad" min="0" required>
+                </div>
+
+                <div style="margin-top: 30px; display: flex; justify-content: flex-end; gap: 10px; grid-column: 1 / -1;">
+                    <button type="button" class="boton-cancelar" onclick="cerrarModal('modal-actualizar')">Cancelar</button>
                     <button type="submit" class="boton-confirmar">Actualizar Producto</button>
                 </div>
             </form>
