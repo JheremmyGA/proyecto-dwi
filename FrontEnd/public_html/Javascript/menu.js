@@ -50,7 +50,7 @@ function updateDateTime() {
     const dateStr = now.toLocaleDateString('es-ES', dateOptions);
     const timeStr = now.toLocaleTimeString('es-ES', timeOptions);
 
-    document.getElementById('datetime').textContent = `${dateStr} | ${timeStr}`;
+    //document.getElementById('datetime').textContent = `${dateStr} | ${timeStr}`;
 }
 
 // Ejecutar la función inmediatamente y luego cada segundo

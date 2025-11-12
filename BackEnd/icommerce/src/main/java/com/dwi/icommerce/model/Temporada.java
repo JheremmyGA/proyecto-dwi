@@ -18,6 +18,10 @@ public class Temporada {
     public Temporada() {
     }
 
+    public Temporada(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Temporada(long id_temporada, String nombre) {
         this.id_temporada = id_temporada;
         this.nombre = nombre;

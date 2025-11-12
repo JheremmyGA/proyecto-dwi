@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dwi.icommerce.model.Categoria;
+import com.dwi.icommerce.model.Temporada;
 import com.dwi.icommerce.repository.CategoriaRepository;
 
 @Service
@@ -21,6 +22,14 @@ public class CategoriaService {
 
     public Optional<Categoria> GetById(Long id){
         return categoria_repository.findById(id);
+    }
+
+    public Categoria findByNombre(String nombre){
+        Optional<Categoria> element =  categoria_repository.findByNombre(nombre);
+        if ((element.isPresent())) {
+            return element.get();
+        }
+        else return Create(new Categoria(nombre));
     }
 
     public Categoria Create(Categoria new_Categoria){

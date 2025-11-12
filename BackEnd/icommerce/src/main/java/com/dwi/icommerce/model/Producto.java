@@ -20,7 +20,7 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private Double precio;
-    @Column(name="preview_image_path")
+    @Column(name="PreviewImage")
     private String PreviewImage;
     //registros de ingresos y salidas de productos en una tabla aparte
 

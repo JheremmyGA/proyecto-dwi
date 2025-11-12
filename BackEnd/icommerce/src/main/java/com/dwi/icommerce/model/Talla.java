@@ -20,6 +20,10 @@ public class Talla {
 
     }
 
+    public Talla (String nombre){
+        this.nombre = nombre;
+    }
+
     public Talla (Long id_talla, String nombre){
         this.id = id_talla;
         this.nombre = nombre;
