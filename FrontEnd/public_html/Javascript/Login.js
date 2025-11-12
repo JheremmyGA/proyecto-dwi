@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 🔹 Si es administrador, agrega el botón "Panel Admin"
             if (usuarioLogueado.rol === 'admin') {
                 const enlaceAdmin = document.createElement('a');
-                enlaceAdmin.href = 'Administrador.html';
+                enlaceAdmin.href = 'menu.html';
                 enlaceAdmin.textContent = 'Panel Admin';
                 enlaceAdmin.id = 'boton-admin';
                 menuUsuario.insertBefore(enlaceAdmin, menuUsuario.firstChild);

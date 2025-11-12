@@ -13,7 +13,10 @@ const datosVentas = [
             { fecha: '05/11/2025', boleta: '988888', producto: 'Pantalón Chino Slim Fit', unid: 2, costo: 40.00},
             { fecha: '05/11/2025', boleta: '888888', producto: 'Polo de piqué', unid: 1, costo: 20.00},
             { fecha: '09/11/2025', boleta: '998888', producto: 'Pantalón Chino Slim Fit', unid: 2, costo: 40.00},
-            { fecha: '09/11/2025', boleta: '998888', producto: 'Jean negro XL', unid: 1, costo: 80.00}
+            { fecha: '09/11/2025', boleta: '018888', producto: 'Jean negro XL', unid: 1, costo: 81.20},
+            { fecha: '11/11/2025', boleta: '018888', producto: 'Polo de piqué', unid: 1, costo: 23.00},
+            { fecha: '11/11/2025', boleta: '028888', producto: 'Pantalón Chino Slim Fit', unid: 2, costo: 45.00},
+            { fecha: '11/11/2025', boleta: '038888', producto: 'Jean negro XL', unid: 1, costo: 90.00}
         ];
 
         // ==============================================
