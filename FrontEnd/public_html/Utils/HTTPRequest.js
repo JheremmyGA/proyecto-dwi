@@ -1,5 +1,5 @@
 let generosCache = null;
-const useBackEnd = false;
+const useBackEnd = true;
 
 const generosStatic = [
     // La imagen 'product_black.png' y 'product_white.png' son placeholders
@@ -242,4 +242,96 @@ export async function GetDetalleProducto(id) {
       return null; // opcional: retorna null si hay error
     }
 }
+
+export async function Registro(userData) {
+    try {
+        const respuesta = await fetch(`http://localhost:9530/auth/register`, {
+            method: 'POST', 
+            
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify(userData) 
+        });
+
+        if (respuesta.status === 204) {
+          return null;
+        }
+
+        if (!respuesta.ok) {
+            const errorData = await respuesta.json();
+            throw new Error(`Error ${respuesta.status}: ${errorData.message || 'Fallo en el registro.'}`);
+        }
+
+        const data = await respuesta.json();
+        return data;
+
+    } catch (error) {
+      console.error("Fallo en el proceso de registro:", error.message);
+      return null;
+    }
+}
+
+export async function Login(userData) {
+  try {
+      const respuesta = await fetch(`http://localhost:9530/auth/login`, {
+          method: 'POST', 
+          
+          headers: {
+              'Content-Type': 'application/json'
+          },
+
+          body: JSON.stringify(userData) 
+      });
+
+      if (respuesta.status === 204) {
+        return null;
+      }
+
+      if (!respuesta.ok) {
+          const errorData = await respuesta.json();
+          throw new Error(`Error ${respuesta.status}: ${errorData.message || 'Fallo en el registro.'}`);
+      }
+
+      const data = await respuesta.json();
+      return data;
+
+  } catch (error) {
+    console.error("Fallo en el proceso de registro:", error.message);
+    return null;
+  }
+}
+
+
+export async function CrearProducto(productData) {
+  try {
+      const respuesta = await fetch(`http://localhost:9530/api/inventario/create`, {
+          method: 'POST', 
+          
+          headers: {
+              'Content-Type': 'application/json'
+          },
+
+          body: JSON.stringify(productData) 
+      });
+
+      if (respuesta.status === 204) {
+        return null;
+      }
+
+      if (!respuesta.ok) {
+          const errorData = await respuesta.json();
+          throw new Error(`Error ${respuesta.status}: ${errorData.message || 'Fallo en el registro.'}`);
+      }
+
+      const data = await respuesta.json();
+      return data;
+
+  } catch (error) {
+    console.error("Fallo en el proceso de registro:", error.message);
+    return null;
+  }
+}
+
 

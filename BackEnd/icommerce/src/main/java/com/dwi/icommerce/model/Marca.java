@@ -21,6 +21,10 @@ public class Marca {
         
     }
 
+    public Marca(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Marca(long id, String nombre) {
         this.id = id;
         this.nombre = nombre;

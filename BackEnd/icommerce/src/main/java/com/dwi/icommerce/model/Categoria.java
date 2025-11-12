@@ -18,6 +18,10 @@ public class Categoria {
     public Categoria() {
     }
 
+    public Categoria(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Categoria(Long id_categoria, String nombre, String descripcion) {
         this.id_categoria = id_categoria;
         this.nombre = nombre;

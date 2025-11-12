@@ -1,6 +1,6 @@
 package com.dwi.icommerce.model;
 
-import com.dwi.icommerce.DTO.RegisterUsuarioDTO;
+import com.dwi.icommerce.DTO.RegisterRequestDTO;
 import com.dwi.icommerce.Enums.UsuarioRol;
 
 import jakarta.persistence.Column;
@@ -36,7 +36,7 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public Usuario(RegisterUsuarioDTO usuarioDTO){
+    public Usuario(RegisterRequestDTO usuarioDTO){
         this.nombre = usuarioDTO.getNombre();
         this.apellido = usuarioDTO.getApellido();
         this.correo = usuarioDTO.getCorreo();
