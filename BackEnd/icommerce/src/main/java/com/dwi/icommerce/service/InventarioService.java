@@ -47,9 +47,9 @@ public class InventarioService {
     }
 
     public void CreateGroupItem(InventarioGroupRequestDTO data){
-        productoService.saveProduct(ConvertToProduct(data));
+        Producto product = productoService.saveProduct(ConvertToProduct(data));
         for (InventarioItemRequestDTO productDetailDto : data.items) {
-            productMainService.saveProduct(ConvertToMainproduct(productDetailDto));
+            productMainService.saveProduct(ConvertToMainproduct(product,productDetailDto));
         }
     }
 
@@ -65,12 +65,14 @@ public class InventarioService {
         return productoService.saveProduct(newProduct);
     }
 
-    private ProductMain ConvertToMainproduct(InventarioItemRequestDTO dInventarioItemRequestDTO){
+    private ProductMain ConvertToMainproduct(Producto producto, InventarioItemRequestDTO dInventarioItemRequestDTO){
         ProductMain newProductMain = new ProductMain();
+        newProductMain.setProducto(producto);
         newProductMain.setSKU(dInventarioItemRequestDTO.SKU);
         newProductMain.setTalla(tallaService.findByNombre(dInventarioItemRequestDTO.talla));
         newProductMain.setColor(colorService.findByNombre(dInventarioItemRequestDTO.color));
         newProductMain.setPreviewImage(dInventarioItemRequestDTO.PreviewImage);
+        newProductMain.setStock(dInventarioItemRequestDTO.cantidad);
         return productMainService.saveProduct(newProductMain);
     }
 

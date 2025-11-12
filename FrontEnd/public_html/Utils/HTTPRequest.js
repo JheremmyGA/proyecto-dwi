@@ -303,3 +303,35 @@ export async function Login(userData) {
   }
 }
 
+
+export async function CrearProducto(productData) {
+  try {
+      const respuesta = await fetch(`http://localhost:9530/api/inventario/create`, {
+          method: 'POST', 
+          
+          headers: {
+              'Content-Type': 'application/json'
+          },
+
+          body: JSON.stringify(productData) 
+      });
+
+      if (respuesta.status === 204) {
+        return null;
+      }
+
+      if (!respuesta.ok) {
+          const errorData = await respuesta.json();
+          throw new Error(`Error ${respuesta.status}: ${errorData.message || 'Fallo en el registro.'}`);
+      }
+
+      const data = await respuesta.json();
+      return data;
+
+  } catch (error) {
+    console.error("Fallo en el proceso de registro:", error.message);
+    return null;
+  }
+}
+
+

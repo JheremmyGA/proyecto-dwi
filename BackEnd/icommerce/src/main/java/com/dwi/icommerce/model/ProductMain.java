@@ -27,7 +27,7 @@ public class ProductMain {
     public Color color;
     public int stock;
     public String SKU;
-    @Column(name="preview_image_path")
+    @Column(name="PreviewImage")
     private String PreviewImage;
 
     public ProductMain() {
