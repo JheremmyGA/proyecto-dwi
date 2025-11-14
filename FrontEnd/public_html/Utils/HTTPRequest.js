@@ -44,6 +44,22 @@ const detalleProducto = {
     ]
 };
 
+const datosInventario = [
+  { SKU: '378291', nombre: 'Camiseta de algodón V-Neck', marca: 'Adidas', temporada: 'Verano', categoria: 'Camisa', precio: 49.99, genero: 'Caballeros', talla: 'XL', color: 'Blanco', cantidad: 40, ruta: 'imagenes/camiseta-blanca-xl.jpg' },
+  { SKU: '904562', nombre: 'Pantalón chino Slim Fit', marca: 'Mossimo', temporada: 'Invierno', categoria: 'Pantalón', precio: 89.99, genero: 'Caballeros', talla: '34', color: 'Gris Melange', cantidad: 56, ruta: 'imagenes/pantalon-gris-34.jpg' },
+  { SKU: '125078', nombre: 'Saco de lana Herringbone', marca: 'Tommy Hilfiger', temporada: 'Invierno', categoria: 'Abrigo', precio: 199.99, genero: 'Caballeros', talla: 'L', color: 'Burdeo', cantidad: 19, ruta: 'imagenes/saco-marron-l.jpg' },
+  { SKU: '639145', nombre: 'Polo de piqué Regular Fit', marca: 'Lacoste', temporada: 'Verano', categoria: 'Polo', precio: 79.99, genero: 'Caballeros', talla: 'S', color: 'Verde Militar', cantidad: 79, ruta: 'imagenes/polo-verde-s.jpg' },
+  { SKU: '852730', nombre: 'Vestido de flores A-Line', marca: 'Mango', temporada: 'Primavera', categoria: 'Vestido', precio: 59.99, genero: 'Damas', talla: 'M', color: 'Rojo', cantidad: 19, ruta: 'imagenes/vestido-flores-m.jpg' },
+  { SKU: '416893', nombre: 'Blusa de seda con lazo', marca: 'Calvin Klein', temporada: 'Primavera', categoria: 'Blusa', precio: 69.99, genero: 'Damas', talla: 'S', color: 'Rosado Pastel', cantidad: 35, ruta: 'imagenes/blusa-rosa-xs.jpg' },
+  { SKU: '770514', nombre: 'Falda de mezclilla High-Waist', marca: 'Denimlab', temporada: 'Verano', categoria: 'Falda', precio: 44.99, genero: 'Damas', talla: '28', color: 'Azul Marino', cantidad: 64, ruta: 'imagenes/falda-azul-28.jpg' },
+  { SKU: '293687', nombre: 'Chaqueta de cuero Biker', marca: 'Lewis', temporada: 'Invierno', categoria: 'Chaqueta', precio: 299.99, genero: 'Caballeros', talla: 'L', color: 'Negro', cantidad: 88, ruta: 'imagenes/chaqueta-negra-l.jpg' },
+  { SKU: '501429', nombre: 'Playera con estampado dino', marca: 'Puma', temporada: 'Verano', categoria: 'Polo', precio: 19.99, genero: 'Niños', talla: '8', color: 'Verde Militar', cantidad: 10, ruta: 'imagenes/playera-dino-8.jpg' },
+  { SKU: '184963', nombre: 'Sudadera con capucha y cierre', marca: 'Adidas', temporada: 'Invierno', categoria: 'Ropa Deportiva', precio: 89.99, genero: 'Caballeros', talla: 'L', color: 'Gris Melange', cantidad: 26, ruta: 'imagenes/sudadera-gris-10.jpg' },
+  { SKU: '957302', nombre: 'Pijama de franela de cuadros', marca: 'Hanes', temporada: 'Invierno', categoria: 'Pijama', precio: 39.99, genero: 'Niñas', talla: '6', color: 'Azul Marino', cantidad: 28, ruta: 'imagenes/pijama-cuadros-6.jpg' },
+  { SKU: '621058', nombre: 'Polo deportivas Air Max', marca: 'Adidas', temporada: 'Verano', categoria: 'Polo', precio: 59.99, genero: 'Caballeros', talla: 'M', color: 'Negro', cantidad: 12, ruta: 'imagenes/polo-negro-m.jpg' },
+  { SKU: '917302', nombre: 'Pijama de franela de cuadros', marca: 'Hanes', temporada: 'Invierno', categoria: 'Pijama', precio: 39.99, genero: 'Niñas', talla: '6', color: 'Rojo', cantidad: 28, ruta: 'imagenes/pijama-rojo-6.jpg' },
+  { SKU: '911058', nombre: 'Pantalones deportivos', marca: 'Puma', temporada: 'Verano', categoria: 'Pantalón', precio: 49.99, genero: 'Damas', talla: 'S', color: 'Azul Marino', cantidad: 15, ruta: 'imagenes/pantalones-azul-s.jpg' }
+];
 
 export async function GetGeneros() {
 
@@ -335,6 +351,8 @@ export async function CrearProducto(productData) {
 }
 
 export async function GetInventario() {
+  if(!useBackEnd) return datosInventario;
+
   try {
       const respuesta = await fetch(`http://localhost:9530/api/inventario`, {
           method: 'GET', 
