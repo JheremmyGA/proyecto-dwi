@@ -332,7 +332,7 @@ document.getElementById("btnComprarDesdeModal")?.addEventListener("click", (e) =
         cantidad: 1 // Por defecto 1 desde el modal, a menos que tengas un input de cantidad
     };
 
-    // 🔥 CLAVE: Disparar el CustomEvent que espera carrito.js
+    // CLAVE: Disparar el CustomEvent que espera carrito.js
     const eventoCarrito = new CustomEvent("agregar-variante", {
         bubbles: true,
         detail: { producto: infoProducto }

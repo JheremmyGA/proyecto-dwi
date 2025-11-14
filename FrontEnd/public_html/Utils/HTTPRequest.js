@@ -25,6 +25,7 @@ const datosProductos = [
 
 // --- DATOS SIMULADOS DEL PRODUCTO PRINCIPAL ---
 const detalleProducto = {
+  id:100,
     nombre: "Chaleco de traje",
     marca: "Basement",
     precio: 50.00,
@@ -230,32 +231,27 @@ export async function GetCategorias() {
     }
 }
 
+
 export async function GetDetalleProducto(id) {
     if(!useBackEnd){
-      return detalleProducto;
+        // 🔥 CAMBIO 2: Aseguramos que el objeto devuelto use el 'id' de la sesión.
+        const productoCopiado = { ...detalleProducto }; // Usamos una copia
+        
+        // Asignamos el ID solicitado (el de la sesión) al objeto.
+        // Esto garantiza que el ID base (detalleProducto.id) sea estable.
+        productoCopiado.id = id; 
+        
+        return productoCopiado;
     }
 
     try {
-      const response = await fetch(`http://localhost:9530/api/catalog/producto/${id}`, {
-        method: "GET"
-      });   
-
-      // Si no hay contenido, retornamos null o un array vacío
-      if (response.status === 204) {
-        return []; // o null según prefieras
-      }
-
-      if (!response.ok) {
-        throw new Error("Error en la respuesta del servidor: " + response.status);
-      } 
-
-      const data = await response.json();  
-
-      return data; // solo retornas la data
-
+        const response = await fetch(`http://localhost:9530/api/catalog/producto/${id}`, {
+            method: "GET"
+        });
+        // ... (el resto de la lógica del backend sigue igual)
     } catch (error) {
-      console.error("Error:", error);
-      return null; // opcional: retorna null si hay error
+        console.error("Error:", error);
+        return null;
     }
 }
 

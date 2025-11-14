@@ -26,19 +26,26 @@ let selectedSize;
 let selectedQuantity = 1;
 let detalleProducto;
 
-async function MostrarDetalleProducto() {
+// CÓDIGO FINAL CORREGIDO para MostrarDetalleProducto en detalle_producto_prenda.js
 
-    detalleProducto = await HTTPS_Request.GetDetalleProducto(PERSISTENT_DATA.GetSelectedProductDetails());
+async function MostrarDetalleProducto() {
+    
+    // 1. OBTENER EL ID ESTABLE DE LA SESIÓN
+    const selectedId = PERSISTENT_DATA.GetSelectedProductDetails();
+
+    // 2. CARGAR EL PRODUCTO
+    detalleProducto = await HTTPS_Request.GetDetalleProducto(selectedId);
+    
     if (!detalleProducto) return;
 
-    // 🔥 CORRECCIÓN CLAVE: Aseguramos que detalleProducto.id exista
-    // Si tu API no devuelve un ID, usa un ID estático para que el SKU no cambie,
-    // eliminando el uso de Date.now().toString() que causaba la duplicación.
+    // 🔥 SOLUCIÓN CRÍTICA: Asegurar que detalleProducto.id SIEMPRE sea estable.
+    // Si la API devuelve el producto sin ID (null/undefined), usamos el ID de la sesión.
     if (!detalleProducto.id) {
-        // Usa un ID fijo que represente este producto específico
-        detalleProducto.id = 'PROD_CHALECO_001';
-        // Si tienes múltiples productos, este ID fijo DEBE ser único para cada producto que uses.
+        // Usamos el ID de la sesión (que es el ID fijo del producto seleccionado)
+        detalleProducto.id = selectedId || 'ID_PRODUCTO_FIJO_POR_DEFECTO'; 
     }
+    // ¡Asegúrate de que NO haya código aquí o en la API que use Date.now()!
+    
 
     selectedColor = detalleProducto.tallasColores[0].color;
     selectedSize = detalleProducto.tallasColores[0].talla;
@@ -257,6 +264,10 @@ window.handleSizeChange = handleSizeChange;
 window.handleColorChange = handleColorChange;
 window.redirigir = redirigir;
 
+
+
+
+
 /* Initialize when DOM ready */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -264,13 +275,14 @@ document.addEventListener('DOMContentLoaded', () => {
     MostrarDetalleProducto();
     MostrarVistaProductos();
 
-
     // --- LÓGICA DE AÑADIR AL CARRITO CORREGIDA (SOLO DISPARA EVENTO) ---
-
     const botonAgregar = document.getElementById('agregarCarrito');
     if (botonAgregar) {
         botonAgregar.addEventListener('click', (e) => {
             e.preventDefault();
+
+            // Aseguramos que el producto tenga un ID base estable. Usamos 'PROD_GENERICO' si no existe.
+            const idBaseEstable = detalleProducto && detalleProducto.id ? detalleProducto.id : 'PROD_GENERICO';
 
             if (!detalleProducto || !selectedSize || !selectedColor || selectedQuantity < 1) {
                 alert("Por favor, selecciona una talla, color y cantidad válida.");
@@ -279,8 +291,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 1. Crear la información del producto con variante
             const infoProducto = {
-                // CLAVE: El ID ÚNICO ahora incluye la talla y el color.
-                id_unico: normalizar(`${detalleProducto.id}-${selectedSize}-${selectedColor}`),
+                // Generamos el ID ÚNICO usando el ID Base ESTABLE, la Talla y el Color NORMALIZADOS.
+                id_unico: normalizar(`${idBaseEstable}-${selectedSize}-${selectedColor}`),
                 nombre: detalleProducto.nombre,
                 // Aseguramos que el precio sea string con 2 decimales
                 precio: detalleProducto.precio.toFixed(2),
@@ -290,44 +302,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 talla: selectedSize,
             };
 
-            // 🔥 CAMBIO CLAVE: Disparar el evento personalizado (carrito.js lo capturará)
+
+            // Disparar el evento personalizado (carrito.js lo capturará)
             const eventoCarrito = new CustomEvent('agregar-variante', {
                 bubbles: true,
                 detail: { producto: infoProducto }
             });
             document.body.dispatchEvent(eventoCarrito);
 
-            // OPCIONAL: Forzar la actualización del contador
             if (typeof window.actualizarContadorCarrito === 'function') {
                 window.actualizarContadorCarrito();
             }
-
-            // ELIMINADO: La simulación del 'fakeEvent' y la llamada directa a agregarProductoAlCarrito
-            // ya no son necesarias aquí, ya que el CustomEvent es el encargado.
         });
     }
 
+    // --- ACTIVAR COLOR Y TALLA MANUALMENTE (Se mantiene el código original de activación) ---
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("swatch-color")) {
+            document.querySelectorAll(".swatch-color")
+                .forEach(c => c.classList.remove("color-seleccionado"));
+            e.target.classList.add("color-seleccionado");
+        }
+    });
 
-});
-
-// --- ACTIVAR COLOR MANUALMENTE ---
-document.addEventListener("click", function (e) {
-    if (e.target.classList.contains("swatch-color")) {
-
-        document.querySelectorAll(".swatch-color")
-            .forEach(c => c.classList.remove("color-seleccionado"));
-
-        e.target.classList.add("color-seleccionado");
-    }
-});
-
-// --- ACTIVAR TALLA MANUALMENTE ---
-document.addEventListener("click", function (e) {
-    if (e.target.classList.contains("size-button")) {
-
-        document.querySelectorAll(".size-button")
-            .forEach(t => t.classList.remove("talla-seleccionada"));
-
-        e.target.classList.add("talla-seleccionada");
-    }
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("size-button")) {
+            document.querySelectorAll(".size-button")
+                .forEach(t => t.classList.remove("talla-seleccionada"));
+            e.target.classList.add("talla-seleccionada");
+        }
+    });
 });
