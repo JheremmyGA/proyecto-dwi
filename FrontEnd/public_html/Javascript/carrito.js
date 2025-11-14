@@ -1,17 +1,17 @@
 // ============ Variables Globales ============
 const listaCarrito = document.querySelector("#lista-carrito tbody");
 // Estos elementos existen en carrito.html
-const vaciarCarritoBtn = document.getElementById("vaciar-carrito"); 
-const btnCheckout = document.getElementById('img-carrito'); 
+const vaciarCarritoBtn = document.getElementById("vaciar-carrito");
+const btnCheckout = document.getElementById('img-carrito');
 
 // Nuevo elemento para el contador en el header (debe existir en index.html y otras páginas)
-const contadorCarrito = document.getElementById('contador-carrito'); 
+const contadorCarrito = document.getElementById('contador-carrito');
 
-let articulosCarrito = []; 
+let articulosCarrito = [];
 
 // Modales de Pago
 const modalPago = document.getElementById('modal-pago');
-const cerrarModalPago = document.getElementById('cerrar-modal'); 
+const cerrarModalPago = document.getElementById('cerrar-modal');
 const formularioPago = document.getElementById('formulario-pago');
 
 
@@ -28,13 +28,9 @@ function cargarCarrito() {
 
 // ============ FUNCIONES DE CONTADOR ============
 
-/**
- * Calcula el número total de ítems (sumando cantidades) y actualiza el icono.
- */
 function actualizarContadorCarrito() {
     if (!contadorCarrito) return;
 
-    // 🔹 Solo contar productos únicos, no las cantidades
     const totalProductosUnicos = articulosCarrito.length;
 
     if (totalProductosUnicos > 0) {
@@ -46,108 +42,149 @@ function actualizarContadorCarrito() {
     }
 }
 
+// ============ FUNCIONES DE NORMALIZACIÓN ============
+
+/**
+ * Función auxiliar para normalizar ID, Color y Talla (quita espacios y pone en mayúsculas).
+ */
+const normalizar = (valor) => valor ? String(valor).trim().toUpperCase() : '';
 
 
 // ============ Funciones del Carrito ============
-
 /**
- * Agrega un producto al carrito.
+ * Agrega un producto al carrito, manejando CustomEvents y clicks del catálogo.
  */
 function agregarProductoAlCarrito(e) {
-    // Permitir la ejecución si es el botón de detalle de producto ('agregarCarrito') 
-    // O si tiene la clase que usas en otras páginas ('agregar-carrito').
-    if (e.target.classList.contains('agregar-carrito') || e.target.id === 'agregarCarrito') {
-        
-        e.preventDefault(); 
-        
-        const btn = e.target;
-        let infoProducto = {};
-
-        // Lógica para obtener los datos.
-        // Si el evento tiene una propiedad 'detail' (usado en llamadas directas o eventos custom)
-        if (e.detail && e.detail.producto) {
-            infoProducto = e.detail.producto;
-        } else {
-             // Caso por defecto (productos de catálogo/carrusel que usan data-attributes)
-            // Esto cubre tanto el fakeEvent de detalle_producto_prenda.js como los botones de catálogo
-            infoProducto = {
-                imagen: btn.getAttribute("data-imagen"),
-                nombre: btn.getAttribute("data-nombre"),
-                precio: btn.getAttribute("data-precio"),
-                id: btn.getAttribute("data-id"),
-                // Si viene del detalle, data-cantidad existe. Si viene de catálogo, será null o 1 (se usa 1 por defecto)
-                cantidad: parseInt(btn.getAttribute("data-cantidad")) || 1 
-            };
-        }
-        
-        // Convertir el precio a float (es importante para que los cálculos sean correctos)
-        const precioLimpio = String(infoProducto.precio).replace('S/.', '').trim();
-        infoProducto.precio = parseFloat(precioLimpio);
-
-        // Si vienes de la página de detalle y no se configuró bien la llamada:
-        if (!infoProducto.id || !infoProducto.nombre || isNaN(infoProducto.precio)) {
-            console.error("No se pudo obtener la información completa del producto.");
-            alert("Error: No se pudo agregar el producto. Información incompleta o precio inválido.");
-            return;
-        }
-
-        // El resto de la lógica de sumar/añadir se mantiene:
-        const existe = articulosCarrito.some(articulo => articulo.id === infoProducto.id);
-        
-        if (existe) {
-            articulosCarrito = articulosCarrito.map(articulo => {
-                if (articulo.id === infoProducto.id) {
-                    // Sumar la cantidad proporcionada (en detalle es selectedQuantity)
-                    articulo.cantidad += (infoProducto.cantidad || 1); 
-                }
-                return articulo;
-            });
-        } else {
-            // Asegurarse de que el nuevo producto tiene una cantidad.
-            infoProducto.cantidad = infoProducto.cantidad || 1; 
-            articulosCarrito = [...articulosCarrito, infoProducto];
-        }
-
-        guardarCarrito(); // GUARDAR en localStorage
-        carritoHTML(); // Llamar a esto para actualizar el mini-carrito en la misma página
-        actualizarContadorCarrito(); // <--- ACTUALIZAR CONTADOR
-        alert(`"${infoProducto.nombre}" agregado al carrito.`);
+    // 0. Seguridad: Asegura que el carrito esté cargado al inicio
+    if (typeof cargarCarrito === 'function') {
+        cargarCarrito();
     }
+
+    let infoProducto = {};
+
+    // 1. Obtener info del producto (Prioridad al CustomEvent de detalle_producto_prenda.js)
+    if (e.detail && e.detail.producto) {
+        // CAMINO A: El producto viene de la página de detalle (CustomEvent)
+        infoProducto = e.detail.producto; 
+
+    } else {
+        // CAMINO B: El producto viene del catálogo (Evento de click normal)
+
+        // CORRECCIÓN: Si no es CustomEvent, validamos que sea un botón de AGREGAR
+        if (!e.target || (!e.target.classList.contains('agregar-carrito') && e.target.id !== 'agregarCarrito')) {
+            return; // No es el elemento que buscamos, detener la ejecución.
+        }
+
+        // Si es un click, prevenimos el comportamiento por defecto
+        e.preventDefault();
+
+        const btn = e.target;
+        infoProducto = {
+            imagen: btn.getAttribute("data-imagen"),
+            nombre: btn.getAttribute("data-nombre"),
+            precio: btn.getAttribute("data-precio"),
+            id_unico: btn.getAttribute("data-id"), // ID de la variante (SKU)
+            color: btn.getAttribute("data-color"),
+            talla: btn.getAttribute("data-talla"),
+            cantidad: parseInt(btn.getAttribute("data-cantidad")) || 1
+        };
+    }
+
+    // 2. Normalización de Precio 
+    const precioLimpio = String(infoProducto.precio).replace('S/.', '').trim();
+    infoProducto.precio = parseFloat(precioLimpio);
+
+    // 3. Normalizar el ID de la variante para la búsqueda
+    const idUnicoNormalizado = normalizar(infoProducto.id_unico);
+
+    // Normalizar Color y Talla
+    infoProducto.color_unico = normalizar(infoProducto.color);
+    infoProducto.talla_unico = normalizar(infoProducto.talla);
+
+    // 4. Validar
+    if (!idUnicoNormalizado || !infoProducto.nombre || isNaN(infoProducto.precio)) {
+        console.error("Error: Datos incompletos o ID Único no disponible.", infoProducto);
+        return;
+    }
+
+    // 5. Estandarizar el Nombre (UI)
+    const nombreBase = infoProducto.nombre.split(' - ')[0];
+    infoProducto.nombre = `${nombreBase.trim()} - ${infoProducto.color_unico} (${infoProducto.talla_unico})`;
+
+    // 6. VALIDACIÓN POR ID (Agrupación por ID único)
+    let existe = articulosCarrito.find(producto =>
+        producto.id_unico === idUnicoNormalizado
+    );
+
+    // 7. Actualizar el producto a agregar con el ID normalizado
+    infoProducto.id_unico = idUnicoNormalizado;
+
+    // 8. Lógica de adición/actualización
+    if (existe) {
+        existe.cantidad += infoProducto.cantidad;
+        existe.subtotal = existe.cantidad * existe.precio;
+    } else {
+        infoProducto.subtotal = infoProducto.precio * infoProducto.cantidad;
+        articulosCarrito.push(infoProducto);
+    }
+
+    // 9. Guardar y actualizar UI
+    localStorage.setItem("articulosCarrito", JSON.stringify(articulosCarrito));
+    carritoHTML();
+    actualizarContadorCarrito();
+
+    alert(`"${infoProducto.nombre}" agregado al carrito.`);
 }
 
 
 /**
- * Elimina un producto del carrito.
+ * Elimina un producto del carrito (por ID, Color y Talla).
  */
 function eliminarProducto(e) {
-    if (e.target.classList.contains("eliminar-producto") || e.target.classList.contains("borrar-curso")) {
+    if (e.target.classList.contains("eliminar-producto") ||
+        e.target.classList.contains("borrar-curso")) {
+
         e.preventDefault();
-        const productoId = e.target.getAttribute('data-id');
-        
-        articulosCarrito = articulosCarrito.filter(articulo => articulo.id !== productoId);
+
+        // Normalizar los data-attributes leídos
+        const productoIdUnico = normalizar(e.target.getAttribute('data-id'));
+        const colorUnico = normalizar(e.target.getAttribute('data-color'));
+        const tallaUnico = normalizar(e.target.getAttribute('data-talla'));
+
+        // Filtrar por la combinación única NORMALIZADA
+        articulosCarrito = articulosCarrito.filter(
+            articulo => !(articulo.id_unico === productoIdUnico && articulo.color_unico === colorUnico && articulo.talla_unico === tallaUnico)
+        );
 
         guardarCarrito();
         carritoHTML();
-        actualizarContadorCarrito(); // <--- ACTUALIZAR CONTADOR
+        actualizarContadorCarrito();
     }
 }
 
+
 /**
- * Actualiza la cantidad de un artículo y recalcula.
+ * Actualiza la cantidad de un artículo (por ID, Color y Talla) y recalcula.
  */
 function actualizarCantidad(e) {
     if (e.target.classList.contains('cantidad-producto')) {
         const input = e.target;
-        const productoId = input.getAttribute('data-id');
+
+        // Normalizar los data-attributes leídos
+        const productoIdUnico = normalizar(input.getAttribute('data-id'));
+        const colorUnico = normalizar(input.getAttribute('data-color'));
+        const tallaUnico = normalizar(input.getAttribute('data-talla'));
+
         let nuevaCantidad = parseInt(input.value);
 
         if (isNaN(nuevaCantidad) || nuevaCantidad < 1) {
             nuevaCantidad = 1;
-            input.value = 1; 
+            input.value = 1;
         }
 
         articulosCarrito = articulosCarrito.map(articulo => {
-            if (articulo.id === productoId) {
+            // Condición de actualización por ID, Color y Talla NORMALIZADOS
+            if (articulo.id_unico === productoIdUnico && articulo.color_unico === colorUnico && articulo.talla_unico === tallaUnico) {
                 articulo.cantidad = nuevaCantidad;
             }
             return articulo;
@@ -155,7 +192,7 @@ function actualizarCantidad(e) {
 
         guardarCarrito();
         carritoHTML();
-        actualizarContadorCarrito(); // <--- ACTUALIZAR CONTADOR
+        actualizarContadorCarrito();
     }
 }
 
@@ -164,46 +201,67 @@ function actualizarCantidad(e) {
  * Genera el HTML del carrito basándose en el array articulosCarrito.
  */
 function carritoHTML() {
-    if (!listaCarrito) return; 
+    if (!listaCarrito) return;
 
-    vaciarCarritoDOM(); 
+    vaciarCarritoDOM();
 
-    let totalCompra = 0; 
-    
+    let totalCompra = 0;
+
     articulosCarrito.forEach(articulo => {
-        // Manejamos el caso de que el precio pueda venir sin formato 'S/. '
-        const precioStr = String(articulo.precio).replace('S/. ', '').trim();
-        const precioUnitario = parseFloat(precioStr);
-        
+        const precioUnitario = parseFloat(String(articulo.precio).replace('S/. ', '').trim());
+
         if (isNaN(precioUnitario)) {
-            console.error(`Precio inválido para el producto ID ${articulo.id}: ${articulo.precio}`);
-            return; 
+            return;
         }
-        
+
+        // Estas líneas de console.log son muy útiles para la depuración
+        console.log("Producto en carrito:");
+        console.log("ID:", articulo.id_unico);
+        console.log("Color:", articulo.color_unico);
+        console.log("Talla:", articulo.talla_unico);
+        console.log("Precio:", articulo.precio);
+
+
         const subtotal = (precioUnitario * articulo.cantidad).toFixed(2);
         totalCompra += parseFloat(subtotal);
 
+        // Texto para Color y Talla (usamos los valores originales para la visualización)
+        const variaciones = [articulo.color, articulo.talla].filter(v => v).join(' / ');
+
+
         const row = document.createElement('tr');
-        row.setAttribute("data-id", articulo.id);
+        row.setAttribute("data-id", articulo.id); // Este atributo puede ser removido si solo usamos id_unico
         row.innerHTML = `
-            <td><img src="${articulo.imagen}" width="80" height="60" style="object-fit: cover;"></td>
-            <td>${articulo.nombre}</td>
-            <td class="precio-subtotal">S/. ${subtotal}</td>
-            <td>
-                <input 
-                    type="number" 
-                    min="1" 
-                    value="${articulo.cantidad}" 
-                    class="cantidad-producto" 
-                    data-id="${articulo.id}" 
-                    style="width: 60px; text-align: center;"
-                >
-            </td>
-            <td><a href="#" class="eliminar-producto" data-id="${articulo.id}">X</a></td>
-        `;
+    <td><img src="${articulo.imagen}" width="80" height="60" style="object-fit: cover;"></td>
+    <td>
+        ${articulo.nombre}
+        ${variaciones ? `<br><small>(${variaciones})</small>` : ''}
+    </td>
+    <td class="precio-subtotal">S/. ${subtotal}</td>
+    <td>
+        <input 
+            type="number" 
+            min="1" 
+            value="${articulo.cantidad}" 
+            class="cantidad-producto" 
+            data-id="${articulo.id_unico}" 
+            data-color="${articulo.color_unico || ''}"
+            data-talla="${articulo.talla_unico || ''}"
+            style="width: 60px; text-align: center;"
+        >
+    </td>
+    <td>
+        <a href="#" class="eliminar-producto" 
+            data-id="${articulo.id_unico}" 
+            data-color="${articulo.color_unico || ''}"
+            data-talla="${articulo.talla_unico || ''}">X
+        </a>
+    </td>
+`;
+
         listaCarrito.appendChild(row);
     });
-    
+
     const totalFinalElement = document.getElementById('total-final');
     if (totalFinalElement) {
         totalFinalElement.textContent = `S/. ${totalCompra.toFixed(2)}`;
@@ -223,10 +281,10 @@ function vaciarCarritoDOM() {
  * Vacía el array de artículos y el DOM.
  */
 function vaciarCarrito() {
-    articulosCarrito = []; 
+    articulosCarrito = [];
     guardarCarrito();
     carritoHTML();
-    actualizarContadorCarrito(); // <--- ACTUALIZAR CONTADOR
+    actualizarContadorCarrito();
     alert("Se ha vaciado el carrito.");
 }
 
@@ -245,7 +303,7 @@ function realizarPago(e) {
         vaciarCarrito(); // Vacía el carrito después de la compra exitosa
         window.location.href = "index.html";
     } else {
-        alert("Por favor, selecciona un método y escribe un número de tarjeta.");
+        alert("Por favor completa los datos de pago.");
     }
 }
 
@@ -255,8 +313,7 @@ window.eliminarProducto = eliminarProducto;
 window.vaciarCarrito = vaciarCarrito;
 window.carritoHTML = carritoHTML;
 window.actualizarCantidad = actualizarCantidad;
-// Exponer la función de actualización del contador globalmente si es necesario
-window.actualizarContadorCarrito = actualizarContadorCarrito; 
+window.actualizarContadorCarrito = actualizarContadorCarrito;
 
 // ============ Initialization ============
 document.addEventListener('DOMContentLoaded', () => {
@@ -267,20 +324,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if carrito elements exist before initializing
     if (listaCarrito) {
         carritoHTML();
+        // Los listeners ahora manejan la información de Color y Talla
         listaCarrito.addEventListener("click", eliminarProducto);
         listaCarrito.addEventListener('change', actualizarCantidad);
         vaciarCarritoBtn?.addEventListener('click', vaciarCarrito);
     }
 
-    // CORRECCIÓN CLAVE: Restablecer listener para los botones de catálogo/inicio.
 
-    document.body.addEventListener('click', (e) => {
-         if (e.target.classList.contains('agregar-carrito')) {
-            agregarProductoAlCarrito(e);
-         }
-    });
-
-    // Initialize modal-related events if modal elements exist
+    // Inicializar eventos del modal
     if (btnCheckout && modalPago && cerrarModalPago) {
         btnCheckout.addEventListener('click', () => {
             if (articulosCarrito.length > 0) {
@@ -304,17 +355,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============ Add Event Listener for Carrito Icon ============
-    // Asumo que el ícono principal del carrito tiene el ID 'carrito-icono'
-    const carritoIcono = document.getElementById('carrito-icono'); 
+    const carritoIcono = document.getElementById('carrito-icono');
 
     if (carritoIcono) {
         carritoIcono.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            window.location.href = 'carrito.html'; 
+            e.preventDefault();
+            window.location.href = 'carrito.html';
         });
     }
-});
 
+    // ============ LISTENERS GLOBALES PARA AGREGAR PRODUCTOS (CORREGIDOS) ============
 
+    // 1. LISTENER DELEGADO PARA BOTONES DEL CATÁLOGO (Evento 'click')
+    document.body.addEventListener('click', (e) => {
+        if (e.target.classList.contains('agregar-carrito')) {
+            agregarProductoAlCarrito(e);
+        }
+    });
 
-
+    // 2. LISTENER PARA LA PÁGINA DE DETALLE (CustomEvent 'agregar-variante')
+    document.body.addEventListener('agregar-variante', agregarProductoAlCarrito);
+}); 

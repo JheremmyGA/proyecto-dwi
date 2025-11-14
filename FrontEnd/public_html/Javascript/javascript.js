@@ -7,12 +7,12 @@ import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 
 // Redirige a otra página (útil para el menú y los botones de Generos)
 // Exportada globalmente (window.) para ser usada en los onclick del HTML
-window.redirigir = function(nombre) {
+window.redirigir = function (nombre) {
     window.location.href = nombre;
 }
 
 // Controla el scroll del carrusel horizontal de productos/categorías
-window.scrollCarrusel = function(id, direccion) {
+window.scrollCarrusel = function (id, direccion) {
     const carrusel = document.getElementById(id);
     const desplazamiento = 250;
     if (carrusel) {
@@ -21,7 +21,7 @@ window.scrollCarrusel = function(id, direccion) {
 }
 
 // Cierra el modal de detalle del producto
-window.cerrarModalProducto = function() {
+window.cerrarModalProducto = function () {
     // Necesitas asegurar que el modalProducto exista en tu index.html o esté siendo importado.
     const modal = document.getElementById("modalProducto");
     if (modal) {
@@ -54,7 +54,7 @@ function actualizarEstadoSesion() {
         // Usuario logueado: Ocultar anónimo, mostrar logueado
         if (contenedorAnonimo) contenedorAnonimo.style.display = 'none';
         // Usamos 'flex' para alinear los íconos (el valor original es 'block' o 'flex')
-        if (contenedorLogueado) contenedorLogueado.style.display = 'flex'; 
+        if (contenedorLogueado) contenedorLogueado.style.display = 'flex';
 
         // Mostrar nombre en el span
         if (nombreUsuarioSpan) {
@@ -64,9 +64,9 @@ function actualizarEstadoSesion() {
         // Mostrar/Ocultar botón de Administrador
         if (btnAdmin) {
             if (rol === 'admin') {
-                btnAdmin.style.display = 'block'; 
+                btnAdmin.style.display = 'block';
             } else {
-                btnAdmin.style.display = 'none'; 
+                btnAdmin.style.display = 'none';
             }
         }
     } else {
@@ -80,9 +80,9 @@ function actualizarEstadoSesion() {
  * Elimina la sesión (usuarioLogeado, nombreUsuario, rolUsuario) y recarga.
  * Se llama desde el 'onclick' del botón de Cerrar Sesión.
  */
-window.cerrarSesion = function() {
+window.cerrarSesion = function () {
     // Elimina todas las claves de sesión importantes
-      
+
     PERSISTENT_DATA.SetNombreUsuario('');
     PERSISTENT_DATA.SetTokenData('');
     PERSISTENT_DATA.SetUsuarioLogeado('false');
@@ -90,14 +90,14 @@ window.cerrarSesion = function() {
 
     // Redirige a la página principal para asegurar que el header se actualice
     // y para salir de la página de Admin/Perfil si el usuario estaba allí.
-    window.location.href = 'index.html'; 
+    window.location.href = 'index.html';
 }
 
 // =======================================================================
 // ========================= CONFIGURACIÓN DE GENEROS =======================
 // =======================================================================
 
-async function MostrarGeneros(){
+async function MostrarGeneros() {
     // *Asegúrate de que la función GetGeneros() está definida y exportada en HTTPRequest.js*
     const generos = await HTTPS_Request.GetGeneros();
     const menu = document.getElementById("categoria-menu");
@@ -151,11 +151,11 @@ function setupModalDetalle() {
             const nombre = botonCompraOriginal.getAttribute("data-nombre");
             const precio = botonCompraOriginal.getAttribute("data-precio");
             const imagen = botonCompraOriginal.getAttribute("data-imagen");
-            
+
             // Llenar el modal
             document.getElementById("modalNombre").textContent = nombre;
             // Usar toFixed(2) para el formato de moneda si es necesario
-            document.getElementById("modalPrecioNum").textContent = `${parseFloat(precio).toFixed(2)}`; 
+            document.getElementById("modalPrecioNum").textContent = `${parseFloat(precio).toFixed(2)}`;
             document.getElementById("modalImagen").src = imagen;
 
             // Transferir data-attributes al botón de Añadir al Carrito del modal
@@ -181,7 +181,7 @@ function setupModalDetalle() {
 
             const modal = document.getElementById("modalProducto");
             if (modal) {
-                 modal.style.display = "flex";
+                modal.style.display = "flex";
             }
         });
     });
@@ -192,7 +192,7 @@ function setupModalDetalle() {
 // =======================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     // Inicialización del Carrusel principal (Hero)
     const images = document.querySelectorAll('.hero img');
     const leftArrow = document.querySelector('.arrow.left');
@@ -217,11 +217,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         showImage(current);
     }
-    
+
     // Ejecución de tareas iniciales
     MostrarGeneros();
     setupModalDetalle();
-    
+
     // 🔥 FUNCIÓN CLAVE: ACTUALIZACIÓN DE ESTADO DE SESIÓN 
     // Esto se ejecuta en cada carga de página para mostrar/ocultar el nombre y el botón de admin
     actualizarEstadoSesion();
@@ -245,4 +245,107 @@ document.addEventListener("DOMContentLoaded", () => {
             if (menuUsuario) menuUsuario.classList.remove("activo");
         }
     });
+});
+
+
+
+
+
+// Esperar a que el DOM cargue los botones de color/talla
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Listener para colores
+    document.querySelectorAll(".color-option").forEach(btn => {
+        btn.addEventListener("click", function () {
+            document.querySelectorAll(".color-option").forEach(b => b.classList.remove("color-seleccionado"));
+            this.classList.add("color-seleccionado");
+        });
+    });
+
+    // Listener para tallas
+    document.querySelectorAll(".talla-option").forEach(btn => {
+        btn.addEventListener("click", function () {
+            document.querySelectorAll(".talla-option").forEach(b => b.classList.remove("talla-seleccionada"));
+            this.classList.add("talla-seleccionada");
+        });
+    });
+
+});
+
+// =======================================================================
+// ========================= LÓGICA DEL MODAL DE COMPRA ====================
+// =======================================================================
+
+function obtenerSeleccionProducto() {
+    const colorSeleccionado = document.querySelector(".color-option.color-seleccionado");
+    const tallaSeleccionada = document.querySelector(".talla-option.talla-seleccionada");
+
+    // NOTA: El ID de producto base debe venir del data-id del botón en el modal, no de un input.
+    return {
+        // id_unico: document.getElementById("id_unico_producto")?.value, // Esto está mal si no existe el input
+        color_unico: colorSeleccionado ? colorSeleccionado.dataset.color : null,
+        talla_unico: tallaSeleccionada ? tallaSeleccionada.dataset.talla : null
+    };
+}
+window.obtenerSeleccionProducto = obtenerSeleccionProducto;
+
+
+document.getElementById("btnComprarDesdeModal")?.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevenir el comportamiento por defecto del botón
+
+    const info = obtenerSeleccionProducto(); // Obtener color y talla
+
+    // Validar que se haya seleccionado color y talla
+    if (!info.color_unico || !info.talla_unico) {
+        alert("Selecciona color y talla antes de continuar.");
+        return;
+    }
+
+    const btnModal = e.currentTarget;
+    const idProductoBase = btnModal.getAttribute("data-id");
+
+    if (!idProductoBase) {
+        console.error("Error: ID base del producto no encontrado en el botón del modal.");
+        alert("Error al cargar la información del producto.");
+        return;
+    }
+
+    // Generar el ID ÚNICO de la VARIANTE (SKU)
+    // Se recomienda una función de normalización, pero usaremos mayúsculas directas aquí por simplicidad.
+    const colorNormalizado = info.color_unico.toUpperCase();
+    const tallaNormalizada = info.talla_unico.toUpperCase();
+    const varianteId = `${idProductoBase}-${colorNormalizado}-${tallaNormalizada}`;
+
+
+    // Crear el objeto de producto listo para carrito.js
+    const infoProducto = {
+        imagen: btnModal.getAttribute("data-imagen"),
+        nombre: btnModal.getAttribute("data-nombre"),
+        precio: btnModal.getAttribute("data-precio"),
+
+        // 🔥 CLAVE: Usamos el ID de la VARIANTE para que carrito.js agrupe correctamente
+        id_unico: varianteId,
+        
+        // Pasamos los valores de variante seleccionados
+        color: info.color_unico,
+        talla: info.talla_unico,
+        cantidad: 1 // Por defecto 1 desde el modal, a menos que tengas un input de cantidad
+    };
+
+    // 🔥 CLAVE: Disparar el CustomEvent que espera carrito.js
+    const eventoCarrito = new CustomEvent("agregar-variante", {
+        bubbles: true,
+        detail: { producto: infoProducto }
+    });
+
+    // Disparamos el evento a nivel del documento
+    document.body.dispatchEvent(eventoCarrito);
+    
+    // Opcional: Cerrar el modal inmediatamente después de disparar el evento
+    window.cerrarModalProducto();
+
+    // Opcional: Forzar la actualización del contador (si carrito.js no lo hace al capturar el evento)
+    if (typeof window.actualizarContadorCarrito === 'function') {
+        window.actualizarContadorCarrito();
+    }
 });
