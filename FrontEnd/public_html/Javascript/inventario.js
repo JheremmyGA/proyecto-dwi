@@ -1,25 +1,7 @@
 import * as HTTPS_Request from '../Utils/HTTPRequest.js';
 import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 
-// ==============================================
-// DATOS DUMMY Y VARIABLES GLOBALES
-// ==============================================
-const datosProductos = [
-    //{ sku: '378291', nombre: 'Camiseta de algodón V-Neck', marca: 'Adidas', temporada: 'Verano', categoria: 'Camisa', precio: 49.99, genero: 'Caballeros', talla: 'XL', color: 'Blanco', cantidad: 40, ruta: 'imagenes/camiseta-blanca-xl.jpg' },
-    //{ sku: '904562', nombre: 'Pantalón chino Slim Fit', marca: 'Mossimo', temporada: 'Invierno', categoria: 'Pantalón', precio: 89.99, genero: 'Caballeros', talla: '34', color: 'Gris Melange', cantidad: 56, ruta: 'imagenes/pantalon-gris-34.jpg' },
-    //{ sku: '125078', nombre: 'Saco de lana Herringbone', marca: 'Tommy Hilfiger', temporada: 'Invierno', categoria: 'Abrigo', precio: 199.99, genero: 'Caballeros', talla: 'L', color: 'Burdeo', cantidad: 19, ruta: 'imagenes/saco-marron-l.jpg' },
-    //{ sku: '639145', nombre: 'Polo de piqué Regular Fit', marca: 'Lacoste', temporada: 'Verano', categoria: 'Polo', precio: 79.99, genero: 'Caballeros', talla: 'S', color: 'Verde Militar', cantidad: 79, ruta: 'imagenes/polo-verde-s.jpg' },
-    //{ sku: '852730', nombre: 'Vestido de flores A-Line', marca: 'Mango', temporada: 'Primavera', categoria: 'Vestido', precio: 59.99, genero: 'Damas', talla: 'M', color: 'Rojo', cantidad: 19, ruta: 'imagenes/vestido-flores-m.jpg' },
-    //{ sku: '416893', nombre: 'Blusa de seda con lazo', marca: 'Calvin Klein', temporada: 'Primavera', categoria: 'Blusa', precio: 69.99, genero: 'Damas', talla: 'S', color: 'Rosado Pastel', cantidad: 35, ruta: 'imagenes/blusa-rosa-xs.jpg' },
-    //{ sku: '770514', nombre: 'Falda de mezclilla High-Waist', marca: 'Denimlab', temporada: 'Verano', categoria: 'Falda', precio: 44.99, genero: 'Damas', talla: '28', color: 'Azul Marino', cantidad: 64, ruta: 'imagenes/falda-azul-28.jpg' },
-    //{ sku: '293687', nombre: 'Chaqueta de cuero Biker', marca: 'Lewis', temporada: 'Invierno', categoria: 'Chaqueta', precio: 299.99, genero: 'Caballeros', talla: 'L', color: 'Negro', cantidad: 88, ruta: 'imagenes/chaqueta-negra-l.jpg' },
-    //{ sku: '501429', nombre: 'Playera con estampado dino', marca: 'Puma', temporada: 'Verano', categoria: 'Polo', precio: 19.99, genero: 'Niños', talla: '8', color: 'Verde Militar', cantidad: 10, ruta: 'imagenes/playera-dino-8.jpg' },
-    //{ sku: '184963', nombre: 'Sudadera con capucha y cierre', marca: 'Adidas', temporada: 'Invierno', categoria: 'Ropa Deportiva', precio: 89.99, genero: 'Caballeros', talla: 'L', color: 'Gris Melange', cantidad: 26, ruta: 'imagenes/sudadera-gris-10.jpg' },
-    //{ sku: '957302', nombre: 'Pijama de franela de cuadros', marca: 'Hanes', temporada: 'Invierno', categoria: 'Pijama', precio: 39.99, genero: 'Niñas', talla: '6', color: 'Azul Marino', cantidad: 28, ruta: 'imagenes/pijama-cuadros-6.jpg' },
-    //{ sku: '621058', nombre: 'Polo deportivas Air Max', marca: 'Adidas', temporada: 'Verano', categoria: 'Polo', precio: 59.99, genero: 'Caballeros', talla: 'M', color: 'Negro', cantidad: 12, ruta: 'imagenes/polo-negro-m.jpg' },
-    //{ sku: '917302', nombre: 'Pijama de franela de cuadros', marca: 'Hanes', temporada: 'Invierno', categoria: 'Pijama', precio: 39.99, genero: 'Niñas', talla: '6', color: 'Rojo', cantidad: 28, ruta: 'imagenes/pijama-rojo-6.jpg' },
-    //{ sku: '911058', nombre: 'Pantalones deportivos', marca: 'Puma', temporada: 'Verano', categoria: 'Pantalón', precio: 49.99, genero: 'Damas', talla: 'S', color: 'Azul Marino', cantidad: 15, ruta: 'imagenes/pantalones-azul-s.jpg' }
-];
+let datosProductos = null;
 
 // Stock máximo para mostrar advertencia (de 10 a menos)
 const UMBRAL_ADVERTENCIA = 10;
@@ -40,15 +22,15 @@ function renderizarProductos(productos) {
 
         const fila = document.createElement('tr');
         fila.innerHTML = `
-            <td class="sku">${producto.sku}</td>
+            <td class="sku">${producto.SKU}</td>
             <td class="nombre">${producto.nombre}</td>
             <td class="stock">
                 ${producto.cantidad}
                 ${necesitaAdvertencia ? `<i class='bx bxs-error-alt icono-advertencia' onclick="mostrarModal('modal-advertencia')"></i>` : ''}
             </td>
             <td class="acciones">
-                <button class="boton-tabla boton-actualizar" data-sku="${producto.sku}" onclick="mostrarModalActualizar(this)">ACTUALIZAR</button>
-                <button class="boton-tabla boton-eliminar" data-sku="${producto.sku}" onclick="mostrarModalEliminar(this)">ELIMINAR</button>
+                <button class="boton-tabla boton-actualizar" data-sku="${producto.SKU}" onclick="mostrarModalActualizar(this)">ACTUALIZAR</button>
+                <button class="boton-tabla boton-eliminar" data-sku="${producto.SKU}" onclick="mostrarModalEliminar(this)">ELIMINAR</button>
             </td>
         `;
         cuerpoTabla.appendChild(fila);
@@ -72,11 +54,11 @@ function cerrarModal(idModal) {
 // MODALES DE ACTUALIZAR Y ELIMINAR
 // ==============================================
 function mostrarModalActualizar(boton) {
-    const sku = boton.getAttribute('data-sku');
-    const producto = datosProductos.find(p => p.sku === sku);
+    const SKU = boton.getAttribute('data-sku');
+    const producto = datosProductos.find(p => p.SKU === SKU);
 
     if (producto) {
-        productoSeleccionadoSKU = sku;
+        productoSeleccionadoSKU = SKU;
         
         // Llenar campos informativos (readonly)
         document.getElementById('update-nombre').value = producto.nombre || '';
@@ -85,7 +67,7 @@ function mostrarModalActualizar(boton) {
         document.getElementById('update-categoria').value = producto.categoria || '';
         document.getElementById('update-precio').value = producto.precio || '';
         document.getElementById('update-genero').value = producto.genero || '';
-        document.getElementById('update-sku').value = producto.sku || '';
+        document.getElementById('update-sku').value = producto.SKU || '';
         document.getElementById('update-color').value = producto.color || '';
         
         // Campo editable: Cantidad
@@ -100,20 +82,20 @@ function mostrarModalActualizar(boton) {
 }
 
 function mostrarModalEliminar(boton) {
-    const sku = boton.getAttribute('data-sku');
-    const producto = datosProductos.find(p => p.sku === sku);
+    const SKU = boton.getAttribute('data-sku');
+    const producto = datosProductos.find(p => p.SKU === SKU);
 
     if (producto) {
-        productoSeleccionadoSKU = sku;
+        productoSeleccionadoSKU = SKU;
         document.getElementById('nombre-producto-eliminar').textContent = producto.nombre;
         mostrarModal('modal-eliminar');
     }
 }
 
-function manejarActualizacion(evento) {
+async function manejarActualizacion(evento) {
     evento.preventDefault();
 
-    const sku = document.getElementById('update-sku').value;
+    const SKU = document.getElementById('update-sku').value;
     const nuevaCantidad = parseInt(document.getElementById('update-cantidad').value);
 
     if (isNaN(nuevaCantidad) || nuevaCantidad < 0) {
@@ -121,7 +103,14 @@ function manejarActualizacion(evento) {
         return false;
     }
 
-    const indice = datosProductos.findIndex(p => p.sku === sku);
+    const action = await HTTPS_Request.UpdateStock(SKU, nuevaCantidad);
+
+    if(action == false){
+        alert("Hubo un problema al actualizar el stock.");
+        return false;
+    }
+
+    const indice = datosProductos.findIndex(p => p.SKU === SKU);
     if (indice !== -1) {
         datosProductos[indice].cantidad = nuevaCantidad;
         cerrarModal('modal-actualizar');
@@ -131,9 +120,11 @@ function manejarActualizacion(evento) {
     }
 }
 
-function ejecutarEliminacion() {
+async function ejecutarEliminacion() {
     if (productoSeleccionadoSKU) {
-        const indice = datosProductos.findIndex(p => p.sku === productoSeleccionadoSKU);
+        await HTTPS_Request.DeleteItemInventario(productoSeleccionadoSKU);
+
+        const indice = datosProductos.findIndex(p => p.SKU === productoSeleccionadoSKU);
         if (indice !== -1) {
             datosProductos.splice(indice, 1);
             cerrarModal('modal-eliminar');
@@ -171,20 +162,20 @@ async function manejarAgregar(evento) {
     const itemsVariacion = contenedorVariaciones.querySelectorAll('.variacion-item');
 
     itemsVariacion.forEach((item) => {
-        const sku = item.querySelector('.input-sku').value.trim();
+        const SKU = item.querySelector('.input-sku').value.trim();
         const talla = item.querySelector('.input-talla').value.trim();
         const color = item.querySelector('.input-color').value.trim();
         const cantidad = parseInt(item.querySelector('.input-stock').value.trim());
         const inputArchivo = item.querySelector('.input-imagen');
         const ruta = inputArchivo && inputArchivo.files.length > 0 ? inputArchivo.files[0].name : '';
 
-        if (!sku || !talla || !color || isNaN(cantidad) || cantidad < 0) {
+        if (!SKU || !talla || !color || isNaN(cantidad) || cantidad < 0) {
             alert("Por favor completa todos los campos de detalles específicos (SKU, Talla, Color, Cantidad).");
             return;
         }
 
         variaciones.push({
-            sku,
+            SKU,
             talla,
             color,
             cantidad,
@@ -193,7 +184,7 @@ async function manejarAgregar(evento) {
 
         items.push({
             // Propiedades de InventarioItemRequestDTO
-            "SKU": sku,
+            "SKU": SKU,
             "talla": talla,
             "color": color,
             "cantidad" : cantidad,
@@ -209,7 +200,7 @@ async function manejarAgregar(evento) {
     // ===== AGREGAR CADA VARIACIÓN COMO UNA FILA EN LA TABLA =====
     variaciones.forEach(variacion => {
         datosProductos.unshift({
-            sku: variacion.sku,
+            SKU: variacion.SKU,
             nombre: nombre,
             marca: marca,
             temporada: temporada,
@@ -240,6 +231,7 @@ async function manejarAgregar(evento) {
     };
 
     const TokenData = await HTTPS_Request.CrearProducto(inventarioGroupRequestDTO);
+    //datosProductos = await HTTPS_Request.GetInventario();
 
     cerrarModal('modal-agregar');
     renderizarProductos(datosProductos);
@@ -356,7 +348,7 @@ function buscarProductos(query) {
     }
     
     return productosFiltrados.filter(producto => 
-        producto.sku.toLowerCase().includes(query) || producto.nombre.toLowerCase().includes(query)
+        producto.SKU.toLowerCase().includes(query) || producto.nombre.toLowerCase().includes(query)
     );
 }
 
@@ -537,6 +529,12 @@ document.addEventListener('change', function (event) {
 // INICIALIZACIÓN DE LA APLICACIÓN
 // ==============================================
 document.addEventListener('DOMContentLoaded', () => {
+    InitPage();
+});
+
+async function InitPage(){
+    datosProductos = await HTTPS_Request.GetInventario();
+
     renderizarProductos(datosProductos);
     inicializarMenuToggle();
 
@@ -571,7 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //MostrarFiltros();
         });
     }
-});
+}
 
 async function MostrarFiltros(){
     const temporadas = await HTTPS_Request.GetTemporadas();
