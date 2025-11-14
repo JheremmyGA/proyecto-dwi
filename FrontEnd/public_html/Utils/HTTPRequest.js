@@ -334,4 +334,86 @@ export async function CrearProducto(productData) {
   }
 }
 
+export async function GetInventario() {
+  try {
+      const respuesta = await fetch(`http://localhost:9530/api/inventario`, {
+          method: 'GET', 
+      });
 
+      if (respuesta.status === 204) {
+        return null;
+      }
+
+      if (!respuesta.ok) {
+          const errorData = await respuesta.json();
+          throw new Error(`Error ${respuesta.status}: ${errorData.message || 'Fallo en el registro.'}`);
+      }
+
+      const data = await respuesta.json();
+      return data;
+
+  } catch (error) {
+    console.error("Fallo en el proceso de registro:", error.message);
+    return null;
+  }
+}
+
+export async function UpdateStock(SKU, newStock) {
+  try {
+    const productData = { // Definimos el objeto a enviar
+      SKU: SKU,
+      NewStock: newStock 
+    };
+
+    const respuesta = await fetch(`http://localhost:9530/api/inventario/update/stock`, {
+      method: 'PUT',
+
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      // Usamos el objeto productData definido
+      body: JSON.stringify(productData) 
+    });
+
+    // Tu lógica de manejo de respuesta
+    if (respuesta.status === 204) {
+      return null;
+    }
+
+    if (!respuesta.ok) {
+      const errorData = await respuesta.json().catch(() => ({ message: 'Fallo en el registro.' }));
+      throw new Error(`Error ${respuesta.status}: ${errorData.message}`);
+    }
+
+    const data = await respuesta.json();
+    return data;
+
+  } catch (error) {
+    console.error("Fallo en el proceso de registro:", error.message);
+    return null;
+  }
+}
+
+export async function DeleteItemInventario(SKU) {
+  try {
+
+    const respuesta = await fetch(`http://localhost:9530/api/inventario/delete/${SKU}`, {
+      method: 'DELETE',
+    });
+
+    // Tu lógica de manejo de respuesta
+    if (respuesta.status === 204) {
+      return null;
+    }
+
+    if (!respuesta.ok) {
+      const errorData = await respuesta.json().catch(() => ({ message: 'Fallo en el registro.' }));
+      throw new Error(`Error ${respuesta.status}: ${errorData.message}`);
+    }
+
+  } catch (error) {
+    console.error("Fallo en el proceso de registro:", error.message);
+    return null;
+  }
+}

@@ -1,18 +1,17 @@
 package com.dwi.icommerce.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dwi.icommerce.DTO.InventarioGroupRequestDTO;
+import com.dwi.icommerce.DTO.InventarioItemDetailResponseDTO;
 import com.dwi.icommerce.DTO.InventarioItemRequestDTO;
 import com.dwi.icommerce.model.ProductMain;
 import com.dwi.icommerce.model.Producto;
-import com.dwi.icommerce.repository.CategoriaRepository;
-import com.dwi.icommerce.repository.ColorRepository;
 import com.dwi.icommerce.repository.GeneroRepository;
-import com.dwi.icommerce.repository.MarcaRepository;
-import com.dwi.icommerce.repository.TallaRepository;
-import com.dwi.icommerce.repository.TemporadaRepository;
 
 @Service
 public class InventarioService {
@@ -44,6 +43,26 @@ public class InventarioService {
         this.temporadaService = temporadaService;
         this.tallaService = tallaService;
         this.colorService = colorService;
+    }
+
+    public boolean UpdateStock(String SKU, int newSotck){
+        return productMainService.UpdateStock(SKU, newSotck);
+    }
+
+    public void DeleteItem(String SKU){
+        productMainService.deleteProduct(SKU);
+    }
+
+    public List<InventarioItemDetailResponseDTO> GetAllDetails(){
+        List<InventarioItemDetailResponseDTO> elements = new ArrayList<>();
+
+        List<ProductMain> productMains = productMainService.repository.findAll();
+
+        for (ProductMain productMain : productMains) {
+            elements.add(new InventarioItemDetailResponseDTO(productMain));
+        }
+
+        return elements;
     }
 
     public void CreateGroupItem(InventarioGroupRequestDTO data){

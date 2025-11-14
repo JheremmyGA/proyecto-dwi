@@ -58,4 +58,29 @@ public class ProductMainService {
 
         return repository.save(productoExistente);
     }
+
+    public boolean UpdateStock(String SKU, int NewStock){
+        Optional<ProductMain> product = repository.findBySKU(SKU);
+
+        if (product.isEmpty()) {
+            return false;
+        }
+
+        ProductMain newProduct = product.get();
+        newProduct.setStock(NewStock);
+
+        repository.save(newProduct);
+
+        return true;
+    }
+
+    public void deleteProduct(String SKU){
+        Optional<ProductMain> productMain = repository.findBySKU(SKU);
+
+        if (productMain.isEmpty()) {
+            return;
+        }
+
+        repository.delete(productMain.get());
+    }
 }
