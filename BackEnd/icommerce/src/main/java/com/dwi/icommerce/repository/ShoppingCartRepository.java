@@ -9,5 +9,5 @@ import com.dwi.icommerce.model.ShoppingCart;
 
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long> {
     public Optional<List<ShoppingCart>> findByUsuarioId(Long id);
-    public Optional<ShoppingCart> findByUsuarioIdAndProductoMainId(Long usuarioId, Long productoMainId);
+    public Optional<ShoppingCart> findByUsuarioIdAndProductoMainSKU(Long usuarioId, String sku);
 }

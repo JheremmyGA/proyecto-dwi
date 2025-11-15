@@ -31,6 +31,19 @@ export function GetNombreUsuario(){
     return localStorage.getItem("nombreUsuario");
 }
 
+export function SetUserId(id){
+    console.error(id);
+    if(id === null || id === undefined || id === ''){
+        localStorage.removeItem("IdDataUser");
+        return;
+    }
+    localStorage.setItem("IdDataUser", id);
+}
+
+export function GetUserId(){
+    return localStorage.getItem("IdDataUser");
+}
+
 export function SetTokenData(tokenData){
     if(tokenData === null || tokenData === undefined || tokenData === ''){
         localStorage.removeItem("TokenDataUser");

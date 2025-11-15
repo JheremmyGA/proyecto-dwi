@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,18 +43,31 @@ public class ShoppingCartController {
             .map(a -> new ShoppingCartDTO(a.getProductoMain(),a.getCantidad()))
             .collect(Collectors.toList());
         
-        return ResponseEntity.status(HttpStatus.FOUND).body(listaFinal);
+        return ResponseEntity.status(HttpStatus.OK).body(listaFinal);
     }
 
     @PostMapping("/{id}")
     public ResponseEntity<ShoppingCartDTO> InsertShoppingCartByUsuario(@PathVariable Long id, 
-                                                                       @RequestParam(required = true) Long idProductoMain,
+                                                                       @RequestParam(required = true) String skuProductoMain,
                                                                        @RequestParam(required = true) int cantidad) {
         Optional<Usuario> usuarioFind = usuarioService.findUsuario(id);
 
         if(usuarioFind.isPresent()){
-            ShoppingCart dataInserted = service.InsertShoppingCartByUsuario(usuarioFind.get(), idProductoMain, cantidad);
+            ShoppingCart dataInserted = service.InsertShoppingCartByUsuario(usuarioFind.get(), skuProductoMain, cantidad);
             return ResponseEntity.status(HttpStatus.OK).body(new ShoppingCartDTO(dataInserted.getProductoMain(),dataInserted.getCantidad()));
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> DeleteMarca(@PathVariable Long id, @RequestParam(required = true) String skuProductoMain) 
+    {
+        Optional<Usuario> usuarioFind = usuarioService.findUsuario(id);
+
+        if(usuarioFind.isPresent()){
+            service.DeleteItem(usuarioFind.get(), skuProductoMain);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

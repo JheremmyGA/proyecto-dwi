@@ -50,7 +50,7 @@ public class AuthService {
 
         SaveUserToken(usuarioSave, jwtToken);
 
-        return new TokenResponseDTO(jwtToken,refreshToken, usuarioSave.getRol().toString());
+        return new TokenResponseDTO(user.getId(), jwtToken,refreshToken, usuarioSave.getRol().toString());
     }
 
     private void SaveUserToken(Usuario user, String jwtToken){
@@ -70,12 +70,16 @@ public class AuthService {
             throw new UsernameNotFoundException("Usuario no encontrado con el correo: " + data.getCorreo());
         }
 
+        //if(userFind.get().getContraseña() != enconder.encode(data.getContraseña())){
+        //    throw new UsernameNotFoundException("Contraseña incorrecta");
+        //}
+
         var jwtToken = jwtService.generateToken(userFind.get());
         var refreshToken = jwtService.generateRefreshToken(userFind.get());
         RevokeAllUserTokens(userFind.get());
         SaveUserToken(userFind.get(), jwtToken);
 
-        return new TokenResponseDTO(jwtToken, refreshToken, userFind.get().getRol().toString());
+        return new TokenResponseDTO(userFind.get().getId(),jwtToken, refreshToken, userFind.get().getRol().toString());
     }
 
     private void RevokeAllUserTokens(Usuario user){
