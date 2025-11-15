@@ -289,10 +289,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            const dataFind = detalleProducto.tallasColores.find(x=> x.color == selectedColor && x.talla == selectedSize);
+
             // 1. Crear la información del producto con variante
             const infoProducto = {
                 // Generamos el ID ÚNICO usando el ID Base ESTABLE, la Talla y el Color NORMALIZADOS.
-                id_unico: normalizar(`${idBaseEstable}-${selectedSize}-${selectedColor}`),
+                id_unico: dataFind.sku,
                 nombre: detalleProducto.nombre,
                 // Aseguramos que el precio sea string con 2 decimales
                 precio: detalleProducto.precio.toFixed(2),
@@ -301,7 +303,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 color: selectedColor,
                 talla: selectedSize,
             };
-
 
             // Disparar el evento personalizado (carrito.js lo capturará)
             const eventoCarrito = new CustomEvent('agregar-variante', {

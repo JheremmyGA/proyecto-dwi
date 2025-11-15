@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dwi.icommerce.model.Marca;
 import com.dwi.icommerce.model.Temporada;
 import com.dwi.icommerce.repository.TemporadaRepository;
 

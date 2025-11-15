@@ -1,3 +1,6 @@
+import * as HTTPS_Request from '../Utils/HTTPRequest.js';
+import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
+
 // ============ Variables Globales ============
 const listaCarrito = document.querySelector("#lista-carrito tbody");
 const vaciarCarritoBtn = document.getElementById("vaciar-carrito");
@@ -15,12 +18,21 @@ const formularioPago = document.getElementById('formulario-pago');
 // ============ FUNCIONES DE PERSISTENCIA ============
 
 function guardarCarrito() {
-    localStorage.setItem('articulosCarrito', JSON.stringify(articulosCarrito));
+    if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') PERSISTENT_DATA.GuardarCarrito(JSON.stringify(articulosCarrito));
 }
 
-function cargarCarrito() {
-    const carritoGuardado = localStorage.getItem('articulosCarrito');
-    articulosCarrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+async function cargarCarrito() {
+    //const carritoGuardado = localStorage.getItem('articulosCarrito');
+    //articulosCarrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+    if(PERSISTENT_DATA.GetUsuarioLogeado() === 'true'){
+        articulosCarrito = await HTTPS_Request.CargarCarrito(PERSISTENT_DATA.GetUserId());
+    }
+    else{
+        const carritoGuardado = PERSISTENT_DATA.CargarCarrito();
+        articulosCarrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+    }
+    
+    if(articulosCarrito == null) articulosCarrito = []
 }
 
 // ============ FUNCIONES DE CONTADOR ============
@@ -51,7 +63,7 @@ const normalizar = (valor) => valor ? String(valor).trim().toUpperCase() : 'N/A'
 /**
  * Agrega un producto al carrito, manejando CustomEvents y clicks del catálogo.
  */
-function agregarProductoAlCarrito(e) {
+async function agregarProductoAlCarrito(e) {
     cargarCarrito();
 
     let infoProducto = {};
@@ -60,34 +72,37 @@ function agregarProductoAlCarrito(e) {
     if (e.detail && e.detail.producto) {
         // CAMINO A: El producto viene de la página de detalle
         infoProducto = e.detail.producto;
-
-    } else {
-        // CAMINO B: El producto viene del catálogo (Evento de click normal)
-
-        if (!e.target || !e.target.classList.contains('agregar-carrito')) {
-            return;
-        }
-
-        e.preventDefault();
-
-        const btn = e.target;
-        const idBase = btn.getAttribute("data-id");
-
-        // 🔥 CORRECCIÓN CLAVE: Generar ID y datos para productos de Catálogo
-        const colorCat = 'UNICO';
-        const tallaCat = 'UNICA';
-
-        infoProducto = {
-            imagen: btn.getAttribute("data-imagen"),
-            nombre: btn.getAttribute("data-nombre"),
-            precio: btn.getAttribute("data-precio"),
-            // ID Único generado para el Catálogo
-            id_unico: normalizar(`${idBase}-${tallaCat}-${colorCat}`),
-            color: colorCat,
-            talla: tallaCat,
-            cantidad: parseInt(btn.getAttribute("data-cantidad")) || 1
-        };
+    } 
+    else{
+        return;
     }
+    //else {
+    //    // CAMINO B: El producto viene del catálogo (Evento de click normal)
+//
+    //    if (!e.target || !e.target.classList.contains('agregar-carrito')) {
+    //        return;
+    //    }
+//
+    //    e.preventDefault();
+//
+    //    const btn = e.target;
+    //    const idBase = btn.getAttribute("data-id");
+//
+    //    // 🔥 CORRECCIÓN CLAVE: Generar ID y datos para productos de Catálogo
+    //    const colorCat = 'UNICO';
+    //    const tallaCat = 'UNICA';
+//
+    //    infoProducto = {
+    //        imagen: btn.getAttribute("data-imagen"),
+    //        nombre: btn.getAttribute("data-nombre"),
+    //        precio: btn.getAttribute("data-precio"),
+    //        // ID Único generado para el Catálogo
+    //        id_unico: normalizar(`${idBase}-${tallaCat}-${colorCat}`),
+    //        color: colorCat,
+    //        talla: tallaCat,
+    //        cantidad: parseInt(btn.getAttribute("data-cantidad")) || 1
+    //    };
+    //}
 
     // 2. Normalización de Precio 
     const precioLimpio = String(infoProducto.precio).replace('S/.', '').trim();
@@ -95,15 +110,15 @@ function agregarProductoAlCarrito(e) {
 
     // 3. Normalizar propiedades para la agrupación
     // El id_unico ya debe venir normalizado o se normaliza aquí
-    const idUnicoNormalizado = normalizar(infoProducto.id_unico);
-    infoProducto.color_unico = normalizar(infoProducto.color);
-    infoProducto.talla_unico = normalizar(infoProducto.talla);
-    infoProducto.id_unico = idUnicoNormalizado; // Aseguramos que el objeto use el ID normalizado
+    //const idUnicoNormalizado = infoProducto.id_unico;
+    //infoProducto.color_unico = normalizar(infoProducto.color);
+    //infoProducto.talla_unico = normalizar(infoProducto.talla);
+    //infoProducto.id_unico = idUnicoNormalizado; // Aseguramos que el objeto use el ID normalizado
 
     // 4. Estandarizar el Nombre para la interfaz (nombre_ui)
     const variaciones = [
-        infoProducto.color_unico !== 'N/A' ? infoProducto.color : '',
-        infoProducto.talla_unico !== 'N/A' ? infoProducto.talla : ''
+        infoProducto.color,
+        infoProducto.talla
     ].filter(v => v).join(' / ');
 
     infoProducto.nombre_ui = infoProducto.nombre.trim();
@@ -111,18 +126,28 @@ function agregarProductoAlCarrito(e) {
         infoProducto.nombre_ui += ` - ${variaciones}`;
     }
 
-
     // 5. VALIDACIÓN POR ID ÚNICO (Agrupación)
     let existe = articulosCarrito.find(producto =>
-        producto.id_unico === idUnicoNormalizado
+        producto.id_unico === infoProducto.id_unico
     );
+
+    let total = 0;
 
     // 6. Lógica de adición/actualización
     if (existe) {
         existe.cantidad += infoProducto.cantidad;
+        total = existe.cantidad;
     } else {
         articulosCarrito.push(infoProducto);
+        total = infoProducto.cantidad;
     }
+
+    const data = {
+        productId : infoProducto.id_unico,
+        quantity: total
+    };
+
+    await HTTPS_Request.InsertarProductoCarrito(data,PERSISTENT_DATA.GetUserId());
 
     // 7. Guardar y actualizar UI
     guardarCarrito();
@@ -173,16 +198,16 @@ function carritoHTML() {
             value="${articulo.cantidad}" 
             class="cantidad-producto" 
             data-id="${articulo.id_unico}" 
-            data-color="${articulo.color_unico || ''}"
-            data-talla="${articulo.talla_unico || ''}"
+            data-color="${articulo.color || ''}"
+            data-talla="${articulo.talla || ''}"
             style="width: 60px; text-align: center;"
         >
     </td>
     <td>
         <a href="#" class="eliminar-producto" 
             data-id="${articulo.id_unico}" 
-            data-color="${articulo.color_unico || ''}"
-            data-talla="${articulo.talla_unico || ''}">X
+            data-color="${articulo.color || ''}"
+            data-talla="${articulo.talla || ''}">X
         </a>
     </td>
 `;
@@ -205,21 +230,23 @@ function carritoHTML() {
 /**
  * Elimina un producto del carrito (por ID, Color y Talla).
  */
-function eliminarProducto(e) {
+async function eliminarProducto(e) {
     if (e.target.classList.contains("eliminar-producto") ||
         e.target.classList.contains("borrar-curso")) {
 
         e.preventDefault();
 
         // Normalizar los data-attributes leídos
-        const productoIdUnico = normalizar(e.target.getAttribute('data-id'));
-        const colorUnico = normalizar(e.target.getAttribute('data-color'));
-        const tallaUnico = normalizar(e.target.getAttribute('data-talla'));
+        const productoIdUnico = e.target.getAttribute('data-id');
+        const colorUnico = e.target.getAttribute('data-color');
+        const tallaUnico = e.target.getAttribute('data-talla');
 
         // Filtrar por la combinación única NORMALIZADA
         articulosCarrito = articulosCarrito.filter(
-            articulo => !(articulo.id_unico === productoIdUnico && articulo.color_unico === colorUnico && articulo.talla_unico === tallaUnico)
+            articulo => !(articulo.id_unico === productoIdUnico && articulo.color === colorUnico && articulo.talla === tallaUnico)
         );
+        
+        await HTTPS_Request.DeleteProductoCarrito(productoIdUnico,PERSISTENT_DATA.GetUserId());
 
         guardarCarrito();
         carritoHTML();
@@ -231,14 +258,14 @@ function eliminarProducto(e) {
 /**
  * Actualiza la cantidad de un artículo (por ID, Color y Talla) y recalcula.
  */
-function actualizarCantidad(e) {
+async function actualizarCantidad(e) {
     if (e.target.classList.contains('cantidad-producto')) {
         const input = e.target;
 
         // Normalizar los data-attributes leídos
-        const productoIdUnico = normalizar(input.getAttribute('data-id'));
-        const colorUnico = normalizar(input.getAttribute('data-color'));
-        const tallaUnico = normalizar(input.getAttribute('data-talla'));
+        const productoIdUnico = input.getAttribute('data-id');
+        const colorUnico = input.getAttribute('data-color');
+        const tallaUnico = input.getAttribute('data-talla');
 
         let nuevaCantidad = parseInt(input.value);
 
@@ -249,11 +276,18 @@ function actualizarCantidad(e) {
 
         articulosCarrito = articulosCarrito.map(articulo => {
             // Condición de actualización por ID, Color y Talla NORMALIZADOS
-            if (articulo.id_unico === productoIdUnico && articulo.color_unico === colorUnico && articulo.talla_unico === tallaUnico) {
+            if (articulo.id_unico === productoIdUnico && articulo.color === colorUnico && articulo.talla === tallaUnico) {
                 articulo.cantidad = nuevaCantidad;
             }
             return articulo;
         });
+
+        const data = {
+            productId : productoIdUnico,
+            quantity: nuevaCantidad
+        };
+
+        await HTTPS_Request.InsertarProductoCarrito(data,PERSISTENT_DATA.GetUserId());
 
         guardarCarrito();
         carritoHTML();
@@ -274,7 +308,8 @@ function vaciarCarritoDOM() {
 /**
  * Vacía el array de artículos y el DOM.
  */
-function vaciarCarrito() {
+async function vaciarCarrito() {
+    if(PERSISTENT_DATA.GetUsuarioLogeado() === 'true') await HTTPS_Request.DeleteCarrito(PERSISTENT_DATA.GetUserId());
     articulosCarrito = [];
     guardarCarrito();
     carritoHTML();
@@ -285,7 +320,7 @@ function vaciarCarrito() {
 
 // ============ Funciones de Pago ============
 
-function realizarPago(e) {
+async function realizarPago(e) {
     e.preventDefault();
     const metodo = document.querySelector('input[name="metodo"]:checked');
     const tarjeta = document.getElementById('numero-tarjeta').value.trim();
@@ -294,7 +329,7 @@ function realizarPago(e) {
         alert("¡Tu compra está realizada! Redirigiendo a inicio...");
         modalPago.style.display = 'none';
         formularioPago.reset();
-        vaciarCarrito(); // Vacía el carrito después de la compra exitosa
+        await vaciarCarrito(); // Vacía el carrito después de la compra exitosa
         window.location.href = "index.html";
     } else {
         alert("Por favor completa los datos de pago.");
@@ -311,8 +346,12 @@ window.actualizarContadorCarrito = actualizarContadorCarrito;
 
 // ============ Initialization ============
 document.addEventListener('DOMContentLoaded', () => {
+    InitComponentes();
+});
+
+async function InitComponentes(){
     // Load carrito from localStorage
-    cargarCarrito();
+    await cargarCarrito();
     actualizarContadorCarrito(); // LLAMADA INICIAL al cargar la página
 
     // Check if carrito elements exist before initializing
@@ -369,4 +408,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. LISTENER PARA LA PÁGINA DE DETALLE (CustomEvent 'agregar-variante')
     document.body.addEventListener('agregar-variante', agregarProductoAlCarrito);
-});
+}

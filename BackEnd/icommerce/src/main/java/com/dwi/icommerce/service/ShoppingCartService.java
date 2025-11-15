@@ -1,6 +1,7 @@
 package com.dwi.icommerce.service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,24 +26,41 @@ public class ShoppingCartService {
         return repository.findByUsuarioId(id);
     }
 
-    public ShoppingCart InsertShoppingCartByUsuario(Usuario usuario, Long id_ProductMain, int cantidad){
-        Optional<ShoppingCart> data = repository.findByUsuarioIdAndProductoMainId(usuario.getId(), id_ProductMain);
+    public ShoppingCart InsertShoppingCartByUsuario(Usuario usuario, String sku, int cantidad){
+        Optional<ShoppingCart> data = repository.findByUsuarioIdAndProductoMainSKU(usuario.getId(), sku);
         ShoppingCart dataFind = new ShoppingCart();
 
         if(data.isPresent()){
             dataFind = data.get();
-            dataFind.setCantidad(dataFind.getCantidad() + cantidad);
+            dataFind.setCantidad(cantidad);
             repository.save(dataFind);
             return dataFind;
         }
 
-        Optional<ProductMain> productoMain = productMainRepository.findById(id_ProductMain);
+        Optional<ProductMain> productoMain = productMainRepository.findBySKU(sku);
         dataFind.setCantidad(cantidad);
         dataFind.setUsuario(usuario);
-        dataFind.setFecha(LocalDateTime.now());
+        dataFind.setFecha(LocalDateTime.now(ZoneId.of("America/Lima")));
         dataFind.setProductoMain(productoMain.get());
         dataFind.setPrecio(productoMain.get().getProducto().getPrecio());
         repository.save(dataFind);
         return dataFind;
+    }
+
+    public void DeleteItem(Usuario usuario,  String sku){
+        Optional<ShoppingCart> data = repository.findByUsuarioIdAndProductoMainSKU(usuario.getId(), sku);
+        repository.delete(data.get());
+    }
+
+    public void DeleteItems(Long userID){
+        Optional<List<ShoppingCart>> itemsUser = FindByUsuario(userID);
+
+        if (itemsUser.isEmpty()) {
+            return;
+        }
+
+        for (ShoppingCart itemCart : itemsUser.get()) {
+            repository.delete(itemCart);
+        }
     }
 }

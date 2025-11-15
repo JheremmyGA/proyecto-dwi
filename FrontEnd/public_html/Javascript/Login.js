@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function Login(){
+    console.error("entro");
     const correoInput = document.getElementById('correo').value.trim();
     const contrasenaInput = document.getElementById('contrasena').value.trim();
 
@@ -82,6 +83,7 @@ async function Login(){
 
     const nombre = correoInput.split('@')[0] || 'Usuario';
     PERSISTENT_DATA.SetNombreUsuario(nombre);
+    PERSISTENT_DATA.SetUserId(TokenData.id_usuario);
     PERSISTENT_DATA.SetTokenData(TokenData.access_token);
     PERSISTENT_DATA.SetUsuarioLogeado('true');
     PERSISTENT_DATA.SetRol(TokenData.role);
@@ -94,6 +96,7 @@ async function Login(){
 // =========================================================
 function cerrarSesion() {
       
+    PERSISTENT_DATA.SetUserId('');
     PERSISTENT_DATA.SetNombreUsuario('');
     PERSISTENT_DATA.SetTokenData('');
     PERSISTENT_DATA.SetUsuarioLogeado('false');

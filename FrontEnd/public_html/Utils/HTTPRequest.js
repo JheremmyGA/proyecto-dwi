@@ -1,5 +1,7 @@
+import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
+
 let generosCache = null;
-const useBackEnd = false;
+const useBackEnd = true;
 
 const generosStatic = [
     // La imagen 'product_black.png' y 'product_white.png' son placeholders
@@ -234,11 +236,8 @@ export async function GetCategorias() {
 
 export async function GetDetalleProducto(id) {
     if(!useBackEnd){
-        // 🔥 CAMBIO 2: Aseguramos que el objeto devuelto use el 'id' de la sesión.
-        const productoCopiado = { ...detalleProducto }; // Usamos una copia
+        const productoCopiado = { ...detalleProducto };
         
-        // Asignamos el ID solicitado (el de la sesión) al objeto.
-        // Esto garantiza que el ID base (detalleProducto.id) sea estable.
         productoCopiado.id = id; 
         
         return productoCopiado;
@@ -248,7 +247,9 @@ export async function GetDetalleProducto(id) {
         const response = await fetch(`http://localhost:9530/api/catalog/producto/${id}`, {
             method: "GET"
         });
-        // ... (el resto de la lógica del backend sigue igual)
+
+        const data = await response.json();
+        return data;
     } catch (error) {
         console.error("Error:", error);
         return null;
@@ -347,6 +348,7 @@ export async function CrearProducto(productData) {
 }
 
 export async function GetInventario() {
+  
   if(!useBackEnd) return datosInventario;
 
   try {
@@ -373,6 +375,10 @@ export async function GetInventario() {
 }
 
 export async function UpdateStock(SKU, newStock) {
+
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+
   try {
     const productData = { // Definimos el objeto a enviar
       SKU: SKU,
@@ -410,6 +416,10 @@ export async function UpdateStock(SKU, newStock) {
 }
 
 export async function DeleteItemInventario(SKU) {
+
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+
   try {
 
     const respuesta = await fetch(`http://localhost:9530/api/inventario/delete/${SKU}`, {
@@ -429,5 +439,114 @@ export async function DeleteItemInventario(SKU) {
   } catch (error) {
     console.error("Fallo en el proceso de registro:", error.message);
     return null;
+  }
+}
+
+export async function InsertarProductoCarrito(productData, id) {
+
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+
+  try {
+      const respuesta = await fetch(`http://localhost:9530/api/carrito/${id}?skuProductoMain=${productData.productId}&cantidad=${productData.quantity}`, {
+          method: 'POST', 
+      });
+
+      if (respuesta.status === 204) {
+        return null;
+      }
+
+      if (!respuesta.ok) {
+          const errorData = await respuesta.json();
+          throw new Error(`Error ${respuesta.status}: ${errorData.message || 'Fallo en el registro.'}`);
+      }
+
+      const data = await respuesta.json();
+      return data;
+
+  } catch (error) {
+    console.error("Fallo en el proceso de registro:", error.message);
+    return null;
+  }
+}
+
+export async function DeleteProductoCarrito(SKU, id) {
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+
+  try {
+
+    const respuesta = await fetch(`http://localhost:9530/api/carrito/${id}?skuProductoMain=${SKU}`, {
+      method: 'DELETE',
+    });
+
+    // Tu lógica de manejo de respuesta
+    if (respuesta.status === 204) {
+      return null;
+    }
+
+    if (!respuesta.ok) {
+      const errorData = await respuesta.json().catch(() => ({ message: 'Fallo en el registro.' }));
+      throw new Error(`Error ${respuesta.status}: ${errorData.message}`);
+    }
+
+  } catch (error) {
+    console.error("Fallo en el proceso de registro:", error.message);
+    return null;
+  }
+}
+
+export async function DeleteCarrito(userId) {
+  
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+  
+  try {
+    const response = await fetch(`http://localhost:9530/api/carrito/all/${userId}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json' 
+      }
+    });   
+
+    if (response.status === 204) {
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error("Error en la respuesta del servidor: " + response.status);
+    } 
+  } catch (error) {
+    console.error("Error:", error);
+    return;
+  }
+}
+
+export async function CargarCarrito(id) {
+
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+
+  try {
+    const response = await fetch(`http://localhost:9530/api/carrito/${id}`, {
+      method: "GET"
+    });   
+
+    // Si no hay contenido, retornamos null o un array vacío
+    if (response.status === 204) {
+      return []; // o null según prefieras
+    }
+
+    if (!response.ok) {
+      throw new Error("Error en la respuesta del servidor: " + response.status);
+    } 
+
+    const data = await response.json();  
+
+    return data; // solo retornas la data
+
+  } catch (error) {
+    console.error("Error:", error);
+    return null; // opcional: retorna null si hay error
   }
 }

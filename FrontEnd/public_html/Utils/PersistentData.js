@@ -14,13 +14,20 @@ export function GetSelectedProductDetails(){
     return localStorage.getItem("productoSeleccionadoDetalle");
 }
 
+export function GuardarCarrito(carrito){
+    localStorage.setItem("articulosCarrito", carrito);
+}
+
+export function CargarCarrito(){
+    return localStorage.getItem("articulosCarrito");
+}
+
 // =======================================================================
 // ========================= CONFIGURACIÓN DE USUARIO =======================
 // =======================================================================
 
 export function SetNombreUsuario(nombre){
     if(nombre === null || nombre === undefined || nombre === ''){
-        console.error("nombreUsuario es null, undefined o vacío");
         localStorage.removeItem("nombreUsuario");
         return;
     }
@@ -29,6 +36,18 @@ export function SetNombreUsuario(nombre){
 
 export function GetNombreUsuario(){
     return localStorage.getItem("nombreUsuario");
+}
+
+export function SetUserId(id){
+    if(id === null || id === undefined || id === ''){
+        localStorage.removeItem("IdDataUser");
+        return;
+    }
+    localStorage.setItem("IdDataUser", id);
+}
+
+export function GetUserId(){
+    return localStorage.getItem("IdDataUser");
 }
 
 export function SetTokenData(tokenData){
