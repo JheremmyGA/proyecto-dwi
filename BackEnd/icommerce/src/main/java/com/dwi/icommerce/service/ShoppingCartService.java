@@ -1,6 +1,7 @@
 package com.dwi.icommerce.service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +40,7 @@ public class ShoppingCartService {
         Optional<ProductMain> productoMain = productMainRepository.findBySKU(sku);
         dataFind.setCantidad(cantidad);
         dataFind.setUsuario(usuario);
-        dataFind.setFecha(LocalDateTime.now());
+        dataFind.setFecha(LocalDateTime.now(ZoneId.of("America/Lima")));
         dataFind.setProductoMain(productoMain.get());
         dataFind.setPrecio(productoMain.get().getProducto().getPrecio());
         repository.save(dataFind);
