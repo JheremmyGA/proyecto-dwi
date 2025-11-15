@@ -4,7 +4,7 @@ import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 // --- DATOS SIMULADOS PARA SECCIONES INFERIORES ---
 const productosPrueba = [
     { nombre: "Loose Jeans", marca: "Basement", precio: 12.00, imagen: "imagenes/hombre/Poleras/Poleron Doo.png" },
-    { nombre: "Chaleco de traje", marca: "Basement", precio: 12.00, imagen: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png"},
+    { nombre: "Chaleco de traje", marca: "Basement", precio: 12.00, imagen: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png" },
     { nombre: "Casaca en lona de algodón", marca: "Basement", precio: 12.00, imagen: "imagenes/hombre/Poleras/Poleron Doo.png" },
     { nombre: "Zapatos Derby", marca: "Basement", precio: 12.00, imagen: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png" }
 ];
@@ -15,6 +15,9 @@ const productData = {
         Blanco: "imagenes/mujer/Polo/Polo Casual Mujer Sybilla.png",
     }
 };
+// ============ FUNCIÓN DE NORMALIZACIÓN (Necesaria aquí) ============
+const normalizar = (valor) => valor ? String(valor).trim().toUpperCase() : '';
+
 
 
 // --- ESTADO GLOBAL ---
@@ -23,16 +26,26 @@ let selectedSize;
 let selectedQuantity = 1;
 let detalleProducto;
 
+// CÓDIGO FINAL CORREGIDO para MostrarDetalleProducto en detalle_producto_prenda.js
 
-async function MostrarDetalleProducto(){
-
-    detalleProducto = await HTTPS_Request.GetDetalleProducto(PERSISTENT_DATA.GetSelectedProductDetails());
-    if (!detalleProducto) return;
+async function MostrarDetalleProducto() {
     
-    // Asegurarse de que detalleProducto.id exista
+    // 1. OBTENER EL ID ESTABLE DE LA SESIÓN
+    const selectedId = PERSISTENT_DATA.GetSelectedProductDetails();
+
+    // 2. CARGAR EL PRODUCTO
+    detalleProducto = await HTTPS_Request.GetDetalleProducto(selectedId);
+    
+    if (!detalleProducto) return;
+
+    // 🔥 SOLUCIÓN CRÍTICA: Asegurar que detalleProducto.id SIEMPRE sea estable.
+    // Si la API devuelve el producto sin ID (null/undefined), usamos el ID de la sesión.
     if (!detalleProducto.id) {
-         detalleProducto.id = 'prod-' + Date.now().toString(); // Asigna un ID temporal si no existe
+        // Usamos el ID de la sesión (que es el ID fijo del producto seleccionado)
+        detalleProducto.id = selectedId || 'ID_PRODUCTO_FIJO_POR_DEFECTO'; 
     }
+    // ¡Asegúrate de que NO haya código aquí o en la API que use Date.now()!
+    
 
     selectedColor = detalleProducto.tallasColores[0].color;
     selectedSize = detalleProducto.tallasColores[0].talla;
@@ -55,7 +68,7 @@ async function MostrarDetalleProducto(){
 }
 
 function MostrarVistaProductos() {
-    
+
     // Secciones inferiores
     renderProductosPrueba('loMasVendidos', productosPrueba);
     renderProductosPrueba('liquidacion', productosPrueba);
@@ -104,7 +117,7 @@ function renderSizeButtons() {
         const button = document.createElement('button');
         button.textContent = talla;
         let buttonClass = `size-button ${talla === selectedSize ? 'selected talla-seleccionada' : 'border-gray-300'} ${isDisabled ? 'disabled' : ''}`;
-        
+
         button.className = buttonClass;
         button.disabled = isDisabled;
 
@@ -119,13 +132,13 @@ function renderSizeButtons() {
 
     const currentOption = colorOptions.find(item => item.talla === selectedSize);
     if (!currentOption || currentOption.stock === 0) {
-           const firstAvailableOption = colorOptions.find(item => item.stock > 0);
-           if (firstAvailableOption) {
-             selectedSize = firstAvailableOption.talla;
-           } else {
-             selectedSize = '';
-           }
-           renderSizeButtons();
+        const firstAvailableOption = colorOptions.find(item => item.stock > 0);
+        if (firstAvailableOption) {
+            selectedSize = firstAvailableOption.talla;
+        } else {
+            selectedSize = '';
+        }
+        renderSizeButtons();
     }
 }
 
@@ -173,7 +186,7 @@ function handleColorChange(newColor) {
     updateStockDisplay();
 }
 
-function renderCurrentColorTitle(){
+function renderCurrentColorTitle() {
     const selColorEl = document.getElementById('selected-color-name');
     if (selColorEl) selColorEl.textContent = selectedColor;
 
@@ -225,14 +238,19 @@ function renderProductosPrueba(containerId, products) {
     products.forEach(product => {
         const tarjeta = document.createElement('div');
         tarjeta.className = 'contenedor-prendas';
+
+        // ✅ Asegúrate de que el precio sea número
+        const precioNumerico = parseFloat(product.precio);
+
         tarjeta.innerHTML = `
-            <img src="${product.imagen}" alt="${product.nombre}">
-                <p class="precio">S/ ${product.precio.toFixed(2)}</p>
-            <p class="nombre">${product.nombre}</p>
-            <p class="marca">${product.marca}</p>
-        `;
+        <img src="${product.imagen}" alt="${product.nombre}">
+        <p class="precio">S/ ${precioNumerico.toFixed(2)}</p>
+        <p class="nombre">${product.nombre}</p>
+        <p class="marca">${product.marca}</p>
+    `;
         container.appendChild(tarjeta);
     });
+
 }
 
 /* Simple redirect util kept as in original */
@@ -246,86 +264,72 @@ window.handleSizeChange = handleSizeChange;
 window.handleColorChange = handleColorChange;
 window.redirigir = redirigir;
 
+
+
+
+
 /* Initialize when DOM ready */
-document.addEventListener('DOMContentLoaded', ()=>{
-    
+document.addEventListener('DOMContentLoaded', () => {
+
     // --- Carga inicial de datos (Se ejecuta solo una vez al inicio) ---
     MostrarDetalleProducto();
     MostrarVistaProductos();
-    
-    // --- LÓGICA DE AÑADIR AL CARRITO CORREGIDA ---
+
+    // --- LÓGICA DE AÑADIR AL CARRITO CORREGIDA (SOLO DISPARA EVENTO) ---
     const botonAgregar = document.getElementById('agregarCarrito');
     if (botonAgregar) {
         botonAgregar.addEventListener('click', (e) => {
-            // CORRECCIÓN CLAVE 1: Detener la propagación para evitar doble ejecución
-            e.stopPropagation(); 
             e.preventDefault();
 
-            if (!detalleProducto) {
-                alert("Error: Datos del producto no cargados. Inténtalo de nuevo.");
+            // Aseguramos que el producto tenga un ID base estable. Usamos 'PROD_GENERICO' si no existe.
+            const idBaseEstable = detalleProducto && detalleProducto.id ? detalleProducto.id : 'PROD_GENERICO';
+
+            if (!detalleProducto || !selectedSize || !selectedColor || selectedQuantity < 1) {
+                alert("Por favor, selecciona una talla, color y cantidad válida.");
                 return;
             }
 
-            // Validación de la variante actual seleccionada
-            const currentOption = detalleProducto.tallasColores.find(item =>
-                item.color === selectedColor && item.talla === selectedSize
-            );
-            
-            if (!currentOption || selectedQuantity < 1) {
-                alert("Por favor, selecciona una talla y un color disponibles, e ingresa una cantidad válida.");
-                return;
-            }
-            
             // 1. Crear la información del producto con variante
             const infoProducto = {
-                // Generar un ID ÚNICO por variante
-                id: `${detalleProducto.id || 'p'}-${selectedSize}-${selectedColor}`, 
-                
-                // Incluir la variante en el nombre para mostrar en el carrito
-                nombre: `${detalleProducto.nombre} - ${selectedColor} (${selectedSize})`, 
-                
-                // Precio como cadena formateada (o número) para que lo maneje carrito.js
-                precio: detalleProducto.precio.toFixed(2), 
-                
-                imagen: productData.imagenes[selectedColor], 
+                // Generamos el ID ÚNICO usando el ID Base ESTABLE, la Talla y el Color NORMALIZADOS.
+                id_unico: normalizar(`${idBaseEstable}-${selectedSize}-${selectedColor}`),
+                nombre: detalleProducto.nombre,
+                // Aseguramos que el precio sea string con 2 decimales
+                precio: detalleProducto.precio.toFixed(2),
+                imagen: productData.imagenes[selectedColor],
                 cantidad: selectedQuantity,
+                color: selectedColor,
+                talla: selectedSize,
             };
 
-            // 2. Simular el objeto de evento (fakeEvent) con los 'data-attributes' que carrito.js espera.
-            const fakeEvent = {
-                target: {
-                    // CLASES y ID DE BOTÓN: Esencial para que carrito.js ejecute la función
-                    classList: { contains: (cls) => cls === 'agregar-carrito' }, 
-                    id: 'agregarCarrito', 
-                    
-                    // Los atributos que lee la función en carrito.js
-                    getAttribute: (attr) => {
-                        switch (attr) {
-                            case 'data-imagen': return infoProducto.imagen;
-                            case 'data-nombre': return infoProducto.nombre;
-                            case 'data-precio': return infoProducto.precio;
-                            case 'data-id': return infoProducto.id;
-                            case 'data-cantidad': return infoProducto.cantidad.toString();
-                            default: return null;
-                        }
-                    }
-                },
-                preventDefault: () => {}
-            };
-            
-            // 3. Llamar a la función global del carrito
-            if (typeof window.agregarProductoAlCarrito === 'function') {
-                window.agregarProductoAlCarrito(fakeEvent); 
-                
-                // 🔥 CORRECCIÓN CLAVE 2: Forzar la actualización del contador en la pestaña de detalle
-                if (typeof window.actualizarContadorCarrito === 'function') {
-                    window.actualizarContadorCarrito();
-                }
-                
-            } else {
-                console.error("La función agregarProductoAlCarrito no está disponible globalmente. Asegúrate de que carrito.js se cargue correctamente.");
+
+            // Disparar el evento personalizado (carrito.js lo capturará)
+            const eventoCarrito = new CustomEvent('agregar-variante', {
+                bubbles: true,
+                detail: { producto: infoProducto }
+            });
+            document.body.dispatchEvent(eventoCarrito);
+
+            if (typeof window.actualizarContadorCarrito === 'function') {
+                window.actualizarContadorCarrito();
             }
         });
     }
-});
 
+    // --- ACTIVAR COLOR Y TALLA MANUALMENTE (Se mantiene el código original de activación) ---
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("swatch-color")) {
+            document.querySelectorAll(".swatch-color")
+                .forEach(c => c.classList.remove("color-seleccionado"));
+            e.target.classList.add("color-seleccionado");
+        }
+    });
+
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("size-button")) {
+            document.querySelectorAll(".size-button")
+                .forEach(t => t.classList.remove("talla-seleccionada"));
+            e.target.classList.add("talla-seleccionada");
+        }
+    });
+});

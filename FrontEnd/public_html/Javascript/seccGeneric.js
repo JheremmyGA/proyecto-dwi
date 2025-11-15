@@ -25,12 +25,19 @@ function crearTarjetaProducto(producto) {
     tarjeta.setAttribute('data-temporada', producto.temporada);
     tarjeta.setAttribute('data-categoria', producto.categoria);
 
+    // Aseguramos que el precio sea string para la visualización
+    const precioFormateado = String(producto.precio);
+
     tarjeta.innerHTML = `
         <img src="${producto.PreviewImage}" alt="${producto.nombre}">
-        <p class="precio">S/.${producto.precio}</p>
+        <p class="precio">S/.${precioFormateado}</p>
         <p class="nombre">${producto.nombre}</p>
         <p class="marca">${producto.marca}</p>
-        <button class="ver-detalle">Ver detalle</button>
+        
+        <div class="botones-tarjeta">
+            <button class="ver-detalle">Ver detalle</button>
+            
+            </div>
     `;
 
     const btnDetalle = tarjeta.querySelector('.ver-detalle');
@@ -38,10 +45,9 @@ function crearTarjetaProducto(producto) {
         PERSISTENT_DATA.SelectProductDetails(producto.id);
         redirigirDetalle();
     });
-    
+
     return tarjeta;
 }
-
 // Función para redirigir a la página de detalle del producto
 function redirigirDetalle(productId) {
     window.location.href = `detalle_producto_prenda.html`;
@@ -96,7 +102,7 @@ function redirigir(nombre) {
 }
 
 // ============ CONFIGURACIÓN DE GÉNEROS ============
-async function MostrarGeneroSelected(){
+async function MostrarGeneroSelected() {
     const genero = await HTTPS_Request.GetGenero(PERSISTENT_DATA.GetSelectedGenero());
 
     if (!genero) return;
@@ -114,7 +120,7 @@ async function MostrarGeneroSelected(){
 }
 
 // ============ CONFIGURACIÓN FILTROS ============
-async function MostrarFiltros(){
+async function MostrarFiltros() {
     const temporadas = await HTTPS_Request.GetTemporadas();
     if (!temporadas) return;
     crearFiltros("filtro-temporada", temporadas);
@@ -128,19 +134,19 @@ async function MostrarFiltros(){
     crearFiltros("filtro-marca", marcas);
 }
 
-function crearFiltros(id, data){
+function crearFiltros(id, data) {
     const filtro = document.getElementById(id);
     filtro.innerHTML = ''; // Limpia la cuadrícula
-    filtro.appendChild(crearFiltro("","Todo"));
+    filtro.appendChild(crearFiltro("", "Todo"));
     data.forEach(data => {
         filtro.appendChild(crearFiltro(data.nombre, data.nombre));
     });
 }
 
-function crearFiltro(value, text){
+function crearFiltro(value, text) {
     const optionTodo = document.createElement("option");
-        optionTodo.value = value; // valor vacío
-        optionTodo.text = text;
+    optionTodo.value = value; // valor vacío
+    optionTodo.text = text;
 
     return optionTodo;
 }
