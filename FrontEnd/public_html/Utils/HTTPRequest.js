@@ -1,3 +1,5 @@
+import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
+
 let generosCache = null;
 const useBackEnd = true;
 
@@ -306,7 +308,6 @@ export async function Login(userData) {
       }
 
       const data = await respuesta.json();
-      console.error(data);
       return data;
 
   } catch (error) {
@@ -347,6 +348,7 @@ export async function CrearProducto(productData) {
 }
 
 export async function GetInventario() {
+  
   if(!useBackEnd) return datosInventario;
 
   try {
@@ -373,6 +375,10 @@ export async function GetInventario() {
 }
 
 export async function UpdateStock(SKU, newStock) {
+
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+
   try {
     const productData = { // Definimos el objeto a enviar
       SKU: SKU,
@@ -410,6 +416,10 @@ export async function UpdateStock(SKU, newStock) {
 }
 
 export async function DeleteItemInventario(SKU) {
+
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+
   try {
 
     const respuesta = await fetch(`http://localhost:9530/api/inventario/delete/${SKU}`, {
@@ -433,6 +443,10 @@ export async function DeleteItemInventario(SKU) {
 }
 
 export async function InsertarProductoCarrito(productData, id) {
+
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+
   try {
       const respuesta = await fetch(`http://localhost:9530/api/carrito/${id}?skuProductoMain=${productData.productId}&cantidad=${productData.quantity}`, {
           method: 'POST', 
@@ -457,6 +471,9 @@ export async function InsertarProductoCarrito(productData, id) {
 }
 
 export async function DeleteProductoCarrito(SKU, id) {
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+
   try {
 
     const respuesta = await fetch(`http://localhost:9530/api/carrito/${id}?skuProductoMain=${SKU}`, {
@@ -479,39 +496,36 @@ export async function DeleteProductoCarrito(SKU, id) {
   }
 }
 
-export async function GetCarritoByUser(id) {
-  if(!useBackEnd){
-    return datosProductos;
-  }
-
+export async function DeleteCarrito(userId) {
+  
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+  
   try {
-    const response = await fetch(`http://localhost:9530/api/carrito/${id}`, {
-      method: "GET"
+    const response = await fetch(`http://localhost:9530/api/carrito/all/${userId}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json' 
+      }
     });   
 
-    // Si no hay contenido, retornamos null o un array vacío
     if (response.status === 204) {
-      return []; // o null según prefieras
+      return;
     }
 
     if (!response.ok) {
       throw new Error("Error en la respuesta del servidor: " + response.status);
     } 
-
-    const data = await response.json();  
-
-    return data; // solo retornas la data
-
   } catch (error) {
     console.error("Error:", error);
-    return null; // opcional: retorna null si hay error
+    return;
   }
 }
 
 export async function CargarCarrito(id) {
-  if(!useBackEnd){
-    return datosProductos;
-  }
+
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
 
   try {
     const response = await fetch(`http://localhost:9530/api/carrito/${id}`, {

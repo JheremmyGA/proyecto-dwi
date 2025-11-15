@@ -50,4 +50,16 @@ public class ShoppingCartService {
         Optional<ShoppingCart> data = repository.findByUsuarioIdAndProductoMainSKU(usuario.getId(), sku);
         repository.delete(data.get());
     }
+
+    public void DeleteItems(Long userID){
+        Optional<List<ShoppingCart>> itemsUser = FindByUsuario(userID);
+
+        if (itemsUser.isEmpty()) {
+            return;
+        }
+
+        for (ShoppingCart itemCart : itemsUser.get()) {
+            repository.delete(itemCart);
+        }
+    }
 }

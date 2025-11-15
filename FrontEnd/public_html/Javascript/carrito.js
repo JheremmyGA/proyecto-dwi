@@ -18,13 +18,20 @@ const formularioPago = document.getElementById('formulario-pago');
 // ============ FUNCIONES DE PERSISTENCIA ============
 
 function guardarCarrito() {
-    //localStorage.setItem('articulosCarrito', JSON.stringify(articulosCarrito));
+    if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') PERSISTENT_DATA.GuardarCarrito(JSON.stringify(articulosCarrito));
 }
 
 async function cargarCarrito() {
     //const carritoGuardado = localStorage.getItem('articulosCarrito');
     //articulosCarrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
-    articulosCarrito = await HTTPS_Request.CargarCarrito(PERSISTENT_DATA.GetUserId());
+    if(PERSISTENT_DATA.GetUsuarioLogeado() === 'true'){
+        articulosCarrito = await HTTPS_Request.CargarCarrito(PERSISTENT_DATA.GetUserId());
+    }
+    else{
+        const carritoGuardado = PERSISTENT_DATA.CargarCarrito();
+        articulosCarrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+    }
+    
     if(articulosCarrito == null) articulosCarrito = []
 }
 
@@ -301,7 +308,8 @@ function vaciarCarritoDOM() {
 /**
  * Vacía el array de artículos y el DOM.
  */
-function vaciarCarrito() {
+async function vaciarCarrito() {
+    if(PERSISTENT_DATA.GetUsuarioLogeado() === 'true') await HTTPS_Request.DeleteCarrito(PERSISTENT_DATA.GetUserId());
     articulosCarrito = [];
     guardarCarrito();
     carritoHTML();
@@ -312,7 +320,7 @@ function vaciarCarrito() {
 
 // ============ Funciones de Pago ============
 
-function realizarPago(e) {
+async function realizarPago(e) {
     e.preventDefault();
     const metodo = document.querySelector('input[name="metodo"]:checked');
     const tarjeta = document.getElementById('numero-tarjeta').value.trim();
@@ -321,7 +329,7 @@ function realizarPago(e) {
         alert("¡Tu compra está realizada! Redirigiendo a inicio...");
         modalPago.style.display = 'none';
         formularioPago.reset();
-        vaciarCarrito(); // Vacía el carrito después de la compra exitosa
+        await vaciarCarrito(); // Vacía el carrito después de la compra exitosa
         window.location.href = "index.html";
     } else {
         alert("Por favor completa los datos de pago.");

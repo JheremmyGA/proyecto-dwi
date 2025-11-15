@@ -61,7 +61,7 @@ public class ShoppingCartController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> DeleteMarca(@PathVariable Long id, @RequestParam(required = true) String skuProductoMain) 
+    public ResponseEntity<?> DeleteItemShoppingCart(@PathVariable Long id, @RequestParam(required = true) String skuProductoMain) 
     {
         Optional<Usuario> usuarioFind = usuarioService.findUsuario(id);
 
@@ -71,5 +71,12 @@ public class ShoppingCartController {
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    @DeleteMapping("/all/{userId}")
+    public ResponseEntity<?> DeleteItemShoppingCart(@PathVariable Long userId) 
+    {
+        service.DeleteItems(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
