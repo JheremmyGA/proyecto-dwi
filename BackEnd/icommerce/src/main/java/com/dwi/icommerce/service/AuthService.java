@@ -70,9 +70,9 @@ public class AuthService {
             throw new UsernameNotFoundException("Usuario no encontrado con el correo: " + data.getCorreo());
         }
 
-        //if(userFind.get().getContraseña() != enconder.encode(data.getContraseña())){
-        //    throw new UsernameNotFoundException("Contraseña incorrecta");
-        //}
+        if(!enconder.matches(data.getContraseña(), userFind.get().getContraseña())){
+            throw new UsernameNotFoundException("Contraseña incorrecta");
+        }
 
         var jwtToken = jwtService.generateToken(userFind.get());
         var refreshToken = jwtService.generateRefreshToken(userFind.get());
