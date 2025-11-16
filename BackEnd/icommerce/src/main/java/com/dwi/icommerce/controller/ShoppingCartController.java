@@ -73,10 +73,10 @@ public class ShoppingCartController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @DeleteMapping("/shop/{userId}")
+    @DeleteMapping("/all/{userId}")
     public ResponseEntity<?> DeleteItemShoppingCart(@PathVariable Long userId) 
     {
-        service.ShopItems(userId);
+        service.DeleteItems(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

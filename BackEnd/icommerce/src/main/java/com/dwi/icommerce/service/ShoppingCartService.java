@@ -52,17 +52,15 @@ public class ShoppingCartService {
         repository.delete(data.get());
     }
 
-    public Boolean ShopItems(Long userID){
+    public void DeleteItems(Long userID){
         Optional<List<ShoppingCart>> itemsUser = FindByUsuario(userID);
 
         if (itemsUser.isEmpty()) {
-            return false;
+            return;
         }
 
         for (ShoppingCart itemCart : itemsUser.get()) {
             repository.delete(itemCart);
         }
-
-        return true;
     }
 }

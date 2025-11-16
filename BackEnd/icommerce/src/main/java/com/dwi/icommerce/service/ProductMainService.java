@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dwi.icommerce.model.ProductMain;
+import com.dwi.icommerce.model.ShoppingCart;
 import com.dwi.icommerce.repository.ProductMainRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProductMainService {
@@ -82,5 +85,24 @@ public class ProductMainService {
         }
 
         repository.delete(productMain.get());
+    }
+
+    @Transactional
+    public void TakeOrder(List<ShoppingCart> orderdetails){
+        for (ShoppingCart shoppingCart : orderdetails) {
+            Long idStock = shoppingCart.getProductoMain().getId();
+            int cantidad = shoppingCart.getCantidad();
+
+            ProductMain stockItem = repository.findByIdWithLock(idStock).orElseThrow(() -> new RuntimeException("Stock item ID: " + idStock + " no encontrado."));
+
+            int currentStock = stockItem.getStock();
+
+            if (currentStock < cantidad) {
+                throw new RuntimeException("Stock insuficiente para ID: " + idStock + ". Disponible: " + currentStock);
+            }
+
+            stockItem.setStock(currentStock - cantidad);
+            repository.save(stockItem); 
+        }
     }
 }
