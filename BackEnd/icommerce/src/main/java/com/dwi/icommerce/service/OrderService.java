@@ -19,10 +19,16 @@ public class OrderService {
     @Autowired
     private final OrderRepository repository;
     @Autowired
+    private final ProductMainService productMainService;
+    @Autowired
+    private final OrderDetailsService orderDetailsService;
+    @Autowired
     private final ShoppingCartService shoppingCartService;
 
-    public OrderService(OrderRepository repository, ShoppingCartService shoppingCartService){
+    public OrderService(OrderRepository repository, ProductMainService productMainService,OrderDetailsService orderDetailsService, ShoppingCartService shoppingCartService){
         this.repository = repository;
+        this.productMainService = productMainService;
+        this.orderDetailsService = orderDetailsService;
         this.shoppingCartService = shoppingCartService;
     }
 
@@ -41,16 +47,15 @@ public class OrderService {
 
         Order newOrder = new Order();
         newOrder.setDireccion(oDetailRequestDTO.direccion);
-        newOrder.setEstado("");
+        newOrder.setEstado("Pagado");
         newOrder.setFecha(LocalDateTime.now(ZoneId.of("America/Lima")));
         newOrder.setMetodo(oDetailRequestDTO.metodo);
         newOrder.setTelefono(oDetailRequestDTO.telefono);
         newOrder.setTotal(total);
         newOrder.setUsuario(userShopping.get(0).getUsuario());
 
-        repository.save(newOrder);
-
-        // Falta colocar los detalles
-        
+        productMainService.TakeOrder(userShopping);
+        orderDetailsService.SaveOrderDetails(repository.save(newOrder), userShopping);
+        shoppingCartService.DeleteItems(usuarioID);
     }
 }

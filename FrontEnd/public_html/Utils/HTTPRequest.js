@@ -550,3 +550,37 @@ export async function CargarCarrito(id) {
     return null; // opcional: retorna null si hay error
   }
 }
+
+export async function ConfirmarCompra(id, details) {
+  
+  if(!useBackEnd) return;
+  if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+  
+  try {
+    const response = await fetch(`http://localhost:9530/api/order/takeorder/${id}`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json' 
+      },
+
+      // Usamos el objeto productData definido
+      body: JSON.stringify(details) 
+    });   
+
+    if (response.status === 204) {
+      return;
+    }
+
+    if (!response.ok) {
+      const errorBody = await response.json(); 
+      
+      const errorMessage = errorBody.message || "Error desconocido al procesar la compra.";
+      throw new Error(errorMessage);
+    } 
+  
+    return response;
+  } catch (error) {
+    console.error("Error:", error);
+    return;
+  }
+}

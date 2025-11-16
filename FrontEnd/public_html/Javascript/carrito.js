@@ -326,10 +326,17 @@ async function realizarPago(e) {
     const tarjeta = document.getElementById('numero-tarjeta').value.trim();
 
     if (metodo && tarjeta !== "") {
+        await HTTPS_Request.ConfirmarCompra(PERSISTENT_DATA.GetUserId(),{
+            telefono : "99879865",
+            direccion : "",
+            metodo : metodo.value
+        });
+
         alert("¡Tu compra está realizada! Redirigiendo a inicio...");
         modalPago.style.display = 'none';
         formularioPago.reset();
-        await vaciarCarrito(); // Vacía el carrito después de la compra exitosa
+        
+        // await vaciarCarrito(); // Vacía el carrito después de la compra exitosa
         window.location.href = "index.html";
     } else {
         alert("Por favor completa los datos de pago.");
