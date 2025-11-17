@@ -32,4 +32,8 @@ public class OrderDetailsService {
             repository.save(detail);
         }
     }
+
+    public List<OrderDetails> GetAllOrdersDetails(){
+        return repository.findAll();
+    } 
 }

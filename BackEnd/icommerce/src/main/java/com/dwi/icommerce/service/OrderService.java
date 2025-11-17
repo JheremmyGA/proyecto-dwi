@@ -2,6 +2,7 @@ package com.dwi.icommerce.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dwi.icommerce.DTO.OrderDetailRequestDTO;
+import com.dwi.icommerce.DTO.SalesDetailsReponseDTO;
 import com.dwi.icommerce.model.Order;
+import com.dwi.icommerce.model.OrderDetails;
 import com.dwi.icommerce.model.ShoppingCart;
 import com.dwi.icommerce.repository.OrderRepository;
 
@@ -57,5 +60,18 @@ public class OrderService {
         productMainService.TakeOrder(userShopping);
         orderDetailsService.SaveOrderDetails(repository.save(newOrder), userShopping);
         shoppingCartService.DeleteItems(usuarioID);
+    }
+
+    public List<SalesDetailsReponseDTO> GetAllSalesDetails(){
+
+        List<SalesDetailsReponseDTO> responseDTOs = new ArrayList<>();
+        List<OrderDetails> ordersDetails = orderDetailsService.GetAllOrdersDetails();
+        
+        for (OrderDetails oDetails : ordersDetails) {
+            SalesDetailsReponseDTO response = new SalesDetailsReponseDTO(oDetails);
+            responseDTOs.add(response);
+        }
+
+        return responseDTOs;
     }
 }

@@ -1,7 +1,7 @@
 import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 
 let generosCache = null;
-const useBackEnd = true;
+const useBackEnd = false;
 
 const generosStatic = [
     // La imagen 'product_black.png' y 'product_white.png' son placeholders
@@ -62,6 +62,27 @@ const datosInventario = [
   { SKU: '621058', nombre: 'Polo deportivas Air Max', marca: 'Adidas', temporada: 'Verano', categoria: 'Polo', precio: 59.99, genero: 'Caballeros', talla: 'M', color: 'Negro', cantidad: 12, ruta: 'imagenes/polo-negro-m.jpg' },
   { SKU: '917302', nombre: 'Pijama de franela de cuadros', marca: 'Hanes', temporada: 'Invierno', categoria: 'Pijama', precio: 39.99, genero: 'Niñas', talla: '6', color: 'Rojo', cantidad: 28, ruta: 'imagenes/pijama-rojo-6.jpg' },
   { SKU: '911058', nombre: 'Pantalones deportivos', marca: 'Puma', temporada: 'Verano', categoria: 'Pantalón', precio: 49.99, genero: 'Damas', talla: 'S', color: 'Azul Marino', cantidad: 15, ruta: 'imagenes/pantalones-azul-s.jpg' }
+];
+
+const datosVentas = [
+  { fecha: '01/11/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 2, costo: 20.90},
+  { fecha: '01/11/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 2, costo: 15.90},
+  { fecha: '01/11/2025', boleta: '378292', producto: 'Camiseta de algodón V-Neck M', unid: 1, costo: 15.90},
+  { fecha: '02/11/2025', boleta: '378292', producto: 'Camiseta de algodón V-Neck XL', unid: 3, costo: 15.90},
+  { fecha: '02/11/2025', boleta: '378293', producto: 'Camiseta de algodón V-Neck S', unid: 1, costo: 15.90},
+  { fecha: '02/11/2025', boleta: '378293', producto: 'Camiseta de algodón V-Neck XL', unid: 5, costo: 15.90},
+  { fecha: '03/11/2025', boleta: '437291', producto: 'Camiseta de algodón V-Neck M', unid: 1, costo: 15.90},
+  { fecha: '03/11/2025', boleta: '478291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90},
+  { fecha: '03/11/2025', boleta: '278291', producto: 'Camiseta de algodón V-Neck XL', unid: 4, costo: 15.90},
+  { fecha: '04/11/2025', boleta: '278291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90},
+  { fecha: '04/11/2025', boleta: '378291', producto: 'Camiseta de algodón V-Neck XL', unid: 1, costo: 15.90},
+  { fecha: '05/11/2025', boleta: '988888', producto: 'Pantalón Chino Slim Fit', unid: 2, costo: 40.00},
+  { fecha: '05/11/2025', boleta: '888888', producto: 'Polo de piqué', unid: 1, costo: 20.00},
+  { fecha: '09/11/2025', boleta: '998888', producto: 'Pantalón Chino Slim Fit', unid: 2, costo: 40.00},
+  { fecha: '09/11/2025', boleta: '018888', producto: 'Jean negro XL', unid: 1, costo: 81.20},
+  { fecha: '11/11/2025', boleta: '018888', producto: 'Polo de piqué', unid: 1, costo: 23.00},
+  { fecha: '11/11/2025', boleta: '028888', producto: 'Pantalón Chino Slim Fit', unid: 2, costo: 45.00},
+  { fecha: '11/11/2025', boleta: '038888', producto: 'Jean negro XL', unid: 1, costo: 90.00}
 ];
 
 export async function GetGeneros() {
@@ -584,3 +605,33 @@ export async function ConfirmarCompra(id, details) {
     return;
   }
 }
+
+  
+  export async function GetAllSalesDetails() {
+
+    if(!useBackEnd) return datosVentas;
+    if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+  
+    try {
+      const response = await fetch(`http://localhost:9530/api/order/sales/all`, {
+        method: "GET"
+      });   
+  
+      // Si no hay contenido, retornamos null o un array vacío
+      if (response.status === 204) {
+        return []; // o null según prefieras
+      }
+  
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del servidor: " + response.status);
+      } 
+  
+      const data = await response.json();  
+  
+      return data; // solo retornas la data
+  
+    } catch (error) {
+      console.error("Error:", error);
+      return null; // opcional: retorna null si hay error
+    }
+  }
