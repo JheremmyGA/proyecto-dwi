@@ -16,11 +16,11 @@
 
     <script type="module" src="../Utils/HTTPRequest.js"></script>
     <script type="module" src="../Utils/PersistentData.js"></script>
-    
+
     <script type="module" src="../Javascript/Login.js" defer></script>
 
 
-    
+
 
 </head>
 
@@ -104,36 +104,137 @@
 
                 <div class="acciones-carrito">
                     <button id="vaciar-carrito" class="btn-secundario">Vaciar Carrito</button>
-                    <button id="img-carrito" class="btn-principal">
+                    <button id="btn-proceder-pago" class="btn-principal">
                         Proceder al Pago
                     </button>
+
                 </div>
             </div>
         </div>
 
     </main>
 
+
+
     <div id="modal-pago" class="modal-wrapper" style="display: none;">
         <div class="modal-contenedor">
-            <span id="cerrar-modal" class="cerrar-modal">&times;</span>
-            <h2>Opciones de Pago</h2>
-            <form id="formulario-pago">
-                <fieldset>
-                    <legend>Método de Pago</legend>
-                    <label>
-                        <img src="imagenes/tarjeta.png" alt="Tarjeta de Crédito/Débito" class="icono-metodo-pago">
-                        <input type="radio" name="metodo" value="tarjeta" required> Tarjeta de Crédito/Débito
-                    </label><br>
-                    <label>
-                        <img src="imagenes/paypal.png" alt="PayPal" class="icono-metodo-pago">
-                        <input type="radio" name="metodo" value="paypal"> PayPal
-                    </label>
-                </fieldset>
-                <input type="text" id="numero-tarjeta" placeholder="Número de Tarjeta (simulado)" required>
-                <button type="submit">Finalizar Compra</button>
-            </form>
+            <span id="cerrar-modal-pago" class="cerrar-modal">&times;</span>
+
+            <h2>Proceso de Compra</h2>
+
+            <div class="paso" id="paso-1" style="display:block;">
+                <h3>1. Selecciona el tipo de entrega</h3>
+
+                <label class="opcion-radio">
+                    <input type="radio" name="entrega" value="domicilio">
+                    <span>Enviar a domicilio</span>
+                </label>
+
+                <label class="opcion-radio">
+                    <input type="radio" name="entrega" value="tienda">
+                    <span>Retirar en tienda</span>
+                </label>
+
+                <button class="btn-siguiente" id="btn-a-paso-2" disabled>Siguiente</button>
+            </div>
+
+            
+            <div class="paso" id="paso-2" style="display:none;">
+                <h3>2. Completa la información</h3>
+               
+                <div id="form-domicilio" style="display:none;">
+                    <input type="text" id="direccion" placeholder="Dirección completa">
+                    <input type="text" id="telefono" placeholder="Teléfono de contacto">
+                </div>
+
+                <div id="form-tienda" style="display:none;">
+                    <label>Selecciona la tienda:</label>
+                    <select id="tienda">
+                        <option value="">-- Seleccionar --</option>
+                        <option value="San Juan de Miraflores">San Juan de Miraflores</option>
+                        <option value="Santiago de Surco">Santiago de Surco</option>
+                        <option value="San Borja">San Borja</option>
+                    </select>
+                </div>
+
+                <button class="btn-atras">← Atrás</button>
+                <button class="btn-siguiente" id="btn-a-paso-3">Siguiente</button>
+            </div>
+
+            
+            <div class="paso" id="paso-3" style="display:none;">
+                <h3>3. Selecciona la fecha de entrega</h3>
+
+                <select id="fecha-entrega">
+                    <option value="">-- Seleccionar día --</option>
+                    <option>Lunes</option>
+                    <option>Martes</option>
+                    <option>Miércoles</option>
+                    <option>Jueves</option>
+                    <option>Viernes</option>
+                    <option>Sábado</option>
+                </select>
+
+                <button class="btn-atras">← Atrás</button>
+                <button class="btn-siguiente" id="btn-a-paso-4">Siguiente</button>
+            </div>
+
+            <div class="paso" id="paso-4" style="display:none;">
+                <h3>4. Elige tu método de pago</h3>
+
+                <label class="opcion-radio">
+                    <input type="radio" name="metodoPago" value="tarjeta">
+                    <span>Tarjeta</span>
+                </label>
+
+                <label class="opcion-radio">
+                    <input type="radio" name="metodoPago" value="billetera">
+                    <span>Billetera digital (Yape / Plin)</span>
+                </label>
+
+                <button class="btn-atras">← Atrás</button>
+                <button class="btn-siguiente" id="btn-a-paso-5" disabled>Siguiente</button>
+            </div>
+
+            <div class="paso" id="paso-5" style="display:none;">
+                <h3>5. Completa tu pago</h3>
+
+                <div id="pago-tarjeta" style="display:none;">
+                    <input type="text" id="numero-tarjeta" placeholder="Número de tarjeta">
+                    <input type="text" id="cvv" placeholder="CVV">
+                    <input type="text" id="fecha" placeholder="MM/YY">
+                </div>
+
+                <div id="pago-billetera" style="display:none; text-align:center;">
+                    <p>Escanea el QR para realizar el pago:</p>
+                    <img src="imagenes/QR.png" width="200">
+
+                    <input type="text" id="codigo-validacion" maxlength="3" placeholder="Ingresa el código (3 dígitos)">
+                </div>
+
+                <button class="btn-atras">← Atrás</button>
+                <button id="btn-finalizar" class="btn-siguiente">Finalizar compra</button>
+            </div>
         </div>
     </div>
+
+    <div id="modal-resumen" class="modal">
+        <div class="modal-content">
+            <h2>Resumen de tu Compra</h2>
+
+            <p><strong>Tipo de entrega:</strong> <span id="resumen-entrega"></span></p>
+            <p><strong>Dirección / Distrito:</strong> <span id="resumen-direccion"></span></p>
+            <p><strong>Teléfono:</strong> <span id="resumen-telefono"></span></p>
+            <p><strong>Fecha de entrega:</strong> <span id="resumen-fecha"></span></p>
+            <p><strong>Método de pago:</strong> <span id="resumen-pago"></span></p>
+
+            <button id="cerrar-resumen" class="btn-cerrar-modal">Cerrar</button>
+        </div>
+    </div>
+
+</body>
+
+
 
     <footer class="footer-kivora">
         <div class="footer-logo">

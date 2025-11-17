@@ -4,35 +4,35 @@ import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 // ============ Variables Globales ============
 const listaCarrito = document.querySelector("#lista-carrito tbody");
 const vaciarCarritoBtn = document.getElementById("vaciar-carrito");
-const btnCheckout = document.getElementById('img-carrito');
+const btnCheckout = document.getElementById('btn-proceder-pago');
 const contadorCarrito = document.getElementById('contador-carrito');
 
 let articulosCarrito = [];
 
 // Modales de Pago
 const modalPago = document.getElementById('modal-pago');
-const cerrarModalPago = document.getElementById('cerrar-modal');
+const cerrarModalPago = document.getElementById('cerrar-modal-pago');
 const formularioPago = document.getElementById('formulario-pago');
 
 
 // ============ FUNCIONES DE PERSISTENCIA ============
 
 function guardarCarrito() {
-    if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') PERSISTENT_DATA.GuardarCarrito(JSON.stringify(articulosCarrito));
+    if (PERSISTENT_DATA.GetUsuarioLogeado() === 'false') PERSISTENT_DATA.GuardarCarrito(JSON.stringify(articulosCarrito));
 }
 
 async function cargarCarrito() {
     //const carritoGuardado = localStorage.getItem('articulosCarrito');
     //articulosCarrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
-    if(PERSISTENT_DATA.GetUsuarioLogeado() === 'true'){
+    if (PERSISTENT_DATA.GetUsuarioLogeado() === 'true') {
         articulosCarrito = await HTTPS_Request.CargarCarrito(PERSISTENT_DATA.GetUserId());
     }
-    else{
+    else {
         const carritoGuardado = PERSISTENT_DATA.CargarCarrito();
         articulosCarrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
     }
-    
-    if(articulosCarrito == null) articulosCarrito = []
+
+    if (articulosCarrito == null) articulosCarrito = []
 }
 
 // ============ FUNCIONES DE CONTADOR ============
@@ -72,26 +72,26 @@ async function agregarProductoAlCarrito(e) {
     if (e.detail && e.detail.producto) {
         // CAMINO A: El producto viene de la página de detalle
         infoProducto = e.detail.producto;
-    } 
-    else{
+    }
+    else {
         return;
     }
     //else {
     //    // CAMINO B: El producto viene del catálogo (Evento de click normal)
-//
+    //
     //    if (!e.target || !e.target.classList.contains('agregar-carrito')) {
     //        return;
     //    }
-//
+    //
     //    e.preventDefault();
-//
+    //
     //    const btn = e.target;
     //    const idBase = btn.getAttribute("data-id");
-//
+    //
     //    // 🔥 CORRECCIÓN CLAVE: Generar ID y datos para productos de Catálogo
     //    const colorCat = 'UNICO';
     //    const tallaCat = 'UNICA';
-//
+    //
     //    infoProducto = {
     //        imagen: btn.getAttribute("data-imagen"),
     //        nombre: btn.getAttribute("data-nombre"),
@@ -143,11 +143,11 @@ async function agregarProductoAlCarrito(e) {
     }
 
     const data = {
-        productId : infoProducto.id_unico,
+        productId: infoProducto.id_unico,
         quantity: total
     };
 
-    await HTTPS_Request.InsertarProductoCarrito(data,PERSISTENT_DATA.GetUserId());
+    await HTTPS_Request.InsertarProductoCarrito(data, PERSISTENT_DATA.GetUserId());
 
     // 7. Guardar y actualizar UI
     guardarCarrito();
@@ -245,8 +245,8 @@ async function eliminarProducto(e) {
         articulosCarrito = articulosCarrito.filter(
             articulo => !(articulo.id_unico === productoIdUnico && articulo.color === colorUnico && articulo.talla === tallaUnico)
         );
-        
-        await HTTPS_Request.DeleteProductoCarrito(productoIdUnico,PERSISTENT_DATA.GetUserId());
+
+        await HTTPS_Request.DeleteProductoCarrito(productoIdUnico, PERSISTENT_DATA.GetUserId());
 
         guardarCarrito();
         carritoHTML();
@@ -283,11 +283,11 @@ async function actualizarCantidad(e) {
         });
 
         const data = {
-            productId : productoIdUnico,
+            productId: productoIdUnico,
             quantity: nuevaCantidad
         };
 
-        await HTTPS_Request.InsertarProductoCarrito(data,PERSISTENT_DATA.GetUserId());
+        await HTTPS_Request.InsertarProductoCarrito(data, PERSISTENT_DATA.GetUserId());
 
         guardarCarrito();
         carritoHTML();
@@ -309,7 +309,7 @@ function vaciarCarritoDOM() {
  * Vacía el array de artículos y el DOM.
  */
 async function vaciarCarrito() {
-    if(PERSISTENT_DATA.GetUsuarioLogeado() === 'true') await HTTPS_Request.DeleteCarrito(PERSISTENT_DATA.GetUserId());
+    if (PERSISTENT_DATA.GetUsuarioLogeado() === 'true') await HTTPS_Request.DeleteCarrito(PERSISTENT_DATA.GetUserId());
     articulosCarrito = [];
     guardarCarrito();
     carritoHTML();
@@ -326,16 +326,16 @@ async function realizarPago(e) {
     const tarjeta = document.getElementById('numero-tarjeta').value.trim();
 
     if (metodo && tarjeta !== "") {
-        await HTTPS_Request.ConfirmarCompra(PERSISTENT_DATA.GetUserId(),{
-            telefono : "99879865",
-            direccion : "",
-            metodo : metodo.value
+        await HTTPS_Request.ConfirmarCompra(PERSISTENT_DATA.GetUserId(), {
+            telefono: "99879865",
+            direccion: "",
+            metodo: metodo.value
         });
 
         alert("¡Tu compra está realizada! Redirigiendo a inicio...");
         modalPago.style.display = 'none';
         formularioPago.reset();
-        
+
         // await vaciarCarrito(); // Vacía el carrito después de la compra exitosa
         window.location.href = "index.html";
     } else {
@@ -356,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
     InitComponentes();
 });
 
-async function InitComponentes(){
+async function InitComponentes() {
     // Load carrito from localStorage
     await cargarCarrito();
     actualizarContadorCarrito(); // LLAMADA INICIAL al cargar la página
@@ -416,3 +416,136 @@ async function InitComponentes(){
     // 2. LISTENER PARA LA PÁGINA DE DETALLE (CustomEvent 'agregar-variante')
     document.body.addEventListener('agregar-variante', agregarProductoAlCarrito);
 }
+
+
+
+
+// ======== CONTROL DE PASOS =========
+
+const paso1 = document.getElementById("paso-1");
+const paso2 = document.getElementById("paso-2");
+const paso3 = document.getElementById("paso-3");
+const paso4 = document.getElementById("paso-4");
+const paso5 = document.getElementById("paso-5");
+
+
+document.querySelectorAll("input[name='entrega']").forEach(r => {
+    r.addEventListener("change", () => {
+        document.getElementById("btn-a-paso-2").disabled = false;
+    });
+});
+
+document.getElementById("btn-a-paso-2").addEventListener("click", () => {
+    const opcion = document.querySelector("input[name='entrega']:checked").value;
+
+    paso1.style.display = "none";
+    paso2.style.display = "block";
+
+    
+    if (opcion === "domicilio") {
+        document.getElementById("form-domicilio").style.display = "block";
+        document.getElementById("form-tienda").style.display = "none";
+    } else {
+        document.getElementById("form-domicilio").style.display = "none";
+        document.getElementById("form-tienda").style.display = "block";
+    }
+});
+
+
+document.getElementById("btn-a-paso-3").addEventListener("click", () => {
+    paso2.style.display = "none";
+    paso3.style.display = "block";
+});
+
+
+document.getElementById("btn-a-paso-4").addEventListener("click", () => {
+    paso3.style.display = "none";
+    paso4.style.display = "block";
+});
+
+
+document.querySelectorAll("input[name='metodoPago']").forEach(r => {
+    r.addEventListener("change", () => {
+        document.getElementById("btn-a-paso-5").disabled = false;
+    });
+});
+
+
+document.getElementById("btn-a-paso-5").addEventListener("click", () => {
+    paso4.style.display = "none";
+    paso5.style.display = "block";
+
+    const metodo = document.querySelector("input[name='metodoPago']:checked").value;
+
+   
+    document.getElementById("pago-tarjeta").style.display = metodo === "tarjeta" ? "block" : "none";
+    document.getElementById("pago-billetera").style.display = metodo === "billetera" ? "block" : "none";
+});
+
+
+document.getElementById("codigo-validacion").addEventListener("input", e => {
+    e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
+});
+
+// ================= BOTONES ATRÁS =================
+
+document.querySelectorAll(".btn-atras").forEach(boton => {
+    boton.addEventListener("click", () => {
+
+        // Detecta qué paso está activo
+        let pasoActual = [...document.querySelectorAll(".paso")]
+            .findIndex(p => p.style.display === "block") + 1;
+
+        // Oculta paso actual
+        document.getElementById(`paso-${pasoActual}`).style.display = "none";
+
+        // Muestra paso anterior
+        document.getElementById(`paso-${pasoActual - 1}`).style.display = "block";
+    });
+});
+
+
+
+
+// ===== FINALIZAR COMPRA (CORRECTO) =====
+document.getElementById("btn-finalizar").addEventListener("click", function () {
+
+    // Obtener tipo de entrega
+    const entrega = document.querySelector("input[name='entrega']:checked").value;
+    document.getElementById("resumen-entrega").textContent =
+        entrega === "domicilio" ? "Envío a domicilio" : "Recojo en tienda";
+
+    //Dirección / Teléfono / Distrito según el tipo
+    let direccion = "";
+    let telefono = "";
+
+    if (entrega === "domicilio") {
+        direccion = document.getElementById("direccion").value;
+        telefono = document.getElementById("telefono").value;
+    } else {
+        direccion = document.getElementById("tienda").value;
+        telefono = "No aplica";
+    }
+
+    document.getElementById("resumen-direccion").textContent = direccion;
+    document.getElementById("resumen-telefono").textContent = telefono;
+
+    //Fecha
+    const fecha = document.getElementById("fecha-entrega").value;
+    document.getElementById("resumen-fecha").textContent = fecha;
+
+    //Método de pago
+    const metodoPago = document.querySelector("input[name='metodoPago']:checked").value;
+    document.getElementById("resumen-pago").textContent =
+        metodoPago === "tarjeta" ? "Pago con tarjeta" : "Yape / Plin";
+
+    //Cerrar modal de proceso de compra
+    document.getElementById("modal-pago").style.display = "none";
+
+    // Mostrar modal resumen
+    document.getElementById("modal-resumen").style.display = "flex";
+});
+
+document.getElementById("cerrar-resumen").addEventListener("click", () => {
+    document.getElementById("modal-resumen").style.display = "none";
+});
