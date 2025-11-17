@@ -56,7 +56,7 @@ public class InventarioService {
     public List<InventarioItemDetailResponseDTO> GetAllDetails(){
         List<InventarioItemDetailResponseDTO> elements = new ArrayList<>();
 
-        List<ProductMain> productMains = productMainService.repository.findAll();
+        List<ProductMain> productMains = productMainService.getAllProducts();
 
         for (ProductMain productMain : productMains) {
             elements.add(new InventarioItemDetailResponseDTO(productMain));
