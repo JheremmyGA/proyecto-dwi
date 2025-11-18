@@ -322,6 +322,9 @@ async function vaciarCarrito() {
 
 async function realizarPago(e) {
     e.preventDefault();
+
+    console.error("etroaquias");
+
     const metodo = document.querySelector('input[name="metodo"]:checked');
     const tarjeta = document.getElementById('numero-tarjeta').value.trim();
 
@@ -509,7 +512,10 @@ document.querySelectorAll(".btn-atras").forEach(boton => {
 
 // ===== FINALIZAR COMPRA (CORRECTO) =====
 document.getElementById("btn-finalizar").addEventListener("click", function () {
+    ConfirmarCompra();
+});
 
+async function ConfirmarCompra() {
     // Obtener tipo de entrega
     const entrega = document.querySelector("input[name='entrega']:checked").value;
     document.getElementById("resumen-entrega").textContent =
@@ -527,6 +533,8 @@ document.getElementById("btn-finalizar").addEventListener("click", function () {
         telefono = "No aplica";
     }
 
+    
+
     document.getElementById("resumen-direccion").textContent = direccion;
     document.getElementById("resumen-telefono").textContent = telefono;
 
@@ -539,12 +547,19 @@ document.getElementById("btn-finalizar").addEventListener("click", function () {
     document.getElementById("resumen-pago").textContent =
         metodoPago === "tarjeta" ? "Pago con tarjeta" : "Yape / Plin";
 
+
+    await HTTPS_Request.ConfirmarCompra(PERSISTENT_DATA.GetUserId(), {
+        telefono: telefono,
+        direccion: direccion,
+        metodo: metodoPago
+    });
+
     //Cerrar modal de proceso de compra
     document.getElementById("modal-pago").style.display = "none";
 
     // Mostrar modal resumen
     document.getElementById("modal-resumen").style.display = "flex";
-});
+}
 
 document.getElementById("cerrar-resumen").addEventListener("click", () => {
     document.getElementById("modal-resumen").style.display = "none";
