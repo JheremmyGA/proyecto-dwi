@@ -1,7 +1,7 @@
 import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 
 let generosCache = null;
-const useBackEnd = false;
+const useBackEnd = true;
 
 const generosStatic = [
     // La imagen 'product_black.png' y 'product_white.png' son placeholders
@@ -337,6 +337,31 @@ export async function Login(userData) {
   }
 }
 
+export async function UploadImage(file) {
+    if (!file) return null;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        // Llama al endpoint de subida
+        const response = await fetch('http://localhost:9530/api/upload/image', {
+            method: 'POST',
+            body: formData 
+        });
+
+        if (response.ok) {
+            return await response.text(); 
+        } else {
+            console.error("Error al subir la imagen:", await response.text());
+            throw new Error("Fallo en la subida de imagen.");
+        }
+
+    } catch (error) {
+        console.error("Error en la subida de imagen:", error);
+        return null;
+    }
+}
 
 export async function CrearProducto(productData) {
   try {
@@ -358,10 +383,6 @@ export async function CrearProducto(productData) {
           const errorData = await respuesta.json();
           throw new Error(`Error ${respuesta.status}: ${errorData.message || 'Fallo en el registro.'}`);
       }
-
-      const data = await respuesta.json();
-      return data;
-
   } catch (error) {
     console.error("Fallo en el proceso de registro:", error.message);
     return null;

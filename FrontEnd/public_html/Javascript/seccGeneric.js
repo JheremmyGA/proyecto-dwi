@@ -25,19 +25,26 @@ function crearTarjetaProducto(producto) {
     tarjeta.setAttribute('data-temporada', producto.temporada);
     tarjeta.setAttribute('data-categoria', producto.categoria);
 
-    // Aseguramos que el precio sea string para la visualización
-    const precioFormateado = String(producto.precio);
+    // Aseguramos que el precio sea válido para la visualización
+    const precioNumerico = producto.precio !== null && producto.precio !== undefined ? producto.precio : 0;
+    const precioFormateado = `S/.${precioNumerico.toFixed(2)}`;
+    
+    // Si PreviewImage está vacío o es null, usar una imagen placeholder/por defecto
+    const imagenSrc = producto.PreviewImage 
+                      ? producto.PreviewImage 
+                      : '/images/7892db09-c21a-4bc9-84c2-295fe6800ab5.png';
 
     tarjeta.innerHTML = `
-        <img src="${producto.PreviewImage}" alt="${producto.nombre}">
-        <p class="precio">S/.${precioFormateado}</p>
+        <img class="producto-imagen-principal" 
+             src="${imagenSrc}" 
+             alt="${producto.nombre}">
+        <p class="precio">${precioFormateado}</p>
         <p class="nombre">${producto.nombre}</p>
         <p class="marca">${producto.marca}</p>
         
         <div class="botones-tarjeta">
             <button class="ver-detalle">Ver detalle</button>
-            
-            </div>
+        </div>
     `;
 
     const btnDetalle = tarjeta.querySelector('.ver-detalle');
@@ -48,6 +55,7 @@ function crearTarjetaProducto(producto) {
 
     return tarjeta;
 }
+
 // Función para redirigir a la página de detalle del producto
 function redirigirDetalle(productId) {
     window.location.href = `detalle_producto_prenda.html`;

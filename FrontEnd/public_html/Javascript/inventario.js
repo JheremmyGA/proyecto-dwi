@@ -148,11 +148,21 @@ async function manejarAgregar(evento) {
     const categoria = document.getElementById('add-categoria').value.trim();
     const precio = parseFloat(document.getElementById('add-precio').value.trim());
     const genero = document.getElementById('add-genero').value.trim();
-    const imagenGeneral = document.getElementById('add-imagen-general').value.trim();
+    const inputImagenGeneral = document.getElementById('add-imagen-general');
+    const archivoGeneral = inputImagenGeneral.files[0];
 
     if (!nombre || !marca || !temporada || !categoria || !genero || isNaN(precio) || precio < 0) {
         alert("Por favor completa todos los campos generales correctamente.");
         return;
+    }
+
+    let urlImagenGeneral = null;
+    if (archivoGeneral) {
+        urlImagenGeneral = await HTTPS_Request.UploadImage(archivoGeneral);
+        if (!urlImagenGeneral) {
+            alert("Fallo al subir la imagen general.");
+            return;
+        }
     }
 
     // ===== INPUTS DE DETALLES ESPECÍFICOS (VARIACIONES) =====
@@ -161,36 +171,46 @@ async function manejarAgregar(evento) {
     const contenedorVariaciones = document.getElementById('contenedor-variaciones');
     const itemsVariacion = contenedorVariaciones.querySelectorAll('.variacion-item');
 
-    itemsVariacion.forEach((item) => {
+    for (const item of itemsVariacion) {
         const SKU = item.querySelector('.input-sku').value.trim();
         const talla = item.querySelector('.input-talla').value.trim();
         const color = item.querySelector('.input-color').value.trim();
         const cantidad = parseInt(item.querySelector('.input-stock').value.trim());
         const inputArchivo = item.querySelector('.input-imagen');
-        const ruta = inputArchivo && inputArchivo.files.length > 0 ? inputArchivo.files[0].name : '';
+        const archivoVariacion = inputArchivo && inputArchivo.files.length > 0 ? inputArchivo.files[0] : null;
 
         if (!SKU || !talla || !color || isNaN(cantidad) || cantidad < 0) {
             alert("Por favor completa todos los campos de detalles específicos (SKU, Talla, Color, Cantidad).");
             return;
         }
 
+        let urlImagenVariacion = null;
+        if (archivoVariacion) {
+            urlImagenVariacion = await HTTPS_Request.UploadImage(archivoVariacion);
+            if (!urlImagenVariacion) {
+                alert("Fallo al subir la imagen de una variación.");
+                return; 
+            }
+        }
+
+        const finalPreviewImage = urlImagenVariacion || urlImagenGeneral || "";
+
         variaciones.push({
             SKU,
             talla,
             color,
             cantidad,
-            ruta
+            finalPreviewImage
         });
 
         items.push({
-            // Propiedades de InventarioItemRequestDTO
             "SKU": SKU,
             "talla": talla,
             "color": color,
             "cantidad" : cantidad,
-            "PreviewImage": "itemPreviewImage"
+            "PreviewImage": finalPreviewImage
         });
-    });
+    }
 
     if (variaciones.length === 0) {
         alert("Por favor agrega al menos una variación (SKU, Talla, Color, Cantidad).");
@@ -226,12 +246,11 @@ async function manejarAgregar(evento) {
         "categoria": categoria,
         "genero": genero,
         "precio": precio,
-        "PreviewImage": "PreviewImageGeneral", // Ruta relativa general
+        "PreviewImage": urlImagenGeneral,
         "items": items
     };
 
-    const TokenData = await HTTPS_Request.CrearProducto(inventarioGroupRequestDTO);
-    //datosProductos = await HTTPS_Request.GetInventario();
+    await HTTPS_Request.CrearProducto(inventarioGroupRequestDTO);
 
     cerrarModal('modal-agregar');
     renderizarProductos(datosProductos);

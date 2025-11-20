@@ -50,6 +50,11 @@ public class SecurityConfig {
             )
 
             .authorizeHttpRequests(auth -> auth
+            // 1. Permitir acceso explícito a las imágenes subidas y a la carpeta /images/
+                .requestMatchers("/images/**").permitAll() 
+                
+                // 2. Permitir acceso explícito al endpoint de subida de archivos
+                .requestMatchers("/api/upload/**").permitAll()
                 .anyRequest().permitAll()
             );
             

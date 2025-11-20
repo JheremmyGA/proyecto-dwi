@@ -17,7 +17,7 @@ import com.dwi.icommerce.service.ProductHighlightService;
 
 
 @RestController
-@RequestMapping("/api/catalog")
+@RequestMapping("/api/tendencies")
 public class ProductHighlightController {
 
     @Autowired
