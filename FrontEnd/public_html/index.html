@@ -6,15 +6,19 @@
     <title>Kivora store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
-
+    <!--Estilos-->
     <link rel="stylesheet" href="../Css/style.css">
+    <link rel="stylesheet" href="../Css/seccGeneric.css">
 
-
+    <!--Scripts-->
     <script type="module" src="../Javascript/javascript.js"></script>
     <script type="module" src="../Utils/HTTPRequest.js"></script>
     <script type="module" src="../Utils/PersistentData.js"></script>
     <script type="module" src="../Javascript/carrito.js" defer></script>
     <script type="module" src="../Javascript/Login.js" defer></script>
+    <script type="module" src="../Javascript/seccGeneric.js"></script>
+
+
 
 </head>
 
@@ -79,7 +83,7 @@
                     </div>
                 </div>
             </div>
-                              
+
         </div>
     </header>
 
@@ -114,94 +118,23 @@
             <button id="btn-ninas" onclick="redirigir('seccGeneric.html')">Niñas</button>
         </div>
 
-        <div class="Novedades">
-            <h2>Novedades 😱</h2>
-            <div class="carrusel-contenedor" data-carrusel-id="novedades-carrusel">
-                <div class="carrusel-horizontal" id="novedades-carrusel">
-                    <div class="item producto">
-                        <img src="imagenes/hombre/Pantalon/Pantalón Hombre University Club.webp"
-                            alt="Pantalón Hombre University Club">
-                        <p>Pantalón Hombre University Club</p>
-                        <a href="#" class="agregar-carrito" data-id="201" data-nombre="Pantalón Hombre University Club"
-                            data-precio="99.90"
-                            data-imagen="imagenes/hombre/Pantalon/Pantalón Hombre University Club.webp">
-                            Comprar
-                        </a>
-                    </div>
-                    <div class="item producto">
-                        <img src="imagenes/mujer/Poleras/Casaca Trench Mujer Sybilla.png"
-                            alt="Casaca Trench Mujer Sybilla">
-                        <p>Casaca Trench Mujer Sybilla</p>
-                        <a href="#" class="agregar-carrito" data-id="202" data-nombre="Casaca Trench Mujer Sybilla"
-                            data-precio="1299.00" data-imagen="imagenes/mujer/Poleras/Casaca Trench Mujer Sybilla.png">
-                            Comprar
-                        </a>
-                    </div>
-                    <div class="item producto">
-                        <img src="imagenes/niña/Poleras/Polera Niña Eleven2.png" alt="Polera Niña Eleven2">
-                        <p>Polera Niña Eleven2</p>
-                        <a href="#" class="agregar-carrito" data-id="203" data-nombre="Polera Niña Eleven2"
-                            data-precio="99.00" data-imagen="imagenes/niña/Poleras/Polera Niña Eleven2.png">
-                            Comprar
-                        </a>
-                    </div>
-                    <div class="item producto">
-                        <img src="imagenes/niño/Poleras/Casaca Niño Coniglio.png" alt="Casaca Niño Coniglio">
-                        <p>Casaca Niño Coniglio</p>
-                        <a href="#" class="agregar-carrito" data-id="204" data-nombre="Casaca Niño Coniglio"
-                            data-precio="84.00" data-imagen="imagenes/niño/Poleras/Casaca Niño Coniglio.png">
-                            Comprar
-                        </a>
+        <div id="inicio">
+            <div class="Novedades">
+                <h2>Novedades 😱</h2>
+                <div class="contenedor-cuadricula-productos">
+                    <div class="cuadricula-productos" id="cuadricula-novedades">
                     </div>
                 </div>
-                <button class="scroll-btn left" onclick="scrollCarrusel('novedades-carrusel', -1)">❮</button>
-                <button class="scroll-btn right" onclick="scrollCarrusel('novedades-carrusel', 1)">❯</button>
             </div>
-        </div>
 
-        <div class="categoria">
-            <h2>Tendencias 🔥🔥🔥</h2>
-            <div class="carrusel-contenedor" data-carrusel-id="tendencias-carrusel">
-                <div class="carrusel-horizontal" id="tendencias-carrusel">
-                    <div class="item producto">
-                        <img src="imagenes/hombre/Polo/Polo Petit Piqué Hombre Lacoste.png"
-                            alt="Polo Petit Piqué Hombre Lacoste">
-                        <p>Polo Petit Piqué Hombre Lacoste</p>
-                        <a href="#" class="agregar-carrito" data-id="301" data-nombre="Polo Petit Piqué Hombre Lacoste"
-                            data-precio="99.90" data-imagen="imagenes/hombre/Polo/Polo Petit Piqué Hombre Lacoste.png">
-                            Comprar
-                        </a>
-                    </div>
-                    <div class="item producto">
-                        <img src="imagenes/mujer/Polo/Polo Manga Corta Mujer University Club.png"
-                            alt="Polo Manga Corta Mujer University Club">
-                        <p>Polo Manga Corta Mujer University Club</p>
-                        <a href="#" class="agregar-carrito" data-id="302"
-                            data-nombre="Polo Manga Corta Mujer University Club" data-precio="199.00"
-                            data-imagen="imagenes/mujer/Polo/Polo Manga Corta Mujer University Club.png">
-                            Comprar
-                        </a>
-                    </div>
-                    <div class="item producto">
-                        <img src="imagenes/niña/Polo/Polo Niña Eleven.png" alt="Polo Niña Eleven">
-                        <p>Polo Niña Eleven</p>
-                        <a href="#" class="agregar-carrito" data-id="303" data-nombre="Polo Niña Eleven"
-                            data-precio="99.00" data-imagen="imagenes/niña/Polo/Polo Niña Eleven.png">
-                            Comprar
-                        </a>
-                    </div>
-                    <div class="item producto">
-                        <img src="imagenes/niño/Polo/Polo Niño Coniglio.png" alt="Polo Niño Coniglio">
-                        <p>Polo Niño Coniglio</p>
-                        <a href="#" class="agregar-carrito" data-id="304" data-nombre="Polo Niño Coniglio"
-                            data-precio="84.00" data-imagen="imagenes/niño/Polo/Polo Niño Coniglio.png">
-                            Comprar
-                        </a>
+            <div class="categoria">
+                <h2>Tendencias 🔥🔥🔥</h2>
+                <div class="contenedor-cuadricula-productos">
+                    <div class="cuadricula-productos" id="cuadricula-tendencias">
                     </div>
                 </div>
-                <button class="scroll-btn left" onclick="scrollCarrusel('tendencias-carrusel', -1)">❮</button>
-                <button class="scroll-btn right" onclick="scrollCarrusel('tendencias-carrusel', 1)">❯</button>
             </div>
+
         </div>
     </div>
 

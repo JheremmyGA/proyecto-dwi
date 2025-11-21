@@ -1,67 +1,68 @@
-/* Estilos Generales y Reset Básico */
+
+/* Estilos Generales y Reset     */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     background-color: #f4f4f4;
 }
 
-/* ============= MENÚ DE SECCIÓN ============= */
+/* MENÚ DE SECCIÓN          */
 .menu-secciones {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 0;  
-  background-color: #6b6666;
-  text-align: center;
-  color: #fff;
-  font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    background-color: #6b6666;
+    text-align: center;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-.menu-secciones-enlaces{
-  display: flex;
-  justify-content: center;   /* Centra los enlaces */
-  align-items: center;
-  width: 100%;
+.menu-secciones-enlaces {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
+
 .menu-secciones-enlaces button {
-  margin: 0;
-  padding: 0 60px;                 /* Elimina margen lateral */
-  text-align: center;        /* Centra el texto dentro del enlace */
-  text-decoration: none;
-  font-size: 16px;
-  background-color: #6b6666;
-  font-weight: 500;
-  transition: color 0.3s ease;
-  color: white;
-  border: none;
+    margin: 0;
+    padding: 0 60px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    background-color: #6b6666;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    color: white;
+    border: none;
 }
 
 .menu-secciones-enlaces button:hover {
-  color: #B80000; /* Color al pasar el mouse */
-  background-color: rgb(232, 232, 232);
+    color: #B80000;
+    background-color: rgb(232, 232, 232);
 }
-/* ============================================== */
 
 
-/* Contenedor principal con CSS Grid */
+/* CONTENEDOR PRINCIPAL GRID   */
 .contenedor-principal {
     display: grid;
-    /* Define 2 columnas: 250px para el filtro y el resto del espacio (1fr) para los productos */
-    grid-template-columns: 250px 1fr; 
+    grid-template-columns: 250px 1fr;
     gap: 20px;
     padding: 20px;
-    max-width: 1200px; 
+    max-width: 1200px;
     margin: 0 auto;
 }
 
-/* Estilos de la Barra Lateral de Filtros */
+
+/* BARRA LATERAL FILTROS   */
 .barra-lateral-filtro {
     background-color: #fff;
     padding: 10px 20px;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-    height: fit-content; 
+    height: fit-content;
 }
 
 .titulo-filtro {
@@ -72,7 +73,6 @@ body {
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
 }
-
 
 .grupo-filtro {
     margin-bottom: 20px;
@@ -93,7 +93,6 @@ body {
     background-color: white;
 }
 
-/* Estilo del botón de filtro */
 .boton-filtro {
     width: 100%;
     padding: 10px;
@@ -110,53 +109,75 @@ body {
     background-color: #555;
 }
 
-/* Cuadrícula de Productos con CSS Grid */
-.cuadricula-productos {
-    display: grid;
-    /* 4 columnas de igual tamaño (1fr) */
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 20px;
+
+/* COLUMNA DERECHA CENTRADA   */
+.columna-productos {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
+/* CUADRÍCULA DE PRODUCTOS   */
+.cuadricula-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+
+/* HEADER SECCIÓN   */
 .header-seccion {
     text-align: justify;
     margin: 40px 0;
     padding: 0 135px;
 }
+
 .descripcion-seccion {
     font-size: 1rem;
     color: #666;
     margin-top: 10px;
 }
+
 .titulo-seccion {
     font-size: 2rem;
     color: #333;
     margin-bottom: 20px;
-
 }
 
-/* Estilos de la Tarjeta de Producto */
+/* TARJETA DE PRODUCTO */
 .tarjeta-producto {
     background-color: #fff;
     border: 1px solid #ddd;
-    padding: 15px;
+    padding: 10px;
     text-align: center;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    width: 180px;
+    height: 320px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .tarjeta-producto img {
     width: 100%;
-    height: auto;
-    max-height: 200px;
-    object-fit: contain; 
-    margin-bottom: 10px;
+    height: 160px;
+    object-fit: cover;
+    margin-bottom: 5px;
     border: 1px solid #f0f0f0;
 }
 
 .tarjeta-producto .precio {
     font-weight: bold;
-    color: #B80000; 
+    color: #B80000;
     font-size: 1.1rem;
     margin-bottom: 5px;
 }
@@ -164,11 +185,27 @@ body {
 .tarjeta-producto .nombre {
     font-size: 0.9rem;
     color: #333;
+    height: 35px;
+    overflow: hidden;
+    margin-bottom: 5px;
 }
 
-/* Estilo para productos ocultos por el filtro */
+.tarjeta-producto .marca {
+    font-size: 0.8rem;
+    color: #B80000;
+    margin-bottom: 10px;
+}
+
 .tarjeta-producto.oculto {
     display: none;
 }
 
-
+/* CENTRAR NOVEDADES/TENDENCIAS */
+#cuadricula-novedades,
+#cuadricula-tendencias {
+    margin: 0 auto;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    max-width: 900px;
+}

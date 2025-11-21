@@ -28,11 +28,11 @@ function crearTarjetaProducto(producto) {
     // Aseguramos que el precio sea válido para la visualización
     const precioNumerico = producto.precio !== null && producto.precio !== undefined ? producto.precio : 0;
     const precioFormateado = `S/.${precioNumerico.toFixed(2)}`;
-    
+
     // Si PreviewImage está vacío o es null, usar una imagen placeholder/por defecto
-    const imagenSrc = producto.PreviewImage 
-                      ? producto.PreviewImage 
-                      : '/images/7892db09-c21a-4bc9-84c2-295fe6800ab5.png';
+    const imagenSrc = producto.PreviewImage
+        ? producto.PreviewImage
+        : '/images/7892db09-c21a-4bc9-84c2-295fe6800ab5.png';
 
     tarjeta.innerHTML = `
         <img class="producto-imagen-principal" 
@@ -161,33 +161,128 @@ function crearFiltro(value, text) {
 
 // 5. Inicialización y Evento del Botón
 document.addEventListener('DOMContentLoaded', () => {
-    MostrarFiltros();
-    MostrarGeneroSelected();
-    // 1. Inicializar la cuadrícula con todos los productos al cargar
-    // Buscar elementos del DOM ahora (seguro)
-    cuadriculaProductos = document.getElementById('cuadricula-productos');
-    filtroTemporada = document.getElementById('filtro-temporada');
-    filtroMarca = document.getElementById('filtro-marca');
-    filtroCategoria = document.getElementById('filtro-categoria');
-    botonAplicarFiltros = document.getElementById('boton-aplicar-filtros');
-    botonResetFiltros = document.getElementById('boton-reset-filtros');
+    // Lógica para la página de Catálogo (SeccGeneric.html)
+    if (document.getElementById('cuadricula-productos')) {
+        MostrarFiltros();
+        MostrarGeneroSelected();
 
-    renderizarProductos();
+        cuadriculaProductos = document.getElementById('cuadricula-productos');
+        filtroTemporada = document.getElementById('filtro-temporada');
+        filtroMarca = document.getElementById('filtro-marca');
+        filtroCategoria = document.getElementById('filtro-categoria');
+        botonAplicarFiltros = document.getElementById('boton-aplicar-filtros');
+        botonResetFiltros = document.getElementById('boton-reset-filtros');
 
-    // Asignar el evento al botón de filtrar
-    botonAplicarFiltros?.addEventListener('click', aplicarFiltros);
-
-    // Evento para el botón reset: vuelve a "Todo" y muestra todos los productos
-    botonResetFiltros?.addEventListener('click', () => {
-        if (filtroTemporada) filtroTemporada.value = '';
-        if (filtroMarca) filtroMarca.value = '';
-        if (filtroCategoria) filtroCategoria.value = '';
-        // Re-renderizamos todas las tarjetas y quitamos la clase oculto por si quedó alguna
         renderizarProductos();
-    });
 
-    // (Opcional) aplicar filtros al cambiar selects para experiencia en vivo
-    filtroTemporada?.addEventListener('change', aplicarFiltros);
-    filtroMarca?.addEventListener('change', aplicarFiltros);
-    filtroCategoria?.addEventListener('change', aplicarFiltros);
+        botonAplicarFiltros?.addEventListener('click', aplicarFiltros);
+
+
+        botonResetFiltros?.addEventListener('click', () => {
+            if (filtroTemporada) filtroTemporada.value = '';
+            if (filtroMarca) filtroMarca.value = '';
+            if (filtroCategoria) filtroCategoria.value = '';
+
+            renderizarProductos();
+        });
+
+
+        filtroTemporada?.addEventListener('change', aplicarFiltros);
+        filtroMarca?.addEventListener('change', aplicarFiltros);
+        filtroCategoria?.addEventListener('change', aplicarFiltros);
+    }
+
+
+    if (document.getElementById('cuadricula-novedades')) {
+        cargarSeccionesInicio();
+    }
+
+
+
+
+    //   Data falsa novedades y tendencias
+
+    function cargarSeccionesInicio() {
+        const listaNovedades = [
+            {
+                id: 901,
+                nombre: "Pantalón Hombre University Club",
+                precio: 99.90,
+                marca: "University Club",
+                PreviewImage: "imagenes/hombre/.png"
+            },
+            {
+                id: 902,
+                nombre: "Casaca Hombre Casual",
+                precio: 149.90,
+                marca: "Kivora",
+                PreviewImage: "imagenes/hombre/.png"
+            },
+            {
+                id: 903,
+                nombre: "Polo Hombre Básico",
+                precio: 39.90,
+                marca: "Kivora",
+                PreviewImage: "imagenes/hombre/.png"
+            },
+            {
+                id: 904,
+                nombre: "Camisa Manga Larga",
+                precio: 89.90,
+                marca: "University Club",
+                PreviewImage: "imagenes/hombre/.png"
+            }
+        ];
+
+        const listaTendencias = [
+            {
+                id: 905,
+                nombre: "Polo Oversize",
+                precio: 49.90,
+                marca: "Kivora",
+                PreviewImage: "imagenes/hombre/.png"
+            },
+            {
+                id: 906,
+                nombre: "Jogger Urbano Hombre",
+                precio: 79.90,
+                marca: "Kivora",
+                PreviewImage: "imagenes/hombre/.png"
+            },
+            {
+                id: 907,
+                nombre: "Casaca Deportiva",
+                precio: 129.90,
+                marca: "Sport Line",
+                PreviewImage: "imagenes/hombre/.png"
+            },
+            {
+                id: 908,
+                nombre: "Zapatillas Urbanas",
+                precio: 159.90,
+                marca: "UrbanFit",
+                PreviewImage: "imagenes/hombre/.png"
+            }
+        ];
+
+        
+        cargarListaEnCuadricula(listaNovedades, "cuadricula-novedades");
+        cargarListaEnCuadricula(listaTendencias, "cuadricula-tendencias");
+    }
+
+
+    
+    function cargarListaEnCuadricula(lista, idContenedor) {
+        const contenedor = document.getElementById(idContenedor);
+        if (!contenedor) return;
+
+        contenedor.innerHTML = ""; 
+
+        lista.forEach(producto => {
+            const tarjeta = crearTarjetaProducto(producto);
+            contenedor.appendChild(tarjeta);
+        });
+    }
+
 });
+
