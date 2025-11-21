@@ -187,6 +187,66 @@ function setupModalDetalle() {
     });
 }
 
+//   Data falsa novedades y tendencia
+async function cargarSeccionesInicio() {
+
+    const novedades = await HTTPS_Request.GetNovedades();
+    const tendencias = await HTTPS_Request.GetTendencias();
+
+    cargarListaEnCuadricula(novedades, "cuadricula-novedades");
+    cargarListaEnCuadricula(tendencias, "cuadricula-tendencias");
+}
+
+function cargarListaEnCuadricula(lista, idContenedor) {
+    const contenedor = document.getElementById(idContenedor);
+    if (!contenedor) return;
+
+    contenedor.innerHTML = ""; 
+
+    lista.forEach(producto => {
+        const tarjeta = crearTarjetaProducto(producto);
+        contenedor.appendChild(tarjeta);
+    });
+}
+
+function crearTarjetaProducto(producto) {
+    const tarjeta = document.createElement('div');
+    tarjeta.className = 'tarjeta-producto';
+    tarjeta.setAttribute('data-marca', producto.marca);
+    tarjeta.setAttribute('data-temporada', producto.temporada);
+    tarjeta.setAttribute('data-categoria', producto.categoria);
+
+    // Aseguramos que el precio sea válido para la visualización
+    const precioNumerico = producto.precio !== null && producto.precio !== undefined ? producto.precio : 0;
+    const precioFormateado = `S/.${precioNumerico.toFixed(2)}`;
+
+    // Si PreviewImage está vacío o es null, usar una imagen placeholder/por defecto
+    const imagenSrc = producto.PreviewImage
+        ? producto.PreviewImage
+        : '/images/7892db09-c21a-4bc9-84c2-295fe6800ab5.png';
+
+    tarjeta.innerHTML = `
+        <img class="producto-imagen-principal" 
+             src="${imagenSrc}" 
+             alt="${producto.nombre}">
+        <p class="precio">${precioFormateado}</p>
+        <p class="nombre">${producto.nombre}</p>
+        <p class="marca">${producto.marca}</p>
+        
+        <div class="botones-tarjeta">
+            <button class="ver-detalle">Ver detalle</button>
+        </div>
+    `;
+
+    const btnDetalle = tarjeta.querySelector('.ver-detalle');
+    btnDetalle.addEventListener('click', () => {
+        PERSISTENT_DATA.SelectProductDetails(producto.id);
+        redirigirDetalle();
+    });
+
+    return tarjeta;
+}
+
 // =======================================================================
 // ========================= INICIALIZACIÓN (DOMContentLoaded) =============
 // =======================================================================
@@ -245,14 +305,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (menuUsuario) menuUsuario.classList.remove("activo");
         }
     });
-});
-
-
-
-
-
-// Esperar a que el DOM cargue los botones de color/talla
-document.addEventListener("DOMContentLoaded", () => {
 
     // Listener para colores
     document.querySelectorAll(".color-option").forEach(btn => {
@@ -270,7 +322,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    if (document.getElementById('cuadricula-novedades')) {
+        cargarSeccionesInicio();
+    }
 });
+
 
 // =======================================================================
 // ========================= LÓGICA DEL MODAL DE COMPRA ====================

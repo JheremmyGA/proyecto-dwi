@@ -52,12 +52,14 @@ public class ProductHighlightController {
     }
 
     private ResponseEntity<List<SoftCatalogProductDTO>> GetAnswerAPI(Optional<List<Producto>> dataCheck){
-        if(dataCheck.isEmpty()) ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        if(dataCheck.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
         
         List<SoftCatalogProductDTO> listaFinal = dataCheck.get().stream()
             .map(a -> new SoftCatalogProductDTO(a))
             .collect(Collectors.toList());
         
-        return ResponseEntity.status(HttpStatus.FOUND).body(listaFinal);
+        return ResponseEntity.status(HttpStatus.OK).body(listaFinal);
     }
 }

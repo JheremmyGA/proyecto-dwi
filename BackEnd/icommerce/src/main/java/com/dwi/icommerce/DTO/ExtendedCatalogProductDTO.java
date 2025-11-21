@@ -6,12 +6,14 @@ import com.dwi.icommerce.model.Producto;
 public class ExtendedCatalogProductDTO {
     public final String nombre, marca;
     public final Double precio;
+    public final String PreviewImage;
     public final List<TallaColorStockDTO> tallasColores;
 
     public ExtendedCatalogProductDTO(Producto producto, List<TallaColorStockDTO> tallaColorStock){
         this.nombre = producto.getNombre();
         this.marca = (producto.getMarca() != null)? producto.getMarca().getNombre() : "";
         this.precio = producto.getPrecio();
+        this.PreviewImage = producto.getPreviewImage();
         this.tallasColores = tallaColorStock;
     }
 }

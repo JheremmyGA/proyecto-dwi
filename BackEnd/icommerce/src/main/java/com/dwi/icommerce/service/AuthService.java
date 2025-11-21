@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.dwi.icommerce.DTO.LoginRequestDTO;
 import com.dwi.icommerce.DTO.RegisterRequestDTO;
 import com.dwi.icommerce.DTO.TokenResponseDTO;
+import com.dwi.icommerce.DTO.UserResponseDTO;
 import com.dwi.icommerce.Enums.UsuarioRol;
 import com.dwi.icommerce.model.Token;
 import com.dwi.icommerce.model.Usuario;
@@ -93,6 +94,16 @@ public class AuthService {
 
             tokenRepository.saveAll(validUserTokens);
         }
+    }
+
+    public UserResponseDTO GetUserDTO(Long id){
+
+        Optional<Usuario> userFind = repository.findById(id);
+        if (userFind.isEmpty()) {
+            throw new UsernameNotFoundException("Usuario no encontrado con el id: " + id);
+        }
+
+        return new UserResponseDTO(userFind.get());
     }
 
     //bearerpublic TokenResponse DTO Refresh(String authHeader){

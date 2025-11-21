@@ -8,6 +8,7 @@ public class TallaColorStockDTO {
     public final String color;
     public final int stock;
     public final String sku;
+    public final String PreviewImage;
     
     public TallaColorStockDTO(){
         id = null;
@@ -15,6 +16,7 @@ public class TallaColorStockDTO {
         color = "";
         sku = "";
         stock = 0;
+        PreviewImage = "";
     }
 
     public TallaColorStockDTO(ProductMain product_main) {
@@ -23,5 +25,6 @@ public class TallaColorStockDTO {
         this.color = (product_main.getColor() != null)? product_main.getColor().getNombre() : "";
         this.stock = product_main.getStock();
         this.sku = product_main.getSKU();
+        this.PreviewImage = product_main.getPreviewImage();
     }
 }

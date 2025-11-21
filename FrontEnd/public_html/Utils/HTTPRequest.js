@@ -85,6 +85,68 @@ const datosVentas = [
   { fecha: '11/11/2025', boleta: '038888', producto: 'Jean negro XL', unid: 1, costo: 90.00}
 ];
 
+const listaNovedades = [
+  {
+      id: 901,
+      nombre: "Pantalón Hombre University Club",
+      precio: 99.90,
+      marca: "University Club",
+      PreviewImage: "imagenes/hombre/.png"
+  },
+  {
+      id: 902,
+      nombre: "Casaca Hombre Casual",
+      precio: 149.90,
+      marca: "Kivora",
+      PreviewImage: "imagenes/hombre/.png"
+  },
+  {
+      id: 903,
+      nombre: "Polo Hombre Básico",
+      precio: 39.90,
+      marca: "Kivora",
+      PreviewImage: "imagenes/hombre/.png"
+  },
+  {
+      id: 904,
+      nombre: "Camisa Manga Larga",
+      precio: 89.90,
+      marca: "University Club",
+      PreviewImage: "imagenes/hombre/.png"
+  }
+];
+
+const listaTendencias = [
+  {
+      id: 905,
+      nombre: "Polo Oversize",
+      precio: 49.90,
+      marca: "Kivora",
+      PreviewImage: "imagenes/hombre/.png"
+  },
+  {
+      id: 906,
+      nombre: "Jogger Urbano Hombre",
+      precio: 79.90,
+      marca: "Kivora",
+      PreviewImage: "imagenes/hombre/.png"
+  },
+  {
+      id: 907,
+      nombre: "Casaca Deportiva",
+      precio: 129.90,
+      marca: "Sport Line",
+      PreviewImage: "imagenes/hombre/.png"
+  },
+  {
+      id: 908,
+      nombre: "Zapatillas Urbanas",
+      precio: 159.90,
+      marca: "UrbanFit",
+      PreviewImage: "imagenes/hombre/.png"
+  }
+];
+
 export async function GetGeneros() {
 
     if(!useBackEnd) return generosStatic;
@@ -656,3 +718,89 @@ export async function ConfirmarCompra(id, details) {
       return null; // opcional: retorna null si hay error
     }
   }
+
+  export async function GetUserData(id) {
+
+    if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
+  
+    try {
+      const response = await fetch(`http://localhost:9530/auth/${id}`, {
+        method: "GET"
+      });   
+  
+      // Si no hay contenido, retornamos null o un array vacío
+      if (response.status === 204) {
+        return []; // o null según prefieras
+      }
+  
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del servidor: " + response.status);
+      } 
+  
+      const data = await response.json();  
+  
+      return data; // solo retornas la data
+  
+    } catch (error) {
+      console.error("Error:", error);
+      return null; // opcional: retorna null si hay error
+    }
+  }
+
+  export async function GetNovedades() {
+    if(!useBackEnd){
+      return listaNovedades;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:9530/api/tendencies/news`, {
+        method: "GET"
+      });   
+
+      // Si no hay contenido, retornamos null o un array vacío
+      if (response.status === 204) {
+        return []; // o null según prefieras
+      }
+
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del servidor: " + response.status);
+      } 
+
+      const data = await response.json();  
+
+      return data; // solo retornas la data
+
+    } catch (error) {
+      console.error("Error:", error);
+      return null; // opcional: retorna null si hay error
+    }
+}
+
+export async function GetTendencias() {
+  if(!useBackEnd){
+    return listaTendencias;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:9530/api/tendencies/trending`, {
+      method: "GET"
+    });   
+
+    // Si no hay contenido, retornamos null o un array vacío
+    if (response.status === 204) {
+      return []; // o null según prefieras
+    }
+
+    if (!response.ok) {
+      throw new Error("Error en la respuesta del servidor: " + response.status);
+    } 
+
+    const data = await response.json();  
+
+    return data; // solo retornas la data
+
+  } catch (error) {
+    console.error("Error:", error);
+    return null; // opcional: retorna null si hay error
+  }
+}

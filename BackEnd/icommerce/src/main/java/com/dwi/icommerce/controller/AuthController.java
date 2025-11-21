@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dwi.icommerce.DTO.LoginRequestDTO;
 import com.dwi.icommerce.DTO.RegisterRequestDTO;
 import com.dwi.icommerce.DTO.TokenResponseDTO;
+import com.dwi.icommerce.DTO.UserResponseDTO;
+import com.dwi.icommerce.model.Usuario;
 import com.dwi.icommerce.service.AuthService;
 
 
@@ -39,6 +43,12 @@ public class AuthController {
     public ResponseEntity<TokenResponseDTO> Login(@RequestBody LoginRequestDTO loginData) {
         final TokenResponseDTO token = service.Login(loginData);
         return ResponseEntity.ok(token);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> findUserDTO(@PathVariable Long id) {
+        final UserResponseDTO userResponseDTO = service.GetUserDTO(id);
+        return ResponseEntity.ok(userResponseDTO);
     }
 
     //@PostMapping("/refresh")
