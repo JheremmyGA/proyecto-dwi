@@ -61,7 +61,7 @@ async function MostrarDetalleProducto() {
 
     renderCurrentColorTitle();
     renderColorSelector();
-    updateMainImage(productData.imagenes[selectedColor]);
+    updateMainImage();
     renderSizeButtons();
     updateStockDisplay();
     updateQuantityButtons();
@@ -178,8 +178,7 @@ function handleColorChange(newColor) {
     if (newColor === selectedColor) return;
     selectedColor = newColor;
 
-    const newImageUrl = productData.imagenes[newColor];
-    updateMainImage(newImageUrl);
+    updateMainImage();
     renderCurrentColorTitle();
     renderColorSelector();
     renderSizeButtons();
@@ -224,9 +223,15 @@ function updateQuantityButtons(maxStock) {
     if (btnIncrement) btnIncrement.disabled = selectedQuantity >= stockVal || stockVal === 0;
 }
 
-function updateMainImage(newUrl) {
+function updateMainImage() {
+    const currentOption = detalleProducto.tallasColores.find(item =>
+        item.color === selectedColor && item.talla === selectedSize
+    );
+    
+    const PreviewImage = currentOption ? currentOption.PreviewImage : "";
+
     const mainImage = document.getElementById('imagen-producto-principal');
-    if (mainImage && newUrl) mainImage.src = newUrl;
+    if (mainImage && PreviewImage) mainImage.src = PreviewImage;
 }
 
 
