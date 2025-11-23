@@ -343,26 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//data false ver detalle
 document.addEventListener("DOMContentLoaded", function () {
 
     function cargarSeccionesDetalle() {
@@ -449,7 +430,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function crearTarjetaProducto(producto) {
 
-        // Imagen por defecto si está vacía
         const imagen = producto.PreviewImage && producto.PreviewImage.trim() !== ""
             ? producto.PreviewImage
             : "imagenes/hombre/Poleras/";
