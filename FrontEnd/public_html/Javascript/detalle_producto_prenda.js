@@ -29,23 +29,23 @@ let detalleProducto;
 // CÓDIGO FINAL CORREGIDO para MostrarDetalleProducto en detalle_producto_prenda.js
 
 async function MostrarDetalleProducto() {
-    
+
     // 1. OBTENER EL ID ESTABLE DE LA SESIÓN
     const selectedId = PERSISTENT_DATA.GetSelectedProductDetails();
 
     // 2. CARGAR EL PRODUCTO
     detalleProducto = await HTTPS_Request.GetDetalleProducto(selectedId);
-    
+
     if (!detalleProducto) return;
 
     // 🔥 SOLUCIÓN CRÍTICA: Asegurar que detalleProducto.id SIEMPRE sea estable.
     // Si la API devuelve el producto sin ID (null/undefined), usamos el ID de la sesión.
     if (!detalleProducto.id) {
         // Usamos el ID de la sesión (que es el ID fijo del producto seleccionado)
-        detalleProducto.id = selectedId || 'ID_PRODUCTO_FIJO_POR_DEFECTO'; 
+        detalleProducto.id = selectedId || 'ID_PRODUCTO_FIJO_POR_DEFECTO';
     }
     // ¡Asegúrate de que NO haya código aquí o en la API que use Date.now()!
-    
+
 
     selectedColor = detalleProducto.tallasColores[0].color;
     selectedSize = detalleProducto.tallasColores[0].talla;
@@ -227,7 +227,7 @@ function updateMainImage() {
     const currentOption = detalleProducto.tallasColores.find(item =>
         item.color === selectedColor && item.talla === selectedSize
     );
-    
+
     const PreviewImage = currentOption ? currentOption.PreviewImage : "";
 
     const mainImage = document.getElementById('imagen-producto-principal');
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const dataFind = detalleProducto.tallasColores.find(x=> x.color == selectedColor && x.talla == selectedSize);
+            const dataFind = detalleProducto.tallasColores.find(x => x.color == selectedColor && x.talla == selectedSize);
 
             // 1. Crear la información del producto con variante
             const infoProducto = {
@@ -338,4 +338,138 @@ document.addEventListener('DOMContentLoaded', () => {
             e.target.classList.add("talla-seleccionada");
         }
     });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    function cargarSeccionesDetalle() {
+
+        const listaLoMasVendidos = [
+            {
+                id: 701,
+                nombre: "Pantalón Hombre",
+                precio: 99.90,
+                marca: "Marca",
+                PreviewImage: ""
+            },
+            {
+                id: 702,
+                nombre: "Casaca Hombre",
+                precio: 149.90,
+                marca: "Marca",
+                PreviewImage: ""
+            },
+            {
+                id: 703,
+                nombre: "Polo Hombre",
+                precio: 39.90,
+                marca: "Marca",
+                PreviewImage: ""
+            },
+            {
+                id: 704,
+                nombre: "Camisa Hombre",
+                precio: 89.90,
+                marca: "Marca",
+                PreviewImage: ""
+            }
+        ];
+
+        const listaLiquidacion = [
+            {
+                id: 705,
+                nombre: "Producto Liquidación 1",
+                precio: 49.90,
+                marca: "Marca",
+                PreviewImage: ""
+            },
+            {
+                id: 706,
+                nombre: "Producto Liquidación 2",
+                precio: 59.90,
+                marca: "Marca",
+                PreviewImage: ""
+            },
+            {
+                id: 707,
+                nombre: "Producto Liquidación 3",
+                precio: 29.90,
+                marca: "Marca",
+                PreviewImage: ""
+            },
+            {
+                id: 708,
+                nombre: "Producto Liquidación 4",
+                precio: 19.90,
+                marca: "Marca",
+                PreviewImage: ""
+            }
+        ];
+
+        cargarListaEnCuadricula(listaLoMasVendidos, "loMasVendidos");
+        cargarListaEnCuadricula(listaLiquidacion, "liquidacion");
+    }
+
+
+    function cargarListaEnCuadricula(lista, idContenedor) {
+        const contenedor = document.getElementById(idContenedor);
+        if (!contenedor) return;
+
+        contenedor.innerHTML = "";
+
+        lista.forEach(producto => {
+            const tarjeta = crearTarjetaProducto(producto);
+            contenedor.appendChild(tarjeta);
+        });
+    }
+
+
+    function crearTarjetaProducto(producto) {
+
+        // Imagen por defecto si está vacía
+        const imagen = producto.PreviewImage && producto.PreviewImage.trim() !== ""
+            ? producto.PreviewImage
+            : "imagenes/hombre/Poleras/";
+
+        const tarjeta = document.createElement("div");
+        tarjeta.classList.add("tarjeta-producto");
+
+
+        tarjeta.innerHTML = `
+            <div class="imagen-container">
+                <img src="${imagen}" alt="${producto.nombre}">
+            </div>
+            <p class="precio">S/. ${producto.precio.toFixed(2)}</p>
+            <p class="nombre">${producto.nombre}</p>
+            <p class="marca">${producto.marca}</p>
+            <button class="btn-detalle">Ver detalle</button>
+        `;
+
+        return tarjeta;
+    }
+
+    cargarSeccionesDetalle();
 });
