@@ -294,3 +294,23 @@ body {
 #agregarCarrito:hover {
   background-color: #ccc;
 }
+
+
+
+/* Bottom  detalle */
+.btn-detalle {
+    display: inline-block;
+    background: #949191;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-detalle:hover {
+    background-color: #949191;
+}

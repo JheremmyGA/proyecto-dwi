@@ -1,53 +1,40 @@
-/* ============================================== */
 /* VARIABLES Y ESTILOS GLOBALES BASE */
-/* ============================================== */
+
 :root {
     --color-fondo-principal: #f4f6f9;
-    /* Fondo muy claro de la página */
     --color-tarjeta: #ffffff;
     --color-texto-oscuro: #344767;
-    /* Azul oscuro para texto y encabezados */
     --color-texto-claro: #8d959f;
     --color-principal: #B80000;
-    /* Azul/Púrpura para elementos clave y gráficos */
     --color-exito: #28a745;
-    /* Verde para 'up' */
     --color-alerta: #dc3545;
-    /* Rojo para 'down' */
     --borde-radio: 12px;
-    --sombra-tarjeta: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    --sombra-tarjeta: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.06);
     --menu-ancho: 250px;
-    /* Asumiendo un ancho de menú para el cálculo de margen */
 }
 
 body {
     background-color: var(--color-fondo-principal);
     font-family: 'Roboto', sans-serif;
+    margin: 0;
 }
 
-/* ============================================== */
-/* 1. CORRECCIÓN DE POSICIONAMIENTO DEL TÍTULO */
-/* ============================================== */
-/* El main-content se desplaza a la derecha para dar espacio al menú lateral */
+/* 1. TITULO Y CONTENEDOR PRINCIPAL */
 .main-content {
     position: relative;
     margin-left: var(--menu-ancho);
     padding-top: 50px;
-    /* Espacio para que el título no quede pegado al top */
 }
 
 .contenedor-principal {
     position: relative;
     z-index: 1;
-    /* Asegura que el contenido quede sobre la barra oscura */
     padding: 25px;
 }
 
 .titulo-seccion {
     color: #000000e1;
-    /* Texto blanco sobre el fondo oscuro simulado */
     position: absolute;
-    /* Usamos absoluto para posicionar el título en la barra oscura */
     top: 25px;
     left: 25px;
     margin: 0;
@@ -55,30 +42,23 @@ body {
     font-weight: 700;
 }
 
-/* INDICADORES (Flechas de rendimiento) */
+/* 2. INDICADORES (KPIs) */
 .indicador {
     font-weight: 600;
     font-size: 0.9rem;
     padding-left: 5px;
 }
 
-.indicador.up {
-    color: var(--color-exito);
-}
+.indicador.up { color: var(--color-exito); }
+.indicador.down { color: var(--color-alerta); }
 
-.indicador.down {
-    color: var(--color-alerta);
-}
 
-/* ============================================== */
-/* 2. LAYOUT PRINCIPAL (TOP Y BOTTOM) */
-/* ============================================== */
+/* 3. LAYOUT PRINCIPAL (TOP Y BOTTOM) */
 .top-widgets-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1.5fr;
     gap: 20px;
     margin-top: 75px;
-    /* Empuja las tarjetas hacia abajo para que no choquen con el título */
     margin-bottom: 30px;
 }
 
@@ -88,30 +68,26 @@ body {
     gap: 20px;
 }
 
-/* Estilo Base de las Tarjetas/Gráficos */
-.kpi-card,
-.grafico-card {
+/* TARJETAS */
+.kpi-card, .grafico-card, .calendario-fijo {
     background-color: var(--color-tarjeta);
     border-radius: var(--borde-radio);
     box-shadow: var(--sombra-tarjeta);
     padding: 20px;
 }
 
-.grafico-card h3 {
-    color: var(--color-texto-oscuro);
+.grafico-card h3, .calendario-fijo h3 {
     font-size: 1.2rem;
     font-weight: 600;
+    color: var(--color-texto-oscuro);
     margin-bottom: 15px;
 }
 
-/* ============================================== */
-/* 3. ESTILO DE KPIS (Customers, Orders) */
-/* ============================================== */
+/* 4. ESTILO DE KPIS */
 .kpi-card {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: space-between;
 }
 
 .kpi-card .info {
@@ -123,7 +99,6 @@ body {
 .kpi-card .icono-kpi {
     font-size: 2rem;
     color: var(--color-texto-claro);
-    padding: 0;
     margin-bottom: 10px;
 }
 
@@ -141,20 +116,9 @@ body {
     font-weight: 500;
 }
 
-/* ============================================== */
-/* 4. GRÁFICO DE META MENSUAL (Monthly Target) */
-/* ============================================== */
-.monthly-target {
+/* 5. GRÁFICO DE META MENSUAL */
+.monthly-target, .target-body {
     text-align: center;
-}
-
-.monthly-target h3 {
-    font-size: 1.1rem;
-    text-align: left;
-    margin-bottom: 5px;
-}
-
-.target-body {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -209,9 +173,7 @@ body {
     font-weight: 600;
 }
 
-/* ============================================== */
-/* 5. GRÁFICOS DE VENTAS Y ESTADÍSTICAS */
-/* ============================================== */
+/* 6. GRÁFICOS DE VENTAS Y ESTADÍSTICAS */
 .canvas-contenedor-large {
     position: relative;
     height: 350px;
@@ -221,9 +183,8 @@ body {
 .statistics .tabs {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 20px;
     gap: 10px;
+    margin-bottom: 20px;
 }
 
 .statistics .tab-button {
@@ -248,90 +209,114 @@ body {
     color: var(--color-texto-claro);
 }
 
-/* ============================================== */
-/* 6. MEDIA QUERIES (RESPONSIVE DESIGN) */
-/* ============================================== */
+/* 7. CALENDARIO FLATPICKR */
+.calendario-fijo {
+    margin-bottom: 20px;
+}
+
+.flatpickr-calendar {
+    font-family: 'Roboto', sans-serif;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    overflow: hidden;
+}
+
+.flatpickr-months {
+    background-color: var(--color-principal);
+    color: white;
+}
+
+.flatpickr-months .flatpickr-prev-month svg,
+.flatpickr-months .flatpickr-next-month svg {
+    fill: white;
+}
+
+.flatpickr-day {
+    border-radius: 6px !important;
+    font-size: 0.9rem;
+}
+
+.flatpickr-day:hover {
+    background: var(--color-principal);
+    color: white;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background-color: var(--color-principal) !important;
+    border-color: var(--color-principal) !important;
+    color: #fff !important;
+}
+
+.flatpickr-day.inRange {
+    background: rgba(184,0,0,0.35) !important;
+    color: white;
+}
+
+.flatpickr-calendar.inline {
+    width: 100% !important;
+    max-width: 350px;
+}
+
+.flatpickr-days {
+    width: 100% !important;
+}
+
+.flatpickr-calendar.static {
+    position: relative !important;
+    top: 0 !important;
+}
+
+/* Botones del calendario */
+.btn-filtrar {
+    background: var(--color-principal);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    font-size: 0.9rem;
+    transition: 0.2s ease;
+}
+
+.btn-filtrar:hover { opacity: 0.85; }
+
+/* Estado de rango */
+.date-status {
+    font-size: 0.85rem;
+    color: var(--color-texto-claro);
+    font-weight: 600;
+}
+
+/* 8. RESPONSIVE DESIGN */
 @media (max-width: 1200px) {
-    .top-widgets-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .top-widgets-grid .monthly-target {
-        grid-column: span 2;
-    }
-
-    .main-content {
-        margin-left: 80px;
-        /* Reducir margen si el menú colapsa */
-    }
+    .top-widgets-grid { grid-template-columns: 1fr 1fr; }
+    .top-widgets-grid .monthly-target { grid-column: span 2; }
+    .main-content { margin-left: 80px; }
 }
 
 @media (max-width: 992px) {
-    .graficos-inferiores-grid {
-        grid-template-columns: 1fr;
-    }
+    .graficos-inferiores-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
-    .top-widgets-grid {
-        grid-template-columns: 1fr;
-        margin-top: 50px;
-    }
-
-    .top-widgets-grid .monthly-target {
-        grid-column: span 1;
-    }
-
-    .statistics .date-range {
-        display: none;
-    }
-
-    .main-content {
-        margin-left: 0;
-        /* Sin margen en móvil */
-        padding-top: 100px;
-    }
-
-    .titulo-seccion {
-        left: 50%;
-        transform: translateX(-50%);
-        /* Centrar el título en móvil */
-    }
+    .top-widgets-grid { grid-template-columns: 1fr; margin-top: 50px; }
+    .top-widgets-grid .monthly-target { grid-column: span 1; }
+    .statistics .date-range { display: none; }
+    .main-content { margin-left: 0; padding-top: 100px; }
+    .titulo-seccion { left: 50%; transform: translateX(-50%); }
 }
 
-/* ============================================== */
-/* PIE DEL MENÚ - INFORMACIÓN DEL USUARIO */
-/* ============================================== */
-
-.menu-pie .enlace {
-    color: #fff !important;
-}
-
-.menu-pie .enlace i {
-    color: #fff !important;
-}
-
-.menu-pie .info span {
-    color: #fff !important;
-}
-
-
-/* ============================================== */
-/* BOTÓN SALIR (VISIBILIDAD Y ESTILO MEJORADO) */
-/* ============================================== */
+/* 9. PIE DEL MENÚ / BOTÓN SALIR */
+.menu-pie .enlace, .menu-pie .enlace i, .menu-pie .info span { color: #fff !important; }
 
 .menu .enlace.salir {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255,255,255,0.1);
     color: #fff !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 1px solid rgba(255,255,255,0.2);
     transition: background 0.3s ease;
 }
 
-.menu .enlace.salir i {
-    color: #fff !important;
-}
-
-.menu .enlace.salir:hover {
-    background-color: rgba(255, 255, 255, 0.25);
-    color: #fff;
-}
+.menu .enlace.salir:hover { background-color: rgba(255,255,255,0.25); color: #fff; }
+.menu .enlace.salir i { color: #fff !important; }
