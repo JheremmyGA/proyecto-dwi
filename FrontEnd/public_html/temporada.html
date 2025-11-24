@@ -6,26 +6,31 @@
     <title>Temporada Kivora</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="imagenes/icon.ico" type="image/x-icon">
+
+    <!-- ==== ESTILOS ==== -->
+
     <link rel="stylesheet" href="../Css/style.css">
     <link rel="stylesheet" href="../Css/seccGeneric.css">
+    <link rel="stylesheet" href="../Css/Login.css">
+    <link rel="stylesheet" href="../Css/temporada.css">
 
-
-
-    <script type="module" src="../Javascript/javascript.js" defer></script>
+    <!-- ==== SCRIPTS (MÓDULOS) ==== -->
+    <script type="module" src="../Javascript/javascript.js"></script>
     <script type="module" src="../Utils/HTTPRequest.js"></script>
     <script type="module" src="../Utils/PersistentData.js"></script>
+
+    <!-- ==== SCRIPTS NORMALES ==== -->
     <script src="../Javascript/carrito.js" defer></script>
-    <script src="../Javascript/temporada.js" defer></script>
-
-    <link rel="stylesheet" href="../Css/Login.css">
-
     <script src="../Javascript/Login.js" defer></script>
 
-    <script src="../Javascript/carrito.js" defer></script>
+    <!-- TEMPORADA: IMPORTANTE usar module -->
+    <script type="module" src="../Javascript/temporada.js"></script>
+
 
 </head>
 
 <body>
+
     <div class="callToAction">LOS MEJORES PRODUCTOS DE TEMPORADA!!! 🔥🔥🔥</div>
 
     <header class="header-principal">
@@ -65,10 +70,9 @@
                     </div>
                 </div>
             </div>
-                   
         </div>
     </header>
-    
+
 
     <nav class="menu">
         <div class="menu-enlaces">
@@ -78,8 +82,8 @@
             <a href="contacto.html">Contacto</a>
         </div>
     </nav>
+
     <div class="menu-secciones">
-        <!-- Enlaces de navegación -->
         <div class="menu-secciones-enlaces" id="categoria-menu">
             <a href="#" onclick="redirigir('seccCaballeros.html')">Caballeros</a>
             <a href="#" onclick="redirigir('seccDamas.html')">Damas</a>
@@ -90,12 +94,33 @@
 
     <div class="header-seccion">
         <h1 class="titulo-seccion">Descubre la Colección Más Reciente: Primavera 2025</h1>
-        <p class="descripcion-seccion">¡La moda evoluciona y nosotros también! Explora las últimas tendencias de nuestra
-            colección de temporada, recién llegada y lista para renovar tu armario. Hemos seleccionado cuidadosamente
-            texturas frescas, colores vibrantes y siluetas innovadoras para que te mantengas a la vanguardia. Encuentra
-            las prendas clave que definirán tu estilo este año y prepárate para brillar con cada look. No esperes más
-            para llevarte lo más nuevo.</p>
+        <p class="descripcion-seccion">
+            ¡La moda evoluciona y nosotros también! Explora las últimas tendencias de nuestra
+            colección de temporada, recién llegada y lista para renovar tu armario.
+            No esperes más para llevarte lo más nuevo.
+        </p>
     </div>
+
+    <!-- ====================== -->
+    <!--  CONTENEDORES TEMPORADA -->
+    <!-- ====================== -->
+
+    <div class="contenedor-temporada">
+        <div class="bloque-temporada">
+            <h2>Hombre - Temporada Primavera</h2>
+            <div id="tempHombre" class="cuadricula-productos"></div>
+        </div>
+    </div>
+
+    <div class="contenedor-temporada">
+        <div class="bloque-temporada">
+            <h2>Mujer - Temporada Primavera</h2>
+            <div id="tempMujer" class="cuadricula-productos"></div>
+        </div>
+    </div>
+
+
+
 
     <footer class="footer-kivora">
         <div class="footer-logo">
@@ -134,6 +159,7 @@
                 </ul>
             </div>
         </div>
+
         <div class="footer-copy">
             © El contenido de esta página web está protegido por copyright y es propiedad de Kivora S.A.C 2025
         </div>

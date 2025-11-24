@@ -1,0 +1,106 @@
+/*
+ * Centrado de los Contenedores Principales
+ */
+.contenedor-temporada {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+.bloque-temporada {
+    max-width: 1200px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
+/* * SOLUCIÓN FLEXBOX FORZADA para las cuadrículas de temporada (CENTRADOR)
+ * Esto anula las configuraciones de Grid o float de otros archivos.
+ */
+#tempHombre.cuadricula-productos,
+#tempMujer.cuadricula-productos {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    
+    /* REGLA CLAVE: Centra el grupo de productos */
+    justify-content: center !important; 
+    
+    margin: 0 auto !important;
+    max-width: 1000px !important;
+    width: 100% !important;
+    padding: 10px 0 !important;
+}
+
+/*
+ * Estilos de la Tarjeta Individual y Centrado
+ */
+.tarjeta-producto {
+    /* ... reglas de centrado anteriores ... */
+    
+    /* ELIMINAR O SOBRESCRIBIR LA ALTURA FIJA */
+    height: auto !important; 
+    
+    /* Mantenemos el resto de estilos para centrado y layout: */
+    width: 180px !important; 
+    margin: 15px !important; 
+    text-align: center !important; 
+    align-items: center !important; 
+}
+
+.tarjeta-producto img {
+    margin: 0 auto 5px auto !important; 
+    display: block !important;
+    
+    /* Asegura que la imagen no tenga una altura o ancho fijo que la distorsione */
+    width: 100% !important;
+    height: auto !important;
+}
+
+/* * Estilo del Precio (Grande y Rojo) 
+ */
+.tarjeta-producto .precio {
+    color: #B80000 !important; 
+    font-size: 1.8rem !important; 
+    font-weight: 700 !important; 
+    margin: 10px 0 5px 0 !important; 
+}
+
+/* * Estilo del Nombre (Fuente grande y regular) 
+ */
+.tarjeta-producto .nombre {
+    font-size: 1.2rem !important;
+    color: #333 !important;
+    height: auto !important; 
+    overflow: visible !important;
+    margin-bottom: 5px !important;
+}
+
+/* * Estilo de la Marca (Rojo y pequeño, asumiendo clase .marca-sybilla en JS)
+ */
+.tarjeta-producto .marca-sybilla {
+    color: #B80000 !important; 
+    font-size: 1rem !important; 
+    font-weight: 500 !important;
+    margin-bottom: 15px !important; 
+}
+
+/* * Estilo del Botón (Gris, Centrado y Suave) 
+ */
+.tarjeta-producto button {
+    background-color: #a9a9a9 !important; /* Fondo gris */
+    color: white !important; 
+    border: 1px solid #a0a0a0 !important; 
+    
+    padding: 10px 30px !important; 
+    border-radius: 5px !important; 
+    font-size: 1.1rem !important;
+    
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important; 
+    
+    /* Asegura que el botón se vea ancho */
+    width: 90% !important; 
+    max-width: 200px !important; 
+}
+
+.tarjeta-producto button:hover {
+    background-color: #909090 !important;
+}
