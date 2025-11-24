@@ -1,73 +1,6 @@
-// DATOS SIMULADOS
-const ventasData = [
-    { fecha: "2025-01-03", monto: 150 },
-    { fecha: "2025-01-08", monto: 200 },
-    { fecha: "2025-01-15", monto: 400 },
-    { fecha: "2025-01-21", monto: 320 },
-    { fecha: "2025-01-28", monto: 180 },
+import * as HTTPS_Request from '../Utils/HTTPRequest.js';
 
-    { fecha: "2025-02-02", monto: 220 },
-    { fecha: "2025-02-06", monto: 250 },
-    { fecha: "2025-02-12", monto: 300 },
-    { fecha: "2025-02-20", monto: 310 },
-    { fecha: "2025-02-25", monto: 270 },
-
-    { fecha: "2025-03-01", monto: 190 },
-    { fecha: "2025-03-05", monto: 180 },
-    { fecha: "2025-03-10", monto: 200 },
-    { fecha: "2025-03-14", monto: 300 },
-    { fecha: "2025-03-22", monto: 250 },
-
-    { fecha: "2025-04-02", monto: 100 },
-    { fecha: "2025-04-08", monto: 220 },
-    { fecha: "2025-04-18", monto: 250 },
-    { fecha: "2025-04-25", monto: 300 },
-
-    { fecha: "2025-05-01", monto: 400 },
-    { fecha: "2025-05-07", monto: 320 },
-    { fecha: "2025-05-12", monto: 300 },
-    { fecha: "2025-05-20", monto: 350 },
-    { fecha: "2025-05-28", monto: 280 },
-
-    { fecha: "2025-06-05", monto: 150 },
-    { fecha: "2025-06-12", monto: 200 },
-    { fecha: "2025-06-20", monto: 80 },
-    { fecha: "2025-06-25", monto: 170 },
-
-    { fecha: "2025-07-02", monto: 210 },
-    { fecha: "2025-07-07", monto: 220 },
-    { fecha: "2025-07-14", monto: 300 },
-    { fecha: "2025-07-21", monto: 330 },
-    { fecha: "2025-07-28", monto: 250 },
-
-    { fecha: "2025-08-03", monto: 400 },
-    { fecha: "2025-08-10", monto: 420 },
-    { fecha: "2025-08-18", monto: 380 },
-    { fecha: "2025-08-24", monto: 360 },
-
-    { fecha: "2025-09-03", monto: 280 },
-    { fecha: "2025-09-10", monto: 300 },
-    { fecha: "2025-09-17", monto: 320 },
-    { fecha: "2025-09-25", monto: 350 },
-
-    { fecha: "2025-10-02", monto: 310 },
-    { fecha: "2025-10-12", monto: 360 },
-    { fecha: "2025-10-18", monto: 330 },
-    { fecha: "2025-10-28", monto: 400 },
-
-    { fecha: "2025-11-02", monto: 500 },
-    { fecha: "2025-11-10", monto: 610 },
-    { fecha: "2025-11-15", monto: 420 },
-    { fecha: "2025-11-18", monto: 420 },
-    { fecha: "2025-11-25", monto: 350 },
-
-    { fecha: "2025-12-01", monto: 300 },
-    { fecha: "2025-12-08", monto: 400 },
-    { fecha: "2025-12-15", monto: 450 },
-    { fecha: "2025-12-22", monto: 500 },
-    { fecha: "2025-12-28", monto: 480 }
-];
-
+let ventasData = null;
 
 const CHART_COLORS = {
     primary: '#B80000',
@@ -83,6 +16,11 @@ let flatpickrInstance = null;
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    InitPage();
+});
+
+async function InitPage() {
+    ventasData = await HTTPS_Request.GetDashboardData();
     inicializarCalendario();
     cargarKpis(ventasData);
     crearGraficoMetaMensual(75.55);
@@ -90,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     crearGraficoEstadisticas("general", ventasData);
     activarTabsEstadisticas();
     activarBotonesRange();
-});
+}
 
 
 // --------- KPIs ---------
