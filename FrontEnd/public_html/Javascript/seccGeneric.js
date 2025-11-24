@@ -27,7 +27,8 @@ function crearTarjetaProducto(producto) {
 
     // Aseguramos que el precio sea válido para la visualización
     const precioNumerico = producto.precio !== null && producto.precio !== undefined ? producto.precio : 0;
-    const precioFormateado = `S/.${precioNumerico.toFixed(2)}`;
+    const precioReal = parseFloat(precioNumerico);
+    const precioFormateado = `S/.${precioReal.toFixed(2)}`;
 
     // Si PreviewImage está vacío o es null, usar una imagen placeholder/por defecto
     const imagenSrc = producto.PreviewImage

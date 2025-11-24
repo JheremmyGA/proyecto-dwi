@@ -1,7 +1,7 @@
 import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 
 let generosCache = null;
-const useBackEnd = false;
+const useBackEnd = true;
 
 const generosStatic = [
     // La imagen 'product_black.png' y 'product_white.png' son placeholders
@@ -144,6 +144,68 @@ const listaTendencias = [
       precio: 159.90,
       marca: "UrbanFit",
       PreviewImage: "imagenes/hombre/.png"
+  }
+];
+
+const listaLoMasVendidos = [
+  {
+      id: 701,
+      nombre: "Pantalón Hombre",
+      precio: 99.90,
+      marca: "Marca",
+      PreviewImage: ""
+  },
+  {
+      id: 702,
+      nombre: "Casaca Hombre",
+      precio: 149.90,
+      marca: "Marca",
+      PreviewImage: ""
+  },
+  {
+      id: 703,
+      nombre: "Polo Hombre",
+      precio: 39.90,
+      marca: "Marca",
+      PreviewImage: ""
+  },
+  {
+      id: 704,
+      nombre: "Camisa Hombre",
+      precio: 89.90,
+      marca: "Marca",
+      PreviewImage: ""
+  }
+];
+
+const listaLiquidacion = [
+  {
+      id: 705,
+      nombre: "Producto Liquidación 1",
+      precio: 49.90,
+      marca: "Marca",
+      PreviewImage: ""
+  },
+  {
+      id: 706,
+      nombre: "Producto Liquidación 2",
+      precio: 59.90,
+      marca: "Marca",
+      PreviewImage: ""
+  },
+  {
+      id: 707,
+      nombre: "Producto Liquidación 3",
+      precio: 29.90,
+      marca: "Marca",
+      PreviewImage: ""
+  },
+  {
+      id: 708,
+      nombre: "Producto Liquidación 4",
+      precio: 19.90,
+      marca: "Marca",
+      PreviewImage: ""
   }
 ];
 
@@ -783,6 +845,64 @@ export async function GetTendencias() {
 
   try {
     const response = await fetch(`http://localhost:9530/api/tendencies/trending`, {
+      method: "GET"
+    });   
+
+    // Si no hay contenido, retornamos null o un array vacío
+    if (response.status === 204) {
+      return []; // o null según prefieras
+    }
+
+    if (!response.ok) {
+      throw new Error("Error en la respuesta del servidor: " + response.status);
+    } 
+
+    const data = await response.json();  
+
+    return data; // solo retornas la data
+
+  } catch (error) {
+    console.error("Error:", error);
+    return null; // opcional: retorna null si hay error
+  }
+}
+
+export async function GetMasVendidos() {
+  if(!useBackEnd){
+    return listaLoMasVendidos;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:9530/api/tendencies/best-selling`, {
+      method: "GET"
+    });   
+
+    // Si no hay contenido, retornamos null o un array vacío
+    if (response.status === 204) {
+      return []; // o null según prefieras
+    }
+
+    if (!response.ok) {
+      throw new Error("Error en la respuesta del servidor: " + response.status);
+    } 
+
+    const data = await response.json();  
+
+    return data; // solo retornas la data
+
+  } catch (error) {
+    console.error("Error:", error);
+    return null; // opcional: retorna null si hay error
+  }
+}
+
+export async function GetLiquidación() {
+  if(!useBackEnd){
+    return listaLiquidacion;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:9530/api/tendencies/liquidation`, {
       method: "GET"
     });   
 

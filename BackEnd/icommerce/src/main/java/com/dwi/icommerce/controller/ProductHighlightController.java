@@ -47,7 +47,7 @@ public class ProductHighlightController {
 
     @GetMapping("/news")
     public ResponseEntity<List<SoftCatalogProductDTO>> GetNews() {
-        Optional<List<Producto>> productsFind = service.GetTrending();
+        Optional<List<Producto>> productsFind = service.GetNews();
         return GetAnswerAPI(productsFind);
     }
 
