@@ -2,6 +2,7 @@ import * as PERSISTENT_DATA from '../Utils/PersistentData.js';
 
 let generosCache = null;
 const useBackEnd = true;
+const dashboardUserBackEnd = true;
 
 const generosStatic = [
     // La imagen 'product_black.png' y 'product_white.png' son placeholders
