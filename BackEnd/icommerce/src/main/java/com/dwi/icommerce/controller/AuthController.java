@@ -15,7 +15,6 @@ import com.dwi.icommerce.DTO.LoginRequestDTO;
 import com.dwi.icommerce.DTO.RegisterRequestDTO;
 import com.dwi.icommerce.DTO.TokenResponseDTO;
 import com.dwi.icommerce.DTO.UserResponseDTO;
-import com.dwi.icommerce.model.Usuario;
 import com.dwi.icommerce.service.AuthService;
 
 
