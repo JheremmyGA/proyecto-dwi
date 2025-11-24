@@ -210,13 +210,15 @@ const listaLiquidacion = [
   }
 ];
 
+const API_BASE_URL = "http://localhost:9530";
+
 export async function GetGeneros() {
 
     if(!useBackEnd) return generosStatic;
     if (generosCache) return generosCache; 
 
     try {
-      const response = await fetch("http://localhost:9530/api/genero", {
+      const response = await fetch(API_BASE_URL + "/api/genero", {
         method: "GET"
       });   
 
@@ -243,7 +245,7 @@ export async function GetGenero(id){
     }
 
     try {
-      const response = await fetch(`http://localhost:9530/api/genero/${id}?`, {
+      const response = await fetch(API_BASE_URL + `/api/genero/${id}?`, {
         method: "GET"
       });   
 
@@ -269,7 +271,7 @@ export async function GetCatalogByGenger(id) {
     }
 
     try {
-      const response = await fetch(`http://localhost:9530/api/catalog/all/genero/${id}`, {
+      const response = await fetch(API_BASE_URL + `/api/catalog/all/genero/${id}`, {
         method: "GET"
       });   
 
@@ -298,7 +300,7 @@ export async function GetTemporadas() {
     }
 
     try {
-      const response = await fetch(`http://localhost:9530/api/temporada`, {
+      const response = await fetch(API_BASE_URL + `/api/temporada`, {
         method: "GET"
       });   
 
@@ -327,7 +329,7 @@ export async function GetMarcas() {
     }
 
     try {
-      const response = await fetch(`http://localhost:9530/api/marca`, {
+      const response = await fetch(API_BASE_URL + `/api/marca`, {
         method: "GET"
       });   
 
@@ -356,7 +358,7 @@ export async function GetCategorias() {
     }
 
     try {
-      const response = await fetch(`http://localhost:9530/api/categoria`, {
+      const response = await fetch(API_BASE_URL + `/api/categoria`, {
         method: "GET"
       });   
 
@@ -390,7 +392,7 @@ export async function GetDetalleProducto(id) {
     }
 
     try {
-        const response = await fetch(`http://localhost:9530/api/catalog/producto/${id}`, {
+        const response = await fetch(API_BASE_URL + `/api/catalog/producto/${id}`, {
             method: "GET"
         });
 
@@ -404,7 +406,7 @@ export async function GetDetalleProducto(id) {
 
 export async function Registro(userData) {
     try {
-        const respuesta = await fetch(`http://localhost:9530/auth/register`, {
+        const respuesta = await fetch(API_BASE_URL + `/auth/register`, {
             method: 'POST', 
             
             headers: {
@@ -434,7 +436,7 @@ export async function Registro(userData) {
 
 export async function Login(userData) {
   try {
-      const respuesta = await fetch(`http://localhost:9530/auth/login`, {
+      const respuesta = await fetch(API_BASE_URL + `/auth/login`, {
           method: 'POST', 
           
           headers: {
@@ -470,7 +472,7 @@ export async function UploadImage(file) {
 
     try {
         // Llama al endpoint de subida
-        const response = await fetch('http://localhost:9530/api/upload/image', {
+        const response = await fetch(API_BASE_URL + '/api/upload/image', {
             method: 'POST',
             body: formData 
         });
@@ -490,7 +492,7 @@ export async function UploadImage(file) {
 
 export async function CrearProducto(productData) {
   try {
-      const respuesta = await fetch(`http://localhost:9530/api/inventario/create`, {
+      const respuesta = await fetch(API_BASE_URL + `/api/inventario/create`, {
           method: 'POST', 
           
           headers: {
@@ -519,7 +521,7 @@ export async function GetInventario() {
   if(!useBackEnd) return datosInventario;
 
   try {
-      const respuesta = await fetch(`http://localhost:9530/api/inventario`, {
+      const respuesta = await fetch(API_BASE_URL + `/api/inventario`, {
           method: 'GET', 
       });
 
@@ -552,7 +554,7 @@ export async function UpdateStock(SKU, newStock) {
       NewStock: newStock 
     };
 
-    const respuesta = await fetch(`http://localhost:9530/api/inventario/update/stock`, {
+    const respuesta = await fetch(API_BASE_URL + `/api/inventario/update/stock`, {
       method: 'PUT',
 
       headers: {
@@ -589,7 +591,7 @@ export async function DeleteItemInventario(SKU) {
 
   try {
 
-    const respuesta = await fetch(`http://localhost:9530/api/inventario/delete/${SKU}`, {
+    const respuesta = await fetch(API_BASE_URL + `/api/inventario/delete/${SKU}`, {
       method: 'DELETE',
     });
 
@@ -615,7 +617,7 @@ export async function InsertarProductoCarrito(productData, id) {
   if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
 
   try {
-      const respuesta = await fetch(`http://localhost:9530/api/carrito/${id}?skuProductoMain=${productData.productId}&cantidad=${productData.quantity}`, {
+      const respuesta = await fetch(API_BASE_URL + `/api/carrito/${id}?skuProductoMain=${productData.productId}&cantidad=${productData.quantity}`, {
           method: 'POST', 
       });
 
@@ -643,7 +645,7 @@ export async function DeleteProductoCarrito(SKU, id) {
 
   try {
 
-    const respuesta = await fetch(`http://localhost:9530/api/carrito/${id}?skuProductoMain=${SKU}`, {
+    const respuesta = await fetch(API_BASE_URL + `/api/carrito/${id}?skuProductoMain=${SKU}`, {
       method: 'DELETE',
     });
 
@@ -669,7 +671,7 @@ export async function DeleteCarrito(userId) {
   if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
   
   try {
-    const response = await fetch(`http://localhost:9530/api/carrito/all/${userId}`, {
+    const response = await fetch(API_BASE_URL + `/api/carrito/all/${userId}`, {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json' 
@@ -695,7 +697,7 @@ export async function CargarCarrito(id) {
   if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
 
   try {
-    const response = await fetch(`http://localhost:9530/api/carrito/${id}`, {
+    const response = await fetch(API_BASE_URL + `/api/carrito/${id}`, {
       method: "GET"
     });   
 
@@ -724,7 +726,7 @@ export async function ConfirmarCompra(id, details) {
   if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
   
   try {
-    const response = await fetch(`http://localhost:9530/api/order/takeorder/${id}`, {
+    const response = await fetch(API_BASE_URL + `/api/order/takeorder/${id}`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json' 
@@ -759,7 +761,7 @@ export async function ConfirmarCompra(id, details) {
     if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
   
     try {
-      const response = await fetch(`http://localhost:9530/api/order/sales/all`, {
+      const response = await fetch(API_BASE_URL + `/api/order/sales/all`, {
         method: "GET"
       });   
   
@@ -787,7 +789,7 @@ export async function ConfirmarCompra(id, details) {
     if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false') return; 
   
     try {
-      const response = await fetch(`http://localhost:9530/auth/${id}`, {
+      const response = await fetch(API_BASE_URL + `/auth/${id}`, {
         method: "GET"
       });   
   
@@ -816,7 +818,7 @@ export async function ConfirmarCompra(id, details) {
     }
 
     try {
-      const response = await fetch(`http://localhost:9530/api/tendencies/news`, {
+      const response = await fetch(API_BASE_URL + `/api/tendencies/news`, {
         method: "GET"
       });   
 
@@ -845,7 +847,7 @@ export async function GetTendencias() {
   }
 
   try {
-    const response = await fetch(`http://localhost:9530/api/tendencies/trending`, {
+    const response = await fetch(API_BASE_URL + `/api/tendencies/trending`, {
       method: "GET"
     });   
 
@@ -874,7 +876,7 @@ export async function GetMasVendidos() {
   }
 
   try {
-    const response = await fetch(`http://localhost:9530/api/tendencies/best-selling`, {
+    const response = await fetch(API_BASE_URL + `/api/tendencies/best-selling`, {
       method: "GET"
     });   
 
@@ -903,7 +905,7 @@ export async function GetLiquidación() {
   }
 
   try {
-    const response = await fetch(`http://localhost:9530/api/tendencies/liquidation`, {
+    const response = await fetch(API_BASE_URL + `/api/tendencies/liquidation`, {
       method: "GET"
     });   
 
