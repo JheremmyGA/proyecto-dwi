@@ -28,7 +28,7 @@ public class ProductHighlightService {
     @Autowired
     public ProductMainRepository productMainRepository;
 
-    private static final int LIMIT = 5;
+    private static final int LIMIT = 4;
 
     public Optional<List<Producto>> GetBestSelling() {
         List<OrderDetails> details = orderDetailsRepository.findAll();

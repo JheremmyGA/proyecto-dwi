@@ -345,111 +345,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //data false ver detalle
 document.addEventListener("DOMContentLoaded", function () {
-
-    function cargarSeccionesDetalle() {
-
-        const listaLoMasVendidos = [
-            {
-                id: 701,
-                nombre: "Pantalón Hombre",
-                precio: 99.90,
-                marca: "Marca",
-                PreviewImage: ""
-            },
-            {
-                id: 702,
-                nombre: "Casaca Hombre",
-                precio: 149.90,
-                marca: "Marca",
-                PreviewImage: ""
-            },
-            {
-                id: 703,
-                nombre: "Polo Hombre",
-                precio: 39.90,
-                marca: "Marca",
-                PreviewImage: ""
-            },
-            {
-                id: 704,
-                nombre: "Camisa Hombre",
-                precio: 89.90,
-                marca: "Marca",
-                PreviewImage: ""
-            }
-        ];
-
-        const listaLiquidacion = [
-            {
-                id: 705,
-                nombre: "Producto Liquidación 1",
-                precio: 49.90,
-                marca: "Marca",
-                PreviewImage: ""
-            },
-            {
-                id: 706,
-                nombre: "Producto Liquidación 2",
-                precio: 59.90,
-                marca: "Marca",
-                PreviewImage: ""
-            },
-            {
-                id: 707,
-                nombre: "Producto Liquidación 3",
-                precio: 29.90,
-                marca: "Marca",
-                PreviewImage: ""
-            },
-            {
-                id: 708,
-                nombre: "Producto Liquidación 4",
-                precio: 19.90,
-                marca: "Marca",
-                PreviewImage: ""
-            }
-        ];
-
-        cargarListaEnCuadricula(listaLoMasVendidos, "loMasVendidos");
-        cargarListaEnCuadricula(listaLiquidacion, "liquidacion");
-    }
-
-
-    function cargarListaEnCuadricula(lista, idContenedor) {
-        const contenedor = document.getElementById(idContenedor);
-        if (!contenedor) return;
-
-        contenedor.innerHTML = "";
-
-        lista.forEach(producto => {
-            const tarjeta = crearTarjetaProducto(producto);
-            contenedor.appendChild(tarjeta);
-        });
-    }
-
-
-    function crearTarjetaProducto(producto) {
-
-        const imagen = producto.PreviewImage && producto.PreviewImage.trim() !== ""
-            ? producto.PreviewImage
-            : "imagenes/hombre/Poleras/";
-
-        const tarjeta = document.createElement("div");
-        tarjeta.classList.add("tarjeta-producto");
-
-
-        tarjeta.innerHTML = `
-            <div class="imagen-container">
-                <img src="${imagen}" alt="${producto.nombre}">
-            </div>
-            <p class="precio">S/. ${producto.precio.toFixed(2)}</p>
-            <p class="nombre">${producto.nombre}</p>
-            <p class="marca">${producto.marca}</p>
-            <button class="btn-detalle">Ver detalle</button>
-        `;
-
-        return tarjeta;
-    }
-
     cargarSeccionesDetalle();
 });
+
+async function cargarSeccionesDetalle() {
+    let best_selling = await HTTPS_Request.GetMasVendidos();
+    let liquidacion = await HTTPS_Request.GetLiquidación();
+
+    await cargarListaEnCuadricula(best_selling, "loMasVendidos");
+    await cargarListaEnCuadricula(liquidacion, "liquidacion");
+}
+
+
+async function cargarListaEnCuadricula(lista, idContenedor) {
+    const contenedor = document.getElementById(idContenedor);
+    if (!contenedor) return;
+
+    contenedor.innerHTML = "";
+
+    lista.forEach(producto => {
+        const tarjeta = crearTarjetaProducto(producto);
+        contenedor.appendChild(tarjeta);
+    });
+}
+
+
+function crearTarjetaProducto(producto) {
+    const tarjeta = document.createElement('div');
+    tarjeta.className = 'tarjeta-producto';
+    tarjeta.setAttribute('data-marca', producto.marca);
+    tarjeta.setAttribute('data-temporada', producto.temporada);
+    tarjeta.setAttribute('data-categoria', producto.categoria);
+
+    // Aseguramos que el precio sea válido para la visualización
+    const precioNumerico = producto.precio !== null && producto.precio !== undefined ? producto.precio : 0;
+    const precioReal = parseFloat(precioNumerico);
+    const precioFormateado = `S/.${precioReal.toFixed(2)}`;
+
+    // Si PreviewImage está vacío o es null, usar una imagen placeholder/por defecto
+    const imagenSrc = producto.PreviewImage
+        ? producto.PreviewImage
+        : '/images/7892db09-c21a-4bc9-84c2-295fe6800ab5.png';
+
+    tarjeta.innerHTML = `
+        <img class="producto-imagen-principal" 
+             src="${imagenSrc}" 
+             alt="${producto.nombre}">
+        <p class="precio">${precioFormateado}</p>
+        <p class="nombre">${producto.nombre}</p>
+        <p class="marca">${producto.marca}</p>
+        
+        <div class="botones-tarjeta">
+            <button class="ver-detalle">Ver detalle</button>
+        </div>
+    `;
+
+    const btnDetalle = tarjeta.querySelector('.ver-detalle');
+    btnDetalle.addEventListener('click', () => {
+        PERSISTENT_DATA.SelectProductDetails(producto.id);
+        redirigirDetalle();
+    });
+
+    return tarjeta;
+}
+
+function redirigirDetalle() {
+    window.location.href = `detalle_producto_prenda.html`;
+}
