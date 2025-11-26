@@ -286,6 +286,10 @@ document.addEventListener('DOMContentLoaded', () => {
         botonAgregar.addEventListener('click', (e) => {
             e.preventDefault();
 
+            if(PERSISTENT_DATA.GetUsuarioLogeado() === 'false'){
+                window.location.href = `Login.html`;
+            }
+
             // Aseguramos que el producto tenga un ID base estable. Usamos 'PROD_GENERICO' si no existe.
             const idBaseEstable = detalleProducto && detalleProducto.id ? detalleProducto.id : 'PROD_GENERICO';
 

@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function InitPage() {
     ventasData = await HTTPS_Request.GetDashboardData();
+    console.log(ventasData);
     inicializarCalendario();
     cargarKpis(ventasData);
     crearGraficoMetaMensual(75.55);

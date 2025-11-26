@@ -45,7 +45,7 @@ public class OrderService {
         List<ShoppingCart> userShopping = userShoppingOptional.get();
 
         double total = userShopping.stream() 
-            .mapToDouble(ShoppingCart::getPrecio)
+            .mapToDouble(cartItem -> cartItem.getPrecio() * cartItem.getCantidad())
             .sum();
 
         Order newOrder = new Order();

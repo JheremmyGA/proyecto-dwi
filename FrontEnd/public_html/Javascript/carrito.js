@@ -37,7 +37,7 @@ async function cargarCarrito() {
 
 // ============ FUNCIONES DE CONTADOR ============
 
-function actualizarContadorCarrito() {
+export function actualizarContadorCarrito() {
     if (!contadorCarrito) return;
 
     const totalProductosUnicos = articulosCarrito.length;

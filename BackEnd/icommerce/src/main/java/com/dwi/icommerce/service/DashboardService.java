@@ -29,9 +29,7 @@ public class DashboardService {
 
         return orders.stream()
             .map(o -> new DashboardDailySaleDTO(
-                    // Convertimos LocalDateTime a LocalDate
                     o.getFecha() != null ? o.getFecha().toLocalDate() : null,
-                    // Convertimos BigDecimal a Double si es necesario
                     o.getTotal() != null ? o.getTotal().doubleValue() : 0.0
             ))
             .collect(Collectors.toList());

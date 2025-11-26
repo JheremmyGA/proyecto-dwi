@@ -49,6 +49,18 @@ public class CatalogController {
         return ResponseEntity.status(HttpStatus.OK).body(listaFinal);
     }
 
+    @GetMapping("/all/temporada")
+    public ResponseEntity<List<SoftCatalogProductDTO>> getProductoByTemporada() {
+        List<Producto> productsFind = productService.GetAllProductsByTemporada();
+        if(productsFind.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        
+        List<SoftCatalogProductDTO> listaFinal = productsFind.stream()
+            .map(a -> new SoftCatalogProductDTO(a))
+            .collect(Collectors.toList());
+        
+        return ResponseEntity.status(HttpStatus.OK).body(listaFinal);
+    }
+
     @GetMapping("/all/genero/filter")
     public ResponseEntity<List<SoftCatalogProductDTO>> getProductoFilter(@RequestParam(required = true) Long genero,
                                     @RequestParam(required = false) Long temporada,

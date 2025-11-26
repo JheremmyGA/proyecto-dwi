@@ -24,5 +24,12 @@ public interface ProductoRepository extends JpaRepository<Producto, Long>{
                                   @Param("marca") Long marca,
                                   @Param("categoria") Long categoria);
 
-    public List<Producto> findByGeneroId(Long id_genero);
+    @Query("SELECT p FROM Producto p " +
+       "JOIN FETCH p.genero g " +         // Cargar Genero
+       "JOIN FETCH p.temporada t " +      // Cargar Temporada
+       "JOIN FETCH p.marca m " +          // Cargar Marca
+       "JOIN FETCH p.categoria c " +      // Cargar Categoria
+       "WHERE g.id = :id_genero")
+    public List<Producto> findByGeneroId(@Param("id_genero") Long id_genero);
+    public List<Producto> findByTemporadaNombre(String nombre);
 }
