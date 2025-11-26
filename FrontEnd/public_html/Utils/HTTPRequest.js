@@ -1025,3 +1025,32 @@ export async function GetDashboardData() {
     return null; // opcional: retorna null si hay error
   }
 }
+
+export async function GetCatalogTemporada() {
+  if(!useBackEnd){
+    return datosProductos;
+  }
+
+  try {
+    const response = await fetch(API_BASE_URL + `/api/catalog/all/temporada`, {
+      method: "GET"
+    });   
+
+    // Si no hay contenido, retornamos null o un array vacío
+    if (response.status === 204) {
+      return []; // o null según prefieras
+    }
+
+    if (!response.ok) {
+      throw new Error("Error en la respuesta del servidor: " + response.status);
+    } 
+
+    const data = await response.json();  
+
+    return data; // solo retornas la data
+
+  } catch (error) {
+    console.error("Error:", error);
+    return null; // opcional: retorna null si hay error
+  }
+}

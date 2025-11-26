@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.dwi.icommerce.model.Producto;
@@ -27,8 +28,13 @@ public class ProductoService {
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
     }
 
+    @Cacheable("productsByGenre")
     public List<Producto> GetAllProductsByGenero(Long id_Genero){
         return productoRepository.findByGeneroId(id_Genero);
+    }
+
+    public List<Producto> GetAllProductsByTemporada(){
+        return productoRepository.findByTemporadaNombre("Primavera");
     }
 
     public Optional<List<Producto>> GetAllProductsFilter(Long genero, Long temporada, Long marca, Long categoria){
