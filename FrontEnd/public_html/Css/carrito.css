@@ -526,3 +526,143 @@
     font-size: 15px;
     width: 100%;
 }
+
+
+
+
+
+
+
+
+/* 1. OPCIONES RADIO (SELECCIÓN DE MÉTODO DE PAGO) */
+
+.opcion-radio {
+    display: flex;
+    align-items: center;
+    gap: 8px;               
+    padding: 10px 14px;
+    border: 2px solid #d9d9d9;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    width: 100%;
+    max-width: 350px;
+    background: #fff;
+}
+
+
+.opcion-radio:hover {
+    border-color: #6a6a6a;
+    background: #f9f9f9;
+}
+
+
+.opcion-radio input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+
+.opcion-radio img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+
+.opcion-radio span {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+
+.opcion-radio input[type="radio"]:checked ~ img,
+.opcion-radio input[type="radio"]:checked ~ span {
+    font-weight: 600;
+    filter: brightness(0.2);
+}
+
+.opcion-radio input[type="radio"]:checked {
+    accent-color: #B80000;
+}
+
+
+
+/* 2. FORMULARIO DE DOMICILIO (DIRECCIÓN + TELÉFONO)*/
+#form-domicilio {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 380px;
+}
+
+
+#form-domicilio input {
+    width: 100%;
+    padding: 12px 40px 12px 12px; 
+    border: 2px solid #d9d9d9;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+
+#form-domicilio img {
+    position: absolute;
+    right: 12px;
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+
+#direccion + img {
+    top: 14px;
+}
+
+#telefono + img {
+    top: 78px;
+}
+
+
+
+/* 3. TÍTULO DEL PASO 3 (SELECCIONA FECHA DE ENTREGA)*/
+#paso-3 {
+    position: relative;
+    max-width: 380px;
+}
+
+#paso-3 h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#paso-3 > img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    position: absolute;
+    left: 300px;  
+    top: 3px;
+}
+
+
+
+/*  4. SELECT DE FECHA DE ENTREGA (OPCIONAL)*/
+#fecha-entrega {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #d9d9d9;
+    font-size: 15px;
+    outline: none;
+}
